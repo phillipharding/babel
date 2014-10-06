@@ -243,6 +243,8 @@ function Update-ContentTypes {
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        Write-Verbose "Updating Content Types" -Verbose
+
         $ClientContext.Load($web.ContentTypes)
         $ClientContext.Load($web.AvailableContentTypes)
         $ClientContext.Load($web.Fields)
@@ -288,7 +290,7 @@ function Update-ContentTypes {
                     $contentTypeCreationInformation.Name = $contentTypeXml.Name
                     $contentTypeCreationInformation.Group = $contentTypeXml.Group
 
-                    if($contentTypeXml.Description) {
+                    if($contentTypeXml.Description -and $contentTypeXml.Description -ne "") {
                         $contentTypeCreationInformation.Description = $contentTypeXml.Description
                     } else {
                         $contentTypeCreationInformation.Description = "Create a new $Name"
@@ -424,5 +426,6 @@ function Update-ContentTypes {
                 }
             }
         }
+        Write-Verbose "Updated Content Types" -Verbose
     }
 }

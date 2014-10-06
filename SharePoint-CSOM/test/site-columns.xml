@@ -1,0 +1,53 @@
+<SPCSOM>
+	<Fields>
+		<RemoveField ID="{99887766-c3f5-4fae-9b49-b1e5097f476f}" Name="Sample Field to Remove" />
+
+		<Field CalType="0" DisplayName="Content Date" EnforceUniqueValues="FALSE" Format="DateOnly" FriendlyDisplayFormat="Relative" Group="Graphicboost" ID="{1be4e8d0-c3f5-4fae-9b49-b1e5097f476f}" Indexed="FALSE" Name="ContentDate" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="ContentDate" Type="DateTime" Version="1"/>
+		<Field DisplayName="Invoice Paid" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{95621a9b-2920-4a84-900d-922e75279c14}" Indexed="FALSE" Name="InvoicePaid" Required="FALSE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="InvoicePaid" Type="Boolean" Version="1">
+			<Default>1</Default>
+		</Field>
+		<Field Decimals="0" DisplayName="Invoice Term Days" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{9393bd34-43f8-4c83-b4e2-4c2153075622}" Indexed="FALSE" Max="90" Min="1" Name="InvoiceTermDays" Percentage="FALSE" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="InvoiceTermDays" Type="Number" Version="1">
+			<Default>30</Default>
+		</Field>
+		<Field Decimals="2" DisplayName="Net Invoice" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Indexed="FALSE" LCID="2057" Name="NetInvoice" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="NetInvoice" Type="Currency" Version="1"/>
+		<Field Decimals="2" DisplayName="Vat Rate" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{9345a769-b1a9-4828-abf7-bac46f8fc36f}" Indexed="FALSE" Name="VatRate" Percentage="TRUE" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="VatRate" Type="Number" Version="2">
+			<Default>.002</Default>
+		</Field>
+		<Field DisplayName="Content Action Date" EnforceUniqueValues="FALSE" Format="DateOnly" Group="Graphicboost" ID="{a59fe2f1-e2d4-41a7-b597-42330842afa1}" Indexed="FALSE" LCID="2057" Name="ContentActionDate" ReadOnly="TRUE" Required="FALSE" ResultType="DateTime" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="ContentActionDate" Type="Calculated" Version="1">
+			<Formula>=ContentDate+InvoiceTermDays</Formula>
+			<FieldRefs>
+				<FieldRef ID="{1be4e8d0-c3f5-4fae-9b49-b1e5097f476f}" Name="ContentDate"/>
+				<FieldRef ID="{9393bd34-43f8-4c83-b4e2-4c2153075622}" Name="InvoiceTermDays"/>
+			</FieldRefs>
+		</Field>
+		<Field Decimals="2" DisplayName="Gross Invoice" EnforceUniqueValues="FALSE" Format="DateOnly" Group="Graphicboost" ID="{9e66ca6d-fc64-43c9-a989-7a49eb14c805}" Indexed="FALSE" LCID="2057" Name="GrossInvoice" ReadOnly="TRUE" Required="FALSE" ResultType="Currency" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="GrossInvoice" Type="Calculated" Version="2">
+			<Formula>=NetInvoice+VatInvoice</Formula>
+			<FieldRefs>
+				<FieldRef ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Name="NetInvoice"/>
+				<FieldRef ID="{38b002c0-c193-4252-9af7-d6b1475a89d6}" Name="VatInvoice"/>
+			</FieldRefs>
+		</Field>
+		<Field Decimals="2" DisplayName="Vat Invoice" EnforceUniqueValues="FALSE" Format="DateOnly" Group="Graphicboost" ID="{38b002c0-c193-4252-9af7-d6b1475a89d6}" Indexed="FALSE" LCID="2057" Name="VatInvoice" ReadOnly="TRUE" Required="FALSE" ResultType="Currency" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="VatInvoice" Type="Calculated" Version="2">
+			<Formula>=NetInvoice*VatRate</Formula>
+			<FieldRefs>
+				<FieldRef ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Name="NetInvoice"/>
+				<FieldRef ID="{9345a769-b1a9-4828-abf7-bac46f8fc36f}" Name="VatRate"/>
+			</FieldRefs>
+		</Field>
+	</Fields>
+
+	<ContentTypes>
+		<ContentType ID="0x0101004D8C2FEC8291D44686C767D8D59B42FC" Name="Invoice" Group="Graphicboost" Description="" ParentContentType="Document">
+			<FieldRefs>
+				<FieldRef ID="{1be4e8d0-c3f5-4fae-9b49-b1e5097f476f}" Required="True" Hidden="" />
+				<FieldRef ID="{95621a9b-2920-4a84-900d-922e75279c14}" Required="True" Hidden="" />
+				<FieldRef ID="{9393bd34-43f8-4c83-b4e2-4c2153075622}" Required="True" Hidden="" />
+				<FieldRef ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Required="True" Hidden="" />
+				<FieldRef ID="{9345a769-b1a9-4828-abf7-bac46f8fc36f}" Required="True" Hidden="" />
+				<FieldRef ID="{a59fe2f1-e2d4-41a7-b597-42330842afa1}" Required="False" Hidden="" />
+				<FieldRef ID="{9e66ca6d-fc64-43c9-a989-7a49eb14c805}" Required="False" Hidden="" />
+				<FieldRef ID="{38b002c0-c193-4252-9af7-d6b1475a89d6}" Required="False" Hidden="" />
+			</FieldRefs>
+		</ContentType>
+	</ContentTypes>
+</SPCSOM>

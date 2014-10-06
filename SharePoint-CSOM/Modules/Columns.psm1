@@ -53,6 +53,7 @@ function Remove-SiteColumns {
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        Write-Verbose "Removing Site Columns" -Verbose
 
         $ClientContext.Load($web.Fields)
         $ClientContext.ExecuteQuery()
@@ -71,6 +72,7 @@ function Remove-SiteColumns {
             $ClientContext.ExecuteQuery()
             Write-Output "Deleted Site Columns"
         }
+        Write-Verbose "Removed Site Columns" -Verbose
     }
 }
 function Update-SiteColumns {
