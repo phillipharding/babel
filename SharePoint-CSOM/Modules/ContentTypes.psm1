@@ -294,9 +294,7 @@ function Update-ContentTypes {
                         $contentTypeCreationInformation.Description = $contentTypeXml.Description
                     } else {
                         $contentTypeCreationInformation.Description = "Create a new $Name"
-                    }
-                
-                
+                    }              
                 
                     if($contentTypeXml.ID) {
                         $contentTypeCreationInformation.ID = $contentTypeXml.ID

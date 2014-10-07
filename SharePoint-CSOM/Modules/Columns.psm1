@@ -92,24 +92,37 @@ function Update-SiteColumns {
         foreach ($fieldXml in $fieldsXml.Field) {
             $field = $web.Fields | Where {$_.Id -eq $fieldXml.ID}
 	        if($field -eq $null) {
+                Write-Verbose "Creating Site Column $($fieldXml.Name)" -Verbose
                 $fieldStr = $fieldXml.OuterXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
                 $field = $web.Fields.AddFieldAsXml($fieldStr, $false, ([Microsoft.SharePoint.Client.AddFieldOptions]::AddToNoContentType))
-                if(($fieldXml.Type -eq "TaxonomyFieldType") -or ($fieldXml.Type -eq "TaxonomyFieldTypeMulti")) {
-                    $termSetId = $null
-                    $field = [SharePointClient.PSClientContext]::CastToTaxonomyField($ClientContext, $field)
-                    $field.SspId = $defaultSiteCollectionTermStore.Id
-                    foreach($property in $fieldXml.Customization.ArrayOfProperty.Property) {
-                        if($property.Name -eq "TermSetId") {
-                            $termSetId = $property.Value.InnerText
-                        }
-                    }
-                    if($termSetId) {                      
-                        $field.TermSetId = $termSetId   
-                    }
-                    $field.UpdateAndPushChanges($false)
-                }
+                $ClientContext.Load($field)
                 $ClientContext.ExecuteQuery()
-		        Write-Verbose "Created Site Column $($fieldXml.Name)" -Verbose
+                $id = $field.ID
+                Write-Verbose "Created Site Column $($fieldXml.Name), ID:$id" -Verbose
+
+                if(($fieldXml.Type -eq "TaxonomyFieldType") -or ($fieldXml.Type -eq "TaxonomyFieldTypeMulti")) {
+                    $ClientContext.Load($web.Fields)
+                    $ClientContext.ExecuteQuery()
+                    $field = $web.Fields.GetById(([guid]$id))
+                    $ClientContext.Load($field)
+                    if($field -ne $null) {
+                        Write-Verbose "Updating TaxonomyField Site Column $($fieldXml.Name)" -Verbose
+                        $termSetId = $null
+                        $taxfield = [SharePointClient.PSClientContext]::CastToTaxonomyField($ClientContext, $field)
+                        $taxfield.SspId = $defaultSiteCollectionTermStore.Id
+                        foreach($property in $fieldXml.Customization.ArrayOfProperty.Property) {
+                            if($property.Name -eq "TermSetId") {
+                                $termSetId = $property.Value.InnerText
+                            }
+                        }
+                        if($termSetId) {                      
+                            $taxfield.TermSetId = $termSetId   
+                        }
+                        $taxfield.UpdateAndPushChanges($false)
+                        $ClientContext.ExecuteQuery()
+                        Write-Verbose "Updated TaxonomyField Site Column $($fieldXml.Name)" -Verbose
+                    }
+                }
 	        } else {
                 $updatedField = $false
                 if($fieldXml.Name -ne $field.InternalName) {
