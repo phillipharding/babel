@@ -25,7 +25,6 @@ function Get-ResourceFile {
         $file
     }
 }
-
 function Get-XMLFile {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$FilePath,
@@ -53,8 +52,6 @@ function Get-XMLFile {
 
     }
 }
-
-
 function Upload-File {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Folder]$Folder,
@@ -69,7 +66,7 @@ function Upload-File {
     process {
         
         $folderServerRelativeUrl = $Folder.ServerRelativeUrl
-        Write-Verbose "$folderServerRelativeUrl/$($FileXml.Url)" -Verbose
+        Write-Host "`tFile: $folderServerRelativeUrl/$($FileXml.Url)" -ForegroundColor Green
 
         $fileCreationInformation = New-Object Microsoft.SharePoint.Client.FileCreationInformation
         $fileCreationInformation.Url = "$folderServerRelativeUrl/$($FileXml.Url)"
@@ -80,34 +77,44 @@ function Upload-File {
             $fileCreationInformation.Overwrite = $replaceContent
         }
         
-        
         $file = $Folder.Files.Add($fileCreationInformation)
+        $ClientContext.Load($file)
+        $ClientContext.ExecuteQuery()
+
+        $item = $file.ListItemAllFields
+
+        if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+            $file.CheckOut()
+            Write-Host "`t..Checkedout" -ForegroundColor Green
+        }
+
+        $updateItem = $false
         foreach($property in $FileXml.Property) {
             $property.Value = $property.Value -replace "~folderUrl", $folderServerRelativeUrl
+            $property.Value = $property.Value -replace "~sitecollection", $ClientContext.Site.ServerRelativeUrl
+            $property.Value = $property.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
             if($property.Name -ne "ContentType") {
-                $file.ListItemAllFields[$property.Name] = $property.Value
+                $item[$property.Name] = $property.Value
+                $updateItem = $true
             }
+            Write-Host "`t`tSet File Property: $($property.Name) = $($property.Value)" 
         }
-        $file.ListItemAllFields.Update()
-        $ClientContext.load($file)
+        if ($updateItem) {
+            $item.Update()
+        }
+
+        $file.CheckIn("Check-in file", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+        $item.File.Publish("Publishing file")
+        $ClientContext.Load($item)
         $ClientContext.ExecuteQuery()
 
         if($file.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
-            $file.CheckIn("Check-in file", [Microsoft.SharePoint.Client.CheckinType]::MinorCheckIn)
-            $ClientContext.Load($file)
-            $ClientContext.ExecuteQuery()
         }
 
-        if($FileXml.Level -eq "Published" -and $MinorVersionsEnabled -and $MajorVersionsEnabled) {
-            $file.Publish("Publishing file")
-            $ClientContext.Load($file)
-            $ClientContext.ExecuteQuery()
-           # $file.CheckIn("Publishing File", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+        if($file.Level -eq "Draft" -and $MinorVersionsEnabled -and $MajorVersionsEnabled) {
         }
 
-        if($FileXml.Approval -eq "Approved" -and $ContentApprovalEnabled) {
-            $file.Approve("Approving file")
-            $ClientContext.ExecuteQuery()
+        if($file.Level -eq "Pending" -and $ContentApprovalEnabled) {
         }
         
         $file
@@ -125,33 +132,46 @@ function Add-Files {
         [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][bool] $ContentApprovalEnabled = $false
     )
     process {
-        Write-Verbose "$($folderXml.Path)" -Verbose
+        if ($ResourcesPath -eq "" -or ($FolderXml.ResourcesPath -and ($FolderXml.ResourcesPath -ne "") )) {
+            $ResourcesPath = $FolderXml.ResourcesPath
+        }
+        Write-Host "Folder: $($FolderXml.Url) << $ResourcesPath" -ForegroundColor Green
         foreach($fileXml in $FolderXml.File) {
-            Write-Verbose "$($fileXml.Path)"
-            $file = Upload-File -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath `
-                        -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
-                        -ClientContext $clientContext -RemoteContext $RemoteContext
+            if ($fileXml.Path -and $fileXml.Path -ne "") {
+                Write-Verbose "$($fileXml.Path)"
+                $file = Upload-File -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath `
+                            -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
+                            -ClientContext $clientContext -RemoteContext $RemoteContext
+            }
         }
 
         foreach ($ProperyBagValue in $folderXml.PropertyBag.PropertyBagValue) {
-            $Indexable = $false
-            if($PropertyBagValue.Indexable) {
-                $Indexable = [bool]::Parse($PropertyBagValue.Indexable)
-            }
+            if ($ProperyBagValue.Key -and $ProperyBagValue.Key -ne "") {
+                $Indexable = $false
+                if($PropertyBagValue.Indexable) {
+                    $Indexable = [bool]::Parse($PropertyBagValue.Indexable)
+                }
 
-            Set-PropertyBagValue -Key $ProperyBagValue.Key -Value $ProperyBagValue.Value -Indexable $Indexable -Folder $Folder -ClientContext $ClientContext
+                Set-PropertyBagValue -Key $ProperyBagValue.Key -Value $ProperyBagValue.Value -Indexable $Indexable -Folder $Folder -ClientContext $ClientContext
+            }
         }
 
         foreach($childfolderXml in $FolderXml.Folder) {
-            $childFolder = Get-Folder -Folder $Folder -Name $childfolderXml.Url -ClientContext $clientContext
-            if($childFolder -eq $null) {
-                $childFolder = $Folder.Folders.Add($childfolderXml.Url)
-                $ClientContext.Load($childFolder)
-                $ClientContext.ExecuteQuery()
+            if ($childfolderXml.Url -and $childfolderXml.Url -ne "") {
+                $childFolder = Get-Folder -Folder $Folder -Name $childfolderXml.Url -ClientContext $clientContext
+                if($childFolder -eq $null) {
+                    $childFolder = $Folder.Folders.Add($childfolderXml.Url)
+                    $ClientContext.Load($childFolder)
+                    $ClientContext.ExecuteQuery()
+                }
+                $childfolderResourcesPath = $ResourcesPath
+                if ($childfolderXml.ResourcesPath -and ($childfolderXml.ResourcesPath -ne "") ) {
+                    $childfolderResourcesPath = $childfolderXml.ResourcesPath
+                }
+                Add-Files -Folder $childFolder -FolderXml $childfolderXml -ResourcesPath $childfolderResourcesPath `
+                    -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
+                    -ClientContext $clientContext -RemoteContext $RemoteContext 
             }
-            Add-Files -Folder $childFolder -FolderXml $childfolderXml -ResourcesPath $ResourcesPath `
-                -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
-                -ClientContext $clientContext -RemoteContext $RemoteContext 
         }
     }
 }

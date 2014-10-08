@@ -236,4 +236,37 @@
 			</FieldRefs>
 		</ContentType>
 	</ContentTypes>
+
+	<SiteFeatures>
+		<Feature FeatureID="b21b090c-c796-4b0f-ac0f-7ef1659c20ae" Name="Standard Site Collection Features" Force="" Ignore="" SandboxSolution="" />
+	</SiteFeatures>
+	<RemoveSiteFeatures>
+		<Feature FeatureID="b21b090c-c796-4b0f-ac0f-7ef1659c20ae" Name="Standard Site Collection Features" Force="" Ignore="" />
+	</RemoveSiteFeatures>
+	<WebFeatures>
+		<Feature FeatureID="99fe402e-89a0-45aa-9163-85342e865dc8" Name="Standard Site Features" Force="" Ignore="" SandboxSolution="" />
+	</WebFeatures>
+	<RemoveWebFeatures>
+		<Feature FeatureID="99fe402e-89a0-45aa-9163-85342e865dc8" Name="Standard Site Features" Force="" Ignore="" />
+	</RemoveWebFeatures>
+
+	<Modules>
+		<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
+		<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+		<Folder Scope="Site" Path="Masterpages" Url="Master Page Gallery" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+			<File Path="masterpages\RBPMasterPage-v2.master" Url="RBPMasterPage-v2.master" ReplaceContent="True">
+				<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+				<Property Name="Title" Value="RBPMasterPage-v2" />
+				<Property Name="MasterPageDescription" Value="The RBP Masterpage" />
+				<Property Name="UIVersion" Value="15" />
+			</File>
+
+			<PropertyBag>
+				<PropertyBagValue Key="" Value="" Indexable="" />
+			</PropertyBag>
+
+			<Folder Path="" Url="" ResourcesPath="">
+			</Folder>
+		</Folder>
+	</Modules>
 </SPCSOM>

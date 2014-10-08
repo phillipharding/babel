@@ -1,4 +1,4 @@
-﻿cls
+﻿
 $scriptRoot = "C:\Dev\github\babel\SharePoint-CSOM"
 $modulesPath = "$scriptRoot\Modules"
 $assemblyPath = "$scriptRoot\Assemblies"
