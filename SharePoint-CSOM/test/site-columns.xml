@@ -237,18 +237,24 @@
 		</ContentType>
 	</ContentTypes>
 
-	<SiteFeatures>
-		<Feature FeatureID="b21b090c-c796-4b0f-ac0f-7ef1659c20ae" Name="Standard Site Collection Features" Force="" Ignore="" SandboxSolution="" />
-	</SiteFeatures>
-	<RemoveSiteFeatures>
-		<Feature FeatureID="b21b090c-c796-4b0f-ac0f-7ef1659c20ae" Name="Standard Site Collection Features" Force="" Ignore="" />
-	</RemoveSiteFeatures>
-	<WebFeatures>
-		<Feature FeatureID="99fe402e-89a0-45aa-9163-85342e865dc8" Name="Standard Site Features" Force="" Ignore="" SandboxSolution="" />
-	</WebFeatures>
-	<RemoveWebFeatures>
-		<Feature FeatureID="99fe402e-89a0-45aa-9163-85342e865dc8" Name="Standard Site Features" Force="" Ignore="" />
-	</RemoveWebFeatures>
+	<Features>
+		<SiteFeatures>
+			<ActivateFeatures>
+				<Feature FeatureID="b21b090c-c796-4b0f-ac0f-7ef1659c20ae" Name="Standard Site Collection Features" Force="" Ignore="" SandboxSolution="" />
+			</ActivateFeatures>
+			<DeactivateFeatures>
+				<Feature FeatureID="b21b090c-c796-4b0f-ac0f-7ef1659c20ae" Name="Standard Site Collection Features" Force="" Ignore="" />
+			</DeactivateFeatures>
+		</SiteFeatures>
+		<WebFeatures>
+			<ActivateFeatures>
+				<Feature FeatureID="99fe402e-89a0-45aa-9163-85342e865dc8" Name="Standard Site Features" Force="" Ignore="" SandboxSolution="" />
+			</ActivateFeatures>
+			<DeactivateFeatures>
+				<Feature FeatureID="99fe402e-89a0-45aa-9163-85342e865dc8" Name="Standard Site Features" Force="" Ignore="" />
+			</DeactivateFeatures>
+		</WebFeatures>
+	</Features>
 
 	<Lists Scope="Site">
 		<List Title="Simple List" Description="List of simple items" OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-DE22-43B2-A848-C05709900100" Type="100" Url="Lists/SimpleList">

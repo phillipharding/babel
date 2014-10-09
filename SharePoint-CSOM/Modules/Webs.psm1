@@ -293,7 +293,7 @@ function Update-Web {
             if($xml.Features.WebFeatures -and $xml.Features.WebFeatures.DeactivateFeatures) {
                 Remove-Features -FeaturesXml $xml.Features.WebFeatures.DeactivateFeatures -web $web -ClientContext $ClientContext
             }
-            if($xml.Features.SiteFeatures -and $xml.Features.SiteFeatures.DeactivateFeature) {
+            if($xml.Features.SiteFeatures -and $xml.Features.SiteFeatures.DeactivateFeatures) {
                 Remove-Features -FeaturesXml $xml.Features.SiteFeatures.DeactivateFeatures -site $ClientContext.Site -ClientContext $ClientContext
             }
         }
@@ -303,7 +303,7 @@ function Update-Web {
             if($xml.Features.WebFeatures -and $xml.Features.WebFeatures.ActivateFeatures) {
                 Add-Features -FeaturesXml $xml.Features.WebFeatures.ActivateFeatures -web $web -ClientContext $ClientContext
             }
-            if($xml.Features.SiteFeatures -and $xml.Features.SiteFeatures.ActivateFeature) {
+            if($xml.Features.SiteFeatures -and $xml.Features.SiteFeatures.ActivateFeatures) {
                 Add-Features -FeaturesXml $xml.Features.SiteFeatures.ActivateFeatures -site $ClientContext.Site -ClientContext $ClientContext
             }
         }
@@ -348,11 +348,11 @@ function Update-Web {
             }
 
             foreach($folderXml in $catalogXml.Folder) {
-                Write-Verbose "`t`t$($folderXml.Url)" -Verbose
+                Write-Verbose "`t`t$(if ($folderXml.Url) { $folderXml.Url } else { `"{root folder}`" })" -Verbose
+                $resourcesPath = ""
+                if ($folderXml.ResourcesPath -and $folderXml.ResourcesPath -ne "") { $resourcesPath = $folderXml.ResourcesPath }
                 $spFolder = Get-RootFolder -List $SPList -ClientContext $ClientContext
-                Add-Files -Folder $spFolder -FolderXml $folderXml -ResourcesPath $ResourcesPath `
-                    -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
-                    -ClientContext $ClientContext -RemoteContext $RemoteContext
+                Add-Files -List $SPList -Folder $spFolder -FolderXml $folderXml -ResourcesPath $resourcesPath -ClientContext $ClientContext -RemoteContext $null
             }
             if($catalogXml.Type -eq "DesignCatalog") {
                 Write-Verbose "`tComposedLooks" -Verbose

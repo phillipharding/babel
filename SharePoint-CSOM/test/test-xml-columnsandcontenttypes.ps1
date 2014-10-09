@@ -24,16 +24,16 @@ $configXml = Get-XMLFile "site-columns.xml" "C:\Dev\github\babel\SharePoint-CSOM
 
 # get datasets
 $modulesXml = $configXml.SelectSingleNode("*/Modules")
-$siteFeaturesXml = $configXml.SelectSingleNode("*/SiteFeatures")
-$removeSiteFeaturesXml = $configXml.SelectSingleNode("*/RemoveSiteFeatures")
-$webFeaturesXml = $configXml.SelectSingleNode("*/WebFeatures")
-$removeWebFeaturesXml = $configXml.SelectSingleNode("*/RemoveWebFeatures")
+$siteFeaturesXml = $configXml.SelectSingleNode("*/Features/SiteFeatures/ActivateFeatures")
+$removeSiteFeaturesXml = $configXml.SelectSingleNode("*/Features/SiteFeatures/DeactivateFeatures")
+$webFeaturesXml = $configXml.SelectSingleNode("*/Features/WebFeatures/ActivateFeatures")
+$removeWebFeaturesXml = $configXml.SelectSingleNode("*/Features/WebFeatures/DeactivateFeatures")
 $taxonomyXml = $configXml.SelectSingleNode("*/TermStore")
 $fieldsXml = $configXml.SelectSingleNode("*/Fields")
 $contentTypesXml = $configXml.SelectSingleNode("*/ContentTypes")
 $listsXml = $configXml.SelectSingleNode("*/Lists")
 
-Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
+#Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
 
 Remove-Features -FeaturesXml $removeSiteFeaturesXml -site $connection.Site -ClientContext $connection.Context
 Add-Features -FeaturesXml $siteFeaturesXml -site $connection.Site -ClientContext $connection.Context
@@ -41,13 +41,13 @@ Add-Features -FeaturesXml $siteFeaturesXml -site $connection.Site -ClientContext
 Remove-Features -FeaturesXml $removeWebFeaturesXml -web $connection.Web -ClientContext $connection.Context
 Add-Features -FeaturesXml $webFeaturesXml -web $connection.Web -ClientContext $connection.Context
 
-Remove-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
-Remove-SiteColumns $fieldsXml $connection.RootWeb $connection.Context
+#Remove-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
+#Remove-SiteColumns $fieldsXml $connection.RootWeb $connection.Context
 
-Update-SiteColumns $fieldsXml $connection.RootWeb $connection.Context
-Update-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
+#Update-SiteColumns $fieldsXml $connection.RootWeb $connection.Context
+#Update-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
 
-Update-Lists $listsXml $connection.Site $connection.Web $connection.Context
-Update-Folders $modulesXml $connection.Site $connection.Web $connection.Context
+#Update-Lists $listsXml $connection.Site $connection.Web $connection.Context
+#Update-Folders $modulesXml $connection.Site $connection.Web $connection.Context
 
 

@@ -14,11 +14,11 @@ function Add-Feature {
         }
         $feature = $Features | Where {$_.DefinitionId -eq $FeatureId}
         if($feature -eq $null) {
-            Write-Verbose "Activating Feature $FeatureId" -Verbose
+            Write-Verbose "`tActivating Feature $FeatureId" -Verbose
             $f = $Features.Add($FeatureId, $force, $FeatureDefinitionScope)
             try {
                 $ClientContext.ExecuteQuery()
-                Write-Verbose "Activated Feature $FeatureId" -Verbose
+                Write-Verbose "`t..Activated Feature $FeatureId" -Verbose
             }
             catch {
                 Write-Error "An error occurred whilst Activating feature $FeatureId. Error detail: $($_)"
@@ -37,11 +37,11 @@ function Remove-Feature {
     process {
         $feature = $features | Where {$_.DefinitionId -eq $FeatureId}
         if($feature) {
-            Write-Verbose "Deactivating Feature $FeatureId" -Verbose
+            Write-Verbose "`tDeactivating Feature $FeatureId" -Verbose
             $features.Remove($featureId, $force)
             try {
                 $ClientContext.ExecuteQuery()
-                Write-Verbose "Deactivated Feature $FeatureId" -Verbose
+                Write-Verbose "`t..Deactivated Feature $FeatureId" -Verbose
             }
             catch {
                 Write-Error "An error occurred whilst Deactivating feature $FeatureId. Error detail: $($_)"
@@ -85,7 +85,7 @@ function Add-Features {
                 Add-Feature -featureId $featureId -force $force -fromSandboxSolution $SandboxSolution -features $features -ClientContext $ClientContext
             }
         }
-        Write-Verbose "Added Features..." -Verbose
+        Write-Verbose "Done" -Verbose
     }
 }
 function Remove-Features {
@@ -121,6 +121,6 @@ function Remove-Features {
                 Remove-Feature -featureId $featureId -force $force -features $features -ClientContext $ClientContext
             }
         }
-        Write-Verbose "Removed Features..." -Verbose
+        Write-Verbose "Done" -Verbose
     }
 }

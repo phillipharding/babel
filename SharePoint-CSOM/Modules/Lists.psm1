@@ -359,9 +359,9 @@ function Update-Lists {
         foreach($listXml in $ListsXml.List) {
             if ($listXml.Title -and $listXml.Title -ne "") {
                 if ((-not $ListsXml.Scope) -or ($ListsXml.Scope -match "web")) {
-                    $splist = Update-List $listXml $web $ClientContext
+                    $splist = Update-List -ListXml $listXml -Web $web -ClientContext $ClientContext
                 } else {
-                    $splist = Update-List $listXml $site.RootWeb $ClientContext
+                    $splist = Update-List -ListXml $listXml -Web $site.RootWeb -ClientContext $ClientContext
                 }
             }
         }
