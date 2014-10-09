@@ -1,3 +1,31 @@
+function Get-File {
+    param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$FileServerRelativeUrl,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        $file = $null
+
+        if ($web.ServerObjectIsNull.HasValue -and $web.ServerObjectIsNull.Value) {
+            $ClientContext.Load($web)
+            $ClientContext.ExecuteQuery()
+        }
+
+        try {
+            $file = $web.GetFileByServerRelativeUrl($FileServerRelativeUrl)
+            $ClientContext.Load($file)
+            $ClientContext.ExecuteQuery()
+            if ($file -eq $null -or (-not $file.Exists)) {
+                $file = $null
+            }
+        }
+        catch { 
+            $file = $null 
+        }
+        $file
+    }
+}
 function Get-ResourceFile {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$FilePath,
@@ -54,94 +82,157 @@ function Get-XMLFile {
 }
 function Upload-File {
     param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Folder]$Folder,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$FileXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$ResourcesPath,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext,
-        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$RemoteContext,
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][bool] $MinorVersionsEnabled = $false,
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][bool] $MajorVersionsEnabled = $false,
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][bool] $ContentApprovalEnabled = $false
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$RemoteContext
     )
     process {
-        
-        $folderServerRelativeUrl = $Folder.ServerRelativeUrl
-        Write-Host "`tFile: $folderServerRelativeUrl/$($FileXml.Url)" -ForegroundColor Green
+        $file = $null
 
-        $fileCreationInformation = New-Object Microsoft.SharePoint.Client.FileCreationInformation
-        $fileCreationInformation.Url = "$folderServerRelativeUrl/$($FileXml.Url)"
-        $fileCreationInformation.Content = Get-ResourceFile -FilePath $FileXml.Path -ResourcesPath $ResourcesPath -RemoteContext $RemoteContext
-        if($FileXml.ReplaceContent) {
-            $replaceContent = $false
-            $replaceContent = [bool]::Parse($FileXml.ReplaceContent)
-            $fileCreationInformation.Overwrite = $replaceContent
-        }
-        
-        $file = $Folder.Files.Add($fileCreationInformation)
-        $ClientContext.Load($file)
-        $ClientContext.ExecuteQuery()
+        try {
+            $folderServerRelativeUrl = $Folder.ServerRelativeUrl
+            $fileServerRelativeUrl = "$folderServerRelativeUrl/$($FileXml.Url)"
+            Write-Host "`tFile: $fileServerRelativeUrl" -ForegroundColor Green
 
-        $item = $file.ListItemAllFields
-
-        if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
-            $file.CheckOut()
-            Write-Host "`t..Checkedout" -ForegroundColor Green
-        }
-
-        $updateItem = $false
-        foreach($property in $FileXml.Property) {
-            $property.Value = $property.Value -replace "~folderUrl", $folderServerRelativeUrl
-            $property.Value = $property.Value -replace "~sitecollection", $ClientContext.Site.ServerRelativeUrl
-            $property.Value = $property.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
-            if($property.Name -ne "ContentType") {
-                $item[$property.Name] = $property.Value
-                $updateItem = $true
+            $fileCreationInformation = New-Object Microsoft.SharePoint.Client.FileCreationInformation
+            $fileCreationInformation.Url = "$fileServerRelativeUrl"
+            $fileCreationInformation.Content = Get-ResourceFile -FilePath $FileXml.Path -ResourcesPath $ResourcesPath -RemoteContext $RemoteContext
+            if($FileXml.ReplaceContent) {
+                $replaceContent = $false
+                $replaceContent = [bool]::Parse($FileXml.ReplaceContent)
+                $fileCreationInformation.Overwrite = $replaceContent
             }
-            Write-Host "`t`tSet File Property: $($property.Name) = $($property.Value)" 
-        }
-        if ($updateItem) {
-            $item.Update()
-        }
 
-        $file.CheckIn("Check-in file", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
-        $item.File.Publish("Publishing file")
-        $ClientContext.Load($item)
-        $ClientContext.ExecuteQuery()
+            # existing file? get and checkout
+            $file = Get-File $fileServerRelativeUrl $List.ParentWeb $ClientContext
+            if ($file -ne $null -and $file.Exists) {
+                if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                    $file.Checkout()
+                    Write-Host "`t..Checkedout Existing File" -ForegroundColor Green
+                } else {
+                    Write-Host "`t..Existing File already Checkedout" -ForegroundColor Green
+                }
+            }
+            
+            $file = $Folder.Files.Add($fileCreationInformation)
+            $ClientContext.Load($file)
+            $ClientContext.ExecuteQuery()
 
-        if($file.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
-        }
+            $item = $file.ListItemAllFields
 
-        if($file.Level -eq "Draft" -and $MinorVersionsEnabled -and $MajorVersionsEnabled) {
-        }
+            if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                $file.CheckOut()
+                Write-Host "`t..Checkedout Uploaded File" -ForegroundColor Green
+            }
 
-        if($file.Level -eq "Pending" -and $ContentApprovalEnabled) {
+            $updateItem = $false
+            foreach($property in $FileXml.Property) {
+                $property.Value = $property.Value -replace "~folderUrl", $folderServerRelativeUrl
+                $property.Value = $property.Value -replace "~sitecollection", $ClientContext.Site.ServerRelativeUrl
+                $property.Value = $property.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
+                if($property.Name -ne "ContentType") {
+                    $item[$property.Name] = $property.Value
+                    $updateItem = $true
+                }
+                Write-Host "`t`tSet File Property: $($property.Name) = $($property.Value)" 
+            }
+            if ($updateItem) {
+                $item.Update()
+            }
+
+            $file.CheckIn("Checkin file", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+            $file.Publish("Publish file")
+            if ($List.EnableModeration) {
+                $file.Approve("Approve file")
+                Write-Host "`t..Approved Uploaded File" -ForegroundColor Green
+            }
+            $ClientContext.Load($item)
+            $ClientContext.ExecuteQuery()
         }
-        
+        catch {
+            if ($file -ne $null -and $file.Exists) {
+                if($file.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                    Write-Host "`t..Undoing Checkout because an exception occured!" -ForegroundColor Red
+                    # undo any checkout
+                    $file.UndoCheckOut()
+                    $ClientContext.Load($item)
+                    $ClientContext.ExecuteQuery()
+                }
+            }
+            $file = $null
+            Write-Host "`t..Exception uploading $fileServerRelativeUrl, `n$($_.Exception.Message)`n" -ForegroundColor Red
+        }
         $file
     }
+    end {}
+}
+function Update-Folders {
+    param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$ModulesXml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        Write-Verbose "Start Folder Modules.." -Verbose
+        foreach($folderXml in $ModulesXml.Folder) {
+            if ($folderXml.Url -and $folderXml.Url -ne "") {
+                $folderPath = ""
+                $resourcesPath = ""
+                if ($folderXml.SubFolder -and $folderXml.SubFolder -ne "") { $folderPath = $folderXml.SubFolder }
+                if ($folderXml.ResourcesPath -and $folderXml.ResourcesPath -ne "") { $resourcesPath = $folderXml.ResourcesPath }
+
+                if ((-not $folderXml.Scope) -or ($folderXml.Scope -match "site")) {
+                    $list = Get-List $folderXml.Url $site.RootWeb $ClientContext
+                } elseif ($folderXml.Scope -match "web") {
+                    $list = Get-List $folderXml.Url $web $ClientContext
+                }
+                if ($list -eq $null) { Throw "List '$($folderXml.Url)' was not found!" }
+                $folder = Get-RootFolder $list $ClientContext
+
+                if ($folderPath -ne $null -and $folderPath -ne "") {
+                    $folderPaths = $folderPath -split "/"
+                    foreach($path in $folderPaths) {
+                        $childfolder = Get-Folder -Folder $folder -Name $path -ClientContext $ClientContext
+                        if($childfolder -eq $null) {
+                            $childfolder = $folder.Folders.Add($path)
+                            $ClientContext.Load($childfolder)
+                            $ClientContext.ExecuteQuery()
+                            $folder = $childfolder
+                        } else {
+                            $folder = $childfolder
+                        }
+                    }
+                }
+
+                Add-Files $list $folder $folderXml $resourcesPath $ClientContext $null
+            }
+        }
+        Write-Verbose "Finish Folder Modules.." -Verbose
+    }
+    end {}
 }
 function Add-Files {
     param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Folder]$Folder,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$FolderXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$ResourcesPath,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext,
-        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$RemoteContext,
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][bool] $MinorVersionsEnabled = $false,
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][bool] $MajorVersionsEnabled = $false,
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][bool] $ContentApprovalEnabled = $false
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$RemoteContext
     )
     process {
         if ($ResourcesPath -eq "" -or ($FolderXml.ResourcesPath -and ($FolderXml.ResourcesPath -ne "") )) {
             $ResourcesPath = $FolderXml.ResourcesPath
         }
-        Write-Host "Folder: $($FolderXml.Url) << $ResourcesPath" -ForegroundColor Green
+        Write-Host "Folder: $($Folder.ServerRelativeUrl) << $ResourcesPath" -ForegroundColor Green
         foreach($fileXml in $FolderXml.File) {
             if ($fileXml.Path -and $fileXml.Path -ne "") {
                 Write-Verbose "$($fileXml.Path)"
-                $file = Upload-File -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath `
-                            -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
-                            -ClientContext $clientContext -RemoteContext $RemoteContext
+                $file = Upload-File -List $List -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath -ClientContext $clientContext -RemoteContext $RemoteContext
             }
         }
 
@@ -168,9 +259,7 @@ function Add-Files {
                 if ($childfolderXml.ResourcesPath -and ($childfolderXml.ResourcesPath -ne "") ) {
                     $childfolderResourcesPath = $childfolderXml.ResourcesPath
                 }
-                Add-Files -Folder $childFolder -FolderXml $childfolderXml -ResourcesPath $childfolderResourcesPath `
-                    -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
-                    -ClientContext $clientContext -RemoteContext $RemoteContext 
+                Add-Files -List $List -Folder $childFolder -FolderXml $childfolderXml -ResourcesPath $childfolderResourcesPath -ClientContext $clientContext -RemoteContext $RemoteContext 
             }
         }
     }

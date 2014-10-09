@@ -1,10 +1,13 @@
 ﻿function Init-CSOMConnection {
-    return @{ `
-        csomUrl = $null; `
-        csomUsername = $null; `
-        csomPassword = $null; `
-        csomCredentials = $null `
+    process {
+        return @{ `
+            csomUrl = $null; `
+            csomUsername = $null; `
+            csomPassword = $null; `
+            csomCredentials = $null `
+        }
     }
+    end {}
 }
 function Get-CSOMConnection {
     param (
@@ -59,7 +62,7 @@ function Get-CSOMConnection {
             }
       
             if (!$clientContext.ServerObjectIsNull.Value) { 
-                Write-Host "Connected to SharePoint '$conn.csomUrl'`nLoading Context..." -ForegroundColor Green 
+                Write-Host "Connected to SharePoint '$($conn.csomUrl)'`nLoading Context..." -ForegroundColor Green 
             }
         
             $csomSite = $clientContext.Site

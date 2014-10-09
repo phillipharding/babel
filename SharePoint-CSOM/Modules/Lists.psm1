@@ -73,12 +73,11 @@ function New-ListWithListCreationInformation {
 
    )
     process {
-
         $list = $web.Lists.Add($listCreationInformation)
-        
+
         $ClientContext.Load($list)
         $ClientContext.ExecuteQuery()
-        
+
         $list
     }
     end {}
@@ -149,6 +148,7 @@ function New-ListView {
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][int]$RowLimit,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string[]]$ViewFields,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$ViewType,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$ViewJslink,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
@@ -188,6 +188,7 @@ function Update-ListView {
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$Query,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][int]$RowLimit,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string[]]$ViewFields,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$ViewJslink,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
@@ -199,6 +200,11 @@ function Update-ListView {
             $view.ViewQuery = $Query
             $view.RowLimit = $RowLimit
             $view.DefaultView = $DefaultView
+            if ($ViewJslink -ne $null -and $ViewJslink -ne "") {
+                $view.JSLink = $ViewJslink
+                Write-Verbose "`t`t`t..Add JSLink $ViewJslink" -Verbose
+            }
+
             #Write-Host $ViewFields
             $view.ViewFields.RemoveAll()
             ForEach ($vf in $ViewFields) {
@@ -207,8 +213,7 @@ function Update-ListView {
                 #$view.Update()
                 #$List.Update()
                 #$ClientContext.ExecuteQuery()
-                #Write-Host "Add column $vf to view"
-                #Write-Host $view.ViewFields
+                Write-Verbose "`t`t`t..Add column $vf" -Verbose
             }
 
             $view.Update()
@@ -342,6 +347,29 @@ function Remove-ListField {
     }
 }
 
+function Update-Lists {
+    param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$ListsXml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        Write-Verbose "Start Lists.." -Verbose
+        foreach($listXml in $ListsXml.List) {
+            if ($listXml.Title -and $listXml.Title -ne "") {
+                if ((-not $ListsXml.Scope) -or ($ListsXml.Scope -match "web")) {
+                    $splist = Update-List $listXml $web $ClientContext
+                } else {
+                    $splist = Update-List $listXml $site.RootWeb $ClientContext
+                }
+            }
+        }
+        Write-Verbose "Finish Lists.." -Verbose
+    }
+    end {}
+}
+
 function Update-List {
     param(
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][System.Xml.XmlElement]$listxml,
@@ -364,108 +392,118 @@ function Update-List {
 
         Write-Verbose "`tContent Types" -Verbose
 	    foreach ($ct in $listxml.ContentType) {
-            $spContentType = Get-ListContentType -List $SPList -ContentTypeName $ct.Name -ClientContext $ClientContext
-		    if($spContentType -eq $null) {
-                $spContentType = Add-ListContentType -List $SPList -ContentTypeName $ct.Name -Web $web -ClientContext $ClientContext
-                if($spContentType -eq $null) {
-                    Write-Error "`t`tContent Type could not be added: $($ct.Name)"
-                } else {
-                    Write-Verbose "`t`tContent Type added: $($ct.Name)" -Verbose
-                }
-            } else {
-                Write-Verbose "`t`tContent Type already added: $($ct.Name)"
-            }
-
-            if($spContentType -ne $null -and $ct.Default -and [bool]::Parse($ct.Default)) {
-                $newDefaultContentType = $spContentType.Id
-                $folder = [SharePointClient.PSClientContext]::loadContentTypeOrderForFolder($SPList.RootFolder, $ClientContext)
-                $currentContentTypeOrder = $folder.ContentTypeOrder
-                $newDefaultContentTypeId = $null
-                foreach($contentTypeId in $currentContentTypeOrder) {
-                    if($($contentTypeId.StringValue).StartsWith($newDefaultContentType)) {
-                        $newDefaultContentTypeId = $contentTypeId
-                        break;
+            if ($ct.Name -and $ct.Name -ne "") {
+                $spContentType = Get-ListContentType -List $SPList -ContentTypeName $ct.Name -ClientContext $ClientContext
+    		    if($spContentType -eq $null) {
+                    $spContentType = Add-ListContentType -List $SPList -ContentTypeName $ct.Name -Web $web -ClientContext $ClientContext
+                    if($spContentType -eq $null) {
+                        Write-Error "`t`tContent Type could not be added: $($ct.Name)"
+                    } else {
+                        Write-Verbose "`t`tContent Type added: $($ct.Name)" -Verbose
                     }
+                } else {
+                    Write-Verbose "`t`tContent Type already added: $($ct.Name)"
                 }
-                if($newDefaultContentTypeId) {
-                    $currentContentTypeOrder.remove($newDefaultContentTypeId)
-                    $currentContentTypeOrder.Insert(0, $newDefaultContentTypeId)
-                    $folder.UniqueContentTypeOrder = $currentContentTypeOrder
-                    $folder.Update()
-                    $ClientContext.ExecuteQuery()
+
+                if($spContentType -ne $null -and $ct.Default -and [bool]::Parse($ct.Default)) {
+                    $newDefaultContentType = $spContentType.Id
+                    $folder = [SharePointClient.PSClientContext]::loadContentTypeOrderForFolder($SPList.RootFolder, $ClientContext)
+                    $currentContentTypeOrder = $folder.ContentTypeOrder
+                    $newDefaultContentTypeId = $null
+                    foreach($contentTypeId in $currentContentTypeOrder) {
+                        if($($contentTypeId.StringValue).StartsWith($newDefaultContentType)) {
+                            $newDefaultContentTypeId = $contentTypeId
+                            break;
+                        }
+                    }
+                    if($newDefaultContentTypeId) {
+                        $currentContentTypeOrder.remove($newDefaultContentTypeId)
+                        $currentContentTypeOrder.Insert(0, $newDefaultContentTypeId)
+                        $folder.UniqueContentTypeOrder = $currentContentTypeOrder
+                        $folder.Update()
+                        $ClientContext.ExecuteQuery()
+                    }
                 }
             }
 	    }
         foreach ($ct in $listxml.RemoveContentType) {
-            $spContentType = Get-ListContentType -List $SPList -ContentTypeName $ct.Name -ClientContext $ClientContext
-		    if($spContentType -ne $null) {
-                Remove-ListContentType -List $SPList -ContentTypeName $ct.Name -ClientContext $ClientContext
-                Write-Verbose "`t`tContent Type deleted: $($ct.Name)" -Verbose
-            } else {
-                Write-Verbose "`t`tContent Type already deleted: $($ct.Name)"
+            if ($ct.Name -and $ct.Name -ne "") {
+                $spContentType = Get-ListContentType -List $SPList -ContentTypeName $ct.Name -ClientContext $ClientContext
+    		    if($spContentType -ne $null) {
+                    Remove-ListContentType -List $SPList -ContentTypeName $ct.Name -ClientContext $ClientContext
+                    Write-Verbose "`t`tContent Type deleted: $($ct.Name)" -Verbose
+                } else {
+                    Write-Verbose "`t`tContent Type already deleted: $($ct.Name)"
+                }
             }
         }
 
         
         Write-Verbose "`tFields" -Verbose
-        foreach($field in $listxml.Fields.Field){
-            $spField = Get-ListField -List $SPList -FieldName $Field.Name -ClientContext $ClientContext
-            if($spField -eq $null) {
-                $fieldStr = $field.OuterXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
-                $spField = New-ListField -FieldXml $fieldStr -List $splist -ClientContext $ClientContext
-                Write-Verbose "`t`tCreated Field: $($Field.DisplayName)" -Verbose
-            } else {
-                Write-Verbose "`t`tField already added: $($Field.DisplayName)"
+        foreach($field in $listxml.Fields.Field) {
+            if ($Field.Name -and $Field.Name -ne "") {
+                $spField = Get-ListField -List $SPList -FieldName $Field.Name -ClientContext $ClientContext
+                if($spField -eq $null) {
+                    $fieldStr = $field.OuterXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
+                    $spField = New-ListField -FieldXml $fieldStr -List $splist -ClientContext $ClientContext
+                    Write-Verbose "`t`tCreated Field: $($Field.DisplayName)" -Verbose
+                } else {
+                    Write-Verbose "`t`tField already added: $($Field.DisplayName)"
+                }
             }
         }
         foreach($Field in $listxml.Fields.UpdateField) {
-            $spField = Get-ListField -List $SPList -FieldName $Field.Name -ClientContext $ClientContext
-            $needsUpdate = $false
-            if($Field.ValidationFormula) {
-                $ValidationFormula = $Field.ValidationFormula
-                $ValidationFormula = $ValidationFormula -replace "&lt;","<"
-                $ValidationFormula = $ValidationFormula -replace "&gt;",">"
-                $ValidationFormula = $ValidationFormula -replace "&amp;","&"
-                if($spField.ValidationFormula -ne $ValidationFormula) {
-                    $spField.ValidationFormula = $ValidationFormula
-                    $needsUpdate = $true
+            if ($Field.Name -and $Field.Name -ne "") {
+                $spField = Get-ListField -List $SPList -FieldName $Field.Name -ClientContext $ClientContext
+                $needsUpdate = $false
+                if($Field.ValidationFormula) {
+                    $ValidationFormula = $Field.ValidationFormula
+                    $ValidationFormula = $ValidationFormula -replace "&lt;","<"
+                    $ValidationFormula = $ValidationFormula -replace "&gt;",">"
+                    $ValidationFormula = $ValidationFormula -replace "&amp;","&"
+                    if($spField.ValidationFormula -ne $ValidationFormula) {
+                        $spField.ValidationFormula = $ValidationFormula
+                        $needsUpdate = $true
+                    }
                 }
-            }
 
-            if($Field.ValidationMessage) {
-                if($spField.ValidationMessage -ne $Field.ValidationMessage) {
-                    $spField.ValidationMessage = $Field.ValidationMessage
-                    $needsUpdate = $true
+                if($Field.ValidationMessage) {
+                    if($spField.ValidationMessage -ne $Field.ValidationMessage) {
+                        $spField.ValidationMessage = $Field.ValidationMessage
+                        $needsUpdate = $true
+                    }
                 }
-            }
 
-            if($needsUpdate -eq $true) {
-                $spField.Update()
-                $ClientContext.ExecuteQuery()
-                Write-Verbose "`t`tUpdated Field: $($Field.DisplayName)" -Verbose
-            } else {
-                Write-Verbose "`t`tDid not need to update Field: $($Field.DisplayName)"
+                if($needsUpdate -eq $true) {
+                    $spField.Update()
+                    $ClientContext.ExecuteQuery()
+                    Write-Verbose "`t`tUpdated Field: $($Field.DisplayName)" -Verbose
+                } else {
+                    Write-Verbose "`t`tDid not need to update Field: $($Field.DisplayName)"
+                }
             }
         }
         foreach($Field in $listxml.Fields.RemoveField) {
-            Remove-ListField -List $SPList -FieldName $Field.Name -ClientContext $ClientContext
+            if ($Field.Name -and $Field.Name -ne "") {
+                Remove-ListField -List $SPList -FieldName $Field.Name -ClientContext $ClientContext
+            }
         }
 
         Write-Verbose "`tViews" -Verbose
         foreach ($view in $listxml.Views.View) {
             $spView = Get-ListView -List $SPList -ViewName $view.DisplayName -ClientContext $ClientContext
             if($spView -ne $null) {
-            
+                Write-Verbose "`t`tUpdating List View: $($view.DisplayName)" -Verbose
+                $ViewJslink = $(if ($view.JSLink) {$view.JSLink} else {""})
                 $Paged = [bool]::Parse($view.RowLimit.Paged)
                 $DefaultView = [bool]::Parse($view.DefaultView)
                 $RowLimit = $view.RowLimit.InnerText
                 $Query = $view.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
                 $ViewFields = $view.ViewFields.FieldRef | Select -ExpandProperty Name
-
-                $spView = Update-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ClientContext $ClientContext
+                $spView = Update-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
                 Write-Verbose "`t`tUpdated List View: $($view.DisplayName)" -Verbose
             } else {
-            
+                Write-Verbose "`t`tCreating List View: $($view.DisplayName)" -Verbose
                 $Paged = [bool]::Parse($view.RowLimit.Paged)
                 $PersonalView = [bool]::Parse($view.PersonalView)
                 $DefaultView = [bool]::Parse($view.DefaultView)
@@ -473,48 +511,68 @@ function Update-List {
                 $Query = $view.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
                 $ViewFields = $view.ViewFields.FieldRef | Select -ExpandProperty Name
                 $ViewType = $view.Type
-                $spView = New-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -PersonalView $PersonalView -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewType $ViewType -ClientContext $ClientContext
+                $ViewJslink = $(if ($view.JSLink) {$view.JSLink} else {""})
+                $spView = New-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -PersonalView $PersonalView -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewType $ViewType -ViewJslink $ViewJslink -ClientContext $ClientContext
                 Write-Verbose "`t`tCreated List View: $($view.DisplayName)" -Verbose
+                if ($ViewJslink -ne "") {
+                    $spView = Update-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
+                    Write-Verbose "`t`t..Updated List View for JSLink: $($view.DisplayName)" -Verbose
+                }
+            }
+        }
+
+        Write-Verbose "`tItems" -Verbose
+        if ($listxml.DeleteItems) {
+            foreach($itemXml in $listxml.DeleteItems.Item) {
+                if ($itemXml.Url -and $itemXml.Url -ne "") {
+                    $item = Get-ListItem -itemUrl $itemXml.Url -Folder $itemXml.Folder -List $SPList -ClientContext $clientContext
+                    if($item -ne $null) {
+                        Remove-ListItem -listItem $item -ClientContext $clientContext
+                    }
+                }
+            }
+        }
+        if ($listxml.UpdateItems) {
+            foreach($itemXml in $listxml.UpdateItems.Item) {
+                if ($itemXml.Url -and $itemXml.Url -ne "") {
+                    Update-ListItem -listItemXml $itemXml -List $SPList -ClientContext $clientContext 
+                }
+            }
+        }
+        if ($listxml.Items) {
+            foreach($itemXml in $listxml.Items.Item) {
+                if ($itemXml.Property) {
+                    New-ListItem -listItemXml $itemXml -List $SPList -ClientContext $clientContext 
+                }
             }
         }
 
         Write-Verbose "`tFiles and Folders" -Verbose
-        if($listxml.DeleteItems) {
-            foreach($itemXml in $listxml.DeleteItems.Item) {
-                $item = Get-ListItem -itemUrl $itemXml.Url -Folder $itemXml.Folder -List $SPList -ClientContext $clientContext
-                if($item -ne $null) {
-                    Remove-ListItem -listItem $item -ClientContext $clientContext
-                }
-            }
-        }
-        if($listxml.UpdateItems) {
-            foreach($itemXml in $listxml.UpdateItems.Item) {
-                Update-ListItem -listItemXml $itemXml -List $SPList -ClientContext $clientContext 
-            }
-        }
-
         foreach($folderXml in $listxml.Folder) {
-            Write-Verbose "`t`t$($folderXml.Url)" -Verbose
+            Write-Verbose "`t`t$(if ($folderXml.Url) { $folderXml.Url } else { `"{root folder}`" })" -Verbose
+            $resourcesPath = ""
+            if ($folderXml.ResourcesPath -and $folderXml.ResourcesPath -ne "") { $resourcesPath = $folderXml.ResourcesPath }
+
             $spFolder = Get-RootFolder -List $SPList -ClientContext $ClientContext
-            Add-Files -Folder $spFolder -FolderXml $folderXml -ResourcesPath $ResourcesPath `
-                -MinorVersionsEnabled $MinorVersionsEnabled -MajorVersionsEnabled $MajorVersionsEnabled -ContentApprovalEnabled $ContentApprovalEnabled `
-                -ClientContext $clientContext -RemoteContext $RemoteContext 
+            Add-Files $SPList $spFolder $folderXml $resourcesPath $ClientContext $null
         }
 
         Write-Verbose "`tPropertyBag Values" -Verbose
         foreach ($ProperyBagValueXml in $listxml.PropertyBag.PropertyBagValue) {
-            $Indexable = $false
-            if($ProperyBagValueXml.Indexable) {
-                $Indexable = [bool]::Parse($ProperyBagValueXml.Indexable)
-            }
+            if ($ProperyBagValueXml.Key -and $ProperyBagValueXml.Key -ne "") {
+                $Indexable = $false
+                if($ProperyBagValueXml.Indexable) {
+                    $Indexable = [bool]::Parse($ProperyBagValueXml.Indexable)
+                }
 
-            Set-PropertyBagValue -Key $ProperyBagValueXml.Key -Value $ProperyBagValueXml.Value -Indexable $Indexable -List $SPList -ClientContext $ClientContext
+                Set-PropertyBagValue -Key $ProperyBagValueXml.Key -Value $ProperyBagValueXml.Value -Indexable $Indexable -List $SPList -ClientContext $ClientContext
+            }
         }
         
         Write-Verbose "`tUpdating Other List Settings" -Verbose
         $listNeedsUpdate = $false
         
-        if($listxml.ContentTypesEnabled) {
+        if($listxml.ContentTypesEnabled -and $listxml.ContentTypesEnabled -ne "") {
             $contentTypesEnabled = [bool]::Parse($listxml.ContentTypesEnabled )
             if($SPList.ContentTypesEnabled -ne $contentTypesEnabled) {
                 $SPList.ContentTypesEnabled = $contentTypesEnabled
@@ -530,7 +588,7 @@ function Update-List {
                 $listNeedsUpdate = $true
             }
         }
-        if($listxml.EnableAttachments) {
+        if($listxml.EnableAttachments -and $listxml.EnableAttachments -ne "") {
             $enableAttachments = [bool]::Parse($listxml.EnableAttachments  )
             if($SPList.EnableAttachments -ne $enableAttachments) {
                 $SPList.EnableAttachments = $enableAttachments
@@ -538,7 +596,7 @@ function Update-List {
                 $listNeedsUpdate = $true
             }
         }
-        if($listxml.EnableFolderCreation ) {
+        if($listxml.EnableFolderCreation -and $listxml.EnableFolderCreation -ne "") {
             $enableFolderCreation = [bool]::Parse($listxml.EnableFolderCreation  )
             if($SPList.EnableFolderCreation -ne $enableFolderCreation) {
                 $SPList.EnableFolderCreation = $enableFolderCreation
@@ -546,7 +604,7 @@ function Update-List {
                 $listNeedsUpdate = $true
             }
         }
-        if($listxml.EnableMinorVersions) {
+        if($listxml.EnableMinorVersions -and $listxml.EnableMinorVersions -ne "") {
             $enableMinorVersions = [bool]::Parse($listxml.EnableMinorVersions)
             if($SPList.EnableMinorVersions -ne $enableMinorVersions) {
                 $SPList.EnableMinorVersions = $enableMinorVersions
@@ -554,7 +612,7 @@ function Update-List {
                 $listNeedsUpdate = $true
             }
         }
-        if($listxml.EnableModeration) {
+        if($listxml.EnableModeration -and $listxml.EnableModeration -ne "") {
             $enableModeration = [bool]::Parse($listxml.EnableModeration)
             if($SPList.EnableModeration -ne $enableModeration) {
                 $SPList.EnableModeration = $enableModeration
@@ -562,7 +620,7 @@ function Update-List {
                 $listNeedsUpdate = $true
             }
         }
-        if($listxml.EnableVersioning) {
+        if($listxml.EnableVersioning -and $listxml.EnableVersioning -ne "") {
             $enableVersioning = [bool]::Parse($listxml.EnableVersioning)
             if($SPList.EnableVersioning -ne $enableVersioning) {
                 $SPList.EnableVersioning = $enableVersioning
@@ -570,7 +628,7 @@ function Update-List {
                 $listNeedsUpdate = $true
             }
         }
-        if($listxml.ForceCheckout) {
+        if($listxml.ForceCheckout -and $listxml.ForceCheckout -ne "") {
             $forceCheckout = [bool]::Parse($listxml.ForceCheckout)
             if($SPList.ForceCheckout -ne $forceCheckout) {
                 $SPList.ForceCheckout = $forceCheckout
@@ -578,7 +636,7 @@ function Update-List {
                 $listNeedsUpdate = $true
             }
         }
-        if($listxml.Hidden) {
+        if($listxml.Hidden -and $listxml.Hidden -ne "") {
             $hidden = [bool]::Parse($listxml.Hidden)
             if($SPList.Hidden -ne $hidden) {
                 $SPList.Hidden = $hidden
@@ -596,7 +654,7 @@ function Update-List {
             }
         }
         #>
-        if($listxml.NoCrawl) {
+        if($listxml.NoCrawl -and $listxml.NoCrawl -ne "") {
             $noCrawl = [bool]::Parse($listxml.NoCrawl)
             if($SPList.NoCrawl -ne $noCrawl) {
                 $SPList.NoCrawl = $noCrawl
@@ -606,14 +664,13 @@ function Update-List {
         }
 
         if($listNeedsUpdate) {
+            Write-Verbose "`t`tUpdating List Settings..." -Verbose
             $SPList.Update()
             $ClientContext.Load($SPList)
             $ClientContext.ExecuteQuery()
             Write-Verbose "`t`tUpdated List Settings" -Verbose
         }
-        $SPList
-        
+        $SPList        
     }
-    end{
-    }
+    end {}
 }

@@ -10,10 +10,10 @@
     process {
         $listItemCreationInformation = New-Object Microsoft.SharePoint.Client.ListItemCreationInformation 
         $newItem = $list.AddItem($listItemCreationInformation);
-        Write-Verbose "Creating List Item"
+        Write-Verbose "`t`tCreating List Item.." -Verbose
         foreach($propertyXml in $listItemXml.Property) {
             if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
-                Write-Verbose "Setting TaxonomyField $($propertyXml.Name) to $($propertyXml.Value)"
+                Write-Verbose "`t`t`tSetting TaxonomyField $($propertyXml.Name) to $($propertyXml.Value)" -Verbose
                 $field = $list.Fields.GetByInternalNameOrTitle($propertyXml.Name)
                 $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
 
@@ -27,14 +27,14 @@
                 }
 
             } else {
-                Write-Verbose "Setting Field $($propertyXml.Name) to $($propertyXml.Value)"
+                Write-Verbose "`t`t`tSetting Field $($propertyXml.Name) to $($propertyXml.Value)" -Verbose
                 $newItem[$propertyXml.Name] = $propertyXml.Value
             }
         }
         $newItem.Update();
         $clientContext.Load($newItem)
         $clientContext.ExecuteQuery()
-        Write-Verbose "Created List Item"
+        Write-Verbose "`t`tCreated List Item" 
         $newItem
     }
     end {

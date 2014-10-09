@@ -5,6 +5,7 @@ $assemblyPath = "$scriptRoot\Assemblies"
 
 Remove-Module "Load-CSOM"
 
+Remove-Module "ClientConnection"
 Remove-Module "Columns"
 Remove-Module "ContentTypes"
 Remove-Module "Files"

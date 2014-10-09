@@ -6,6 +6,7 @@ $assemblyPath = "$scriptRoot\Assemblies"
 Import-Module "$modulesPath\Load-CSOM.psm1"
 Add-InternalDlls -assemblyPath $assemblyPath
 
+Import-Module "$modulesPath\ClientConnection.psm1"
 Import-Module "$modulesPath\Columns.psm1"
 Import-Module "$modulesPath\ContentTypes.psm1"
 Import-Module "$modulesPath\Files.psm1"

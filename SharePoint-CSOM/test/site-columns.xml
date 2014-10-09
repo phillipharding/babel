@@ -250,23 +250,116 @@
 		<Feature FeatureID="99fe402e-89a0-45aa-9163-85342e865dc8" Name="Standard Site Features" Force="" Ignore="" />
 	</RemoveWebFeatures>
 
+	<Lists Scope="Site">
+		<List Title="Simple List" Description="List of simple items" OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-DE22-43B2-A848-C05709900100" Type="100" Url="Lists/SimpleList">
+			<Items>
+				<Item>
+					<Property Name="Title" Type="" Value="Simple Item 1" />
+				</Item>
+				<Item>
+					<Property Name="Title" Type="" Value="Simple Item 2" />
+				</Item>
+				<Item>
+					<Property Name="Title" Type="" Value="Simple Item 3" />
+				</Item>
+			</Items>
+		</List>
+		<List Title="My Documents" Description="Library of my documents" OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="MyDocuments"
+				 ContentTypesEnabled="" EnableAttachments="" EnableFolderCreation="" EnableMinorVersions="" EnableModeration="" EnableVersioning="" ForceCheckout="" Hidden="" NoCrawl=""
+				 JSLink="">
+			<ContentType Name="Invoice" Default="True" />
+			<RemoveContentType Name="Document" />
+			
+			<Fields>
+				<Field />
+				<UpdateField />
+				<RemoveField />
+			</Fields>
+
+			<PropertyBag>
+				<PropertyBagValue Key="" Value="" Indexable="" />
+			</PropertyBag>
+
+			<DeleteItems>
+				<Item />
+			</DeleteItems>
+			<UpdateItems>
+				<Item />
+			</UpdateItems>
+
+			<Views>
+				<View DisplayName="My Documents" DefaultView="True" PersonalView="False" Type="html">
+					<Query>
+						<OrderBy>
+							<FieldRef Name="FileLeafRef" />
+						</OrderBy>
+					</Query>
+					<ViewFields>
+						<FieldRef Name="DocIcon" />
+						<FieldRef Name="LinkFilename" />
+						<FieldRef Name="Modified" />
+						<FieldRef Name="Editor" />
+						<FieldRef Name="CheckoutUser" />
+					</ViewFields>
+					<RowLimit Paged="True">50</RowLimit>
+					<JSLink>~sitecollection/_catalogs/masterpage/display templates/pd.listnavigation.js</JSLink>
+				</View>
+			</Views>
+
+			<Folder Path="" Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+				<File Path="docs\Admin Document.docx" Url="Admin Document.docx" ReplaceContent="True">
+					<Property Name="ContentTypeId" Value="0x0101004D8C2FEC8291D44686C767D8D59B42FC" />
+					<Property Name="Title" Value="Admins Big Document.docx" />
+				</File>
+
+				<Folder Path="ENA" Url="ENA" ResourcesPath="">
+					<Folder Path="Europe" Url="Europe" ResourcesPath="" />
+					<Folder Path="Africa" Url="Africa" ResourcesPath="" />
+				</Folder>
+				<Folder Path="LATAM" Url="LATAM" ResourcesPath="" />
+			</Folder>
+		</List>
+	</Lists>
+
 	<Modules>
 		<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 		<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
-		<Folder Scope="Site" Path="Masterpages" Url="Master Page Gallery" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+		<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+
+		<Folder Scope="Site" Path="Display Templates" Url="Master Page Gallery" SubFolder="Display Templates" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+			<File Path="docs\pd.listnavigation.js" Url="pd.listnavigation.js" ReplaceContent="True">
+				<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
+				<Property Name="Title" Value="pd.listnavigation.js" />
+				<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
+				<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
+				<Property Name="DisplayTemplateJSTargetScope" Value="/" />
+			</File>
+		</Folder>
+
+		<Folder Scope="Site" Path="Masterpages" Url="Master Page Gallery" SubFolder="RBP" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
 			<File Path="masterpages\RBPMasterPage-v2.master" Url="RBPMasterPage-v2.master" ReplaceContent="True">
 				<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
 				<Property Name="Title" Value="RBPMasterPage-v2" />
 				<Property Name="MasterPageDescription" Value="The RBP Masterpage" />
 				<Property Name="UIVersion" Value="15" />
 			</File>
+			<File Path="pagelayouts\BuzzStandardPageLayout.aspx" Url="BuzzStandardPageLayout.aspx" ReplaceContent="True">
+				<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811"/>
+				<Property Name="Title" Value="BuzzStandardPageLayout"/>
+				<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#"/>
+				<Property Name="PublishingHidden" Value="False"/>
+			</File>
 
 			<PropertyBag>
 				<PropertyBagValue Key="" Value="" Indexable="" />
 			</PropertyBag>
 
-			<Folder Path="" Url="" ResourcesPath="">
+			<Folder Path="RBP Images" Url="RBP Images" ResourcesPath="">
 			</Folder>
+		</Folder>
+		<Folder Scope="Site" Path="Site Assets" Url="Site Assets" SubFolder="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+		</Folder>
+		<Folder Scope="Site" Path="Site Assets" Url="Site Assets" SubFolder="apps/app1" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
 		</Folder>
 	</Modules>
 </SPCSOM>
