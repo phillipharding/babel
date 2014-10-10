@@ -111,9 +111,9 @@ function Upload-File {
             if ($file -ne $null -and $file.Exists) {
                 if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
                     $file.Checkout()
-                    Write-Host "`t..Checkedout Existing File" -ForegroundColor Green
+                    Write-Host "`t..Checkout existing file" -ForegroundColor Green
                 } else {
-                    Write-Host "`t..Existing File already Checkedout" -ForegroundColor Green
+                    Write-Host "`t..Existing file already checked-out" -ForegroundColor Green
                 }
             }
             
@@ -125,29 +125,44 @@ function Upload-File {
 
             if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
                 $file.CheckOut()
-                Write-Host "`t..Checkedout Uploaded File" -ForegroundColor Green
+                Write-Host "`t..Checkout uploaded file" -ForegroundColor Green
             }
 
             $updateItem = $false
-            foreach($property in $FileXml.Property) {
-                $property.Value = $property.Value -replace "~folderUrl", $folderServerRelativeUrl
-                $property.Value = $property.Value -replace "~sitecollection", $ClientContext.Site.ServerRelativeUrl
-                $property.Value = $property.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
-                if($property.Name -ne "ContentType") {
-                    $item[$property.Name] = $property.Value
+            foreach($propertyXml in $FileXml.Property) {
+                $propertyXml.Value = $propertyXml.Value -replace "~folderUrl", $folderServerRelativeUrl
+                $propertyXml.Value = $propertyXml.Value -replace "~sitecollection", $ClientContext.Site.ServerRelativeUrl
+                $propertyXml.Value = $propertyXml.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
+                
+                if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
+                    Write-Host "`t`t..Set file TaxonomyField property $($propertyXml.Name) = $($propertyXml.Value)" -ForegroundColor Green
+                    $field = $List.Fields.GetByInternalNameOrTitle($propertyXml.Name)
+                    $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($ClientContext, $field)
+                    $taxFieldValueCol = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection($ClientContext, "", $taxField)
+                    $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
+                    $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
                     $updateItem = $true
+                } else {
+                    if($propertyXml.Name -ne "ContentType") {
+                        $item[$propertyXml.Name] = $propertyXml.Value
+                        $updateItem = $true
+                    }
+                    Write-Host "`t`tSet file property: $($propertyXml.Name) = $($propertyXml.Value)" -ForegroundColor Green
                 }
-                Write-Host "`t`tSet File Property: $($property.Name) = $($property.Value)" 
             }
             if ($updateItem) {
                 $item.Update()
             }
 
             $file.CheckIn("Checkin file", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
-            $file.Publish("Publish file")
+            Write-Host "`t..Checkin uploaded file" -ForegroundColor Green
+            if ($List.EnableVersioning -and $List.EnableMinorVersions) {
+                $file.Publish("Publish file")
+                Write-Host "`t..Published uploaded file" -ForegroundColor Green
+            }
             if ($List.EnableModeration) {
                 $file.Approve("Approve file")
-                Write-Host "`t..Approved Uploaded File" -ForegroundColor Green
+                Write-Host "`t..Approved uploaded file" -ForegroundColor Green
             }
             $ClientContext.Load($item)
             $ClientContext.ExecuteQuery()
@@ -171,24 +186,25 @@ function Upload-File {
 }
 function Update-Folders {
     param (
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$ModulesXml,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$FoldersXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        Write-Verbose "Start Folder Modules.." -Verbose
-        foreach($folderXml in $ModulesXml.Folder) {
+        if ($FoldersXml -eq $null -or $FoldersXml -eq "") { return }
+        Write-Host "Start Folders.." -ForegroundColor Green
+        foreach($folderXml in $FoldersXml.Folder) {
             if ($folderXml.Url -and $folderXml.Url -ne "") {
                 $folderPath = ""
                 $resourcesPath = ""
                 if ($folderXml.SubFolder -and $folderXml.SubFolder -ne "") { $folderPath = $folderXml.SubFolder }
                 if ($folderXml.ResourcesPath -and $folderXml.ResourcesPath -ne "") { $resourcesPath = $folderXml.ResourcesPath }
 
-                if ((-not $folderXml.Scope) -or ($folderXml.Scope -match "site")) {
-                    $list = Get-List $folderXml.Url $site.RootWeb $ClientContext
-                } elseif ($folderXml.Scope -match "web") {
+                if ((-not $folderXml.Scope) -or ($folderXml.Scope -match "web")) {
                     $list = Get-List $folderXml.Url $web $ClientContext
+                } else {
+                    $list = Get-List $folderXml.Url $site.RootWeb $ClientContext
                 }
                 if ($list -eq $null) { Throw "List '$($folderXml.Url)' was not found!" }
                 $folder = Get-RootFolder $list $ClientContext
@@ -211,7 +227,7 @@ function Update-Folders {
                 Add-Files $list $folder $folderXml $resourcesPath $ClientContext $null
             }
         }
-        Write-Verbose "Finish Folder Modules.." -Verbose
+        Write-Host "Finish Folders.." -ForegroundColor Green
     }
     end {}
 }
@@ -219,19 +235,20 @@ function Add-Files {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Folder]$Folder,
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$FolderXml,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$FolderXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$ResourcesPath,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext,
         [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$RemoteContext
     )
     process {
+        if ($FolderXml -eq $null -or $FolderXml -eq "") { return }
         if ($ResourcesPath -eq "" -or ($FolderXml.ResourcesPath -and ($FolderXml.ResourcesPath -ne "") )) {
             $ResourcesPath = $FolderXml.ResourcesPath
         }
-        Write-Host "Folder: $($Folder.ServerRelativeUrl) << $ResourcesPath" -ForegroundColor Green
+        Write-Host "`t`tFolder: $($Folder.ServerRelativeUrl)" -ForegroundColor Green
         foreach($fileXml in $FolderXml.File) {
             if ($fileXml.Path -and $fileXml.Path -ne "") {
-                Write-Verbose "$($fileXml.Path)"
+                Write-Host "$($fileXml.Path)"
                 $file = Upload-File -List $List -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath -ClientContext $clientContext -RemoteContext $RemoteContext
             }
         }

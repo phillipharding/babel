@@ -241,10 +241,10 @@ function Update-Term {
         $tdesc = $(if ($termXml.Description -eq $null -or $termXml.Description -eq "") { "" } else { $termXml.Description })
         
         if ($ParentTerm -eq $null) {
-            Write-Host "Start> Term '$termName', Language: $tlcid, ID: $tid" -ForegroundColor Green
+            Write-Host "`t`tStart> Term '$termName', Language: $tlcid, ID: $tid" -ForegroundColor Green
             $terms = Get-Terms $TermSet $ClientContext
         } else {
-            Write-Host "Start> Term '$($ParentTerm.Name) -> $termName', Language: $tlcid, ID: $tid" -ForegroundColor Green
+            Write-Host "`t`t`tStart> Term '$($ParentTerm.Name) -> $termName', Language: $tlcid, ID: $tid" -ForegroundColor Green
             $terms = Get-ChildTerms $ParentTerm $ClientContext
         }
         
@@ -255,14 +255,14 @@ function Update-Term {
 
         if ($term -eq $null) {
             if ($ParentTerm -eq $null) {
-                Write-Host "Creating Term '$termName' ID: $tid" -ForegroundColor Green
+                Write-Host "`t`tCreating Term '$termName' ID: $tid" -ForegroundColor Green
                 $term = Add-Term $termName $tlcid $tid $TermSet $ClientContext
             } else {
-                Write-Host "Creating Term '$($ParentTerm.Name) -> $termName' ID: $tid" -ForegroundColor Green
+                Write-Host "`t`t`tCreating Term '$($ParentTerm.Name) -> $termName' ID: $tid" -ForegroundColor Green
                 $term = Add-ChildTerm $termName $tlcid $tid $ParentTerm $ClientContext
             }
         } else {
-            Write-Host "Updating Term '$termName' ID: $tid" -ForegroundColor Green
+            Write-Host "`t`tUpdating Term '$termName' ID: $tid" -ForegroundColor Green
         }
         if ($term -ne $null) {
             if ($turl -ne $null) {
@@ -289,17 +289,18 @@ function Update-Term {
 function Update-Taxonomy {
     [cmdletbinding()]
     param(
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$taxonomyXml,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$taxonomyXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        Write-Verbose "Updating Taxonomy..." -Verbose
+        if ($taxonomyXml -eq $null -or $taxonomyXml -eq "") { return }
+        Write-Host "Updating Taxonomy..." -ForegroundColor Green
         $taxonomySession = Get-TaxonomySession -ClientContext $ClientContext
         $defaultSiteCollectionTermStore = Get-DefaultSiteCollectionTermStore -TaxonomySession $taxonomySession -ClientContext $ClientContext
         $ClientContext.Load($web.Fields)
         $ClientContext.ExecuteQuery()
-        Write-Verbose "Got Default Site Collection TermStore..." -Verbose
+        Write-Host "Got Default Site Collection TermStore..." -ForegroundColor Green
 
         foreach($termGroupXml in $taxonomyXml.TermGroup) {
             $termGroup = Get-TermGroup $termGroupXml.Name $defaultSiteCollectionTermStore $ClientContext
@@ -307,9 +308,9 @@ function Update-Taxonomy {
                 # add term group
                 $tgid = $(if ($termGroupXml.ID -eq $null -or $termGroupXml.ID -eq "") { [guid]::NewGuid() } else { [guid] ($termGroupXml.ID) })
                 $termGroup = Add-TermGroup $termGroupXml.Name $tgid $defaultSiteCollectionTermStore $ClientContext
-                Write-Verbose "Created TermGroup $($termGroup.Name)..." -Verbose
+                Write-Host "Created TermGroup $($termGroup.Name)..." -ForegroundColor Green
             }
-            Write-Verbose "Updating TermGroup $($termGroup.Name)..." -Verbose
+            Write-Host "Updating TermGroup $($termGroup.Name)..." -ForegroundColor Green
 
             foreach($termSetXml in $termGroupXml.TermSet) {
                 $termSet = Get-TermSet $termSetXml.Name $termGroup $ClientContext
@@ -321,9 +322,9 @@ function Update-Taxonomy {
                     $navigation = $(if ($termSetXml.Navigation -eq $null -or $termSetXml.Navigation -eq "") { $false } else { [bool]::Parse($termSetXml.Navigation) })
                     $open = $(if ($termSetXml.Open -eq $null -or $termSetXml.Open -eq "") { $false } else { [bool]::Parse($termSetXml.Open) })
                     $termSet = Add-TermSet $termSetXml.Name $tslcid $tsid $tagging $navigation $open $termGroup $ClientContext
-                    Write-Verbose "Created TermSet $($termSet.Name)... Language: $tslcid, ID: $tsid" -Verbose
+                    Write-Host "Created TermSet $($termSet.Name)... Language: $tslcid, ID: $tsid" -ForegroundColor Green
                 }
-                Write-Verbose "Updating TermSet $($termSet.Name)..." -Verbose
+                Write-Host "Updating TermSet $($termSet.Name)..." -ForegroundColor Green
 
                 # remove terms
                 foreach($removeTermXml in $termSetXml.RemoveTerm) {
@@ -337,34 +338,35 @@ function Update-Taxonomy {
             }
         }
         $defaultSiteCollectionTermStore.CommitAll()
-        Write-Verbose "Updated Taxonomy..." -Verbose
+        Write-Host "Updated Taxonomy..." -ForegroundColor Green
     }
 }
 
 function Remove-Taxonomy {
     [cmdletbinding()]
     param(
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$taxonomyXml,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$taxonomyXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        Write-Verbose "Remove Taxonomy Objects..." -Verbose
+        if ($taxonomyXml -eq $null -or $taxonomyXml -eq "") { return }
+        Write-Host "Remove Taxonomy Objects..." -ForegroundColor Green
         $taxonomySession = Get-TaxonomySession -ClientContext $ClientContext
         $defaultSiteCollectionTermStore = Get-DefaultSiteCollectionTermStore -TaxonomySession $taxonomySession -ClientContext $ClientContext
         $ClientContext.Load($web.Fields)
         $ClientContext.ExecuteQuery()
-        Write-Verbose "Got Default Site Collection TermStore..." -Verbose
+        Write-Host "Got Default Site Collection TermStore..." -ForegroundColor Green
 
         foreach($termGroupXml in $taxonomyXml.TermGroup) {
             $termGroup = Get-TermGroup $termGroupXml.Name $defaultSiteCollectionTermStore $ClientContext
             if ($termGroup -ne $null) {
-                Write-Verbose "Updating TermGroup $($termGroup.Name)..." -Verbose
+                Write-Host "Updating TermGroup $($termGroup.Name)..." -ForegroundColor Green
                 
                 foreach($termSetXml in $termGroupXml.TermSet) {
                     $termSet = Get-TermSet $termSetXml.Name $termGroup $ClientContext
                     if ($termSet -ne $null) {
-                        Write-Verbose "Updating TermSet $($termSet.Name)..." -Verbose
+                        Write-Host "Updating TermSet $($termSet.Name)..." -ForegroundColor Green
 
                         # remove terms
                         foreach($removeTermXml in $termSetXml.RemoveTerm) {
@@ -375,7 +377,7 @@ function Remove-Taxonomy {
         }
 
         $defaultSiteCollectionTermStore.CommitAll()
-        Write-Verbose "Removed Taxonomy Objects..." -Verbose
+        Write-Host "Removed Taxonomy Objects..." -ForegroundColor Green
     }
 }
 

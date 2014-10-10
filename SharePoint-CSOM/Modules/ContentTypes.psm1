@@ -169,9 +169,9 @@ function Remove-FieldFromContentType {
             $fieldLink.DeleteObject()
             $ContentType.Update($true)
             $ClientContext.ExecuteQuery()
-            Write-Verbose "Deleted field $fieldId from content type $($ContentType.Name)" -Verbose
+            Write-Host "Deleted field $fieldId from content type $($ContentType.Name)" -ForegroundColor Green
         } else {
-            Write-Verbose "Field $fieldId already deleted from content type $($ContentType.Name)"
+            Write-Host "Field $fieldId already deleted from content type $($ContentType.Name)"
         }
     }
     end {}
@@ -198,9 +198,9 @@ function Update-ContentTypeFieldLink {
             if($needsUpdating) {
                 $ContentType.Update($true)
                 $ClientContext.ExecuteQuery()
-                Write-Verbose "`tUpdated field link $fieldId for content type $($ContentType.Name)" -Verbose
+                Write-Host "`tUpdated field link $fieldId for content type $($ContentType.Name)" -ForegroundColor Green
             } else {
-                Write-Verbose "`tDid not update field link $fieldId for content type $($ContentType.Name)"
+                Write-Host "`tDid not update field link $fieldId for content type $($ContentType.Name)"
             }
         } else {
             Write-Warning "Could not find field link $fieldId for content type $($ContentType.Name)" -WarningAction Continue
@@ -211,11 +211,13 @@ function Update-ContentTypeFieldLink {
 
 function Remove-ContentTypes {
     param(
-        [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][System.Xml.XmlElement]$contentTypesXml,
+        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][System.Xml.XmlElement]$contentTypesXml,
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web,
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        if ($contentTypesXml -eq $null -or $contentTypesXml -eq "") { return }
+        Write-Host "Removing Content Types" -ForegroundColor Green
         $ClientContext.Load($web.ContentTypes)
         $ClientContext.ExecuteQuery()
 
@@ -232,18 +234,20 @@ function Remove-ContentTypes {
             $ClientContext.Load($web.ContentTypes)
             $ClientContext.ExecuteQuery()
         }
+        Write-Host "Removed Content Types" -ForegroundColor Green
     }
-
+    end {}
 }
 
 function Update-ContentTypes {
     param(
-        [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][System.Xml.XmlElement]$contentTypesXml,
+        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][System.Xml.XmlElement]$contentTypesXml,
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web,
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        Write-Verbose "Updating Content Types" -Verbose
+        if ($contentTypesXml -eq $null -or $contentTypesXml -eq "") { return }
+        Write-Host "Updating Content Types" -ForegroundColor Green
 
         $ClientContext.Load($web.ContentTypes)
         $ClientContext.Load($web.AvailableContentTypes)
@@ -310,12 +314,12 @@ function Update-ContentTypes {
                     $ClientContext.ExecuteQuery()
 
                     if($contentType -eq $null) {
-                        Write-Error "Could Not Create Content Type $($ContentType.Name)"
+                        Write-Error "`tCould not create content type $($ContentType.Name)" -ForegroundColor Red
                     } else {
-                        Write-Verbose "Created Content Type $($ContentType.Name)" -Verbose
+                        Write-Host "`tCreated content type $($ContentType.Name)" -ForegroundColor Green
                     }
                 } else {
-                    Write-Warning "Skipping Content Type $($contentTypeXml.Name), parent content type $($contentTypeXml.ParentContentType) unavilable" -WarningAction Continue
+                    Write-Warning "`tSkipping content type $($contentTypeXml.Name), parent content type $($contentTypeXml.ParentContentType) unavilable" -WarningAction Continue
                 }
             # rename if needed
             } elseif ($contentType.Name -ne $contentTypeXml.Name) {
@@ -325,9 +329,9 @@ function Update-ContentTypes {
                 $ClientContext.Load($web.ContentTypes)
                 $ClientContext.Load($web.AvailableContentTypes)
                 $ClientContext.ExecuteQuery()
-                Write-Verbose "Renamed Content Type $($ContentType.Name) ." -Verbose
+                Write-Host "`tRenamed content type $($ContentType.Name) ." -ForegroundColor Green
             } else {
-                Write-Verbose "Content Type $($ContentType.Name)  already created."
+                Write-Host "`tContent type $($ContentType.Name) already created." -ForegroundColor Green
             }
 
             ## add / edit/ remove fieldlinks if we have a content type
@@ -344,9 +348,9 @@ function Update-ContentTypes {
                     if($fieldLinkToRemove -ne $null) {
                         $fieldLinkToRemove.DeleteObject()
                         $fieldLinksRemoved = $true
-                        Write-Verbose "Deleted field $($removeFieldRefXml.ID) from content type $($ContentType.Name)" -Verbose
+                        Write-Host "`t`tDeleted field $($removeFieldRefXml.ID) from content type $($ContentType.Name)" -ForegroundColor Green
                     } else {
-                        Write-Verbose "Field $($removeFieldRefXml.ID) already deleted from content type $($ContentType.Name)"
+                        Write-Host "`t`tField $($removeFieldRefXml.ID) already deleted from content type $($ContentType.Name)" -ForegroundColor Green
                     }
                 }
                 if($fieldLinksRemoved) {
@@ -369,9 +373,9 @@ function Update-ContentTypes {
                         $fieldlink = $contentType.FieldLinks.Add($fieldlinkCreation)
                         $fieldLinksAdded = $true
 
-                        Write-Verbose "`tAdded field $($fieldRefXml.ID) to Content Type $($ContentType.Name)" -Verbose
+                        Write-Host "`t`tAdded field $($fieldRefXml.ID) to Content Type $($ContentType.Name)" -ForegroundColor Green
                     } else {
-                        Write-Verbose "`tField $($fieldRefXml.ID) already added to Content Type $($ContentType.Name)"
+                        Write-Host "`t`tField $($fieldRefXml.ID) already added to Content Type $($ContentType.Name)"-ForegroundColor Green
                     }
                 }
                 if($fieldLinksAdded) {
@@ -407,23 +411,24 @@ function Update-ContentTypes {
                             $needsUpdating = $true
                         }
                         if($needsUpdating) {
-                            Write-Verbose "`tUpdated field link $($fieldRefXml.ID) for content type $($contentType.Name)" -Verbose
+                            Write-Host "`t`tUpdated field link $($fieldRefXml.ID) for content type $($contentType.Name)" -ForegroundColor Green
                         } else {
-                            Write-Verbose "`tDid not update field link $($fieldRefXml.ID) for content type $($contentType.Name)"
+                            Write-Host "`t`tDid not update field link $($fieldRefXml.ID) for content type $($contentType.Name)" -ForegroundColor Green
                         }
                     } else {
-                        Write-Error "Could not find field link $($fieldRefXml.ID) for content type $($contentType.Name)"
+                        Write-Error "`t`tCould not find field link $($fieldRefXml.ID) for content type $($contentType.Name)" -ForegroundColor Green
                     }
                 }
                 if($needsUpdating) {
                     $ContentType.Update($true)
                     $ClientContext.ExecuteQuery()
-                    Write-Verbose "`tUpdated field links for content type $($contentType.Name)" -Verbose
+                    Write-Host "`t`tUpdated field links for content type $($contentType.Name)" -ForegroundColor Green
                 } else {
-                    Write-Verbose "`tDid not update field links for content type $($contentType.Name)"
+                    Write-Host "`t`tDid not update field links for content type $($contentType.Name)" -ForegroundColor Green
                 }
             }
         }
-        Write-Verbose "Updated Content Types" -Verbose
+        Write-Host "Updated Content Types" -ForegroundColor Green
     }
+    end {}
 }

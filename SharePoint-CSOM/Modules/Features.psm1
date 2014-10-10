@@ -14,11 +14,11 @@ function Add-Feature {
         }
         $feature = $Features | Where {$_.DefinitionId -eq $FeatureId}
         if($feature -eq $null) {
-            Write-Verbose "`tActivating Feature $FeatureId" -Verbose
+            Write-Host "`tActivating Feature $FeatureId" -ForegroundColor Green
             $f = $Features.Add($FeatureId, $force, $FeatureDefinitionScope)
             try {
                 $ClientContext.ExecuteQuery()
-                Write-Verbose "`t..Activated Feature $FeatureId" -Verbose
+                Write-Host "`t..Activated Feature $FeatureId" -ForegroundColor Green
             }
             catch {
                 Write-Error "An error occurred whilst Activating feature $FeatureId. Error detail: $($_)"
@@ -37,11 +37,11 @@ function Remove-Feature {
     process {
         $feature = $features | Where {$_.DefinitionId -eq $FeatureId}
         if($feature) {
-            Write-Verbose "`tDeactivating Feature $FeatureId" -Verbose
+            Write-Host "`tDeactivating Feature $FeatureId" -ForegroundColor Green
             $features.Remove($featureId, $force)
             try {
                 $ClientContext.ExecuteQuery()
-                Write-Verbose "`t..Deactivated Feature $FeatureId" -Verbose
+                Write-Host "`t..Deactivated Feature $FeatureId" -ForegroundColor Green
             }
             catch {
                 Write-Error "An error occurred whilst Deactivating feature $FeatureId. Error detail: $($_)"
@@ -52,17 +52,18 @@ function Remove-Feature {
 function Add-Features {
     [cmdletbinding()]
     param(
-        [parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$FeaturesXml,
+        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$FeaturesXml,
         [parameter(Mandatory=$false, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web,
         [parameter(Mandatory=$false, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        if ($FeaturesXml -eq $null -or $FeaturesXml -eq "") { return }
         if($web) {
-            Write-Verbose "Adding Web Features..." -Verbose
+            Write-Host "Adding Web Features..." -ForegroundColor Green
             $features = $web.Features
         } elseif($site) {
-            Write-Verbose "Adding Site Features..." -Verbose
+            Write-Host "Adding Site Features..." -ForegroundColor Green
             $features = $site.Features
         }
         $ClientContext.Load($features)
@@ -85,23 +86,24 @@ function Add-Features {
                 Add-Feature -featureId $featureId -force $force -fromSandboxSolution $SandboxSolution -features $features -ClientContext $ClientContext
             }
         }
-        Write-Verbose "Done" -Verbose
+        Write-Host "Done" -ForegroundColor Green
     }
 }
 function Remove-Features {
     [cmdletbinding()]
     param(
-        [parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$FeaturesXml,
+        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$FeaturesXml,
         [parameter(Mandatory=$false, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web,
         [parameter(Mandatory=$false, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        if ($FeaturesXml -eq $null -or $FeaturesXml -eq "") { return }
         if($web) {
-            Write-Verbose "Removing Web Features..." -Verbose
+            Write-Host "Removing Web Features..." -ForegroundColor Green
             $features = $web.Features
         } elseif($site) {
-            Write-Verbose "Removing Site Features..." -Verbose
+            Write-Host "Removing Site Features..." -ForegroundColor Green
             $features = $site.Features
         }
         $ClientContext.Load($features)
@@ -121,6 +123,6 @@ function Remove-Features {
                 Remove-Feature -featureId $featureId -force $force -features $features -ClientContext $ClientContext
             }
         }
-        Write-Verbose "Done" -Verbose
+        Write-Host "Done" -ForegroundColor Green
     }
 }

@@ -136,7 +136,7 @@ function New-PublishingPage {
         $publishingPage = $publishingWeb.AddPublishingPage($publishingPageInformation)
         foreach($property in $PageXml.Property) {
             if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
-                Write-Verbose "Setting TaxonomyField $($propertyXml.Name) to $($propertyXml.Value)"
+                Write-Verbose "`t`t..Setting page TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
                 $field = $pagesList.Fields.GetByInternalNameOrTitle($propertyXml.Name)
                 $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
 
@@ -153,6 +153,7 @@ function New-PublishingPage {
                 // Do Nothing
             } else {
                 $publishingPage.ListItem[$property.Name] = $property.Value
+                Write-Host "`t`tSet page property: $($property.Name) = $($property.Value)" -ForegroundColor Green
             }
         }
         $publishingPage.ListItem.Update()

@@ -56,9 +56,9 @@ function Set-WelcomePage {
             $rootFolder.Update()
             $ClientContext.Load($rootFolder)
             $ClientContext.ExecuteQuery()
-            Write-Verbose "Updated WelcomePage settings" -Verbose
+            Write-Host "Updated WelcomePage settings" -ForegroundColor Green
         } else {
-            Write-Verbose "Did not need to update WelcomePage settings"
+            Write-Host "Did not need to update WelcomePage settings"
         }
     }
 }
@@ -99,9 +99,9 @@ function Set-MasterPage {
         if($performUpdate) {
             $Web.Update()
             $ClientContext.ExecuteQuery()
-            Write-Verbose "Updated MasterPage settings" -Verbose
+            Write-Host "Updated MasterPage settings" -ForegroundColor Green
         } else {
-            Write-Verbose "Did not need to update MasterPage settings"
+            Write-Host "Did not need to update MasterPage settings"
         }
     }
 }
@@ -133,7 +133,7 @@ function Set-Theme {
             $newImageUrl = "$ServerRelativeUrl/$ImageUrl"
         }
 
-        Write-Verbose "Applying Theme" -Verbose
+        Write-Host "Applying Theme" -ForegroundColor Green
         if($newImageUrl) {
             $web.ApplyTheme($newThemeUrl, $newFontSchemeUrl, $newImageUrl, $shareGenerated)
         } else {
@@ -276,6 +276,17 @@ function Update-Web {
         [parameter(Mandatory=$false)][string]$ResourcesPath
     )
     process {
+
+        $site = $web.Site
+        if ($site.ServerObjectIsNull.HasValue -and $site.ServerObjectIsNull.Value) {
+            $ClientContent.Load($site)
+            $ClientContext.ExecuteQuery()
+        }
+        if ($site.RootWeb.ServerObjectIsNull.HasValue -and $site.RootWeb.ServerObjectIsNull.Value) {
+            $ClientContent.Load($site.RootWeb)
+            $ClientContext.ExecuteQuery()
+        }
+
         foreach ($RemovePage in $xml.Pages.RemovePage) {
 		    Delete-PublishingPage -PageXml $RemovePage -Web $web -ClientContext $ClientContext
 		}
@@ -283,10 +294,10 @@ function Update-Web {
             Remove-List -ListName $listXml.Title -Web $web -ClientContext $ClientContext
         }
         if($xml.ContentTypes) {
-            Remove-ContentTypes -contentTypesXml $xml.ContentTypes -web $web -ClientContext $ClientContext
+            Remove-ContentTypes -contentTypesXml $xml.ContentTypes -web $site.RootWeb -ClientContext $ClientContext
         }
         if($xml.Fields) {
-            Remove-SiteColumns -fieldsXml $xml.Fields -web $web -ClientContext $ClientContext
+            Remove-SiteColumns -fieldsXml $xml.Fields -web $site.RootWeb -ClientContext $ClientContext
         }
 
         if($xml.Features) {
@@ -294,7 +305,7 @@ function Update-Web {
                 Remove-Features -FeaturesXml $xml.Features.WebFeatures.DeactivateFeatures -web $web -ClientContext $ClientContext
             }
             if($xml.Features.SiteFeatures -and $xml.Features.SiteFeatures.DeactivateFeatures) {
-                Remove-Features -FeaturesXml $xml.Features.SiteFeatures.DeactivateFeatures -site $ClientContext.Site -ClientContext $ClientContext
+                Remove-Features -FeaturesXml $xml.Features.SiteFeatures.DeactivateFeatures -site $site -ClientContext $ClientContext
             }
         }
 
@@ -304,66 +315,19 @@ function Update-Web {
                 Add-Features -FeaturesXml $xml.Features.WebFeatures.ActivateFeatures -web $web -ClientContext $ClientContext
             }
             if($xml.Features.SiteFeatures -and $xml.Features.SiteFeatures.ActivateFeatures) {
-                Add-Features -FeaturesXml $xml.Features.SiteFeatures.ActivateFeatures -site $ClientContext.Site -ClientContext $ClientContext
+                Add-Features -FeaturesXml $xml.Features.SiteFeatures.ActivateFeatures -site $site -ClientContext $ClientContext
             }
         }
 
         if($xml.Fields) {
-            Update-SiteColumns -fieldsXml $xml.Fields -web $web -ClientContext $ClientContext
+            Update-SiteColumns -fieldsXml $xml.Fields -web $site.RootWeb -ClientContext $ClientContext
         }
-        
 
         if($xml.ContentTypes) {
-            Update-ContentTypes -contentTypesXml $xml.ContentTypes -web $web -ClientContext $ClientContext
+            Update-ContentTypes -contentTypesXml $xml.ContentTypes -web $site.RootWeb -ClientContext $ClientContext
         }
-        foreach ($catalogXml in $xml.Catalogs.Catalog) {
-            $SPList = $web.GetCatalog([Microsoft.SharePoint.Client.ListTemplateType]::$($catalogXml.Type))
-            $ClientContext.Load($SPList)
-            $ClientContext.ExecuteQuery()
 
-            if($SPList -eq $null) {
-                throw "List not found: $($catalogXml.Title) for List Type: $($catalogXml.Type)"
-            } else {
-                Write-Verbose "List loaded: $($catalogXml.Title)" -Verbose
-            }
-
-            $MajorVersionsEnabled = $SPList.EnableVersioning
-            $MinorVersionsEnabled = $SPList.EnableMinorVersions
-            $ContentApprovalEnabled = $SPList.EnableModeration
-            $CheckOutRequired = $SPList.ForceCheckout
-
-            Write-Verbose "`tFiles and Folders" -Verbose
-            if($catalogXml.DeleteItems) {
-                foreach($itemXml in $catalogXml.DeleteItems.Item) {
-                    $item = Get-ListItem -itemUrl $itemXml.Url -Folder $itemXml.Folder -List $SPList -ClientContext $clientContext
-                    if($item -ne $null) {
-                        Remove-ListItem -listItem $item -ClientContext $clientContext
-                    }
-                }
-            }
-            if($catalogXml.UpdateItems) {
-                foreach($itemXml in $catalogXml.UpdateItems.Item) {
-                    Update-ListItem -listItemXml $itemXml -List $SPList -ClientContext $clientContext 
-                }
-            }
-
-            foreach($folderXml in $catalogXml.Folder) {
-                Write-Verbose "`t`t$(if ($folderXml.Url) { $folderXml.Url } else { `"{root folder}`" })" -Verbose
-                $resourcesPath = ""
-                if ($folderXml.ResourcesPath -and $folderXml.ResourcesPath -ne "") { $resourcesPath = $folderXml.ResourcesPath }
-                $spFolder = Get-RootFolder -List $SPList -ClientContext $ClientContext
-                Add-Files -List $SPList -Folder $spFolder -FolderXml $folderXml -ResourcesPath $resourcesPath -ClientContext $ClientContext -RemoteContext $null
-            }
-            if($catalogXml.Type -eq "DesignCatalog") {
-                Write-Verbose "`tComposedLooks" -Verbose
-                foreach($composedLookXml in $catalogXml.ComposedLook) {
-                    $composedLookListItem = Get-ComposedLook -Name $composedLookXml.Title -ComposedLooksList $SPList -Web $web -ClientContext $ClientContext
-                    if($composedLookListItem -eq $null) {
-                        $composedLookListItem = Add-ComposedLook -Name $composedLookXml.Title -MasterPageUrl $composedLookXml.MasterPageUrl -ThemeUrl $composedLookXml.ThemeUrl -DisplayOrder $composedLookXml.DisplayOrder -ComposedLooksList $SPList -Web $web -ClientContext  $ClientContext
-                    }
-                }
-            }
-        }
+        Update-Catalogs $xml.Catalogs $site $web $ClientContext
 
         foreach ($listXml in $xml.Lists.RenameList) {
             Rename-List -OldTitle $listXml.OldTitle -NewTitle $listXml.NewTitle -Web $web -ClientContext $ClientContext
@@ -372,10 +336,10 @@ function Update-Web {
             $List = Update-List -ListXml $listXml -Web $web -ClientContext $ClientContext
         }
 
-
         foreach ($PageXml in $xml.Pages.Page) {
             New-PublishingPage -PageXml $PageXml -Web $web -ClientContext $ClientContext
         }
+
         foreach ($ProperyBagValue in $xml.PropertyBag.PropertyBagValue) {
             $Indexable = $false
             if($PropertyBagValue.Indexable) {
