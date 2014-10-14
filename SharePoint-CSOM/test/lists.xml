@@ -17,6 +17,8 @@
 		</ContentTypes>
 
 		<Lists Scope="Site">
+			<RemoveList Title="Documents" />
+			<RemoveList Title="Tasks" />
 			<List Title="Simple List" Description="List of simple items" OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-DE22-43B2-A848-C05709900100" Type="100" Url="Lists/SimpleList">
 				<Items>
 					<Item>

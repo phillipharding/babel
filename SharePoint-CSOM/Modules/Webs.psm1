@@ -287,12 +287,14 @@ function Update-Web {
             $ClientContext.ExecuteQuery()
         }
 
-        foreach ($RemovePage in $xml.Pages.RemovePage) {
-		    Delete-PublishingPage -PageXml $RemovePage -Web $web -ClientContext $ClientContext
-		}
-        foreach ($listXml in $xml.Lists.RemoveList) {
-            Remove-List -ListName $listXml.Title -Web $web -ClientContext $ClientContext
+        if ($xml.Pages) {
+            Remove-PublishingPages -PageXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
         }
+
+        if ($xml.Lists) {
+            Remove-Lists $xml.Lists $site $web $ClientContext
+        }
+
         if($xml.ContentTypes) {
             Remove-ContentTypes -contentTypesXml $xml.ContentTypes -web $site.RootWeb -ClientContext $ClientContext
         }
@@ -311,11 +313,11 @@ function Update-Web {
 
         # Done removing stuff, now to add/update
         if($xml.Features) {
-            if($xml.Features.WebFeatures -and $xml.Features.WebFeatures.ActivateFeatures) {
-                Add-Features -FeaturesXml $xml.Features.WebFeatures.ActivateFeatures -web $web -ClientContext $ClientContext
-            }
             if($xml.Features.SiteFeatures -and $xml.Features.SiteFeatures.ActivateFeatures) {
                 Add-Features -FeaturesXml $xml.Features.SiteFeatures.ActivateFeatures -site $site -ClientContext $ClientContext
+            }
+            if($xml.Features.WebFeatures -and $xml.Features.WebFeatures.ActivateFeatures) {
+                Add-Features -FeaturesXml $xml.Features.WebFeatures.ActivateFeatures -web $web -ClientContext $ClientContext
             }
         }
 
@@ -327,17 +329,19 @@ function Update-Web {
             Update-ContentTypes -contentTypesXml $xml.ContentTypes -web $site.RootWeb -ClientContext $ClientContext
         }
 
-        Update-Catalogs $xml.Catalogs $site $web $ClientContext
+        if ($xml.Catalogs) {
+            Update-Catalogs $xml.Catalogs $site $web $ClientContext
+        }
 
         foreach ($listXml in $xml.Lists.RenameList) {
             Rename-List -OldTitle $listXml.OldTitle -NewTitle $listXml.NewTitle -Web $web -ClientContext $ClientContext
         }
-        foreach ($listXml in $xml.Lists.List) {
-            $List = Update-List -ListXml $listXml -Web $web -ClientContext $ClientContext
+        if ($xml.Lists) {
+            Update-Lists $xml.Lists $site $web $ClientContext
         }
 
-        foreach ($PageXml in $xml.Pages.Page) {
-            New-PublishingPage -PageXml $PageXml -Web $web -ClientContext $ClientContext
+        if ($xml.Pages) {
+            Update-PublishingPages -PageXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
         }
 
         foreach ($ProperyBagValue in $xml.PropertyBag.PropertyBagValue) {

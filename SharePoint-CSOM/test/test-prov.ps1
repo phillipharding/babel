@@ -1,36 +1,37 @@
 ﻿cls
 $configurationName = "Default"
+$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\test"
 $scriptPath = Split-Path -Parent  $MyInvocation.MyCommand.Definition
 
 # load and init the CSOM helpers
 ."$scriptPath\load-spo-helpers.ps1"
 cls
-
 Add-CSOM
 Add-TenantCSOM
 
-# init connector
+# init a blank connector
 $connector = Init-CSOMConnection
+
+# set connection url
 $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
 #$connector.csomUrl = "http://pub.pdogs.local"
+
+# set credentials with username/password
 $connector.csomUsername = "phil.harding@platinumdogsconsulting.onmicrosoft.com"
 $connector.csomPassword = "Pa`$`$w0rd2"
+
+# set credentials with Get-Credentials (prompts for creds)
 #$connector.csomCredentials = (Get-Credential | Out-Null)
 
+# connect...
 $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host
 
-# load XML datasets file
-#$configXml = Get-XMLFile "taxonomy.xml" "C:\Dev\github\babel\SharePoint-CSOM\test" 
-#$configXml = Get-XMLFile "features.xml" "C:\Dev\github\babel\SharePoint-CSOM\test" 
-#$configXml = Get-XMLFile "columns-and-contenttypes.xml" "C:\Dev\github\babel\SharePoint-CSOM\test" 
-#$configXml = Get-XMLFile "lists.xml" "C:\Dev\github\babel\SharePoint-CSOM\test" 
-#$configXml = Get-XMLFile "masterpages-pagelayouts.xml" "C:\Dev\github\babel\SharePoint-CSOM\test" 
+$configFiles = @("taxonomy","features","columns-and-contenttypes","lists","masterpages-pagelayouts","pages")
 
-$configFiles = @("taxonomy.xml","features.xml","columns-and-contenttypes.xml","lists.xml","masterpages-pagelayouts.xml")
-$configFiles | ? { $_ -eq "lists.xml" } | % {
-    $configXml = Get-XMLFile $_ "C:\Dev\github\babel\SharePoint-CSOM\test" 
+$configFiles | ? { $_ -eq "pages" } | % {
+    $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration
     $configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName']")
@@ -49,11 +50,12 @@ $configFiles | ? { $_ -eq "lists.xml" } | % {
 
     Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
 
+    Remove-PublishingPages $pagesXml $connection.Site $connection.Web $connection.Context
     Remove-Lists  $listsXml $connection.Site $connection.Web $connection.Context
     Remove-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
     Remove-SiteColumns $fieldsXml $connection.RootWeb $connection.Context
-    Remove-Features -FeaturesXml $removeSiteFeaturesXml -site $connection.Site -ClientContext $connection.Context
     Remove-Features -FeaturesXml $removeWebFeaturesXml -web $connection.Web -ClientContext $connection.Context
+    Remove-Features -FeaturesXml $removeSiteFeaturesXml -site $connection.Site -ClientContext $connection.Context
 
     Add-Features -FeaturesXml $siteFeaturesXml -site $connection.Site -ClientContext $connection.Context
     Add-Features -FeaturesXml $webFeaturesXml -web $connection.Web -ClientContext $connection.Context
@@ -61,6 +63,7 @@ $configFiles | ? { $_ -eq "lists.xml" } | % {
     Update-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
     Update-Catalogs $catalogsXml $connection.Site $connection.Web $connection.Context
     Update-Lists $listsXml $connection.Site $connection.Web $connection.Context
+    Update-PublishingPages  $pagesXml $connection.Site $connection.Web $connection.Context
 
     Write-Host
 }

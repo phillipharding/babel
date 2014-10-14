@@ -1,3 +1,59 @@
+function Update-PublishingPages {
+param (
+    [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$PagesXml,
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+)
+    process {
+        if ($PagesXml -eq $null -or $PagesXml -eq "") { return }
+        Write-Host "Start Update Pages.." -ForegroundColor Green
+        foreach($PageXml in $PagesXml.Page) {
+            if ($PageXml.Url -and $PageXml.Url -ne "") {
+                Write-Host "`tUpdating page '$($PageXml.Url)'" -ForegroundColor Green
+                try {
+                    New-PublishingPage $PageXml $web $ClientContext
+                }
+                catch {
+                    Write-Host "`t..Exception updating page '$($PageXml.Url)', `n$($_)`n" -ForegroundColor Red
+                }
+            }
+        }
+        Write-Host "Finish Update Pages.." -ForegroundColor Green
+    }
+    end {}
+}
+function Remove-PublishingPages {
+param (
+    [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$PagesXml,
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+)
+    process {
+        if ($PagesXml -eq $null -or $PagesXml -eq "") { return }
+        Write-Host "Start Remove Pages.." -ForegroundColor Green
+        foreach($PageXml in $PagesXml.RemovePage) {
+            if ($PageXml.Url -and $PageXml.Url -ne "") {
+                Write-Host "`tRemove page '$($PageXml.Url)'" -ForegroundColor Green
+                $publishingPage = Get-PublishingPage $PageXml.Url $web $ClientContext
+                try {
+                    if ($publishingPage -ne $null) {
+                        Remove-PublishingPage $publishingPage $web $ClientContext
+                        Write-Host "`t..Removed" -ForegroundColor Red
+                    } else {
+                        Write-Host "`t..Page '$($PageXml.Url)' not found" -ForegroundColor Red
+                    }
+                }
+                catch {
+                    Write-Host "`t..Exception removing page '$($PageXml.Url)', `n$($_.Exception.Message)`n" -ForegroundColor Red
+                }
+            }
+        }
+        Write-Host "Finish Remove Pages.." -ForegroundColor Green
+    }
+    end {}
+}
 function Get-PublishingPage {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$pageUrl,
@@ -5,7 +61,7 @@ function Get-PublishingPage {
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$clientContext
     )
     process {
-        Write-Verbose "Getting page $($pageUrl)" -Verbose
+        #Write-Host "`tGetting page $($pageUrl)" -ForegroundColor Green
         $pagesLibrary = $web.Lists.GetByTitle("Pages")
         $camlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
         $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($pageUrl)</Value></Eq></Where></Query></View>"
@@ -47,6 +103,7 @@ function New-PublishingPage {
     )
     process {
         
+        Write-Host "`t`tNew Page $($PageXml.Url)" -ForegroundColor Green
         $pageAlreadyExists = $false
         $replaceContent = $false
         if($PageXml.ReplaceContent) {
@@ -58,20 +115,17 @@ function New-PublishingPage {
 		$clientContext.Load($pagesList)
 
         # Check for existing Page
-		$existingPageCamlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
-		$existingPageCamlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($PageXml.Url)</Value></Eq></Where></Query></View>"
-		$existingPageListItems = $pagesList.GetItems($existingPageCamlQuery)
-		$clientContext.Load($existingPageListItems)
+        $existingPageFile = Get-File "$($web.ServerRelativeUrl)/Pages/$($PageXml.Url)" $web $ClientContext
 
         # Get Page Layout
-        Write-Verbose "Getting Page Layout $($PageXml.PageLayout) for new page" -Verbose
+        Write-Host "`t`tGetting Page Layout $($PageXml.PageLayout)" -ForegroundColor Green
         $rootWeb = $ClientContext.Site.RootWeb
         $masterPageCatalog = $rootWeb.GetCatalog([Microsoft.SharePoint.Client.ListTemplateType]::MasterPageCatalog)
         $pageLayoutCamlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
         $pageLayoutCamlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($PageXml.PageLayout)</Value></Eq></Where></Query></View>"
         $pageLayoutItems = $masterPageCatalog.GetItems($pageLayoutCamlQuery)
         $ClientContext.Load($pageLayoutItems)
- 
+        $clientContext.ExecuteQuery()
 
         # Get Publishing Web
         $publishingWeb = [Microsoft.SharePoint.Client.Publishing.PublishingWeb]::GetPublishingWeb($ClientContext, $Web)
@@ -85,22 +139,20 @@ function New-PublishingPage {
         $ContentApprovalEnabled = $pagesList.EnableModeration
         $CheckOutRequired = $pagesList.ForceCheckout
 		
-		if ($existingPageListItems.Count -ne 0)
+        if ($existingPageFile -ne $null -and $existingPageFile.Exists)
 		{
-			Write-Verbose "Page $($PageXml.Url) already exists"
+			Write-Host "`t`t..Page $($PageXml.Url) already exists"
 			$pageAlreadyExists = $true
-			$originalPublishingPageListItem = $existingPageListItems[0]
 		}
         
         if($pageAlreadyExists -and $replaceContent -eq $false) {
-            Write-Verbose "Page $($PageXml.Url) already Exists and ReplaceContent is set to false" -Verbose
+            Write-Host "`t`t..Page $($PageXml.Url) already Exists and ReplaceContent is set to false" -ForegroundColor Blue
             return
         }
         
         # Load Page Layout Item if avilable
-        if ($pageLayoutItems.Count -lt 1)
-		{
-			Write-Verbose "Missing Page Layout $($PageXml.PageLayout), Can not create $($PageXml.Url)" -Verbose
+        if ($pageLayoutItems.Count -lt 1) {
+			Write-Host "`t`tMissing Page Layout $($PageXml.PageLayout), Can not create $($PageXml.Url)" -ForegroundColor Red
             return
 		} else {
             $pageLayout = $pageLayoutItems[0]
@@ -110,33 +162,38 @@ function New-PublishingPage {
 
         # Rename existing page if needed
         if($pageAlreadyExists) {
-            Write-Verbose "Renaming existing page"
-            if($CheckOutRequired) {
-                Write-Verbose "Checking-out existing page"
-                $originalPublishingPageListItem.File.CheckOut()
-            }
-			$tempPageUrl = $PageXml.Url.Replace(".aspx", "-temp.aspx");
-			$originalPublishingPageListItem["FileLeafRef"] = $tempPageUrl
-			$originalPublishingPageListItem.Update()
-            $ClientContext.ExecuteQuery()
-            if($CheckOutRequired) {
-                Write-Verbose "Checking-in existing page"
-                $originalPublishingPageListItem.File.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MinorCheckIn)
-                $ClientContext.ExecuteQuery()
-            }
-        }
-       
+            $tempPageUrl = $($PageXml.Url -replace ".aspx","-temp.aspx") #$PageXml.Url.Replace(".aspx", "-$(Get-Date -Format "yyyyMMdd-HHmmss").aspx")
+            Write-Host "`t`t..Renaming existing page to $($tempPageUrl)"
 
-        Write-Verbose "Creating page $($PageXml.Url) using layout $($PageXml.PageLayout)" -Verbose
+            if($existingPageFile.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                Write-Host "`t`t..Checking-out existing page"
+                $existingPageFile.CheckOut()
+            }
+
+            $item = $existingPageFile.ListItemAllFields
+			$item["Title"] = $tempPageUrl
+            $item["FileLeafRef"] = $tempPageUrl
+			$item.Update()
+            $ClientContext.ExecuteQuery()
+            
+            $existingPageFile = Get-File "$($web.ServerRelativeUrl)/Pages/$tempPageUrl" $web $ClientContext
+
+            Write-Host "`t`t..Checking-in existing page"
+            $existingPageFile.CheckIn("Checkin", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+            $ClientContext.ExecuteQuery()
+            Write-Host "`t`t..Checked-in existing page"
+        }       
+
+        Write-Host "`t`tCreating page $($PageXml.Url) using layout $($PageXml.PageLayout)" -ForegroundColor Green
         
         $publishingPageInformation = New-Object Microsoft.SharePoint.Client.Publishing.PublishingPageInformation
         $publishingPageInformation.Name = $PageXml.Url;
         $publishingPageInformation.PageLayoutListItem = $pageLayout
 
         $publishingPage = $publishingWeb.AddPublishingPage($publishingPageInformation)
-        foreach($property in $PageXml.Property) {
+        foreach($propertyXml in $PageXml.Property) {
             if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
-                Write-Verbose "`t`t..Setting page TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
+                Write-Host "`t`t..Setting page TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
                 $field = $pagesList.Fields.GetByInternalNameOrTitle($propertyXml.Name)
                 $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
 
@@ -149,51 +206,59 @@ function New-PublishingPage {
                     $publishingPage.ListItem[$propertyXml.Name] = $propertyXml.Value
                 }
 
-            } elseif ($property.Name -eq "ContentType") {
-                // Do Nothing
+            } elseif ($propertyXml.Name -eq "ContentType") {
+                # Do Nothing, use ContentTypeId to set content type
+            } elseif($propertyXml.Type -and $propertyXml.Type -match "image") {
+                $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$site.RootWeb.ServerRelativeUrl) -replace `"~site`",$web.ServerRelativeUrl)' style='border: 0px solid;'>"
+                $publishingPage.ListItem[$propertyXml.Name] = $pval
+                Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
+            } elseif($propertyXml.Type -and $propertyXml.Type -match "html") {
+                $pval = (($propertyXml.InnerXml -replace "~sitecollection",$site.RootWeb.ServerRelativeUrl) -replace "~site",$web.ServerRelativeUrl)
+                $publishingPage.ListItem[$propertyXml.Name] = $pval
+                Write-Host "`t`tSet page HTML property: $($propertyXml.Name) = $pval" -ForegroundColor Green
             } else {
-                $publishingPage.ListItem[$property.Name] = $property.Value
-                Write-Host "`t`tSet page property: $($property.Name) = $($property.Value)" -ForegroundColor Green
+                $pval = (($propertyXml.Value -replace "~sitecollection",$site.RootWeb.ServerRelativeUrl) -replace "~site",$web.ServerRelativeUrl)
+                $publishingPage.ListItem[$propertyXml.Name] = $pval
+                Write-Host "`t`tSet page property: $($propertyXml.Name) = $($pval)" -ForegroundColor Green
             }
         }
         $publishingPage.ListItem.Update()
         $publishingPageFile = $publishingPage.ListItem.File
-        $ClientContext.load($publishingPage)
-        $ClientContext.load($publishingPageFile)
+        $ClientContext.Load($publishingPage)
+        $ClientContext.Load($publishingPageFile)
         $ClientContext.ExecuteQuery()
 
-        if($publishingPageFile.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
-            $publishingPageFile.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MinorCheckIn)
-            $ClientContext.Load($publishingPageFile)
-            $ClientContext.ExecuteQuery()
-        }
-        
-        if($PageXml.Level -eq "Published"  -and $MinorVersionsEnabled -and $MajorVersionsEnabled) {
+        $publishingPageFile.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+        Write-Host "`t`t..Checkin page" -ForegroundColor Green
+
+        if($MinorVersionsEnabled -and $MajorVersionsEnabled) {
             $publishingPageFile.Publish("Publishing Page")
-            $ClientContext.Load($publishingPageFile)
-            $ClientContext.ExecuteQuery()
+            Write-Host "`t`t..Published page" -ForegroundColor Green
         }
+
         if($PageXml.Approval -eq "Approved" -and $ContentApprovalEnabled) {
             $publishingPageFile.Approve("Approving Page")
-            $ClientContext.Load($publishingPageFile)
-            $ClientContext.ExecuteQuery()
+            Write-Host "`t`t..Approved page" -ForegroundColor Green
         }
-        
+
+        $ClientContext.Load($publishingPageFile)
+        $ClientContext.ExecuteQuery()
+                
         if($PageXml.WelcomePage) {
             $isWelcomePage = $false
             $isWelcomePage = [bool]::Parse($PageXml.WelcomePage)
             if($isWelcomePage) {
                 Set-WelcomePage -WelcomePageUrl $publishingPageFile.ServerRelativeUrl -Web $Web -ClientContext $ClientContext
+                Write-Host "`t`t..Set as Welcome page" -ForegroundColor Green
             }
         }
 
         # Delete orginal page
 		if ($pageAlreadyExists)
 		{
-			$originalPublishingPageListItem.DeleteObject()
-			$clientContext.ExecuteQuery()
-		}
-        
+			$existingPageFile.DeleteObject()
+			$ClientContext.ExecuteQuery()
+		}        
     }
 }
 

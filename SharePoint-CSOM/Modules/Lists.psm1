@@ -402,10 +402,17 @@ param (
         Write-Host "Start Remove Lists.." -ForegroundColor Green
         foreach($listXml in $ListsXml.RemoveList) {
             if ($listXml.Title -and $listXml.Title -ne "") {
-                if ((-not $ListsXml.Scope) -or ($ListsXml.Scope -match "web")) {
-                    Remove-List -ListName $listXml.Title -Web $web -ClientContext $ClientContext
-                } else {
-                    Remove-List -ListName $listXml.Title -Web $site.Rootweb -ClientContext $ClientContext
+                Write-Host "`tRemoving list '$($listXml.Title)'" -ForegroundColor Green
+                try {
+                    if ((-not $ListsXml.Scope) -or ($ListsXml.Scope -match "web")) {
+                        Remove-List -ListName $listXml.Title -Web $web -ClientContext $ClientContext
+                    } else {
+                        Remove-List -ListName $listXml.Title -Web $site.Rootweb -ClientContext $ClientContext
+                    }
+                    Write-Host "`t..Removed" -ForegroundColor Green
+                }
+                catch {
+                    Write-Host "`t..Exception removing list '$($listXml.Title)', `n$($_.Exception.Message)`n" -ForegroundColor Red
                 }
             }
         }

@@ -1,0 +1,124 @@
+<Configurations>
+	<Configuration Name="Default">
+
+		<Lists>
+			<List Title="Images" Description="A library created by the Publishing feature to store images that are used on pages in this site." OnQuickLaunchBar="True" TemplateFeatureId="4bcccd62-dcaf-46dc-a7d4-e38277ef33f4" Type="851" Url="PublishingImages">
+				<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+					<File Path="images\cogs.jpg" Url="cogs.jpg" ReplaceContent="True">
+						<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+						<Property Name="Title" Value="cogs.jpg" />
+					</File>
+					<File Path="images\cogsmore.jpg" Url="cogsmore.jpg" ReplaceContent="True">
+						<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+						<Property Name="Title" Value="cogsmore.jpg" />
+					</File>
+					<File Path="images\compass.jpg" Url="compass.jpg" ReplaceContent="True">
+						<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+						<Property Name="Title" Value="compass.jpg" />
+					</File>
+					<File Path="images\corn-hand-focus.jpg" Url="corn-hand-focus.jpg" ReplaceContent="True">
+						<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+						<Property Name="Title" Value="corn-hand-focus.jpg" />
+					</File>
+					<File Path="images\lightbulbs.jpg" Url="lightbulbs.jpg" ReplaceContent="True">
+						<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+						<Property Name="Title" Value="lightbulbs.jpg" />
+					</File>
+				</Folder>
+			</List>
+		</Lists>
+
+		<Pages>
+			<RemovePage Url="Test-Page.aspx" />
+
+			<Page Url="Sample-Article-1.aspx" ReplaceContent="True" PageLayout="ArticleRight.aspx" >
+				<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF3900242457EFB8B24247815D688C526CD44D" Type="" />
+				<Property Name="Title" Value="Sample Article 1" Type="" />
+				<Property Name="ArticleStartDate" Value="2014-10-14T15:14:00.000Z" Type="" />
+				<Property Name="ArticleByLine" Value="Assum vocibus voluptaria id eum, id choro" Type="" />
+				<Property Name="PublishingImageCaption" Value="Vis alii aliquid convenire cu, mel eripuit omnesque" Type="" />
+				<Property Name="PublishingPageContent" Value="" Type="HTML">
+<em>Je anti fontoj mallongigoj mia, mem plej minimume uj.</em> Hav ik naŭ instruitulo, e ligfinaĵo frazenkondukilo eko. Dz reala faras kromakcento tri, lo duon movi mikro eks. Ke unu reciprokeco frazelemento, ad aga panjo lasta. It esk alies personalo,, ig vol plen tial, tuj avio dolaro solstariva ek.
+
+Ial i krom helpverbo netransitiva, iel sh havi frazo, ties alimaniere frazenkondukilo sed ol. Tiela kelka tabelvorto um mia, speco subjunkcio men nu. Nulo movi nj dua, duona senobjekta tabelvorto kia oz, paki finno sh kaj. Log'o ebleco mallongigoj du sur, nur volu triliono ne.
+
+End ej lasta senigi vidalvide. Id nette kemia reprezenti bio, lo logi pleje postparto sor, dev nenio scivolema leterskribi gv. Metr nula kibi anc il, paki supersigno prepozicio ti cit, bat'o ripeti parentezo iv ism. Ab hoj ajna nelimigita, ioj kaŭ dekoj prepoziciaĵo um, ot tuj itismo anstataŭe.
+
+Ve tuj celo vendo infra, pro ad peri danke haltostreko. Eg tago glota kemia ari, oid duona mekao estro ed. Eko unun vola ek, oid co aliam helpa fundamento, il hodiaŭa antaŭeniri cis. Minus aspektismo praantaŭhieraŭ esk ar, kilometro helpverbo malantaŭ ol anc. Ajna jokto kialo ant at.
+
+To hoj nuna deziri morgaŭo, okej samideano laŭlonge vir iv, eg lasi malprofitanto nek. Ec vic' kvaronhoro nur, trae kibi esk ts, igi kasedo franjo rilativo nu. Sia stop unujn ho. Pri so apud milimetro, at ena ties proto kunmetaĵo. Eko an fare popolnomo altmontaro, pra ot deko movi aspektismo. Vo sen nenio patro mezurunuo, frazo dolaro morgaŭa li plu, nk kvin instruitulo eks.
+
+Dev kelk mallongigo pseŭdoafikso mi. It vela verbo ebleco ene, tien tempodaŭro ies gv. Oz obl milo leterskribi postpostmorgaŭ. Hoj edzo dekuma personalo, li, hoj oz centi numeralo, ti amen duonhoro bio. Ie pasko dikfingro frazetvorto kun, veka rolmontrilo kuo nk. Pre to kial tioma.
+
+Hej eligi vivui homonimo ja. Ed ojd seksa alikvante, if ena ikso retro altlernejo. As aŭ trae dividostreko, tra iama kien vi. Aj bis kilo noniliono, os ene apude negativaj kazablanko.
+
+Jam festo iometo en, en ism onia intera, veadi senforte to vic. Rilativa akuzativo tie co. Ies malsupera jugoslavo predikativo mo, mi pri aligi inkluzive anstataŭigi. Iv ses found reala. Pobo getto ot hoj, he aŭ vendo helpa cirkumflekso, kio el duuma finaĵvorto. Uj pere sekse nenio ore. Ajn hola nigra so, kvar cent log'o pro nk.
+
+Ul nula aliom literaturo nun, mf tek indikativo kunskribado. Li via fundamento anstataŭi multiplikite, for vi kaŭ pasko alternativdemando. Ej vol duona femto. Zo peri tiam ricevanto iel. To tio nenio eksterna. I preterito demandovorto por, int lipa bek'o alial eg, du kelk nedifina nea.
+
+Cento bek'o kz ena. Vivui kvanto predikato vol je, he sia piko troa found. Vendo ultra anstataŭa kie nv, cii zorgi finitivo da, cia el negi elnombrado. Nul sori kian ek, jes kapabl komparado ut, mal hodiaŭa reprezenti malprofitanto ci. Gh armo interalie eks, da fare decimala renkonten dek. Mis laŭlonge kompleksa kristnasko ne. Je veadi kaŭze leteri sur.
+				</Property>
+				<Property Name="PublishingPageImage" Value="~sitecollection/PublishingImages/compass.jpg" Type="Image" />
+			</Page>
+			<Page Url="Sample-Article-2.aspx" ReplaceContent="True" PageLayout="ArticleLeft.aspx" >
+				<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF3900242457EFB8B24247815D688C526CD44D" Type="" />
+				<Property Name="Title" Value="Sample Article 2" Type="" />
+				<Property Name="ArticleStartDate" Value="2014-10-10T10:14:00.000Z" Type="" />
+				<Property Name="ArticleByLine" Value="Bu tri cxasis prosijm, tot posle usmehili ne, to vse usta politia. Sxelk lednek polakzem tak ku." Type="" />
+				<Property Name="PublishingImageCaption" Value="Uzx dumam zdrovie bo, prosim celoju bi nad." Type="" />
+				<Property Name="PublishingPageContent" Value="" Type="HTML">
+Bu tri cxasis prosijm, tot posle usmehili ne, to vse usta politia. <em>Sxelk lednek polakzem tak ku. Lukas otbral li sos,</em> vsesxto pecxina zapalka om tri. Tak da lico kusoks hrebet. Pridij zxenis dla es, gda sportju premnog so. Li lubijm kontainer kak.
+
+Dla gladju nezxnuo te, esli rodzin verijm sos bo. Pesna slavju potrebite ti tak, delat mlodju bu oni. Velgrod dusxijm to oni, posle pravdauo oni bu, om gaz usta vlosis bulgarzem. Sol kozxa soglosili na, to sos lico tper, nad sxto slozxju sxuflad ja. Voz om zemla svadba prostju, iz moi poka imajut. Ili to dopis bolsx toplju. Mai vcxera problem zapalit bo, oni zxen delat edinju no.
+
+Da slisxil blagodarim kak, gde razumil cxetvert iz, moi rekas cxistju bi. Uzx dumam zdrovie bo, prosim celoju bi nad. Tak glos angloju profesor mi, polka sledju profesor tot da, so mozx jazikas prostju voz. Lico knigis gde ti, do varim smutju vipolnil kai.
+
+Idijte cxistenie mai ku, ti plus lesis zxe. Polka cxetvert informacia vo kak, oni om naidit politju. Vi den domo tancit, dla do nams sonis hrebet, miacx maluo cenijt sos ti. Toplju tragedju eda te, futbol dirkas pisalju vi voz, imenijt politju ku dom. To zxe letoju ovocxju, on dla vasx cxesajm polakju. Ti tolk ukrainzem bil, no skolk hcejm svadit tri.
+
+Te gde vasx lukas stranka, den na vozis bistruo, poka takak bu gda. Nigda sledju slabju voz iz. On mai takak kupit imajte, voda piat politikju dom es. Sam no pesok gramatik, tut ekonom gostis nezxnuo no, bez no vsezem sportju. Li uzx ucxit cxehzem. Zubis scxastie din iz, tot imame zaspatit telefonijm ti, zxe varit dumajut ku.
+
+Bi des maks delame kazahzem, on mai ribaf ucxenie. Na hceme celoju televidenie ona, moi ti znajsx milion, gaz om nikai sipal potrebijsx. Pervju svekrsestra oni do, program slovenzem ili bi. Delajt vernujm minutis es voz, moi chcel pisanie on. Dom znajm polnil kontainer ti, zxe vi nikto ludis vseslavju. Miaso robijt gotovijut vi gaz, no tot mokrju mozxuo realuo.
+
+Dom oliv jazika cxitanie es, oni bu nams mlodju nozxis, mne bu cenit drugica dolaris. Vo nikto dumajm kak, bi polka mlodic zxe, iz celuvajt nebocvetju tot. Dla klas hrvatzem so. So bil imame kasxtanju, nad dumajut videnies pravdauo ne, den ti vrem polnju prekrasju. Ne komnat narodis tarelkas ona.
+
+Pisal ocxviduo eda mi. Li mai nezxnuo pomocijsx roksanavoi, te ili darijte svekrmama, cxasis bistruo on dev. Vnov pisal ovocx bi den, gda te iskajm gotovijut. Oni li lukas robenie, gazet nezxnuo prostju mne es.
+
+Verijm libktor ku kak. Esli zxenis na mai, ona bi dopis lednek svekrmama. Nogas tipis cxitanie vi oni. Letoju domovijm ne tut. Na cielis polakju posteluf dva. Ti tak tolk posteluf, ti tri lubovijm slovenzem.
+
+Pocx zxizn ona on. Idijm hvala cxutenie vi voz, do blizuo delajt razumil voz, dla sledju priatel li. Otbral slovenzem bo kai. Sport vozifs da vse, nadeam soglosili voz vi, ne des klet zima toplju. Vse do oliv starju vnimanie, bu kak maks velju mozxuo.
+				</Property>
+				<Property Name="PublishingPageImage" Value="~sitecollection/PublishingImages/lightbulbs.jpg" Type="Image" />
+			</Page>
+			<Page Url="Sample-Article-3.aspx" ReplaceContent="True" PageLayout="ArticleRight.aspx" >
+				<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF3900242457EFB8B24247815D688C526CD44D" Type="" />
+				<Property Name="Title" Value="Sample Article 3" Type="" />
+				<Property Name="ArticleStartDate" Value="2014-10-12T13:44:00.000Z" Type="" />
+				<Property Name="ArticleByLine" Value="In per etiam scientific questiones, populos ascoltar effortio web ma." Type="" />
+				<Property Name="PublishingImageCaption" Value="Ha europa membros comprende non, nos libera practic language es" Type="" />
+				<Property Name="PublishingPageContent" Value="" Type="HTML">
+Lo articulo preparation per, tres specimen publicate web tu. <em>Da duce tote philologos sia, ma duo duce multo connectiones, duo lo pote cadeva vocabulos.</em> In per etiam scientific questiones, populos ascoltar effortio web ma. Giuseppe utilitate millennios sia tu, duo disuso demonstrate international le, web o illo linguas professional. Ultra occidental non il, resultato principalmente o del. Integre anglo-romanic pro su. Da celo practic nos.
+
+Qui es message apprende occidental. Da ample involvite essentialmente sia, altere moderne movimento que lo. Uso ma sitos resultato westeuropee, qui veni active representantes il. Que da technic association, al vide personas initialmente pro, ma sia post scientia occidental. Del sitos parlar il, in uso computator sanctificate.
+
+Da uno celo philologos angloromanic, tres disuso unidirectional tu per. Ha europa membros comprende non, nos libera practic language es. Asia litteratura primarimente pro da, per da texto flexione questiones. Existe national philologos nos in.
+
+Su uso quotidian international, sed tu facite summario international. Sed lo connectiones unidirectional, sed su regula qualcunque. Ma sed regula romanic finalmente, non un movimento intention occidental. De europee anteriormente con, non como dictionario ma. Lista spatios personas sia e, via es post russo.
+
+Non le asia tempore introduction, pan da usate abstracte, commun facite tempore que ha. Tu con durante europeo anglo-romanic. Del es iala regula, usos resultato philologos via lo, e non apprende registrate. Servi existe pardona nos le, iala parolas nos ha. Con su gode signo summarios.
+
+Tu del preparation professional international, tu toto lateres qui. Sia ille philologos concretisation o. Responder principalmente qui il. Periodicos simplificate uno ha, nos un gode concretisation, que esseva sanctificate es. Il web facite principalmente, su flexione quotidian programma web.
+
+Libera complete responder o sia, non responder intermediari ha. Uso in vide maximo, in active linguage international uno. Qui gode esser un, per abstracte historiettas es, con veni regula introduction tu. Del ha national unidirectional, vices disuso anglese de web. In con super tamben comprende. Sitos moderne distinguer in sia, ha servi disuso magazines per. Ha pan mundial questiones encyclopedia, secundo latente lo per, con specimen responder involvite se.
+
+Da pro russo africa movimento, sed personas utilitate un, da malo servi latino duo. Esseva instruction interlinguistica ma con, es uso distinguer essentialmente. Il deler initialmente per, un iste asia parolas uso, su sed linguas principalmente. Pan studio vocabulario ma, su sia infra signo extrahite, vices resultato preparation del o.
+
+Tamben articulo ascoltar web su. Pro infra publication un, lo lingua sanctificate anteriormente pan. Libro campo summarios ma pro, da toto esser qui. Apprende appellate continentes nos de. Integre abstracte uso in, su nos texto publicate. Se non terra maximo europee, qui capital flexione anglo-romanic le.
+
+Servi computator da pan, in commun laborava nos. De duo como abstracte initialmente. Nos ultra celos hereditage e. Ille spatios demonstrate in sed, gode facite apprende ha del. Il per disuso scientific litteratura. Commun lateres con le. Via al clave maximo lateres, web laborava abstracte in.
+				</Property>
+				<Property Name="PublishingPageImage" Value="~sitecollection/PublishingImages/corn-hand-focus.jpg" Type="Image" />
+			</Page>
+		</Pages>
+
+	</Configuration>
+</Configurations>
