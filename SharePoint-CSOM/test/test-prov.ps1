@@ -17,8 +17,8 @@ $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publis
 #$connector.csomUrl = "http://pub.pdogs.local"
 
 # set credentials with username/password
-$connector.csomUsername = "phil.harding@platinumdogsconsulting.onmicrosoft.com"
-$connector.csomPassword = "Pa`$`$w0rd2"
+$connector.csomUsername = ""
+$connector.csomPassword = ""
 
 # set credentials with Get-Credentials (prompts for creds)
 #$connector.csomCredentials = (Get-Credential | Out-Null)
