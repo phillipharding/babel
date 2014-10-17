@@ -1,0 +1,84 @@
+<Configurations>
+	<Configuration Name="Default">
+
+		<CustomActions>
+			<Site>
+				<JSLink>
+					<Name>Injected Site Javascript/CSS Links</Name>
+					<ScriptLinks>~sitecollection/Style Library/js/script1.js;~sitecollection/Style Library/js/script2.js;~sitecollection/Style Library/css/master.css;~sitecollection/Style Library/css/responsive.css</ScriptLinks>
+					<Sequence>100</Sequence>
+				</JSLink>
+				<JSLink>
+					<Name>Injected Site Javascript Block</Name>
+					<ScriptBlock>
+						$(function($,window) {
+							$(function() {
+								$('A[href]').hide();
+							});
+						})(jQuery, window);
+					</ScriptBlock>
+					<Sequence>100</Sequence>
+				</JSLink>
+				<UserAction>
+					<Description></Description>
+					<Location></Location>
+					<Sequence></Sequence>
+					<Url></Url>
+					<Group></Group>
+					<Title></Title>
+					<ImageUrl></ImageUrl>
+					<Rights></Rights>
+				</UserAction>
+			</Site>
+			<Web>
+				<JSLink>
+					<Name>Injected Web Javascript/CSS Links</Name>
+					<ScriptLinks>~site/SiteAssets/js/script1.js;~site/SiteAssets/js/script2.js;~site/SiteAssets/css/master.css;~site/SiteAssets/css/responsive.css</ScriptLinks>
+					<Sequence>100</Sequence>
+				</JSLink>
+				<JSLink>
+					<Name>Injected Web Javascript Block</Name>
+					<ScriptBlock>
+						$(function($,window) {
+							$(function() {
+								$('A[href]').hide();
+							});
+						})(jQuery, window);
+					</ScriptBlock>
+					<Sequence>100</Sequence>
+				</JSLink>
+				<UserAction>
+					<Description></Description>
+					<Location></Location>
+					<Sequence></Sequence>
+					<Url></Url>
+					<Group></Group>
+					<Title></Title>
+					<ImageUrl></ImageUrl>
+					<Rights></Rights>
+				</UserAction>
+			</Web>
+		</CustomActions>
+		<RemoveCustomActions>
+			<Site>
+				<JSLink>
+					<Name>Injected Site Javascript/CSS Links</Name>
+				</JSLink>
+				<UserAction>
+					<Description></Description>
+					<Location></Location>
+				</UserAction>
+			</Site>
+			<Web>
+				<JSLink>
+					<Name>Injected Web Javascript/CSS Links</Name>
+				</JSLink>
+				<UserAction>
+					<Description></Description>
+					<Location></Location>
+				</UserAction>
+			</Web>
+		</RemoveCustomActions>
+
+	</Configuration>
+</Configurations>

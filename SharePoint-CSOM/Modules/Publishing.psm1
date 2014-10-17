@@ -1,3 +1,128 @@
+<#
+    var importingWebPart = mgr.ImportWebPart(webPartXml).WebPart; 
+    var wpDefinition = mgr.AddWebPart(importingWebPart, "Top", 1);
+    mgr.Context.Load(wpDefinition, d => d.Id); // need the Id of the hidden view which gets automatically created
+    mgr.Context.ExecuteQuery();
+    var viewId = wpDefinition.Id;
+
+    List list = web.Lists.GetByTitle("Library Title");
+    View view = list.Views.GetById(viewId);
+    view.ViewFields.RemoveAll();
+    view.ViewFields.Add("Title");
+    view.ViewQuery = "<Where><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">Something Here</Value></Eq></Where>";
+    view.RowLimit = 10;
+    view.Update();
+    web.Context.ExecuteQuery();
+#>
+function Update-WebParts {
+    [cmdletbinding()]
+    param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$PageXml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        Write-Host "`t`tUpdate Page WebParts on $($PageXml.Url)" -ForegroundColor Green
+        $pageAlreadyExists = $false
+
+        # get list information
+        $pagesList = $Web.Lists.GetByTitle("Pages")
+        $ClientContext.Load($pagesList)
+        $ClientContext.Load($pagesList.RootFolder)
+        $ClientContext.ExecuteQuery()
+
+        $MajorVersionsEnabled = $pagesList.EnableVersioning
+        $MinorVersionsEnabled = $pagesList.EnableMinorVersions
+        $ContentApprovalEnabled = $pagesList.EnableModeration
+        $CheckOutRequired = $pagesList.ForceCheckout
+
+        # get page
+        $pageFile = Get-File "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" $web $ClientContext
+        if ($pageFile -eq $null) {
+            Write-Host "`t..Page '$($PageXml.Url)' was not found" -ForegroundColor Red
+            return
+        }
+
+        if($pageFile.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+            Write-Host "`t`t..Checking-out existing page"
+            $pageFile.CheckOut()
+        }
+
+        # add web parts
+        Write-Host "`t`t..Adding WebParts"
+        $updatePage = $false
+        $limitedWebPartManager = $pageFile.GetLimitedWebPartManager([Microsoft.SharePoint.Client.WebParts.PersonalizationScope]::Shared);
+        foreach($wpDefXml in $PageXml.AllUsersWebPart) {
+            $wpZoneID = $wpDefXml.WebPartZoneID
+            $wpZoneOrder = $wpDefXml.WebPartOrder
+            
+            $xml = $($wpDefXml.WebPart."#cdata-section")
+            if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerXml }
+            if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerText }
+            if ($xml -eq $null -or $xml -eq "") { continue }
+            $wpXml = $(($xml -replace "~sitecollection",$site.RootWeb.ServerRelativeUrl) -replace "~site",$web.ServerRelativeUrl)            
+            if ($wpDefXml.ListTitle) {
+                Write-Host "`t`t..Add webpart to '$wpZoneID':$wpZoneOrder for list '$($wpDefXml.ListTitle)'" -ForegroundColor Green
+            } else {
+                Write-Host "`t`t..Add webpart to '$wpZoneID':$wpZoneOrder" -ForegroundColor Green
+            }
+
+            Write-Host "`t`t....Importing" -ForegroundColor Green
+            $wpD = $limitedWebPartManager.ImportWebPart($wpXml)
+            Write-Host "`t`t....Adding" -ForegroundColor Green
+            $wpInstDef = $limitedWebPartManager.AddWebPart($wpD.WebPart, $wpZoneID, $wpZoneOrder)
+            Write-Host "`t`t....Loading" -ForegroundColor Green
+            $ClientContext.Load($wpInstDef)
+            $updatePage = $true
+
+            if ($wpDefXml.ListTitle) {
+                $wpList = Get-List $wpDefXml.ListTitle $web $ClientContext
+                if ($wpList -ne $null) {
+                    # update the hidden list view for the list view webpart
+                    $view = Get-ListViewById $wpList $wpInstDef.Id $ClientContext
+                    Write-Host "`t`t....Update Webpart ListView: $($view.Id)"
+
+                    $DefaultView = $false
+                    $ViewJslink = $(if ($wpDefXml.JSLink) {$wpDefXml.JSLink} else {""})
+                    $Paged = $(if ($wpDefXml.RowLimit.Paged) { [bool]::Parse($wpDefXml.RowLimit.Paged) } else { $true })
+                    $RowLimit = $(if ($wpDefXml.RowLimit) { $wpDefXml.RowLimit.InnerText } else { "30" })
+                    $RowLimit = $(if ($RowLimit -eq $null -or $RowLimit -eq "") { "30" } else { $RowLimit })
+                    $Query = $(if ($wpDefXml.Query) { $wpDefXml.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "") } else { "" })
+                    $Query = $(if ($Query -eq $null -or $Query -eq "") { "<OrderBy><FieldRef Name=`"Modified`" Ascending=`"FALSE`" /></OrderBy>" } else { $Query })
+                    $ViewFields = $(if ($wpDefXml.ViewFields.FieldRef) { $wpDefXml.ViewFields.FieldRef | Select -ExpandProperty Name } else { @("DocIcon","LinkFilename","Modified") })
+
+                    $spView = Update-ListView -List $wpList -ViewNameOrId $wpInstDef.Id -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
+                    Write-Host "`t`t......Updated Webpart ListView: $($view.Id)"
+
+                }
+            }
+        }
+        if ($updatePage) {
+            $ClientContext.ExecuteQuery()
+            Write-Host "`t`t..Finished adding webparts"
+        }
+
+        # now save/checkin/publish/approve
+        $pageFile.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+        Write-Host "`t`t..Checked-in page" -ForegroundColor Green
+
+        if($MinorVersionsEnabled -and $MajorVersionsEnabled) {
+            $pageFile.Publish("Publish Page")
+            Write-Host "`t`t..Published page" -ForegroundColor Green
+        }
+
+        if($ContentApprovalEnabled) {
+            $pageFile.Approve("Approve Page")
+            Write-Host "`t`t..Approved page" -ForegroundColor Green
+        }
+
+        $ClientContext.Load($pageFile)
+        $ClientContext.ExecuteQuery()
+    }
+    end {}
+}
+
 function Update-PublishingPages {
 param (
     [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$PagesXml,
@@ -12,7 +137,7 @@ param (
             if ($PageXml.Url -and $PageXml.Url -ne "") {
                 Write-Host "`tUpdating page '$($PageXml.Url)'" -ForegroundColor Green
                 try {
-                    New-PublishingPage $PageXml $web $ClientContext
+                    New-PublishingPage $PageXml $site $web $ClientContext
                 }
                 catch {
                     Write-Host "`t..Exception updating page '$($PageXml.Url)', `n$($_)`n" -ForegroundColor Red
@@ -98,6 +223,7 @@ function New-PublishingPage {
     [cmdletbinding()]
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$PageXml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
@@ -236,7 +362,7 @@ function New-PublishingPage {
             Write-Host "`t`t..Published page" -ForegroundColor Green
         }
 
-        if($PageXml.Approval -eq "Approved" -and $ContentApprovalEnabled) {
+        if($ContentApprovalEnabled) {
             $publishingPageFile.Approve("Approving Page")
             Write-Host "`t`t..Approved page" -ForegroundColor Green
         }
@@ -258,10 +384,11 @@ function New-PublishingPage {
 		{
 			$existingPageFile.DeleteObject()
 			$ClientContext.ExecuteQuery()
-		}        
+		}
+
+        Update-WebParts $PageXml $site $web $ClientContext
     }
 }
-
 function Delete-PublishingPage {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$PageXml,

@@ -5,7 +5,6 @@ function Add-Web {
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-
         $webCreationInfo = New-Object Microsoft.SharePoint.Client.WebCreationInformation
 
         $webCreationInfo.Url = $xml.URL
@@ -23,19 +22,15 @@ function Add-Web {
     end {} 
 }
 function Add-Webs {
-
- 
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$xml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-
         foreach ($webInfo in $xml.Web) {
             $newweb = Add-Web -web $web -xml $webInfo -ClientContext $ClientContext 
         }
-      
     }
     end {} 
 }
@@ -56,11 +51,12 @@ function Set-WelcomePage {
             $rootFolder.Update()
             $ClientContext.Load($rootFolder)
             $ClientContext.ExecuteQuery()
-            Write-Host "Updated WelcomePage settings" -ForegroundColor Green
+            Write-Host "`t`tUpdated WelcomePage settings" -ForegroundColor Green
         } else {
-            Write-Host "Did not need to update WelcomePage settings"
+            Write-Host "`t`tDid not need to update WelcomePage settings" -ForegroundColor Blue
         }
     }
+    end {}
 }
 
 function Set-MasterPage {
@@ -99,11 +95,12 @@ function Set-MasterPage {
         if($performUpdate) {
             $Web.Update()
             $ClientContext.ExecuteQuery()
-            Write-Host "Updated MasterPage settings" -ForegroundColor Green
+            Write-Host "`t`tUpdated MasterPage settings" -ForegroundColor Green
         } else {
-            Write-Host "Did not need to update MasterPage settings"
+            Write-Host "`t`tDid not need to update MasterPage settings" -ForegroundColor Blue
         }
     }
+    end {}
 }
 
 function Set-Theme {
@@ -133,7 +130,7 @@ function Set-Theme {
             $newImageUrl = "$ServerRelativeUrl/$ImageUrl"
         }
 
-        Write-Host "Applying Theme" -ForegroundColor Green
+        Write-Host "`t`tApplying Theme" -ForegroundColor Green
         if($newImageUrl) {
             $web.ApplyTheme($newThemeUrl, $newFontSchemeUrl, $newImageUrl, $shareGenerated)
         } else {
@@ -144,6 +141,7 @@ function Set-Theme {
         $ClientContext.Load($web)
         $ClientContext.ExecuteQuery()
     }
+    end {}
 }
 function Add-ComposedLook {
     param (
@@ -183,6 +181,7 @@ function Add-ComposedLook {
         $ClientContext.Load($composedLooksListItem) 
         $ClientContext.ExecuteQuery()
     }
+    end {}
 }
 function Get-ComposedLook {
     param (
@@ -207,6 +206,7 @@ function Get-ComposedLook {
         $ClientContext.ExecuteQuery()
         return $composedLookItem
     }
+    end {}
 }
 function Update-ComposedLook {
     param (
@@ -265,6 +265,7 @@ function Update-ComposedLook {
         }
         return $ComposedLook
     }
+    end {}
 }
 
 function Update-Web {
@@ -276,7 +277,6 @@ function Update-Web {
         [parameter(Mandatory=$false)][string]$ResourcesPath
     )
     process {
-
         $site = $web.Site
         if ($site.ServerObjectIsNull.HasValue -and $site.ServerObjectIsNull.Value) {
             $ClientContent.Load($site)
@@ -383,6 +383,7 @@ function Update-Web {
             Add-Webs -Web $web -Xml $xml.Webs -ClientContext $ClientContext
         }
     }
+    end {}
 }
 
 function Remove-RecentNavigationItem {
@@ -407,6 +408,7 @@ function Remove-RecentNavigationItem {
             }
         }
     }
+    end {}
 }
 
 function Update-NoCrawl {
@@ -430,6 +432,7 @@ function Update-NoCrawl {
             Set-PropertyBagValue -Key $searchVersionPropName -Value $searchVersionNew -Web $Web -ClientContext $clientContext
         }
     }
+    end {}
 }
 
 <#

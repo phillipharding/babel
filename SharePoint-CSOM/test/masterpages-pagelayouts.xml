@@ -28,7 +28,7 @@
 					<Folder Url="Display Templates">
 						<File Path="docs\pd.listnavigation.js" Url="pd.listnavigation.js" ReplaceContent="True">
 							<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
-							<Property Name="Title" Value="pd.listnavigation.js" />
+							<Property Name="Title" Value="pd.listnavigation" />
 							<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
 							<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
 							<Property Name="DisplayTemplateJSTargetScope" Value="/" />

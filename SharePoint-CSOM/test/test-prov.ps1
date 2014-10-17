@@ -20,6 +20,9 @@ $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publis
 $connector.csomUsername = ""
 $connector.csomPassword = ""
 
+# set credentials using Windows Credential Manager
+$connector.csomCredentialLabel = "SPO"
+
 # set credentials with Get-Credentials (prompts for creds)
 #$connector.csomCredentials = (Get-Credential | Out-Null)
 
@@ -28,9 +31,9 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host
 
-$configFiles = @("taxonomy","features","columns-and-contenttypes","lists","masterpages-pagelayouts","pages")
+$configFiles = @("taxonomy","features","columns-and-contenttypes","lists","masterpages-pagelayouts","pages","customactions")
 
-$configFiles | ? { $_ -eq "pages" } | % {
+$configFiles | ? { $_ -eq "customactions" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration

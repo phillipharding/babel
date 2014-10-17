@@ -131,6 +131,26 @@ param (
         $view
     }
 }
+function Get-ListViewById {
+param (
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$ViewId,
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+)
+    process {
+        $views = $list.Views
+        $ClientContext.Load($views)
+        $ClientContext.ExecuteQuery()
+        
+        $view = $null
+        $view = $views | Where {$_.Id -eq $ViewId}
+        if($view -ne $null) {
+            $ClientContext.Load($view)
+            $ClientContext.ExecuteQuery()
+        }
+        $view
+    }
+}
 function New-ListView {
 param (
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
@@ -175,7 +195,7 @@ param (
 function Update-ListView {
 param (
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
-    [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$ViewName,
+    [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$ViewNameOrId,
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][bool]$DefaultView,
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][bool]$Paged,
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$Query,
@@ -185,7 +205,10 @@ param (
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
 )
     process {
-        $view = Get-ListView -List $List -ViewName $ViewName -ClientContext $ClientContext
+        $view = Get-ListView -List $List -ViewName $ViewNameOrId -ClientContext $ClientContext
+        if ($view -eq $null) {
+            $view = Get-ListViewById -List $List -ViewId $ViewNameOrId -ClientContext $ClientContext
+        }
         if($view -ne $null) {
             $view.Paged = $Paged
             $view.ViewQuery = $Query
@@ -568,7 +591,7 @@ param(
                 $RowLimit = $view.RowLimit.InnerText
                 $Query = $view.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
                 $ViewFields = $view.ViewFields.FieldRef | Select -ExpandProperty Name
-                $spView = Update-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
+                $spView = Update-ListView -List $splist -ViewNameOrId $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
                 Write-Host "`t`tUpdated List View: $($view.DisplayName)" -ForegroundColor Green
             } else {
                 Write-Host "`t`tCreating List View: $($view.DisplayName)" -ForegroundColor Green
@@ -583,7 +606,7 @@ param(
                 $spView = New-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -PersonalView $PersonalView -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewType $ViewType -ViewJslink $ViewJslink -ClientContext $ClientContext
                 Write-Host "`t`tCreated List View: $($view.DisplayName)" -ForegroundColor Green
                 if ($ViewJslink -ne "") {
-                    $spView = Update-ListView -List $splist -ViewName $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
+                    $spView = Update-ListView -List $splist -ViewNameOrId $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
                     Write-Host "`t`t..Updated List View for JSLink: $($view.DisplayName)" -ForegroundColor Green
                 }
             }
