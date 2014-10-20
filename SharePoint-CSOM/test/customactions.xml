@@ -1,83 +1,80 @@
 <Configurations>
 	<Configuration Name="Default">
 
+		<Lists Scope="Site">
+			<List Title="Style Library" Url="Style Library">
+				<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+					<Folder Url="pdogs">
+						<Folder Url="css">
+							<File Path="css\jquery-ui-1.10.4.custom.css" Url="jquery-ui-1.10.4.custom.css" ReplaceContent="True" />
+							<File Path="css\jquery-ui-1.10.4.custom.min.css" Url="jquery-ui-1.10.4.custom.min.css" ReplaceContent="True" />
+							<Folder Url="images">
+								<File Path="css\images\animated-overlay.gif" Url="animated-overlay.gif" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_flat_0_eeeeee_40x100.png" Url="ui-bg_flat_0_eeeeee_40x100.png" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_flat_55_ffffff_40x100.png" Url="ui-bg_flat_55_ffffff_40x100.png" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" Url="ui-bg_highlight-soft_100_f6f6f6_1x100.png" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_highlight-soft_25_0073ea_1x100.png" Url="ui-bg_highlight-soft_25_0073ea_1x100.png" ReplaceContent="True" />
+								<File Path="css\images\ui-bg_highlight-soft_50_dddddd_1x100.png" Url="ui-bg_highlight-soft_50_dddddd_1x100.png" ReplaceContent="True" />
+								<File Path="css\images\ui-icons_0073ea_256x240.png" Url="ui-icons_0073ea_256x240.png" ReplaceContent="True" />
+								<File Path="css\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
+								<File Path="css\images\ui-icons_666666_256x240.png" Url="ui-icons_666666_256x240.png" ReplaceContent="True" />
+								<File Path="css\images\ui-icons_ff0084_256x240.png" Url="ui-icons_ff0084_256x240.png" ReplaceContent="True" />
+								<File Path="css\images\ui-icons_ffffff_256x240.png" Url="ui-icons_ffffff_256x240.png" ReplaceContent="True" />
+							</Folder>
+						</Folder>
+						<Folder Url="scripts">
+							<File Path="scripts\page-code-01.js" Url="page-code-01.js" ReplaceContent="True" />
+							<File Path="scripts\jquery-1.11.0.js" Url="jquery-1.11.0.js" ReplaceContent="True" />
+							<File Path="scripts\jquery-1.11.0.min.js" Url="jquery-1.11.0.min.js" ReplaceContent="True" />
+							<File Path="scripts\jquery-ui-1.10.4.custom.js" Url="jquery-ui-1.10.4.custom.js" ReplaceContent="True" />
+							<File Path="scripts\jquery-ui-1.10.4.custom.min.js" Url="jquery-ui-1.10.4.custom.min.js" ReplaceContent="True" />
+						</Folder>
+					</Folder>
+				</Folder>
+			</List>
+		</Lists>
+
 		<CustomActions>
-			<Site>
-				<JSLink>
-					<Name>Injected Site Javascript/CSS Links</Name>
-					<ScriptLinks>~sitecollection/Style Library/js/script1.js;~sitecollection/Style Library/js/script2.js;~sitecollection/Style Library/css/master.css;~sitecollection/Style Library/css/responsive.css</ScriptLinks>
-					<Sequence>100</Sequence>
-				</JSLink>
-				<JSLink>
-					<Name>Injected Site Javascript Block</Name>
-					<ScriptBlock>
-						$(function($,window) {
-							$(function() {
-								$('A[href]').hide();
-							});
-						})(jQuery, window);
-					</ScriptBlock>
-					<Sequence>100</Sequence>
-				</JSLink>
-				<UserAction>
-					<Description></Description>
-					<Location></Location>
-					<Sequence></Sequence>
-					<Url></Url>
-					<Group></Group>
-					<Title></Title>
-					<ImageUrl></ImageUrl>
-					<Rights></Rights>
-				</UserAction>
-			</Site>
-			<Web>
-				<JSLink>
-					<Name>Injected Web Javascript/CSS Links</Name>
-					<ScriptLinks>~site/SiteAssets/js/script1.js;~site/SiteAssets/js/script2.js;~site/SiteAssets/css/master.css;~site/SiteAssets/css/responsive.css</ScriptLinks>
-					<Sequence>100</Sequence>
-				</JSLink>
-				<JSLink>
-					<Name>Injected Web Javascript Block</Name>
-					<ScriptBlock>
-						$(function($,window) {
-							$(function() {
-								$('A[href]').hide();
-							});
-						})(jQuery, window);
-					</ScriptBlock>
-					<Sequence>100</Sequence>
-				</JSLink>
-				<UserAction>
-					<Description></Description>
-					<Location></Location>
-					<Sequence></Sequence>
-					<Url></Url>
-					<Group></Group>
-					<Title></Title>
-					<ImageUrl></ImageUrl>
-					<Rights></Rights>
-				</UserAction>
-			</Web>
+			<UserAction Scope="Site" DOMElement="head">
+				<Name>Inject-Site-jQuery-and-jQuery-UI</Name>
+				<Location>ScriptLink</Location>
+				<Sequence>90</Sequence>
+				<ScriptLinks>~sitecollection/Style Library/pdogs/scripts/jquery-1.11.0.min.js;~sitecollection/Style Library/pdogs/scripts/jquery-ui-1.10.4.custom.min.js;~sitecollection/Style Library/pdogs/css/jquery-ui-1.10.4.custom.min.css</ScriptLinks>
+			</UserAction>
+			<UserAction Scope="Site" DOMElement="body">
+				<Name>Inject-Site-Javascript-Block</Name>
+				<Location>ScriptLink</Location>
+				<Sequence>100</Sequence>
+				<ScriptLinks>~sitecollection/Style Library/pdogs/scripts/page-code-01.js</ScriptLinks>
+			</UserAction>
+			<UserAction Scope="Site" >
+				<Name></Name>
+				<Location></Location>
+				<Sequence></Sequence>
+				<Description></Description>
+				<Url></Url>
+				<Group></Group>
+				<Title></Title>
+				<ImageUrl></ImageUrl>
+				<Rights></Rights>
+			</UserAction>
 		</CustomActions>
 		<RemoveCustomActions>
-			<Site>
-				<JSLink>
-					<Name>Injected Site Javascript/CSS Links</Name>
-				</JSLink>
-				<UserAction>
-					<Description></Description>
-					<Location></Location>
-				</UserAction>
-			</Site>
-			<Web>
-				<JSLink>
-					<Name>Injected Web Javascript/CSS Links</Name>
-				</JSLink>
-				<UserAction>
-					<Description></Description>
-					<Location></Location>
-				</UserAction>
-			</Web>
+			<UserAction Scope="Site">
+				<Name>Inject-Site-jQuery-and-jQuery-UI</Name>
+				<Location>ScriptLink</Location>
+			</UserAction>
+			<UserAction Scope="Site">
+				<Name>Inject-Site-Javascript-Block</Name>
+				<Location>ScriptLink</Location>
+			</UserAction>
+			<UserAction Scope="Site">
+				<Name></Name>
+				<Location></Location>
+			</UserAction>
 		</RemoveCustomActions>
 
 	</Configuration>

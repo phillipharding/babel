@@ -40,6 +40,8 @@ $configFiles | ? { $_ -eq "customactions" } | % {
     $configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName']")
 
     # get configuration datasets
+    $customActionsXml = $configurationXml.CustomActions
+    $removeCustomActionsXml = $configurationXml.RemoveCustomActions
     $pagesXml = $configurationXml.Pages
     $siteFeaturesXml = $configurationXml.Features.SiteFeatures.ActivateFeatures
     $removeSiteFeaturesXml = $configurationXml.Features.SiteFeatures.DeactivateFeatures
@@ -67,6 +69,7 @@ $configFiles | ? { $_ -eq "customactions" } | % {
     Update-Catalogs $catalogsXml $connection.Site $connection.Web $connection.Context
     Update-Lists $listsXml $connection.Site $connection.Web $connection.Context
     Update-PublishingPages  $pagesXml $connection.Site $connection.Web $connection.Context
+    Add-CustomActions $customActionsXml $connection.Site $connection.Web $connection.Context
 
     Write-Host
 }
