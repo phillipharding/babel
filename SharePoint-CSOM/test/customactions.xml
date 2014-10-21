@@ -1,7 +1,8 @@
 <Configurations>
 	<Configuration Name="Default">
 
-		<Lists Scope="Site">
+		<!-- add jQuery/jQueryUI to Style Library -->
+		<Lists1 Scope="Site">
 			<List Title="Style Library" Url="Style Library">
 				<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
 					<Folder Url="pdogs">
@@ -35,47 +36,72 @@
 					</Folder>
 				</Folder>
 			</List>
-		</Lists>
+		</Lists1>
 
-		<CustomActions>
-			<UserAction Scope="Site" DOMElement="head">
+		<UserCustomActions>
+			<UserCustomAction Scope="Site" DOMElement="head">
 				<Name>Inject-Site-jQuery-and-jQuery-UI</Name>
 				<Location>ScriptLink</Location>
 				<Sequence>90</Sequence>
 				<ScriptLinks>~sitecollection/Style Library/pdogs/scripts/jquery-1.11.0.min.js;~sitecollection/Style Library/pdogs/scripts/jquery-ui-1.10.4.custom.min.js;~sitecollection/Style Library/pdogs/css/jquery-ui-1.10.4.custom.min.css</ScriptLinks>
-			</UserAction>
-			<UserAction Scope="Site" DOMElement="body">
-				<Name>Inject-Site-Javascript-Block</Name>
+			</UserCustomAction>
+			<UserCustomAction Scope="Site" DOMElement="body">
+				<Name>Inject-Site-PagePulseScript</Name>
 				<Location>ScriptLink</Location>
 				<Sequence>100</Sequence>
 				<ScriptLinks>~sitecollection/Style Library/pdogs/scripts/page-code-01.js</ScriptLinks>
-			</UserAction>
-			<UserAction Scope="Site" >
+			</UserCustomAction>
+			<UserCustomAction Scope="Site" DOMElement="body">
+				<Name>Inject-Site-Javascript-Block1</Name>
+				<Location>ScriptLink</Location>
+				<Sequence>101</Sequence>
+				<ScriptBlock>
+(function() {
+	function jQueryLoaded() {
+		/*alert('jQuery is Loaded...');*/
+		var $e = $('<a title="jQuery has been loaded on the page">jQuery is Loaded...</a>')
+						.attr('href','#')
+						.css({ 'color':'white','margin-left':'10px','background-color':'rgb(0, 114, 198)','font-weight': 800,'font-size':'10pt','text-align':'center'})
+						.addClass('ms-core-listMenu-item ms-core-listMenu-heading');
+		$('#ctl00_PlaceHolderLeftNavBar_PlaceHolderQuickLaunchBottom_idNavLinkViewAll').after($e);
+	}
+	_spBodyOnLoadFunctions.push(function() {
+		ExecuteOrDelayUntilScriptLoaded(function() { 
+			$(jQueryLoaded);
+		}, 'SP.core.js');
+	});
+})();
+				</ScriptBlock>
+			</UserCustomAction>
+			<UserCustomAction Scope="Site" >
 				<Name></Name>
 				<Location></Location>
 				<Sequence></Sequence>
-				<Description></Description>
 				<Url></Url>
 				<Group></Group>
 				<Title></Title>
 				<ImageUrl></ImageUrl>
 				<Rights></Rights>
-			</UserAction>
-		</CustomActions>
-		<RemoveCustomActions>
-			<UserAction Scope="Site">
+			</UserCustomAction>
+		</UserCustomActions>
+		<RemoveUserCustomActions>
+			<UserCustomAction Scope="Site">
 				<Name>Inject-Site-jQuery-and-jQuery-UI</Name>
 				<Location>ScriptLink</Location>
-			</UserAction>
-			<UserAction Scope="Site">
-				<Name>Inject-Site-Javascript-Block</Name>
+			</UserCustomAction>
+			<UserCustomAction Scope="Site">
+				<Name>Inject-Site-PagePulseScript</Name>
 				<Location>ScriptLink</Location>
-			</UserAction>
-			<UserAction Scope="Site">
+			</UserCustomAction>
+			<UserCustomAction Scope="Site">
+				<Name>Inject-Site-Javascript-Block1</Name>
+				<Location>ScriptLink</Location>
+			</UserCustomAction>
+			<UserCustomAction Scope="Site">
 				<Name></Name>
 				<Location></Location>
-			</UserAction>
-		</RemoveCustomActions>
+			</UserCustomAction>
+		</RemoveUserCustomActions>
 
 	</Configuration>
 </Configurations>

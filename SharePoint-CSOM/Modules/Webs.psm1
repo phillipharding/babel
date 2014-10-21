@@ -287,6 +287,9 @@ function Update-Web {
             $ClientContext.ExecuteQuery()
         }
 
+        if ($xml.RemoveUserCustomActions) {
+             Remove-CustomActions -CustomActionsXml $xml.RemoveUserCustomActions -Site $site -Web $web -ClientContext $ClientContext
+        }
         if ($xml.Pages) {
             Remove-PublishingPages -PageXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
         }
@@ -342,6 +345,10 @@ function Update-Web {
 
         if ($xml.Pages) {
             Update-PublishingPages -PageXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
+        }
+
+        if ($xml.UserCustomActions) {
+             Add-CustomActions -CustomActionsXml $xml.UserCustomActions -Site $site -Web $web -ClientContext $ClientContext
         }
 
         foreach ($ProperyBagValue in $xml.PropertyBag.PropertyBagValue) {

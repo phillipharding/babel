@@ -40,8 +40,8 @@ $configFiles | ? { $_ -eq "customactions" } | % {
     $configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName']")
 
     # get configuration datasets
-    $customActionsXml = $configurationXml.CustomActions
-    $removeCustomActionsXml = $configurationXml.RemoveCustomActions
+    $customActionsXml = $configurationXml.UserCustomActions
+    $removeCustomActionsXml = $configurationXml.RemoveUserCustomActions
     $pagesXml = $configurationXml.Pages
     $siteFeaturesXml = $configurationXml.Features.SiteFeatures.ActivateFeatures
     $removeSiteFeaturesXml = $configurationXml.Features.SiteFeatures.DeactivateFeatures
@@ -55,6 +55,7 @@ $configFiles | ? { $_ -eq "customactions" } | % {
 
     Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
 
+#    Remove-CustomActions $removeCustomActionsXml $connection.Site $connection.Web $connection.Context
     Remove-PublishingPages $pagesXml $connection.Site $connection.Web $connection.Context
     Remove-Lists  $listsXml $connection.Site $connection.Web $connection.Context
     Remove-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
@@ -72,5 +73,6 @@ $configFiles | ? { $_ -eq "customactions" } | % {
     Add-CustomActions $customActionsXml $connection.Site $connection.Web $connection.Context
 
     Write-Host
+    Get-CustomAction -Site $connection.Site -ClientContext $connection.Context | % { Write-Host "Name: $($_.Name)`nLocation: $($_.Location)`nSequence: $($_.Sequence)`n" }
 }
 

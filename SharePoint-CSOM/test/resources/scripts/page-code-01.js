@@ -1,7 +1,7 @@
 (function($,window) { 
 	var canContinue = true; 
 	function pulse() {
-		$('#DeltaPlaceHolderPageTitleInTitleArea').effect('highlight').effect('highlight',{color: '#FF0000'}).effect('highlight');
+		$('#DeltaPlaceHolderPageTitleInTitleArea').effect('highlight').effect('highlight',{color: '#FF00FF'});
 		if (canContinue) setTimeout(pulse, 2000);
 	}
 	$(function() {
