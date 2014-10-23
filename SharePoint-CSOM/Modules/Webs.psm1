@@ -102,7 +102,6 @@ function Set-MasterPage {
     }
     end {}
 }
-
 function Set-Theme {
     param (
         [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true )][alias("ColorPaletteUrl")][string]$ThemeUrl = "_catalogs/theme/15/palette001.spcolor",

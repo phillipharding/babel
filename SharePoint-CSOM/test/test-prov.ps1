@@ -29,11 +29,11 @@ $connector.csomCredentialLabel = "SPO"
 # connect...
 $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
-Write-Host
+Write-Host "Connected.`n"
 
-$configFiles = @("taxonomy","features","columns-and-contenttypes","lists","masterpages-pagelayouts","pages","customactions")
+$configFiles = @("taxonomy","features","columns-and-contenttypes","lists","masterpages-pagelayouts","pages","customactions","webparts-catalog")
 
-$configFiles | ? { $_ -eq "customactions" } | % {
+$configFiles | ? { $_ -eq "webparts-catalog" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration
@@ -55,7 +55,7 @@ $configFiles | ? { $_ -eq "customactions" } | % {
 
     Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
 
-#    Remove-CustomActions $removeCustomActionsXml $connection.Site $connection.Web $connection.Context
+    Remove-CustomActions $removeCustomActionsXml $connection.Site $connection.Web $connection.Context
     Remove-PublishingPages $pagesXml $connection.Site $connection.Web $connection.Context
     Remove-Lists  $listsXml $connection.Site $connection.Web $connection.Context
     Remove-ContentTypes $contentTypesXml $connection.RootWeb $connection.Context
@@ -76,3 +76,4 @@ $configFiles | ? { $_ -eq "customactions" } | % {
     Get-CustomAction -Site $connection.Site -ClientContext $connection.Context | % { Write-Host "Name: $($_.Name)`nLocation: $($_.Location)`nSequence: $($_.Sequence)`n" }
 }
 
+"Done."

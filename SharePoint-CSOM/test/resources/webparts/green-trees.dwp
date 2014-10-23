@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Green Trees</Title>
+  <FrameType>None</FrameType>
+  <Description>A description of the webpart.</Description>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor"><![CDATA[<img src="http://www.altum-solutions.co.uk/wp-content/uploads/2014/05/green-landscape-960x3441.jpg" alt="" style="width:500px; border: 0px currentcolor;"/>]]></Content>
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>

@@ -116,7 +116,7 @@ param (
 }
 function Add-CustomActions {
 param (
-    [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$CustomActionsXml,
+    [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$CustomActionsXml,
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $Site, 
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $Web, 
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
@@ -237,7 +237,7 @@ domTarget.appendChild(newScript);`n
 }
 function Remove-CustomActions {
 param (
-    [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$CustomActionsXml,
+    [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$CustomActionsXml,
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $Site, 
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $Web, 
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
