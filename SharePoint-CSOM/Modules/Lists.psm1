@@ -402,9 +402,11 @@ param (
             if($catalogXml.Type -eq "DesignCatalog") {
                 Write-Host "`t..ComposedLooks" -ForegroundColor Green
                 foreach($composedLookXml in $catalogXml.ComposedLook) {
-                    $composedLookListItem = Get-ComposedLook -Name $composedLookXml.Title -ComposedLooksList $SPList -Web $web -ClientContext $ClientContext
-                    if($composedLookListItem -eq $null) {
-                        $composedLookListItem = Add-ComposedLook -Name $composedLookXml.Title -MasterPageUrl $composedLookXml.MasterPageUrl -ThemeUrl $composedLookXml.ThemeUrl -DisplayOrder $composedLookXml.DisplayOrder -ComposedLooksList $SPList -Web $web -ClientContext  $ClientContext
+                    if ($composedLookXml.Title -ne $null -and $composedLookXml.Title -ne "") {
+                        $composedLookListItem = Get-ComposedLook -Name $composedLookXml.Title -ComposedLooksList $SPList -Web $web -ClientContext $ClientContext
+                        if($composedLookListItem -eq $null) {
+                            $composedLookListItem = Add-ComposedLook -Name $composedLookXml.Title -MasterPageUrl $composedLookXml.MasterPageUrl -ThemeUrl $composedLookXml.ThemeUrl -ImageUrl $composedLookXml.ImageUrl -FontSchemeUrl $composedLookXml.FontSchemeUrl -DisplayOrder $composedLookXml.DisplayOrder -ComposedLooksList $SPList -Web $web -ClientContext  $ClientContext
+                        }
                     }
                 }
             }

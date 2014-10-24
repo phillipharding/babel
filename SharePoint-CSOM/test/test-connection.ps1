@@ -1,10 +1,8 @@
 ﻿cls
-$configurationName = "Default"
-$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\test"
-$scriptPath = Split-Path -Parent  $MyInvocation.MyCommand.Definition
+$modulesPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
-# load and init the CSOM helpers
-."$scriptPath\load-spo-helpers.ps1"
+# load and init the CSOM modules
+."$modulesPath\load-spo-modules.ps1"
 cls
 Add-CSOM
 Add-TenantCSOM

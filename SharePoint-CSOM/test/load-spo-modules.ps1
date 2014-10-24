@@ -1,7 +1,7 @@
 ﻿
-$scriptRoot = "C:\Dev\github\babel\SharePoint-CSOM"
-$modulesPath = "$scriptRoot\Modules"
-$assemblyPath = "$scriptRoot\Assemblies"
+$modulesRoot = "C:\Dev\github\babel\SharePoint-CSOM"
+$modulesPath = "$modulesRoot\Modules"
+$assemblyPath = "$modulesRoot\Assemblies"
 
 Import-Module "$modulesPath\Load-CSOM.psm1"
 Add-InternalDlls -assemblyPath $assemblyPath

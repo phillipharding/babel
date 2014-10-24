@@ -1,7 +1,8 @@
 function Add-Web {
     param (
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$xml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site]$Site,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
@@ -16,20 +17,21 @@ function Add-Web {
         $ClientContext.Load($newWeb);
         $ClientContext.ExecuteQuery()
 
-        Update-Web -web $newweb -xml $xml -ClientContext $ClientContext
+        Update-Web -xml $xml -site $site -web $newweb -ClientContext $ClientContext
         $newWeb
     }
     end {} 
 }
 function Add-Webs {
     param (
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$xml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site]$Site,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
         foreach ($webInfo in $xml.Web) {
-            $newweb = Add-Web -web $web -xml $webInfo -ClientContext $ClientContext 
+            $newweb = Add-Web -xml $webInfo -site $site -web $web -ClientContext $ClientContext 
         }
     }
     end {} 
@@ -269,17 +271,18 @@ function Update-ComposedLook {
 
 function Update-Web {
     param (
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$xml,
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext,
-        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$RemoteContext,
-        [parameter(Mandatory=$false)][string]$ResourcesPath
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site]$Site,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        $site = $web.Site
-        if ($site.ServerObjectIsNull.HasValue -and $site.ServerObjectIsNull.Value) {
-            $ClientContent.Load($site)
-            $ClientContext.ExecuteQuery()
+        if ($site -eq $null) {
+            $site = $ClientContext.Site
+            if ($site.ServerObjectIsNull.HasValue -and $site.ServerObjectIsNull.Value) {
+                $ClientContent.Load($site)
+                $ClientContext.ExecuteQuery()
+            }
         }
         if ($site.RootWeb.ServerObjectIsNull.HasValue -and $site.RootWeb.ServerObjectIsNull.Value) {
             $ClientContent.Load($site.RootWeb)
@@ -323,6 +326,16 @@ function Update-Web {
             }
         }
 
+        # add role definitions
+        if ($xml.Roles) {
+            Add-RoleDefintions -RolesXml $xml.Roles -Web $web -ClientContext $ClientContext
+        }
+
+        # add Site Groups
+        if ($xml.Groups) {
+            Add-SiteGroups -GroupsXml $xml.Groups -Web $site.RootWeb -ClientContext $ClientContext
+        }
+
         if($xml.Fields) {
             Update-SiteColumns -fieldsXml $xml.Fields -web $site.RootWeb -ClientContext $ClientContext
         }
@@ -332,7 +345,7 @@ function Update-Web {
         }
 
         if ($xml.Catalogs) {
-            Update-Catalogs $xml.Catalogs $site $web $ClientContext
+            Update-Catalogs -CatalogsXml $xml.Catalogs -site $site -Web $web -ClientContext $ClientContext
         }
 
         foreach ($listXml in $xml.Lists.RenameList) {
@@ -386,7 +399,7 @@ function Update-Web {
         }
 
         if($xml.Webs) {
-            Add-Webs -Web $web -Xml $xml.Webs -ClientContext $ClientContext
+            Add-Webs -Xml $xml.Webs -Site $site -Web $web -ClientContext $ClientContext
         }
     }
     end {}
