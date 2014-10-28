@@ -284,13 +284,20 @@ function Add-Files {
 
 function Get-RootFolder {
     param (
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        $ClientContext.Load($List.RootFolder)
-        $ClientContext.ExecuteQuery()
-        $List.RootFolder
+        if ($List) {
+            $ClientContext.Load($List.RootFolder)
+            $ClientContext.ExecuteQuery()
+            $List.RootFolder
+        } elseif ($Web) {
+            $ClientContext.Load($Web.RootFolder)
+            $ClientContext.ExecuteQuery()
+            $Web.RootFolder
+        }
     }
 }
 function Get-Folder {

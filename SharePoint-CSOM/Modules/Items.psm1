@@ -79,14 +79,23 @@ function Add-ListItems {
 }
 function Get-ListItem {
     param (
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$itemUrl,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$itemUrl,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$title,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$id,
         [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$folder = $null,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$list,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$clientContext
     )
     process {
         $camlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
-        $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($itemUrl)</Value></Eq></Where></Query></View>"
+        if ($itemUrl) {
+            $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($itemUrl)</Value></Eq></Where></Query></View>"
+        } elseif ($title) {
+            $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>$($title)</Value></Eq></Where></Query></View>"
+        } elseif ($id) {
+            $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='ID' /><Value Type='Counter'>$($id)</Value></Eq></Where></Query></View>"
+        }
+        
         if($folder) {
             $clientContext.Load($list.RootFolder)
             $clientContext.ExecuteQuery()
@@ -124,7 +133,16 @@ function Update-ListItem {
         $fileServerRelativeUrl += "/$($listItemXml.Url)"
 
         $camlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
-        $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($listItemXml.Url)</Value></Eq></Where></Query></View>"
+        if ($listItemXml.Url) {
+            $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($listItemXml.Url)</Value></Eq></Where></Query></View>"
+        } elseif ($listItemXml.Title) {
+            $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>$($listItemXml.Title)</Value></Eq></Where></Query></View>"
+        } elseif ($listItemXml.Id) {
+            $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='ID' /><Value Type='Counter'>$($listItemXml.Id)</Value></Eq></Where></Query></View>"
+        }
+        if ((-not $camlQuery.ViewXml) -or ($camlQuery.ViewXml -eq "")) {
+            return
+        }
         if($listItemXml.folder) {
             $camlQuery.FolderServerRelativeUrl = "$($list.RootFolder.ServerRelativeUrl)/$($listItemXml.folder)"
             Write-Host "CamlQuery FolderServerRelativeUrl: $($camlQuery.FolderServerRelativeUrl)" -ForegroundColor Green
@@ -179,32 +197,35 @@ function Update-ListItem {
                     $ClientContext.ExecuteQuery()
                 }
 
-                $file.CheckIn("Checkin file", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
-                Write-Host "`t..Checkin uploaded file" -ForegroundColor Green
-                if ($List.EnableVersioning -and $List.EnableMinorVersions) {
-                    $file.Publish("Publish file")
-                    Write-Host "`t..Published uploaded file" -ForegroundColor Green
-                }
-                if ($List.EnableModeration) {
-                    $file.Approve("Approve file")
-                    Write-Host "`t..Approved uploaded file" -ForegroundColor Green
+                if ($item.File -ne $null -and $item.File.Exists) {
+                    $item.File.CheckIn("Checkin file", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+                    Write-Host "`t..Checkin uploaded file" -ForegroundColor Green
+                    if ($List.EnableVersioning -and $List.EnableMinorVersions) {
+                        $item.File.Publish("Publish file")
+                        Write-Host "`t..Published uploaded file" -ForegroundColor Green
+                    }
+                    if ($List.EnableModeration) {
+                        $item.File.Approve("Approve file")
+                        Write-Host "`t..Approved uploaded file" -ForegroundColor Green
+                    }
                 }
                 $ClientContext.Load($item)
                 $ClientContext.ExecuteQuery()
             }
             catch {
-                if ($file -ne $null -and $file.Exists) {
-                    if($file.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                if ($item.File -ne $null -and $item.File.Exists) {
+                    if($item.File.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
                         Write-Host "`t..Undoing Checkout because an exception occured!" -ForegroundColor Red
                         # undo any checkout
-                        $file.UndoCheckOut()
+                        $item.File.UndoCheckOut()
                         $ClientContext.Load($item)
                         $ClientContext.ExecuteQuery()
                     }
                 }
-                $file = $null
                 Write-Host "`t..Exception updating document item $fileServerRelativeUrl, `n$($_.Exception.Message)`n" -ForegroundColor Red
             }
+        } else {
+            New-ListItem -listItemXml $listItemXml -List $list -ClientContext $ClientContext
         }
     }
     end {}

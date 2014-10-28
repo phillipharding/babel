@@ -2,22 +2,48 @@ function Add-Web {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$xml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site]$Site,
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$web,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        $webCreationInfo = New-Object Microsoft.SharePoint.Client.WebCreationInformation
+        Write-Host "Create Web '$($xml.Title)' [$($xml.WebTemplate)] $($xml.Url)" -ForegroundColor Green
+        $newWeb = $null
+        try {
+            $newWebUrl = "$($Web.ServerRelativeUrl)/$($xml.Url)"
+            $newWeb = $site.OpenWeb($newWebUrl)
+            $ClientContext.Load($newWeb)
+            $ClientContext.ExecuteQuery()
+            Write-Host "`t..Web already exists" -ForegroundColor Green
+        }
+        catch {
+            if ($_.Exception.InnerException.ServerErrorTypeName -ne "System.IO.FileNotFoundException") {
+                throw $_
+            } else {
+                # the web doesn't exist
+                Write-Host "`t..Web doesn't exist" -ForegroundColor Green
+                $newWeb = $null
+            }
+        }
 
-        $webCreationInfo.Url = $xml.URL
-        $webCreationInfo.Title = $xml.Title
-        $webCreationInfo.Description = $xml.Description
-        $webCreationInfo.WebTemplate = $xml.WebTemplate
+        if ($newWeb -eq $null) {
+            $webCreationInfo = New-Object Microsoft.SharePoint.Client.WebCreationInformation
 
-        $newWeb = $web.Webs.Add($webCreationInfo); 
-        $ClientContext.Load($newWeb);
-        $ClientContext.ExecuteQuery()
+            $webCreationInfo.Url = $xml.Url
+            $webCreationInfo.Title = $xml.Title
+            $webCreationInfo.Description = $xml.Description
+            $webCreationInfo.WebTemplate = $xml.WebTemplate
+            $webCreationInfo.Language = 1033
 
-        Update-Web -xml $xml -site $site -web $newweb -ClientContext $ClientContext
+            $newWeb = $Web.Webs.Add($webCreationInfo)
+            $ClientContext.ExecuteQuery()
+            $ClientContext.Load($newWeb)
+            $ClientContext.ExecuteQuery()
+            Write-Host "`t..Created Web '$($newWeb.Title)' [$($newWeb.WebTemplate)] $($newWeb.ServerRelativeUrl)" -ForegroundColor Green
+        }
+
+        Write-Host "`t..Update web '$($newWeb.Title)' [$($newWeb.WebTemplate)] $($newWeb.ServerRelativeUrl)" -ForegroundColor Green
+        Update-Web -xml $xml -site $site -web $newWeb -ClientContext $ClientContext
+        Write-Host "Created Web '$($newWeb.Title)' [$($newWeb.WebTemplate)] $($newWeb.ServerRelativeUrl)" -ForegroundColor Green
         $newWeb
     }
     end {} 

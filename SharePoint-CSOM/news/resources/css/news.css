@@ -1,0 +1,30 @@
+.ms-cui-topBar2 {
+	background-color: #FFE1E1;
+}
+#contentBox {
+	min-width: 200px;
+}
+.ms-blog-adminLinks {
+	display: none;
+}
+.ms-blog-MainArea {
+	max-width: inherit;
+	min-width: 200px;
+	width: 98%;
+}
+.ms-blog-postList {
+	min-width: 200px;
+	max-width: 100%;
+}
+.ms-blog-quickLinksTitle {
+	font-size: 1.8em;
+}
+#onetIDListForm .ms-formtable TD.ms-formbody {
+	width: 95%;
+}
+#onetIDListForm .ms-formtable TD.ms-formbody input.ms-long[type='text'] {
+	width: 99%;
+}
+#onetIDListForm.ms-core-tableNoSpace {
+	width: 90%;
+}

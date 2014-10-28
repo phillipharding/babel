@@ -617,17 +617,21 @@ param(
         Write-Host "`tItems" -ForegroundColor Green
         if ($listxml.DeleteItems) {
             foreach($itemXml in $listxml.DeleteItems.Item) {
-                if ($itemXml.Url -and $itemXml.Url -ne "") {
+                if ($itemXml.Url) {
                     $item = Get-ListItem -itemUrl $itemXml.Url -Folder $itemXml.Folder -List $SPList -ClientContext $clientContext
-                    if($item -ne $null) {
-                        Remove-ListItem -listItem $item -ClientContext $clientContext
-                    }
+                } elseif ($itemXml.Title) {
+                    $item = Get-ListItem -title $itemXml.Title -Folder $itemXml.Folder -List $SPList -ClientContext $clientContext
+                } elseif ($itemXml.Id) {
+                    $item = Get-ListItem -id $itemXml.Id -Folder $itemXml.Folder -List $SPList -ClientContext $clientContext
+                }
+                if($item -ne $null) {
+                    Remove-ListItem -listItem $item -ClientContext $clientContext
                 }
             }
         }
         if ($listxml.UpdateItems) {
             foreach($itemXml in $listxml.UpdateItems.Item) {
-                if ($itemXml.Url -and $itemXml.Url -ne "") {
+                if (($itemXml.Url -and $itemXml.Url -ne "") -or ($itemXml.Title -and $itemXml.Title -ne "") -or ($itemXml.Id -and $itemXml.Id -ne "")) {
                     Update-ListItem -listItemXml $itemXml -List $SPList -ClientContext $clientContext 
                 }
             }

@@ -18,3 +18,4 @@ Remove-Module "Taxonomy"
 Remove-Module "CustomActions"
 Remove-Module "Webs"
 Remove-Module "SearchCenter"
+cls

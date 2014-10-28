@@ -288,7 +288,7 @@ function Update-ContentTypes {
                 
                 # check to see if we have the parent content type avilable, if not, then can't create content type.
                 $parentContentType = $web.AvailableContentTypes | Where {$_.Name -eq $contentTypeXml.ParentContentType}
-                if($parentContentType -ne $null) {
+                if(($contentTypeXml.ID -and $contentTypeXml.ID -ne "") -or ($parentContentType -ne $null)) {
 
                     $contentTypeCreationInformation = New-Object Microsoft.SharePoint.Client.ContentTypeCreationInformation
                     $contentTypeCreationInformation.Name = $contentTypeXml.Name

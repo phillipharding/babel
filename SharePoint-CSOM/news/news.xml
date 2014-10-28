@@ -1,0 +1,146 @@
+<Configurations>
+	<Configuration Name="News">
+
+		<Webs>
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="BLOG#0">
+				<!-- Allowed schema
+					
+					<Fields/>
+					<ContentTypes/>
+					<Pages/>
+					<Lists/>
+					<Features/>
+						<WebFeatures/>
+						<SiteFeatures/>
+					<Catalogs/>
+					<UserCustomActions/>
+					<RemoveUserCustomActions/>
+					<PropertyBag/>
+						<PropertyBagValue />
+
+					<WelcomePage/>
+					<CustomMasterUrl/>
+					<MasterUrl/>
+					<NoCrawl/>
+
+					<ColorPaletteUrl/>
+					<FontSchemeUrl/>
+					<BackgroundImageUrl/>
+
+					<Webs/>
+						<Web/>
+				-->
+				<Features>
+					<SiteFeatures>
+						<ActivateFeatures>
+						</ActivateFeatures>
+						<DeactivateFeatures>
+						</DeactivateFeatures>
+					</SiteFeatures>
+					<WebFeatures>
+						<ActivateFeatures>
+						</ActivateFeatures>
+						<DeactivateFeatures>
+							<Feature FeatureID="87294C72-F260-42f3-A41B-981A2FFCE37A" Name="Minimal Download Strategy" Force="" Ignore="" />
+						</DeactivateFeatures>
+					</WebFeatures>
+				</Features>
+
+				<PropertyBag>
+					<PropertyBagValue Key="SaveSiteAsTemplateEnabled" Value="true" Indexable="true" />
+					<PropertyBagValue Key="ms-blogs-skinid" Value="1" Indexable="false" />
+				</PropertyBag>
+
+				<Fields>
+					<Field Type="Image" RichText="TRUE" RichTextMode="FullHtml" DisplayName="News Rollup Image" Required="FALSE" ID="{3C8B42B3-A9D4-4542-9D45-4D36228477F3}" StaticName="NewsRollupImage" Name="NewsRollupImage" Group="News Columns" />
+					<Field Type="Image" RichText="TRUE" RichTextMode="FullHtml" DisplayName="News Page Image" Required="FALSE" ID="{AC2E4A9F-DC0A-4337-9A0F-F35F8E9FB7C7}" StaticName="NewsPageImage" Name="NewsPageImage" Group="News Columns" />
+				</Fields>
+				<ContentTypes>
+					<ContentType ID="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" Group="News ContentTypes" Name="News Post" Description="Create a new News Post.">
+						<FieldRefs>
+							<FieldRef ID="{AC2E4A9F-DC0A-4337-9A0F-F35F8E9FB7C7}" Required="False" Hidden="False" />
+							<FieldRef ID="{3C8B42B3-A9D4-4542-9D45-4D36228477F3}" Required="False" Hidden="False" />
+						</FieldRefs>
+					</ContentType>
+				</ContentTypes>
+
+				<Lists>
+					<List Title="Photos" Description="A library created to store images that are used on pages in this site." OnQuickLaunchBar="True" TemplateFeatureId="4bcccd62-dcaf-46dc-a7d4-e38277ef33f4" Type="851" Url="Lists/Photos">
+						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+							<!-- ContentTypeId for Image is 0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214 -->
+							<File Path="images\cogs.jpg" Url="cogs.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="cogs.jpg" />
+							</File>
+							<File Path="images\cogsmore.jpg" Url="cogsmore.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="cogsmore.jpg" />
+							</File>
+							<File Path="images\compass.jpg" Url="compass.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="compass.jpg" />
+							</File>
+							<File Path="images\corn-hand-focus.jpg" Url="corn-hand-focus.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="corn-hand-focus.jpg" />
+							</File>
+							<File Path="images\lightbulbs.jpg" Url="lightbulbs.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="lightbulbs.jpg" />
+							</File>
+						</Folder>
+					</List>
+
+					<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
+						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+							<Folder Url="news">
+								<Folder Url="css">
+									<File Path="css\news.css" Url="news.css" ReplaceContent="True" />
+								</Folder>
+								<Folder Url="js">
+								</Folder>
+							</Folder>
+						</Folder>
+					</List>
+					
+					<List Title="Posts" ContentTypesEnabled="True">
+						<DeleteItems>
+							<Item Title="Welcome to my blog!" />
+						</DeleteItems>
+						<ContentType Name="News Post" Default="True" />
+						<RemoveContentType Name="Post" />
+					</List>
+					
+					<List Title="Categories">
+						<DeleteItems>
+							<Item Title="Events" />
+							<Item Title="Opinions" />
+							<Item Title="Ideas" />
+						</DeleteItems>
+						<UpdateItems>
+							<Item Title="Highlights">
+								<Property Name="Title" Value="Highlights" />
+							</Item>
+							<Item Title="RB Better Business">
+								<Property Name="Title" Value="RB Better Business" />
+							</Item>
+							<Item Title="RB Apppointments">
+								<Property Name="Title" Value="RB Apppointments" />
+							</Item>
+						</UpdateItems>
+					</List>
+				</Lists>
+
+				<UserCustomActions>
+					<UserCustomAction Scope="Web" DOMElement="head">
+						<Name>Inject-Web-News-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>90</Sequence>
+						<ScriptLinks>~site/SiteAssets/news/css/news.css</ScriptLinks>
+					</UserCustomAction>
+				</UserCustomActions>
+			</Web>
+		</Webs>
+
+	</Configuration>
+</Configurations>

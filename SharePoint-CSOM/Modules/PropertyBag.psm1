@@ -32,7 +32,7 @@ function Set-PropertyBagValue {
     )
     process {
         $indexedPropertyBagKey = "vti_indexedpropertykeys"
-        Write-Verbose "Set-PropertyBagValue Key: $Key Value: $Value Indexable: $Indexable" -Verbose
+        Write-Host "`tSet-PropertyBagValue Key: $Key Value: $Value Indexable: $Indexable" -ForegroundColor Green
         if($Site) {
 
             if($Indexable) {
