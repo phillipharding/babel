@@ -5,7 +5,7 @@
 
 		-->
 		<Webs>
-			<Web Url="" Title="" Description="" WebTemplate="">
+			<Web Url="news" Title="News Site" Description="Welcome to the Corporate News Site" WebTemplate="BLOG#0">
 				<!-- Allowed schema
 					
 					<Fields/>

@@ -11,6 +11,8 @@
 
 		<Groups>
 			<Group Title="WCM Authors" Description="The WCM Authors group" OnlyAllowMembersViewMembership="false">
+				<Permission Roles="WCM Author,Edit,Contribute" />
+				<User />
 			</Group>
 			<Group Title="WCM Readers" Description="The WCM Reader group" OnlyAllowMembersViewMembership="false">
 			</Group>
