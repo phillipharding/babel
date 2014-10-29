@@ -2,7 +2,7 @@
 	<Configuration Name="News">
 
 		<Webs>
-			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="BLOG#0">
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
 				<!-- Allowed schema
 					
 					<Fields/>
@@ -39,6 +39,7 @@
 					</SiteFeatures>
 					<WebFeatures>
 						<ActivateFeatures>
+							<Feature FeatureID="0D1C50F7-0309-431c-ADFB-B777D5473A65" Name="BlogContent" />
 						</ActivateFeatures>
 						<DeactivateFeatures>
 							<Feature FeatureID="87294C72-F260-42f3-A41B-981A2FFCE37A" Name="Minimal Download Strategy" Force="" Ignore="" />
@@ -46,9 +47,31 @@
 					</WebFeatures>
 				</Features>
 
+				<Catalogs>
+					<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
+					<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+					<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+
+					<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+							<Folder Url="Display Templates">
+								<File Path="scripts\news-post-summary.js" Url="news-post-summary.js" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
+									<Property Name="Title" Value="news-post-summary" />
+									<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
+									<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
+									<Property Name="DisplayTemplateJSTargetScope" Value="~sitecollection" />
+									<Property Name="DisplayTemplateJSTargetListTemplate" Value="301" />
+								</File>
+							</Folder>
+						</Folder>
+					</Catalog>
+				</Catalogs>
+
 				<PropertyBag>
 					<PropertyBagValue Key="SaveSiteAsTemplateEnabled" Value="true" Indexable="true" />
 					<PropertyBagValue Key="ms-blogs-skinid" Value="1" Indexable="false" />
+					<PropertyBagValue Key="RB-WebTemplate-NewsCorp" Value="v1-0-0-0" />
 				</PropertyBag>
 
 				<Fields>
@@ -100,6 +123,14 @@
 								<Folder Url="js">
 								</Folder>
 							</Folder>
+						</Folder>
+					</List>
+					<List Title="Site Pages" Description="Site Pages Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-C796-4402-9F2F-0EB9A6E71B18" Type="119" Url="SitePages">
+						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+							<File Path="pages\News Articles.aspx" Url="News Articles.aspx" ReplaceContent="True" WelcomePage="True" ReplaceContentTokens="True">
+								<Property Name="ContentTypeId" Value="0x01010901" />
+								<Property Name="Title" Value="News Articles" />
+							</File>
 						</Folder>
 					</List>
 					

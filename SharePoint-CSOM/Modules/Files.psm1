@@ -96,10 +96,31 @@ function Upload-File {
             $folderServerRelativeUrl = $Folder.ServerRelativeUrl
             $fileServerRelativeUrl = "$folderServerRelativeUrl/$($FileXml.Url)"
             Write-Host "`tFile: $fileServerRelativeUrl" -ForegroundColor Green
+    
+            $ClientContext.Load($List.ParentWeb)
+            $ClientContext.ExecuteQuery()
+
+            $fileContent = Get-ResourceFile -FilePath $FileXml.Path -ResourcesPath $ResourcesPath -RemoteContext $RemoteContext
+            if ($FileXml.ReplaceContentTokens -and $FileXml.ReplaceContentTokens -ne "") {
+                $replaceTokens = [bool]::Parse($FileXml.ReplaceContentTokens)
+                if ($replaceTokens) {
+                    $ClientContext.Load($List.ParentWeb.SiteUserInfoList)
+                    $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb)
+                    $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder)
+                    $ClientContext.ExecuteQuery()
+                    $siteUrl = $($List.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
+                    $webUrl = $($List.ParentWeb.ServerRelativeUrl) -replace "/$",""
+Write-Host ">>$siteUrl<< >>$webUrl<<"
+                    $strContent = [System.Text.Encoding]::UTF8.GetString($fileContent)
+                    $strContent = $strContent -replace "{{~sitecollection}}",$siteUrl
+                    $strContent = $strContent -replace "{{~site}}",$webUrl
+                    $fileContent = [System.Text.Encoding]::UTF8.GetBytes($strContent)
+                }
+            }
 
             $fileCreationInformation = New-Object Microsoft.SharePoint.Client.FileCreationInformation
             $fileCreationInformation.Url = "$fileServerRelativeUrl"
-            $fileCreationInformation.Content = Get-ResourceFile -FilePath $FileXml.Path -ResourcesPath $ResourcesPath -RemoteContext $RemoteContext
+            $fileCreationInformation.Content = $fileContent
             if($FileXml.ReplaceContent) {
                 $replaceContent = $false
                 $replaceContent = [bool]::Parse($FileXml.ReplaceContent)
@@ -161,11 +182,22 @@ function Upload-File {
                 Write-Host "`t..Published uploaded file" -ForegroundColor Green
             }
             if ($List.EnableModeration) {
+                Write-Host "`t..About to Approve uploaded file" -ForegroundColor Green
                 $file.Approve("Approve file")
                 Write-Host "`t..Approved uploaded file" -ForegroundColor Green
             }
             $ClientContext.Load($item)
             $ClientContext.ExecuteQuery()
+
+            if($FileXml.WelcomePage -and ($FileXml.Url -match ".aspx")) {
+                $isWelcomePage = $false
+                $isWelcomePage = [bool]::Parse($FileXml.WelcomePage)
+                if($isWelcomePage) {
+                    $web = $List.ParentWeb
+                    Set-WelcomePage -WelcomePageUrl $file.ServerRelativeUrl -Web $web -ClientContext $ClientContext
+                    Write-Host "`t..ASPX page set as Welcome page" -ForegroundColor Green
+                }
+            }
         }
         catch {
             if ($file -ne $null -and $file.Exists) {

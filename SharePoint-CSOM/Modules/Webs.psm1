@@ -14,6 +14,16 @@ function Add-Web {
             $ClientContext.Load($newWeb)
             $ClientContext.ExecuteQuery()
             Write-Host "`t..Web already exists" -ForegroundColor Green
+
+            $delete = $false
+            if ($xml.AlwaysDeleteWeb -and $xml.AlwaysDeleteWeb -ne "") { $delete = [bool]::Parse($xml.AlwaysDeleteWeb) }
+            if ($delete) {
+                Write-Host "`t..Deleting existing Web" -ForegroundColor Green
+                $newWeb.DeleteObject();
+                $ClientContext.ExecuteQuery()
+                $newWeb = $null
+                Write-Host "`t..Deleted" -ForegroundColor Green
+            }
         }
         catch {
             if ($_.Exception.InnerException.ServerErrorTypeName -ne "System.IO.FileNotFoundException") {
@@ -81,7 +91,7 @@ function Set-WelcomePage {
             $ClientContext.ExecuteQuery()
             Write-Host "`t`tUpdated WelcomePage settings" -ForegroundColor Green
         } else {
-            Write-Host "`t`tDid not need to update WelcomePage settings" -ForegroundColor Blue
+            Write-Host "`t`tDid not need to update WelcomePage settings" -ForegroundColor White
         }
     }
     end {}

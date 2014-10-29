@@ -364,7 +364,11 @@ param (
         if ($CatalogsXml -eq $null -or $CatalogsXml -eq "") { return }
         Write-Host "Start Catalogs.." -ForegroundColor Green
         foreach($catalogXml in $CatalogsXml.Catalog) {
-            $SPList = $web.GetCatalog([Microsoft.SharePoint.Client.ListTemplateType]::$($catalogXml.Type))
+            if ($catalogXml.Type -eq "MasterPageCatalog") {
+                $SPList = $site.RootWeb.GetCatalog([Microsoft.SharePoint.Client.ListTemplateType]::$($catalogXml.Type))
+            } else {
+                $SPList = $web.GetCatalog([Microsoft.SharePoint.Client.ListTemplateType]::$($catalogXml.Type))
+            }
             $ClientContext.Load($SPList)
             $ClientContext.ExecuteQuery()
 

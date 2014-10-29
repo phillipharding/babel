@@ -31,7 +31,8 @@
 							<Property Name="Title" Value="pd.listnavigation" />
 							<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
 							<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
-							<Property Name="DisplayTemplateJSTargetScope" Value="/" />
+							<Property Name="DisplayTemplateJSTargetScope" Value="~sitecollection" />
+							<Property Name="DisplayTemplateJSTargetListTemplate" Value="" />
 						</File>
 					</Folder>
 				</Folder>
