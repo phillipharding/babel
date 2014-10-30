@@ -9,24 +9,26 @@
 	<SharePoint:DelegateControl runat="server" ControlId="SmallSearchInputBox" />
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderLeftNavBar" runat="server">
-	<SharePoint:SPSecurityTrimmedControl runat="server" permission="AddAndCustomizePages">
-		<table id="Hero-WPQ2" class="add-a-new-post" dir="none" border="0" cellspacing="0" cellpadding="0">
-			<tbody>
-				<tr>
-					<td class="ms-list-addnew ms-textXLarge ms-list-addnew-aligntop ms-soften">
-						<!-- sitecollection = "{{~sitecollection}}/something"   -->
-						<a title="Add a new item to this list or library." class="ms-heroCommandLink ms-hero-command-enabled-alt" id="idHomePageNewItem" onclick='_EasyUploadOrNewItem2(event, false, "{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=", "WPQ2"); return false;' href="{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=" target="_self">
-							<span class="ms-list-addnew-imgSpan20">
-								<img class="ms-list-addnew-img20" id="idHomePageNewItem-img" src="/_layouts/15/images/spcommon.png?rev=38">
-							</span>
-							<span>New Article</span>
-						</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</SharePoint:SPSecurityTrimmedControl>
-	<WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" ID="BlogNavigator" Title="Navigator" AllowPersonalization="false" />
+	<div class='posts-navigator'>
+		<SharePoint:SPSecurityTrimmedControl runat="server" permission="AddAndCustomizePages">
+			<table id="Hero-WPQ2" class="add-a-new-post" dir="none" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td class="ms-list-addnew ms-textXLarge ms-list-addnew-aligntop ms-soften">
+							<!-- sitecollection = "{{~sitecollection}}/something"   -->
+							<a title="Add a new item to this list or library." class="ms-heroCommandLink ms-hero-command-enabled-alt" id="idHomePageNewItem" onclick='_EasyUploadOrNewItem2(event, false, "{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=", "WPQ2"); return false;' href="{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=" target="_self">
+								<span class="ms-list-addnew-imgSpan20">
+									<img class="ms-list-addnew-img20" id="idHomePageNewItem-img" src="/_layouts/15/images/spcommon.png?rev=38">
+								</span>
+								<span>New Article</span>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</SharePoint:SPSecurityTrimmedControl>
+		<WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" ID="BlogNavigator" Title="Navigator" AllowPersonalization="false" />
+	</div>
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderBodyAreaClass" runat="server">
 	<SharePoint:StyleBlock runat="server">

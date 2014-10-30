@@ -1,6 +1,8 @@
+/* INVOKE a CUSTOMACTION CLUE */
 .ms-cui-topBar2 {
 	background-color: #FFE1E1;
 }
+/* SET FLUID WIDTH */
 #contentBox {
 	min-width: 200px;
 }
@@ -27,4 +29,11 @@
 }
 #onetIDListForm.ms-core-tableNoSpace {
 	width: 90%;
+}
+/* POSTS */
+.ms-blog-postBoxMargin > h2 { display: none; }
+.ms-blog-postBoxMargin > h2.news-post-title { 
+	display: block; 
+	font-size: 2em;
+	margin: -12px 0 3px 0;
 }

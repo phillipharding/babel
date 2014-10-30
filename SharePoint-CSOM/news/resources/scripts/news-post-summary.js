@@ -1,7 +1,7 @@
 (function() {
 /*
 	CSR display template
-	JSLink = ~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js
+	JSLink = sp.ui.blogs.js|~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js
 */
 
 window.csr = window.csr || {};
@@ -16,21 +16,50 @@ csr.templateoverride = function() {
 	ctxOverride = {
 		OnPreRender: OnPreRender,
 		Templates: {
+			View: ViewRender,
+			Body: BodyRender,
 			Header: HeaderRender,
 			Footer: FooterRender,
 			Item: ItemRender,
 			Fields: {
+				'Title': {'View': FieldTitleViewRender },
 				'Body': {'View': FieldBodyViewRender }
 			}
 		},
-		OnPostRender: OnPostRender/*,
-		ListTemplateType: 301,
+		OnPostRender: OnPostRender,
+		ListTemplateType: 301/*,
 		BaseViewID: 0*/
 	};
 
+	function ViewRender(ctx) {
+		console.log(String.format(">>In ViewRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
+		return "";
+	}
+	function BodyRender(ctx) {
+		console.log(String.format(">>In BodyRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
+		return "";
+	}
+	function FieldTitleViewRender(ctx) {
+		console.log(String.format(">>In FieldTitleViewRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
+		/* close the <A/> and <H2/> tags first */
+		var ret = String.format("</a></h2><h2 class='news-post-title'><a href='{0}/Post.aspx?ID={1}' class=''>{2}</a></h2>",
+							ctx.listUrlDir,
+							ctx.CurrentItem.ID,
+							ctx.CurrentItem.Title);
+		for(var k in ctx.CurrentItem) {
+			console.log(String.format(">>{0} = {1}", k, ctx.CurrentItem[k]));
+		}
+
+		return ret;
+	}
 	function FieldBodyViewRender(ctx) {
 		console.log(String.format(">>In FieldBodyViewRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
 		var ret = "<hr/><hr/>" + ctx.CurrentItem.Body;
+
+		/*for(var k in ctx.CurrentItem) {
+			console.log(String.format(">>{0} = {1}", k, ctx.CurrentItem[k]));
+		}*/
+
 		return ret;
 	}
 	function OnPreRender(ctx) {

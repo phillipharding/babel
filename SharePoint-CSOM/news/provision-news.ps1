@@ -1,5 +1,6 @@
 ﻿cls
 $configurationName = "News"
+$configurationId = "1"
 $configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news"
 
 # load and init the CSOM modules
@@ -26,7 +27,12 @@ $configFiles | ? { $_ -eq "news" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration
-    $configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName']")
+    $configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName' and @ID='$configurationId']")
+    if ($configurationXml -eq $null) {
+        Write-Host "Could not find configuration $configurationName#$configurationId`n" -ForegroundColor Red
+        return
+    }
+    Write-Host "Applying Configuration $configurationName#$configurationId - $($configurationXml.Description)`n" -ForegroundColor Yellow
 
     Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
     Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context

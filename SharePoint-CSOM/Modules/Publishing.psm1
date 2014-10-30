@@ -18,16 +18,32 @@ function Update-WebParts {
     [cmdletbinding()]
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$PageXml,
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $site, 
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $Site, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        Write-Host "`t`tUpdate Page WebParts on $($PageXml.Url)" -ForegroundColor Green
+        if (-not ($PageXml.Url -match ".aspx$")) {
+            Write-Host "`t`t$($PageXml.Url) is not a publishing or webpart page" -ForegroundColor Green
+            return
+        }
+        Write-Host "`t`tUpdate WebParts on $($PageXml.Url)" -ForegroundColor Green
         $pageAlreadyExists = $false
+        $siteUrl = ""
+        if ($Site -eq $null) {
+            $ClientContext.Load($Web.SiteUserInfoList)
+            $ClientContext.Load($Web.SiteUserInfoList.ParentWeb)
+            $ClientContext.Load($Web.SiteUserInfoList.ParentWeb.RootFolder)
+            $ClientContext.ExecuteQuery()
+            $siteUrl = $($Web.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
+        } else {
+            $siteUrl = $($site.ServerRelativeUrl) -replace "/$",""
+        }
 
         # get list information
-        $pagesList = $Web.Lists.GetByTitle("Pages")
+        $pagesList = $(if ($List -ne $null) { $List } else { $Web.Lists.GetByTitle("Pages") })
+        
         $ClientContext.Load($pagesList)
         $ClientContext.Load($pagesList.RootFolder)
         $ClientContext.ExecuteQuery()
@@ -61,7 +77,7 @@ function Update-WebParts {
             if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerXml }
             if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerText }
             if ($xml -eq $null -or $xml -eq "") { continue }
-            $wpXml = $(($xml -replace "~sitecollection",$site.RootWeb.ServerRelativeUrl) -replace "~site",$web.ServerRelativeUrl)            
+            $wpXml = $(($xml -replace "~sitecollection",$siteUrl) -replace "~site",$web.ServerRelativeUrl)            
             if ($wpDefXml.ListTitle) {
                 Write-Host "`t`t..Add webpart to '$wpZoneID':$wpZoneOrder for list '$($wpDefXml.ListTitle)'" -ForegroundColor Green
             } else {
@@ -83,14 +99,26 @@ function Update-WebParts {
                     $view = Get-ListViewById $wpList $wpInstDef.Id $ClientContext
                     Write-Host "`t`t....Update Webpart ListView: $($view.Id)"
 
-                    $DefaultView = $false
-                    $ViewJslink = $(if ($wpDefXml.JSLink) {$wpDefXml.JSLink} else {""})
-                    $Paged = $(if ($wpDefXml.RowLimit.Paged) { [bool]::Parse($wpDefXml.RowLimit.Paged) } else { $true })
-                    $RowLimit = $(if ($wpDefXml.RowLimit) { $wpDefXml.RowLimit.InnerText } else { "30" })
+                    $DefaultView = $view.DefaultView
+                    $ViewJslink = $(if ($wpDefXml.JSLink) {$wpDefXml.JSLink} else { $view.JSLink })
+                    $Paged = $(if ($wpDefXml.RowLimit.Paged) { [bool]::Parse($wpDefXml.RowLimit.Paged) } else { $view.Paged })
+                    $RowLimit = $(if ($wpDefXml.RowLimit) { $wpDefXml.RowLimit.InnerText } else { "$($view.RowLimit)" })
                     $RowLimit = $(if ($RowLimit -eq $null -or $RowLimit -eq "") { "30" } else { $RowLimit })
-                    $Query = $(if ($wpDefXml.Query) { $wpDefXml.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "") } else { "" })
+                    $Query = $(if ($wpDefXml.Query) { $wpDefXml.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "") } else { $view.ViewQuery })
                     $Query = $(if ($Query -eq $null -or $Query -eq "") { "<OrderBy><FieldRef Name=`"Modified`" Ascending=`"FALSE`" /></OrderBy>" } else { $Query })
-                    $ViewFields = $(if ($wpDefXml.ViewFields.FieldRef) { $wpDefXml.ViewFields.FieldRef | Select -ExpandProperty Name } else { @("DocIcon","LinkFilename","Modified") })
+                    if ($wpDefXml.ViewFields.FieldRef) { 
+                        $ViewFields = $wpDefXml.ViewFields.FieldRef | Select -ExpandProperty Name 
+                    } else {
+                        if ($wpDefXml.ViewFields) {
+                            if ($pagesList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::DocumentLibrary) {
+                                $ViewFields = @("DocIcon","LinkFilename","Modified")
+                            } elseif ($pagesList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::GenericList) {
+                                $ViewFields = @("Title","Modified","ModifiedBy")
+                            }
+                        } else {
+                            $ViewFields = @()
+                        }
+                    }
 
                     $spView = Update-ListView -List $wpList -ViewNameOrId $wpInstDef.Id -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
                     Write-Host "`t`t......Updated Webpart ListView: $($view.Id)"
@@ -386,7 +414,7 @@ function New-PublishingPage {
 			$ClientContext.ExecuteQuery()
 		}
 
-        Update-WebParts $PageXml $site $web $ClientContext
+        Update-WebParts -PageXml $PageXml -List $pagesList -Site $site -Web $web -ClientContext $ClientContext
     }
 }
 function Delete-PublishingPage {

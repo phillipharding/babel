@@ -110,7 +110,7 @@ function Upload-File {
                     $ClientContext.ExecuteQuery()
                     $siteUrl = $($List.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
                     $webUrl = $($List.ParentWeb.ServerRelativeUrl) -replace "/$",""
-Write-Host ">>$siteUrl<< >>$webUrl<<"
+
                     $strContent = [System.Text.Encoding]::UTF8.GetString($fileContent)
                     $strContent = $strContent -replace "{{~sitecollection}}",$siteUrl
                     $strContent = $strContent -replace "{{~site}}",$webUrl
@@ -130,11 +130,22 @@ Write-Host ">>$siteUrl<< >>$webUrl<<"
             # existing file? get and checkout
             $file = Get-File $fileServerRelativeUrl $List.ParentWeb $ClientContext
             if ($file -ne $null -and $file.Exists) {
-                if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
-                    $file.Checkout()
-                    Write-Host "`t..Checkout existing file" -ForegroundColor Green
+                if ($FileXml.ReplaceFile -and ($FileXml.ReplaceFile -match "true")) {
+                    Write-Host "`t..Deleting existing file" -ForegroundColor Green
+                    if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                        $file.CheckOut()
+                        Write-Host "`t`t..Checkout existing file for delete" -ForegroundColor Green
+                    }
+                    $file.DeleteObject()
+                    $ClientContext.ExecuteQuery()
+                    $file = $null
                 } else {
-                    Write-Host "`t..Existing file already checked-out" -ForegroundColor Green
+                    if($file.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                        $file.Checkout()
+                        Write-Host "`t..Checkout existing file" -ForegroundColor Green
+                    } else {
+                        Write-Host "`t..Existing file already checked-out" -ForegroundColor Green
+                    }
                 }
             }
             
@@ -229,7 +240,8 @@ function Update-Folders {
         foreach($folderXml in $FoldersXml.Folder) {
             if ($folderXml.Url -and $folderXml.Url -ne "") {
                 $folderPath = ""
-                $resourcesPath = ""
+                $resourcesPath = $($folderXml.SelectSingleNode("ancestor::*[@ResourcesPath][1]/@ResourcesPath")).Value
+
                 if ($folderXml.SubFolder -and $folderXml.SubFolder -ne "") { $folderPath = $folderXml.SubFolder }
                 if ($folderXml.ResourcesPath -and $folderXml.ResourcesPath -ne "") { $resourcesPath = $folderXml.ResourcesPath }
 
@@ -277,11 +289,17 @@ function Add-Files {
         if ($ResourcesPath -eq "" -or ($FolderXml.ResourcesPath -and ($FolderXml.ResourcesPath -ne "") )) {
             $ResourcesPath = $FolderXml.ResourcesPath
         }
+
+        $ClientContext.Load($List.ParentWeb)
+        $ClientContext.ExecuteQuery()
+
         Write-Host "`t`tFolder: $($Folder.ServerRelativeUrl)" -ForegroundColor Green
         foreach($fileXml in $FolderXml.File) {
             if ($fileXml.Path -and $fileXml.Path -ne "") {
                 Write-Host "$($fileXml.Path)"
                 $file = Upload-File -List $List -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath -ClientContext $clientContext -RemoteContext $RemoteContext
+
+                Update-WebParts -PageXml $fileXml -List $List -Web $List.ParentWeb -ClientContext $ClientContext
             }
         }
 

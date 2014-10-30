@@ -1,5 +1,8 @@
-<Configurations>
-	<Configuration Name="News">
+<Configurations ResourcesPath="">
+	<Configuration Name="News" ID="0" Description="Applies Corporate News capability to an existing site" ResourcesPath="">
+	</Configuration>
+
+	<Configuration Name="News" ID="1" Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
 
 		<Webs>
 			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
@@ -53,7 +56,7 @@
 					<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
 
 					<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
-						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+						<Folder Url="">
 							<Folder Url="Display Templates">
 								<File Path="scripts\news-post-summary.js" Url="news-post-summary.js" ReplaceContent="True">
 									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
@@ -89,7 +92,7 @@
 
 				<Lists>
 					<List Title="Photos" Description="A library created to store images that are used on pages in this site." OnQuickLaunchBar="True" TemplateFeatureId="4bcccd62-dcaf-46dc-a7d4-e38277ef33f4" Type="851" Url="Lists/Photos">
-						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+						<Folder Url="">
 							<!-- ContentTypeId for Image is 0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214 -->
 							<File Path="images\cogs.jpg" Url="cogs.jpg" ReplaceContent="True">
 								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
@@ -115,21 +118,210 @@
 					</List>
 
 					<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
-						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+						<Folder Url="">
 							<Folder Url="news">
 								<Folder Url="css">
 									<File Path="css\news.css" Url="news.css" ReplaceContent="True" />
+									<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
+									<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
+									<File Path="css\jquery-ui-1.10.4.custom.css" Url="jquery-ui-1.10.4.custom.css" ReplaceContent="True" />
+									<File Path="css\jquery-ui-1.10.4.custom.min.css" Url="jquery-ui-1.10.4.custom.min.css" ReplaceContent="True" />
+									<Folder Url="images">
+										<File Path="css\images\animated-overlay.gif" Url="animated-overlay.gif" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_0_eeeeee_40x100.png" Url="ui-bg_flat_0_eeeeee_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_55_ffffff_40x100.png" Url="ui-bg_flat_55_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" Url="ui-bg_highlight-soft_100_f6f6f6_1x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_highlight-soft_25_0073ea_1x100.png" Url="ui-bg_highlight-soft_25_0073ea_1x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_highlight-soft_50_dddddd_1x100.png" Url="ui-bg_highlight-soft_50_dddddd_1x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_0073ea_256x240.png" Url="ui-icons_0073ea_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_666666_256x240.png" Url="ui-icons_666666_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_ff0084_256x240.png" Url="ui-icons_ff0084_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_ffffff_256x240.png" Url="ui-icons_ffffff_256x240.png" ReplaceContent="True" />
+									</Folder>
 								</Folder>
-								<Folder Url="js">
+								<Folder Url="scripts">
+									<File Path="scripts\jquery-1.11.0.js" Url="jquery-1.11.0.js" ReplaceContent="True" />
+									<File Path="scripts\jquery-1.11.0.min.js" Url="jquery-1.11.0.min.js" ReplaceContent="True" />
+									<File Path="scripts\jquery-ui-1.10.4.custom.js" Url="jquery-ui-1.10.4.custom.js" ReplaceContent="True" />
+									<File Path="scripts\jquery-ui-1.10.4.custom.min.js" Url="jquery-ui-1.10.4.custom.min.js" ReplaceContent="True" />
 								</Folder>
 							</Folder>
 						</Folder>
 					</List>
+
 					<List Title="Site Pages" Description="Site Pages Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-C796-4402-9F2F-0EB9A6E71B18" Type="119" Url="SitePages">
-						<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
-							<File Path="pages\News Articles.aspx" Url="News Articles.aspx" ReplaceContent="True" WelcomePage="True" ReplaceContentTokens="True">
+						<Folder Url="">
+							<File Path="pages\News Articles.aspx" Url="News Articles.aspx" ReplaceFile="True" WelcomePage="True" ReplaceContentTokens="True">
 								<Property Name="ContentTypeId" Value="0x01010901" />
 								<Property Name="Title" Value="News Articles" />
+
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">
+									<WebPart><![CDATA[<WebPart xmlns="http://schemas.microsoft.com/WebPart/v2">
+                      <Assembly>Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+                      <TypeName>Microsoft.SharePoint.WebPartPages.BlogAdminWebPart</TypeName>
+                      <Title>Post Tools</Title>
+                      <Description>Post Tools</Description>
+                      <FrameType>None</FrameType>
+                      <FrameState>Normal</FrameState>
+                      <IsVisible>true</IsVisible>
+                      </WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0" ListTitle="Categories">
+									<ViewFields>
+										<FieldRef Name="Title" />
+									</ViewFields>
+									<JSLink>sp.ui.blogs.js</JSLink>
+									<WebPart><![CDATA[<webParts>
+	      <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+	        <metaData>
+	          <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+	          <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+	        </metaData>
+	        <data>
+	          <properties>
+	            <property name="ListUrl" type="string">Lists/Categories</property>
+					<property name="TitleUrl" type="string">#</property>
+					<property name="ListDisplayName" type="string">Categories</property>
+	            <property name="ChromeType" type="chrometype">None</property>
+					<property name="XmlDefinition" type="string">&lt;View Name=&quot;{99C1884B-5785-4ABD-B762-ADF0D478FAC0}&quot; Type=&quot;HTML&quot; Hidden=&quot;TRUE&quot; DisplayName=&quot;&quot; Level=&quot;1&quot; BaseViewID=&quot;0&quot;&gt;    &lt;Query&gt;        &lt;OrderBy&gt;            &lt;FieldRef Name=&quot;Title&quot; Ascending=&quot;TRUE&quot; /&gt;        &lt;/OrderBy&gt;    &lt;/Query&gt;    &lt;ViewFields&gt;        &lt;FieldRef Name=&quot;Title&quot; /&gt;    &lt;/ViewFields&gt;    &lt;RowLimit Paged=&quot;TRUE&quot; &gt;        30    &lt;/RowLimit&gt;    &lt;JSLink&gt;sp.ui.blogs.js&lt;/JSLink&gt;    &lt;XslLink&gt;        blog.xsl    &lt;/XslLink&gt;    &lt;Toolbar Type=&quot;None&quot; /&gt;&lt;/View&gt;</property>
+					<property name="Title" type="string">Categories</property>
+					<property name="Description" type="string"></property>
+					<property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
+            &lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;
+            &lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;
+            &lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
+            &lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;
+            &lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;
+            &lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;
+            &lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt; &lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noXinviewofY_LIST)" /&gt;
+           &lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(core,noXinviewofY_DEFAULT)" /&gt;
+           &lt;ParameterBinding Name="AddNewAnnouncement" Location="Resource(wss,addnewitem)" /&gt;
+           &lt;ParameterBinding Name="MoreAnnouncements" Location="Resource(wss,moreItemsParen)" /&gt;</property>
+					<property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
+	          </properties>
+	        </data>
+	      </webPart>
+	    </webParts>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1">
+									<WebPart><![CDATA[<WebPart xmlns="http://schemas.microsoft.com/WebPart/v2">
+                      <Assembly>Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+                      <TypeName>Microsoft.SharePoint.WebPartPages.BlogMonthQuickLaunch</TypeName>
+                      <Title>Archives</Title>
+                      <Description></Description>
+                      <FrameType>None</FrameType>
+                      <FrameState>Normal</FrameState>
+                      <IsVisible>true</IsVisible>
+                      </WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="Left" WebPartOrder="0" ListTitle="Posts">
+									<ViewFields>
+										<FieldRef Name="Title" />
+										<FieldRef Name="Body" />
+										<FieldRef Name="Author" />
+										<FieldRef Name="PostedByWithDate" />
+										<FieldRef Name="CategoryWithLink" />
+										<FieldRef Name="Permalink" />
+										<FieldRef Name="EmailPostLink" />
+										<FieldRef Name="NumCommentsWithLink" />
+										<FieldRef Name="PublishedDate" />
+										<FieldRef Name="PostCategory" />
+										<FieldRef Name="NewsRollupImage"/>
+										<FieldRef Name="NewsPageImage"/>
+									</ViewFields>
+									<JSLink>sp.ui.blogs.js|~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js</JSLink>
+									<WebPart><![CDATA[<webParts>
+	<webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+		<metaData>
+			<type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+			<importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+		</metaData>
+		<data>
+			<properties>
+				<property name="ShowWithSampleData" type="bool">False</property>
+				<property name="Default" type="string" />
+				<property name="NoDefaultStyle" type="string" null="true" />
+				<property name="CacheXslStorage" type="bool">True</property>
+				<property name="ViewContentTypeId" type="string" />
+				<property name="XmlDefinitionLink" type="string" />
+				<property name="ManualRefresh" type="bool">False</property>
+				<property name="ListUrl" type="string">Lists/Posts</property>
+				<property name="TitleUrl" type="string">#</property>
+				<property name="EnableOriginalValue" type="bool">False</property>
+				<property name="Direction" type="direction">NotSet</property>
+				<property name="ServerRender" type="bool">False</property>
+				<property name="ViewFlags" type="Microsoft.SharePoint.SPViewFlags, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">None</property>
+				<property name="AllowConnect" type="bool">True</property>
+				<property name="ListDisplayName" type="string">Posts</property>
+				<property name="AllowZoneChange" type="bool">True</property>
+				<property name="ChromeState" type="chromestate">Normal</property>
+				<property name="DisableSaveAsNewViewButton" type="bool">False</property>
+				<property name="ViewFlag" type="string" />
+				<property name="DataSourceID" type="string" />
+				<property name="ExportMode" type="exportmode">All</property>
+				<property name="AutoRefresh" type="bool">False</property>
+				<property name="FireInitialRow" type="bool">True</property>
+				<property name="AllowEdit" type="bool">True</property>
+				<property name="Description" type="string" />
+				<property name="HelpMode" type="helpmode">Modeless</property>
+				<property name="BaseXsltHashKey" type="string" null="true" />
+				<property name="AllowMinimize" type="bool">True</property>
+				<property name="CacheXslTimeOut" type="int">86400</property>
+				<property name="ChromeType" type="chrometype">None</property>
+				<property name="Xsl" type="string" null="true" />
+				<property name="JSLink" type="string" null="true" />
+				<property name="CatalogIconImageUrl" type="string" />
+				<property name="SampleData" type="string" null="true" />
+				<property name="UseSQLDataSourcePaging" type="bool">True</property>
+				<property name="TitleIconImageUrl" type="string" />
+				<property name="PageSize" type="int">-1</property>
+				<property name="ShowTimelineIfAvailable" type="bool">True</property>
+				<property name="Width" type="string" />
+				<property name="DataFields" type="string" />
+				<property name="Hidden" type="bool">False</property>
+				<property name="Title" type="string">Corp News Posts</property>
+				<property name="PageType" type="Microsoft.SharePoint.PAGETYPE, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">PAGE_NORMALVIEW</property>
+				<property name="DataSourcesString" type="string" />
+				<property name="AllowClose" type="bool">False</property>
+				<property name="InplaceSearchEnabled" type="bool">True</property>
+				<property name="WebId" type="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">00000000-0000-0000-0000-000000000000</property>
+				<property name="Height" type="string" />
+				<property name="GhostedXslLink" type="string">blog.xsl</property>
+				<property name="DisableViewSelectorMenu" type="bool">False</property>
+				<property name="DisplayName" type="string" />
+				<property name="IsClientRender" type="bool">False</property>
+				<property name="XmlDefinition" type="string">&lt;View BaseViewID=&quot;0&quot; DisplayName=&quot;&quot; Hidden=&quot;TRUE&quot; Level=&quot;1&quot; Name=&quot;{9168C16C-131A-4797-9DDE-AF2448B69B0F}&quot; Type=&quot;HTML&quot;&gt;	&lt;Query&gt;		&lt;Where&gt;			&lt;And&gt;				&lt;Leq&gt;					&lt;FieldRef Name=&quot;PublishedDate&quot;/&gt;					&lt;Value Type=&quot;DateTime&quot;&gt;						&lt;Today/&gt;					&lt;/Value&gt;				&lt;/Leq&gt;				&lt;Eq&gt;					&lt;FieldRef Name=&quot;_ModerationStatus&quot;/&gt;					&lt;Value Type=&quot;ModStat&quot;&gt;0&lt;/Value&gt;				&lt;/Eq&gt;			&lt;/And&gt;		&lt;/Where&gt;		&lt;OrderBy&gt;			&lt;FieldRef Ascending=&quot;FALSE&quot; Name=&quot;PublishedDate&quot;/&gt;			&lt;FieldRef Ascending=&quot;FALSE&quot; Name=&quot;ID&quot;/&gt;		&lt;/OrderBy&gt;	&lt;/Query&gt;	&lt;ViewFields&gt;		&lt;FieldRef Name=&quot;Title&quot;/&gt;		&lt;FieldRef Name=&quot;Body&quot;/&gt;		&lt;FieldRef Name=&quot;Author&quot;/&gt;		&lt;FieldRef Name=&quot;PostedByWithDate&quot;/&gt;		&lt;FieldRef Name=&quot;CategoryWithLink&quot;/&gt;		&lt;FieldRef Name=&quot;Permalink&quot;/&gt;		&lt;FieldRef Name=&quot;EmailPostLink&quot;/&gt;		&lt;FieldRef Name=&quot;NumCommentsWithLink&quot;/&gt;		&lt;FieldRef Name=&quot;PublishedDate&quot;/&gt;		&lt;FieldRef Name=&quot;PostCategory&quot;/&gt;		&lt;FieldRef Name=&quot;LikesCount&quot;/&gt;		&lt;FieldRef Explicit=&quot;TRUE&quot; Name=&quot;LikedBy&quot;/&gt;		&lt;FieldRef Name=&quot;NewsRollupImage&quot; /&gt;		&lt;FieldRef Name=&quot;NewsPageImage&quot; /&gt;	&lt;/ViewFields&gt;	&lt;RowLimit Paged=&quot;TRUE&quot;&gt;10&lt;/RowLimit&gt;	&lt;JSLink&gt;sp.ui.blogs.js&lt;/JSLink&gt;	&lt;XslLink&gt;blog.xsl&lt;/XslLink&gt;	&lt;Toolbar Type=&quot;None&quot;/&gt;&lt;/View&gt;</property>
+				<property name="InitialAsyncDataFetch" type="bool">False</property>
+				<property name="AllowHide" type="bool">True</property>
+				<property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
+            &lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;
+            &lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;
+            &lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
+            &lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;
+            &lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;
+            &lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;
+            &lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt; &lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noXinviewofY_LIST)" /&gt;
+           &lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(core,noXinviewofY_DEFAULT)" /&gt;
+           &lt;ParameterBinding Name="AddNewAnnouncement" Location="Resource(wss,addnewitem)" /&gt;
+           &lt;ParameterBinding Name="MoreAnnouncements" Location="Resource(wss,moreItemsParen)" /&gt;</property>
+				<property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
+				<property name="AutoRefreshInterval" type="int">60</property>
+				<property name="AsyncRefresh" type="bool">False</property>
+				<property name="HelpUrl" type="string" />
+				<property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+				<property name="XslLink" type="string" null="true" />
+				<property name="SelectParameters" type="string" />
+				<property name="HasClientDataSource" type="bool">False</property>
+			</properties>
+		</data>
+	</webPart>
+</webParts>]]>
+									</WebPart>
+								</AllUsersWebPart>
 							</File>
 						</Folder>
 					</List>
@@ -140,6 +332,80 @@
 						</DeleteItems>
 						<ContentType Name="News Post" Default="True" />
 						<RemoveContentType Name="Post" />
+						<Views>
+							<View ServerRelativeUrl="Post.aspx" BaseViewID="7">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>sp.ui.blogs.js|~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage"/>
+									<FieldRef Name="NewsPageImage"/>
+								</ViewFields>
+							</View>
+							<View ServerRelativeUrl="Date.aspx" BaseViewID="9">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>sp.ui.blogs.js|~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage"/>
+									<FieldRef Name="NewsPageImage"/>
+								</ViewFields>
+							</View>
+							<View ServerRelativeUrl="Category.aspx" BaseViewID="8">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>sp.ui.blogs.js|~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage"/>
+									<FieldRef Name="NewsPageImage"/>
+								</ViewFields>
+							</View>
+							<View ServerRelativeUrl="Summary.aspx" BaseViewID="0">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>sp.ui.blogs.js|~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage"/>
+									<FieldRef Name="NewsPageImage"/>
+								</ViewFields>
+							</View>
+						</Views>
 					</List>
 					
 					<List Title="Categories">
@@ -164,10 +430,16 @@
 
 				<UserCustomActions>
 					<UserCustomAction Scope="Web" DOMElement="head">
+						<Name>Inject-Site-jQuery-and-jQuery-UI</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>80</Sequence>
+						<ScriptLinks>~site/SiteAssets/news/scripts/jquery-1.11.0.min.js;~site/SiteAssets/news/scripts/jquery-ui-1.10.4.custom.min.js;~site/SiteAssets/news/css/jquery-ui-1.10.4.custom.min.css</ScriptLinks>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web" DOMElement="head">
 						<Name>Inject-Web-News-CSS</Name>
 						<Location>ScriptLink</Location>
 						<Sequence>90</Sequence>
-						<ScriptLinks>~site/SiteAssets/news/css/news.css</ScriptLinks>
+						<ScriptLinks>~site/SiteAssets/news/css/pure-min.css;~site/SiteAssets/news/css/grids-responsive-min.css;~site/SiteAssets/news/css/news.css</ScriptLinks>
 					</UserCustomAction>
 				</UserCustomActions>
 			</Web>
