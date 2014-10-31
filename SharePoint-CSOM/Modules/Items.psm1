@@ -26,7 +26,6 @@
                 } else {
                     $newItem[$propertyXml.Name] = $propertyXml.Value
                 }
-
             } else {
                 Write-Host "`t`t`tSetting Field $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
                 $newItem[$propertyXml.Name] = $propertyXml.Value
@@ -131,6 +130,17 @@ function Update-ListItem {
             $fileServerRelativeUrl += "/$($listItemXml.folder)"
         }
         $fileServerRelativeUrl += "/$($listItemXml.Url)"
+        $webUrl = ""
+        $siteUrl = ""
+        $clientContext.Load($list.ParentWeb)
+        $ClientContext.Load($list.ParentWeb.SiteUserInfoList)
+        $ClientContext.Load($list.ParentWeb.SiteUserInfoList.ParentWeb)
+        $ClientContext.Load($list.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder)
+        $ClientContext.ExecuteQuery()
+        $siteUrl = $($list.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
+        $webUrl = $($list.ParentWeb.ServerRelativeUrl) -replace "/$",""
+        
+        $clientContext.ExecuteQuery()
 
         $camlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
         if ($listItemXml.Url) {
@@ -180,6 +190,21 @@ function Update-ListItem {
                         $taxFieldValueCol = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection($clientContext, "", $taxField)
                         $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
                         $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
+                        $updateItem = $true
+                    } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
+                        $lv = New-Object Microsoft.SharePoint.Client.FieldLookupValue
+                        if ($propertyXml.Type -eq "LookupValue") {
+                            $lv.LookupValue = $propertyXml.Value
+                        } else {
+                            $lv.LookupId = $propertyXml.Value
+                        }
+                        $item[$propertyXml.Name] = $lv
+                        $updateItem = $true
+                        Write-Host "`t`tSet page LOOKUP property: $($propertyXml.Name) = $pval" -ForegroundColor Green
+                    } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
+                        $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                        $item[$propertyXml.Name] = $pval
+                        Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
                         $updateItem = $true
                     } else {
                         if($propertyXml.Name -ne "ContentType") {

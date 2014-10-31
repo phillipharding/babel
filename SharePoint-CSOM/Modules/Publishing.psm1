@@ -60,69 +60,112 @@ function Update-WebParts {
             return
         }
 
+        Write-Host "`t`t..[$($pageFile.CheckOutType)]"
         if($pageFile.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
             Write-Host "`t`t..Checking-out existing page"
             $pageFile.CheckOut()
         }
 
         # add web parts
-        Write-Host "`t`t..Adding WebParts"
+        Write-Host "`t`t..Adding/Updating WebParts"
         $updatePage = $false
         $limitedWebPartManager = $pageFile.GetLimitedWebPartManager([Microsoft.SharePoint.Client.WebParts.PersonalizationScope]::Shared);
+        
+        $ClientContext.Load($limitedWebPartManager.WebParts)
+        $ClientContext.ExecuteQuery()
+        # preload webparts
+        $limitedWebPartManager.WebParts | % {
+            $def = $_
+            $ClientContext.Load($def.WebPart)
+            $ClientContext.Load($def.WebPart.Properties)
+            $ClientContext.ExecuteQuery()
+        }
+
         foreach($wpDefXml in $PageXml.AllUsersWebPart) {
             $wpZoneID = $wpDefXml.WebPartZoneID
             $wpZoneOrder = $wpDefXml.WebPartOrder
+            $wpTitle = $wpDefXml.Title
+            $wpDelete = $wpDefXml.DeleteWebPart
             
-            $xml = $($wpDefXml.WebPart."#cdata-section")
-            if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerXml }
-            if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerText }
-            if ($xml -eq $null -or $xml -eq "") { continue }
-            $wpXml = $(($xml -replace "~sitecollection",$siteUrl) -replace "~site",$web.ServerRelativeUrl)            
-            if ($wpDefXml.ListTitle) {
-                Write-Host "`t`t..Add webpart to '$wpZoneID':$wpZoneOrder for list '$($wpDefXml.ListTitle)'" -ForegroundColor Green
-            } else {
-                Write-Host "`t`t..Add webpart to '$wpZoneID':$wpZoneOrder" -ForegroundColor Green
-            }
-
-            Write-Host "`t`t....Importing" -ForegroundColor Green
-            $wpD = $limitedWebPartManager.ImportWebPart($wpXml)
-            Write-Host "`t`t....Adding" -ForegroundColor Green
-            $wpInstDef = $limitedWebPartManager.AddWebPart($wpD.WebPart, $wpZoneID, $wpZoneOrder)
-            Write-Host "`t`t....Loading" -ForegroundColor Green
-            $ClientContext.Load($wpInstDef)
-            $updatePage = $true
-
-            if ($wpDefXml.ListTitle) {
-                $wpList = Get-List $wpDefXml.ListTitle $web $ClientContext
-                if ($wpList -ne $null) {
-                    # update the hidden list view for the list view webpart
-                    $view = Get-ListViewById $wpList $wpInstDef.Id $ClientContext
-                    Write-Host "`t`t....Update Webpart ListView: $($view.Id)"
-
-                    $DefaultView = $view.DefaultView
-                    $ViewJslink = $(if ($wpDefXml.JSLink) {$wpDefXml.JSLink} else { $view.JSLink })
-                    $Paged = $(if ($wpDefXml.RowLimit.Paged) { [bool]::Parse($wpDefXml.RowLimit.Paged) } else { $view.Paged })
-                    $RowLimit = $(if ($wpDefXml.RowLimit) { $wpDefXml.RowLimit.InnerText } else { "$($view.RowLimit)" })
-                    $RowLimit = $(if ($RowLimit -eq $null -or $RowLimit -eq "") { "30" } else { $RowLimit })
-                    $Query = $(if ($wpDefXml.Query) { $wpDefXml.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "") } else { $view.ViewQuery })
-                    $Query = $(if ($Query -eq $null -or $Query -eq "") { "<OrderBy><FieldRef Name=`"Modified`" Ascending=`"FALSE`" /></OrderBy>" } else { $Query })
-                    if ($wpDefXml.ViewFields.FieldRef) { 
-                        $ViewFields = $wpDefXml.ViewFields.FieldRef | Select -ExpandProperty Name 
-                    } else {
-                        if ($wpDefXml.ViewFields) {
-                            if ($pagesList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::DocumentLibrary) {
-                                $ViewFields = @("DocIcon","LinkFilename","Modified")
-                            } elseif ($pagesList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::GenericList) {
-                                $ViewFields = @("Title","Modified","ModifiedBy")
-                            }
+            if ($wpTitle -and $wpTitle -ne "") {
+                # update webpart properties
+                $def = $limitedWebPartManager.WebParts | Where { $_.WebPart.Title -eq $wpTitle }
+                if ($def -ne $null) {
+                    $update = $false
+                    foreach($wpPropertyXml in $wpDefXml.Property) {
+                        if ($wpPropertyXml.Name -match "title") {
+                            $def.WebPart.Title = $wpPropertyXml.Value
+                        } elseif ($wpPropertyXml.Name -match "titleurl") {
+                            $def.WebPart.TitleUrl = $wpPropertyXml.Value
+                        } elseif ($wpPropertyXml.Name -match "hidden") {
+                            $def.WebPart.Hidden = [bool]::Parse($wpPropertyXml.Value)
+                        } elseif ($wpPropertyXml.Name -match "zoneindex") {
+                            $def.WebPart.ZoneIndex = [bool]::Parse($wpPropertyXml.Value)
                         } else {
-                            $ViewFields = @()
-                        }
+                            $def.WebPart.Properties[$wpPropertyXml.Name] = $wpPropertyXml.Value
+                        }                        
+                        $update = $true
                     }
+                    if ($update) {
+                        $def.SaveWebPartChanges()
+                    } elseif ($wpDelete -and $wpDelete -match "true") {
+                        $def.DeleteWebPart()
+                    }
+                    $ClientContext.ExecuteQuery()
+                }
+            } else {
+                $xml = $($wpDefXml.WebPart."#cdata-section")
+                if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerXml }
+                if ($xml -eq $null -or $xml -eq "") { $xml = $wpDefXml.WebPart.InnerText }
+                if ($xml -eq $null -or $xml -eq "") { continue }
+                $wpXml = $(($xml -replace "~sitecollection",$siteUrl) -replace "~site",$web.ServerRelativeUrl)
+                $wpXml = ($wpXml -replace "{{~ListId}}",$pagesList.Id)
+                if ($wpDefXml.ListTitle) {
+                    Write-Host "`t`t..Add webpart to '$wpZoneID':$wpZoneOrder for list '$($wpDefXml.ListTitle)'" -ForegroundColor Green
+                } else {
+                    Write-Host "`t`t..Add webpart to '$wpZoneID':$wpZoneOrder" -ForegroundColor Green
+                }
 
-                    $spView = Update-ListView -List $wpList -ViewNameOrId $wpInstDef.Id -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
-                    Write-Host "`t`t......Updated Webpart ListView: $($view.Id)"
+                Write-Host "`t`t....Importing" -ForegroundColor Green
+                $wpD = $limitedWebPartManager.ImportWebPart($wpXml)
+                Write-Host "`t`t....Adding" -ForegroundColor Green
+                $wpInstDef = $limitedWebPartManager.AddWebPart($wpD.WebPart, $wpZoneID, $wpZoneOrder)
+                Write-Host "`t`t....Loading" -ForegroundColor Green
+                $ClientContext.Load($wpInstDef)
+                $updatePage = $true
 
+                if ($wpDefXml.ListTitle) {
+                    $wpList = Get-List $wpDefXml.ListTitle $web $ClientContext
+                    if ($wpList -ne $null) {
+                        # update the hidden list view for the list view webpart
+                        $view = Get-ListViewById $wpList $wpInstDef.Id $ClientContext
+                        Write-Host "`t`t....Update Webpart ListView: $($view.Id)"
+
+                        $DefaultView = $view.DefaultView
+                        $ViewJslink = $(if ($wpDefXml.JSLink) {$wpDefXml.JSLink} else { $view.JSLink })
+                        $Paged = $(if ($wpDefXml.RowLimit.Paged) { [bool]::Parse($wpDefXml.RowLimit.Paged) } else { $view.Paged })
+                        $RowLimit = $(if ($wpDefXml.RowLimit) { $wpDefXml.RowLimit.InnerText } else { "$($view.RowLimit)" })
+                        $RowLimit = $(if ($RowLimit -eq $null -or $RowLimit -eq "") { "30" } else { $RowLimit })
+                        $Query = $(if ($wpDefXml.Query) { $wpDefXml.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "") } else { $view.ViewQuery })
+                        $Query = $(if ($Query -eq $null -or $Query -eq "") { "<OrderBy><FieldRef Name=`"Modified`" Ascending=`"FALSE`" /></OrderBy>" } else { $Query })
+                        if ($wpDefXml.ViewFields.FieldRef) { 
+                            $ViewFields = $wpDefXml.ViewFields.FieldRef | Select -ExpandProperty Name 
+                        } else {
+                            if ($wpDefXml.ViewFields) {
+                                if ($pagesList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::DocumentLibrary) {
+                                    $ViewFields = @("DocIcon","LinkFilename","Modified")
+                                } elseif ($pagesList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::GenericList) {
+                                    $ViewFields = @("Title","Modified","ModifiedBy")
+                                }
+                            } else {
+                                $ViewFields = @()
+                            }
+                        }
+
+                        $spView = Update-ListView -List $wpList -ViewNameOrId $wpInstDef.Id -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
+                        Write-Host "`t`t......Updated Webpart ListView: $($view.Id)"
+
+                    }
                 }
             }
         }
@@ -132,21 +175,31 @@ function Update-WebParts {
         }
 
         # now save/checkin/publish/approve
-        $pageFile.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
-        Write-Host "`t`t..Checked-in page" -ForegroundColor Green
+        if ($pageFile.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
+            $pageFile.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+            Write-Host "`t`t..Checked-in page" -ForegroundColor Green
+        }
 
-        if($MinorVersionsEnabled -and $MajorVersionsEnabled) {
+        if ($MinorVersionsEnabled -and $MajorVersionsEnabled) {
+            Write-Host "`t`t..Publishing" -ForegroundColor Green
             $pageFile.Publish("Publish Page")
             Write-Host "`t`t..Published page" -ForegroundColor Green
         }
 
-        if($ContentApprovalEnabled) {
+        if ($ContentApprovalEnabled) {
+            Write-Host "`t`t..Approving" -ForegroundColor Green
             $pageFile.Approve("Approve Page")
             Write-Host "`t`t..Approved page" -ForegroundColor Green
         }
-
-        $ClientContext.Load($pageFile)
-        $ClientContext.ExecuteQuery()
+        
+        if ($ClientContext.HasPendingRequest) {
+            Write-Host "`t`t..(Re)Loading" -ForegroundColor Green
+        #    $ClientContext.Load($pageFile)
+            $ClientContext.ExecuteQuery()
+        } else {
+            Write-Host "`t`t..Not (Re)Loading, no pending requests" -ForegroundColor Green
+        }
+        Write-Host "`t`t..Done" -ForegroundColor Green
     }
     end {}
 }

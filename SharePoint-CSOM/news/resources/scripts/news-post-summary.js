@@ -27,8 +27,8 @@ csr.templateoverride = function() {
 			}
 		},
 		OnPostRender: OnPostRender,
-		ListTemplateType: 301/*,
-		BaseViewID: 0*/
+		ListTemplateType: 301
+		/*BaseViewID: 0*/
 	};
 
 	function ViewRender(ctx) {
@@ -42,25 +42,50 @@ csr.templateoverride = function() {
 	function FieldTitleViewRender(ctx) {
 		console.log(String.format(">>In FieldTitleViewRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
 		/* close the <A/> and <H2/> tags first */
-		var ret = String.format("</a></h2><h2 class='news-post-title'><a href='{0}/Post.aspx?ID={1}' class=''>{2}</a></h2>",
-							ctx.listUrlDir,
-							ctx.CurrentItem.ID,
-							ctx.CurrentItem.Title);
-		for(var k in ctx.CurrentItem) {
-			console.log(String.format(">>{0} = {1}", k, ctx.CurrentItem[k]));
+
+		var html = '', headerimage = '';
+		if (ctx.CurrentItem.NewsRollupImage) {
+			headerimage = String.format("<div class='news-post-title-image'>{0}</div>",ctx.CurrentItem.NewsRollupImage);
 		}
-
-		return ret;
-	}
-	function FieldBodyViewRender(ctx) {
-		console.log(String.format(">>In FieldBodyViewRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
-		var ret = "<hr/><hr/>" + ctx.CurrentItem.Body;
-
+		if (ctx.BaseViewID == 0 || ctx.BaseViewID == 7) {
+		/* summary view or post view */
+			html = String.format("</a></h2><h2 class='news-post-title'>{3}<a href='{0}/Post.aspx?ID={1}' class=''>{2}</a></h2>",
+								ctx.listUrlDir,
+								ctx.CurrentItem.ID,
+								ctx.CurrentItem.Title,
+								headerimage);
+		} else if (ctx.BaseViewID == 9 || ctx.BaseViewID == 8) {
+		/* category view or date (range) view */
+			var body = String.format("<div class='news-post-bodysummary'>{2}<div class='ellipsis'><a href='{0}/Post.aspx?ID={1}' class=''>&hellip;</a></div></div>", 
+								ctx.listUrlDir,
+								ctx.CurrentItem.ID,
+								ctx.CurrentItem.Body);
+			html = String.format("</a></h2><h2 class='news-post-title'>{3}<a href='{0}/Post.aspx?ID={1}' class=''>{2}</a></h2>{4}",
+								ctx.listUrlDir,
+								ctx.CurrentItem.ID,
+								ctx.CurrentItem.Title,
+								headerimage,
+								body);
+		} else {
+		/* some other view I don't know about */
+			html = ctx.CurrentItem.Title;
+		}
+		
 		/*for(var k in ctx.CurrentItem) {
 			console.log(String.format(">>{0} = {1}", k, ctx.CurrentItem[k]));
 		}*/
 
-		return ret;
+		return html;
+	}
+	function FieldBodyViewRender(ctx) {
+		console.log(String.format(">>In FieldBodyViewRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
+		var html = "";
+		if (ctx.CurrentItem.NewsPageImage) {
+			html = String.format("<div class='news-post-pageimage'>{0}</div>",ctx.CurrentItem.NewsPageImage);
+		}
+		html += ctx.CurrentItem.Body;
+
+		return html;
 	}
 	function OnPreRender(ctx) {
 		console.log(String.format(">>In OnPreRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));

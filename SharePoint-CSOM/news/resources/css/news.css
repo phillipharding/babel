@@ -31,9 +31,82 @@
 	width: 90%;
 }
 /* POSTS */
+.news-main-content { margin-top: 10px; }
+.ms-blog-postBoxMargin { position: relative; }
 .ms-blog-postBoxMargin > h2 { display: none; }
 .ms-blog-postBoxMargin > h2.news-post-title { 
 	display: block; 
-	font-size: 2em;
+	font-size: 2.5em;
 	margin: -12px 0 3px 0;
+}
+.ms-blog-postBoxMargin > h2.news-post-title a:link,
+.ms-blog-postBoxMargin > h2.news-post-title a:hover,
+.ms-blog-postBoxMargin > h2.news-post-title a:visited {
+	color: #0072c6!important;
+}
+.news-post-pageimage {
+	float: right;
+}
+.news-post-pageimage img {
+	border: 0;
+	width: 600px;
+	margin-left: 10px;
+}
+.news-post-pageimage + div[class^='ExternalClass'] p:first-of-type {
+	margin-top: 0px;
+}
+.ms-blog-postBody {}
+
+h2.news-post-title .news-post-title-image {
+	position: absolute;
+	right: 0;
+}
+h2.news-post-title .news-post-title-image img {
+	height: 50px;
+	border: 0;
+}
+#blgcat {
+	text-transform: uppercase;
+}
+.ms-blog-postList .ms-shadow {
+	box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.47);
+}
+.ms-blog-postBoxDate {
+	height: 55px;
+	padding-top: 5px;
+}
+.ms-textXLarge.ms-blog-dateText {
+	font-size: 1.8em;
+}
+.ms-blog-postBoxDate .ms-textSmall {
+	font-size: 1.1em;
+}
+.news-post-bodysummary { position: relative; max-height: 88px; overflow: hidden; margin-bottom: 10px; margin-top: 10px; margin-left: 30px; }
+.news-post-bodysummary > div[class^='ExternalClass'],
+.news-post-bodysummary > div[class^='ExternalClass'] * { 
+	font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif!important; 
+	font-size: 13px!important; 
+	font-style: italic!important;
+	color: #444!important;
+	line-height: inherit!important;
+}
+.news-post-bodysummary > div[class^='ExternalClass'] p:first-of-type {
+	margin-top: 0px;
+}
+.news-post-bodysummary .ellipsis {
+	position: absolute;
+	bottom: -1px;
+	right: 0;
+	font-weight: bold;
+	color: #0072c6;
+	width: 32px;
+	height: 18px;
+	background: white;
+	text-align: right;
+	font-size: 18pt;
+}
+.news-post-bodysummary .ellipsis a {
+	display: block;
+	height: 10px;
+	line-height: 10px;
 }

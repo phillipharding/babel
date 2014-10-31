@@ -38,20 +38,22 @@
 	</SharePoint:StyleBlock>
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderMain" runat="server">
-	<table id="MSO_ContentTable" MsoPnlId="layout" cellpadding="0" cellspacing="0" border="0" width="100%">
-		<tr>
-		 <td>
-		  <table cellpadding="0" cellspacing="0" class="ms-blog-MainArea">
-		   <tr>
-			<td valign="top">
-				<WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" ID="Left" Title="Left" AllowPersonalization="false" />
+	<div class='news-main-content'>
+		<table id="MSO_ContentTable" MsoPnlId="layout" cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+			 <td>
+			  <table cellpadding="0" cellspacing="0" class="ms-blog-MainArea">
+			   <tr>
+				<td valign="top">
+					<WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" ID="Left" Title="Left" AllowPersonalization="false" />
+				</td>
+				<td valign="top" class="ms-blog-LeftColumn">
+					<WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" ID="Right" Title="Right" AllowPersonalization="false" />
+				</td>
+			  </tr>
+			 </table>
 			</td>
-			<td valign="top" class="ms-blog-LeftColumn">
-				<WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" ID="Right" Title="Right" AllowPersonalization="false" />
-			</td>
-		  </tr>
-		 </table>
-		</td>
-	   </tr>
-	</table>
+		   </tr>
+		</table>
+	</div>
 </asp:Content>
