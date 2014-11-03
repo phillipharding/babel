@@ -33,7 +33,7 @@ $configFiles | ? { $_ -eq "news" } | % {
         return
     }
     Write-Host "Applying Configuration $configurationName#$configurationId - $($configurationXml.Description)`n" -ForegroundColor Yellow
-
+    
     Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
     Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
 

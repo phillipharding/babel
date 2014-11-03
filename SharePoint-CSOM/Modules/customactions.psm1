@@ -24,7 +24,8 @@ param (
             $sequence = $_.Sequence
             if ($location -match "ScriptLink") {
                 $scriptblock = $_.ScriptBlock
-                $obj = @{ Location = $location; Name = $description; Sequence = $sequence; ScriptBlock = $scriptblock }
+                $scriptsrc = $_.ScriptSrc
+                $obj = @{ Location = $location; Name = $description; Sequence = $sequence; ScriptSrc = $scriptsrc; ScriptBlock = $scriptblock }
                 $actions += $obj
             } else {
                 $url = $_.Url
@@ -46,6 +47,7 @@ param (
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$Description,
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][bool]$RemoveOnly,
     [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$ScriptBlock,
+    [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$ScriptLink,
     [parameter(Mandatory=$false, ValueFromPipeline=$true)][int]$Sequence,
     [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$Url,
     [parameter(Mandatory=$false, ValueFromPipeline=$true)][string]$Group,
@@ -77,7 +79,7 @@ param (
             $actionsToDelete += $_
         }
         $actionsToDelete | % {
-            Write-Host "`t`t..Removing Existing CustomAction: $($_.Location) : $($_.Description) : $($_.Sequence)"
+            Write-Host "`t`t..Removing Existing CustomAction from $($_.Location) : $($_.Description) : $($_.Sequence) : $($_.ScriptSrc)"
             $added = $true
             $_.DeleteObject()
             $ClientContext.ExecuteQuery()
@@ -88,7 +90,17 @@ param (
             $newAction.Description = $Description
             $newAction.Location = $Location
             if ($Location -match "ScriptLink") {
-                $newAction.ScriptBlock = $ScriptBlock
+                if ($ScriptLink -ne $null -and $ScriptLink -ne "") {
+                    if ($ScriptLink -match ".js$") {
+                        Write-Host "`t`t..CustomAction.ScriptSrc to $Location : $Description : $Sequence) : $ScriptLink"
+                        $newAction.ScriptSrc = $ScriptLink
+                    } elseif ($ScriptLink -match ".css$") {
+                        Write-Host "`t`t..CustomAction.ScriptBlock to $Location : $Description : $Sequence) : $ScriptLink"
+                        $newAction.ScriptBlock = "document.write('<link rel=""stylesheet"" href=""$ScriptLink"" />');"
+                    }
+                } else {
+                    $newAction.ScriptBlock = $ScriptBlock
+                }
                 $newAction.Sequence = $Sequence
             } else {
                 $newAction.Sequence = $Sequence
@@ -134,8 +146,11 @@ param (
 
             $name = $customActionXml.Name
             $location = $customActionXml.Location
-            $sequence = $customActionXml.Sequence
-            if ($name -eq $null -or $name -eq "" -or $location -eq $null -or $location -eq "") { continue }
+            $sequence = [int]::Parse($customActionXml.Sequence)
+            if ($name -eq $null -or $name -eq "" -or $location -eq $null -or $location -eq "") { 
+                Write-Host "No name or Location"
+                continue 
+            }
 
             if ($location -match "ScriptLink") {
                 $scriptBody = ""
@@ -162,51 +177,36 @@ param (
     }
 })(window);`n
 "@
-                    #$scriptBody = $code
-                } elseif ($customActionXml.ScriptLinks -ne $null -and $customActionXml.ScriptLinks -ne "") {
-                    $scriptBody = @"
-(function(window) {
-/* PROVISION: ScriptLink: [$name] -- [$location] -- [$sequence] */`n
-"@
-                    $scriptBody += "var domTarget = document.getElementsByTagName('$dom')[0];`nvar newLink = null, newScript = null;`n"
-                    $scriptLinks = $customActionXml.ScriptLinks -split ";"
-                    foreach($scriptlink in $scriptLinks) {
+
+                    # call Add-CustomAction
+                    if ($scriptBody -ne "") {
+                        #Write-Host "Add CustomAction [ScriptLink]: [$scope] -- [$name] -- [$location] -- [$sequence]`n$scriptBody`n"
+                        Write-Host "`tAdd CustomAction [ScriptLink]: [$scope] -- [$name] -- [$location] -- [$sequence]"
+                        $done = $false
+                        if ($scope -match "site") {
+                            $done = Add-CustomAction -Location $location -Description $name -RemoveOnly $false -ScriptBlock $scriptBody -Sequence $sequence `
+                                                -Site $site -ClientContext $ClientContext
+                        } else {
+                            $done = Add-CustomAction -Location $location -Description $name -RemoveOnly $false -ScriptBlock $scriptBody -Sequence $sequence `
+                                                -Web $web -ClientContext $ClientContext
+                        }
+                        Write-Host "`t..$(if ($done) {`"Done`"} else {`"Not Done`"})"
+                    }
+                } elseif ($customActionXml.ScriptLink -ne $null -and $customActionXml.ScriptLink -ne "") {
+                    $scriptlink = $customActionXml.ScriptLink
+                    if (-not ($scriptlink -match ".js$")) {
+                        ## ScriptLink actions using ScriptSrc (i.e. JS files) must use absolute URL or a URL beginning with ~site or ~sitecollection
                         $scriptlink = $scriptlink -replace "~sitecollection", $Site.ServerRelativeUrl
                         $scriptlink = $scriptlink -replace "~site", $Web.ServerRelativeUrl
-
-                        if ($scriptlink -match ".css") {
-                            $text = @"
-newLink = document.createElement('link');
-newLink.type = 'text/css';
-newLink.href = '$($scriptLink)?ver=$($uid)';
-newLink.rel = 'stylesheet'
-domTarget.appendChild(newLink);`n
-"@
-                        } elseif ($scriptlink -match ".js") {
-                            $text = @"
-newScript = document.createElement('script');
-newScript.async = false;
-newScript.type = 'text/javascript';
-newScript.src = '$($scriptLink)?ver=$($uid)';
-domTarget.appendChild(newScript);`n
-"@
-                        }
-                        $scriptBody += $text
                     }
-                    # close the scriptBody IIFE
-                    $scriptBody += "})(window);`n"
-                }
 
-                # call Add-CustomAction
-                if ($scriptBody -ne "") {
-                    #Write-Host "Add CustomAction [ScriptLink]: [$scope] -- [$name] -- [$location] -- [$sequence]`n$scriptBody`n"
                     Write-Host "`tAdd CustomAction [ScriptLink]: [$scope] -- [$name] -- [$location] -- [$sequence]"
                     $done = $false
                     if ($scope -match "site") {
-                        $done = Add-CustomAction -Location $location -Description $name -RemoveOnly $false -ScriptBlock $scriptBody -Sequence $sequence `
+                        $done = Add-CustomAction -Location $location -Description $name -RemoveOnly $false -ScriptLink $scriptlink -Sequence $sequence `
                                             -Site $site -ClientContext $ClientContext
                     } else {
-                        $done = Add-CustomAction -Location $location -Description $name -RemoveOnly $false -ScriptBlock $scriptBody -Sequence $sequence `
+                        $done = Add-CustomAction -Location $location -Description $name -RemoveOnly $false -ScriptLink $scriptlink -Sequence $sequence `
                                             -Web $web -ClientContext $ClientContext
                     }
                     Write-Host "`t..$(if ($done) {`"Done`"} else {`"Not Done`"})"

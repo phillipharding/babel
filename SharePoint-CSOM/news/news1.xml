@@ -1,0 +1,78 @@
+<Configurations ResourcesPath="">
+	<Configuration Name="News" ID="0" Description="Applies Corporate News capability to an existing site" ResourcesPath="">
+	</Configuration>
+
+	<Configuration Name="News" ID="1" Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+
+		<Webs>
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+				<!-- Allowed schema
+					
+					<Fields/>
+					<ContentTypes/>
+					<Pages/>
+					<Lists/>
+					<Features/>
+						<WebFeatures/>
+						<SiteFeatures/>
+					<Catalogs/>
+					<UserCustomActions/>
+					<RemoveUserCustomActions/>
+					<PropertyBag/>
+						<PropertyBagValue />
+
+					<WelcomePage/>
+					<CustomMasterUrl/>
+					<MasterUrl/>
+					<NoCrawl/>
+
+					<ColorPaletteUrl/>
+					<FontSchemeUrl/>
+					<BackgroundImageUrl/>
+
+					<Webs/>
+						<Web/>
+				-->
+				<UserCustomActions>
+					<UserCustomAction Scope="Web">
+						<Name>jQuery</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>100</Sequence>
+						<ScriptLink>~site/SiteAssets/news/scripts/jquery-1.11.0.min.js</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>jQuery-UI</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>101</Sequence>
+						<ScriptLink>~site/SiteAssets/news/scripts/jquery-ui-1.10.4.custom.min.js</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>jQuery-UI-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>102</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/jquery-ui-1.10.4.custom.min.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>Pure-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>110</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/pure-min.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>Responsive-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>111</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/grids-responsive-min.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>News-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>112</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/news.css</ScriptLink>
+					</UserCustomAction>
+				</UserCustomActions>
+			</Web>
+		</Webs>
+
+	</Configuration>
+</Configurations>

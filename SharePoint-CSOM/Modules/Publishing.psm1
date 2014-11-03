@@ -1,19 +1,43 @@
-<#
-    var importingWebPart = mgr.ImportWebPart(webPartXml).WebPart; 
-    var wpDefinition = mgr.AddWebPart(importingWebPart, "Top", 1);
-    mgr.Context.Load(wpDefinition, d => d.Id); // need the Id of the hidden view which gets automatically created
-    mgr.Context.ExecuteQuery();
-    var viewId = wpDefinition.Id;
+function Get-WebPart {
+    [cmdletbinding()]
+    param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$PageUrl,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$WebPartTitle,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        if (-not ($PageUrl -match ".aspx$")) {
+            Write-Host "`t`t$($PageUrl) is not a publishing or webpart page" -ForegroundColor Green
+            return
+        }
 
-    List list = web.Lists.GetByTitle("Library Title");
-    View view = list.Views.GetById(viewId);
-    view.ViewFields.RemoveAll();
-    view.ViewFields.Add("Title");
-    view.ViewQuery = "<Where><Eq><FieldRef Name=\"Title\" /><Value Type=\"Text\">Something Here</Value></Eq></Where>";
-    view.RowLimit = 10;
-    view.Update();
-    web.Context.ExecuteQuery();
-#>
+        # get list information
+        $pagesList = $(if ($List -ne $null) { $List } else { $Web.Lists.GetByTitle("Pages") })
+        $ClientContext.Load($pagesList)
+        $ClientContext.Load($pagesList.RootFolder)
+        $ClientContext.ExecuteQuery()
+        
+        $pageFile = Get-File "$($pagesList.RootFolder.ServerRelativeUrl)/$PageUrl" $Web $ClientContext
+        if (-not $pageFile.Exists) { return $null }
+
+        $limitedWebPartManager = $pageFile.GetLimitedWebPartManager([Microsoft.SharePoint.Client.WebParts.PersonalizationScope]::Shared)
+        $ClientContext.Load($limitedWebPartManager.WebParts)
+        $ClientContext.ExecuteQuery()
+        # preload webparts
+        $limitedWebPartManager.WebParts | % {
+            $def = $_
+            $ClientContext.Load($def.WebPart)
+            $ClientContext.Load($def.WebPart.Properties)
+            $ClientContext.Load($def.WebPart.Properties)
+            $ClientContext.ExecuteQuery()
+        }
+        $def = $limitedWebPartManager.WebParts | Where { $_.WebPart.Title -eq $WebPartTitle }
+        $def
+    }
+    end {}
+}
 function Update-WebParts {
     [cmdletbinding()]
     param (
@@ -48,6 +72,7 @@ function Update-WebParts {
         $ClientContext.Load($pagesList.RootFolder)
         $ClientContext.ExecuteQuery()
 
+        $pageXmlFlags = $(if ($PageXml.Flags) {$PageXml.Flags} else {""})
         $MajorVersionsEnabled = $pagesList.EnableVersioning
         $MinorVersionsEnabled = $pagesList.EnableMinorVersions
         $ContentApprovalEnabled = $pagesList.EnableModeration
@@ -60,16 +85,25 @@ function Update-WebParts {
             return
         }
 
-        Write-Host "`t`t..[$($pageFile.CheckOutType)]"
-        if($pageFile.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
-            Write-Host "`t`t..Checking-out existing page"
-            $pageFile.CheckOut()
+        Write-Host "`t`t..1) Checkout Status [$($pageFile.CheckOutType)]"
+        if (-not ($pageXmlFlags -match "nocheckout")) {
+            if($pageFile.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                Write-Host "`t`t..Checking-out existing page"
+                $pageFile.CheckOut()
+            }
+            if($pageFile.CheckOutType -eq [Microsoft.SharePoint.Client.CheckOutType]::Online) {
+                Write-Host "`t`t..Existing page is Checked-out Online, UndoCheckout and Checkout"
+                $pageFile.UndoCheckOut()
+                $pageFile.CheckOut()
+            }
         }
+        #$pageFile = Get-File "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" $web $ClientContext
+        Write-Host "`t`t..2) Checkout Status [$($pageFile.CheckOutType)]"
 
         # add web parts
         Write-Host "`t`t..Adding/Updating WebParts"
         $updatePage = $false
-        $limitedWebPartManager = $pageFile.GetLimitedWebPartManager([Microsoft.SharePoint.Client.WebParts.PersonalizationScope]::Shared);
+        $limitedWebPartManager = $pageFile.GetLimitedWebPartManager([Microsoft.SharePoint.Client.WebParts.PersonalizationScope]::Shared)
         
         $ClientContext.Load($limitedWebPartManager.WebParts)
         $ClientContext.ExecuteQuery()
@@ -91,27 +125,35 @@ function Update-WebParts {
                 # update webpart properties
                 $def = $limitedWebPartManager.WebParts | Where { $_.WebPart.Title -eq $wpTitle }
                 if ($def -ne $null) {
-                    $update = $false
-                    foreach($wpPropertyXml in $wpDefXml.Property) {
-                        if ($wpPropertyXml.Name -match "title") {
-                            $def.WebPart.Title = $wpPropertyXml.Value
-                        } elseif ($wpPropertyXml.Name -match "titleurl") {
-                            $def.WebPart.TitleUrl = $wpPropertyXml.Value
-                        } elseif ($wpPropertyXml.Name -match "hidden") {
-                            $def.WebPart.Hidden = [bool]::Parse($wpPropertyXml.Value)
-                        } elseif ($wpPropertyXml.Name -match "zoneindex") {
-                            $def.WebPart.ZoneIndex = [bool]::Parse($wpPropertyXml.Value)
-                        } else {
-                            $def.WebPart.Properties[$wpPropertyXml.Name] = $wpPropertyXml.Value
-                        }                        
-                        $update = $true
-                    }
-                    if ($update) {
-                        $def.SaveWebPartChanges()
-                    } elseif ($wpDelete -and $wpDelete -match "true") {
+                    if ($wpDelete -and $wpDelete -match "true") {
                         $def.DeleteWebPart()
+                        Write-Host "`t`t..Delete Webpart '$wpTitle'" -ForegroundColor Green
+                    } else {
+                        Write-Host "`t`t..Attempt to Update Webpart '$wpTitle'" -ForegroundColor Green
+                        $update = $false
+                        foreach($wpPropertyXml in $wpDefXml.Property) {
+                            if ($wpPropertyXml.Name -match "title") {
+                                $def.WebPart.Title = $wpPropertyXml.Value
+                            } elseif ($wpPropertyXml.Name -match "titleurl") {
+                                $def.WebPart.TitleUrl = $wpPropertyXml.Value
+                            } elseif ($wpPropertyXml.Name -match "hidden") {
+                                #$def.WebPart.Hidden = [bool]::Parse($wpPropertyXml.Value)
+                                $def.WebPart.Properties["Hidden"] = [bool]::Parse($wpPropertyXml.Value)
+                            } elseif ($wpPropertyXml.Name -match "zoneindex") {
+                                $def.WebPart.ZoneIndex = [bool]::Parse($wpPropertyXml.Value)
+                            } else {
+                                $def.WebPart.Properties[$wpPropertyXml.Name] = $wpPropertyXml.Value
+                            }
+                            $update = $true
+                        }
+                        if ($update) {
+                            $def.SaveWebPartChanges()
+                            Write-Host "`t`t..Save Updated Webpart '$wpTitle'" -ForegroundColor Green
+                        }
                     }
                     $ClientContext.ExecuteQuery()
+                } else {
+                    Write-Host "`t`t..Webpart '$wpTitle' not found" -ForegroundColor Green
                 }
             } else {
                 $xml = $($wpDefXml.WebPart."#cdata-section")
@@ -175,23 +217,26 @@ function Update-WebParts {
         }
 
         # now save/checkin/publish/approve
-        if ($pageFile.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
-            $pageFile.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
-            Write-Host "`t`t..Checked-in page" -ForegroundColor Green
+        Write-Host "`t`t..Checkout Status [$($pageFile.CheckOutType)]"
+        if (-not ($pageXmlFlags -match "nocheckout")) {
+            if ($pageFile.CheckOutType -ne [Microsoft.SharePoint.Client.CheckOutType]::None) {
+                $pageFile.CheckIn("Draft Check-in", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
+                Write-Host "`t`t..Checked-in page" -ForegroundColor Green
+            }
+
+            if ($MinorVersionsEnabled -and $MajorVersionsEnabled) {
+                Write-Host "`t`t..Publishing" -ForegroundColor Green
+                $pageFile.Publish("Publish Page")
+                Write-Host "`t`t..Published page" -ForegroundColor Green
+            }
+
+            if ($ContentApprovalEnabled) {
+                Write-Host "`t`t..Approving" -ForegroundColor Green
+                $pageFile.Approve("Approve Page")
+                Write-Host "`t`t..Approved page" -ForegroundColor Green
+            }
         }
 
-        if ($MinorVersionsEnabled -and $MajorVersionsEnabled) {
-            Write-Host "`t`t..Publishing" -ForegroundColor Green
-            $pageFile.Publish("Publish Page")
-            Write-Host "`t`t..Published page" -ForegroundColor Green
-        }
-
-        if ($ContentApprovalEnabled) {
-            Write-Host "`t`t..Approving" -ForegroundColor Green
-            $pageFile.Approve("Approve Page")
-            Write-Host "`t`t..Approved page" -ForegroundColor Green
-        }
-        
         if ($ClientContext.HasPendingRequest) {
             Write-Host "`t`t..(Re)Loading" -ForegroundColor Green
         #    $ClientContext.Load($pageFile)
