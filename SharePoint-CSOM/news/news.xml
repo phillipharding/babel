@@ -150,6 +150,8 @@
 									<File Path="scripts\jquery-ui-1.10.4.custom.min.js" Url="jquery-ui-1.10.4.custom.min.js" ReplaceContent="True" />
 								</Folder>
 								<Folder Url="apps">
+									<File Path="apps\news-post-category-cloud.html" Url="news-post-category-cloud.html" ReplaceContent="True" ReplaceContentTokens="True" />
+									<File Path="apps\news-post-category-cloud.js" Url="news-post-category-cloud.js" ReplaceContent="True" />
 									<File Path="apps\news-post-date-cloud.html" Url="news-post-date-cloud.html" ReplaceContent="True" ReplaceContentTokens="True" />
 									<File Path="apps\news-post-date-cloud.js" Url="news-post-date-cloud.js" ReplaceContent="True" />
 								</Folder>
@@ -239,42 +241,24 @@
 </webParts>]]></WebPart>
 								</AllUsersWebPart>
 
-								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0" ListTitle="Categories">  <!-- category cloud -->
-									<ViewFields>
-										<FieldRef Name="Title" />
-									</ViewFields>
-									<JSLink>sp.ui.blogs.js</JSLink>
-									<WebPart><![CDATA[<webParts>
-	      <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
-	        <metaData>
-	          <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
-	          <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
-	        </metaData>
-	        <data>
-	          <properties>
-	            <property name="ListUrl" type="string">Lists/Categories</property>
-					<property name="TitleUrl" type="string">#</property>
-					<property name="ListDisplayName" type="string">Categories</property>
-	            <property name="ChromeType" type="chrometype">None</property>
-					<property name="XmlDefinition" type="string">&lt;View Name=&quot;{99C1884B-5785-4ABD-B762-ADF0D478FAC0}&quot; Type=&quot;HTML&quot; Hidden=&quot;TRUE&quot; DisplayName=&quot;&quot; Level=&quot;1&quot; BaseViewID=&quot;0&quot;&gt;    &lt;Query&gt;        &lt;OrderBy&gt;            &lt;FieldRef Name=&quot;Title&quot; Ascending=&quot;TRUE&quot; /&gt;        &lt;/OrderBy&gt;    &lt;/Query&gt;    &lt;ViewFields&gt;        &lt;FieldRef Name=&quot;Title&quot; /&gt;    &lt;/ViewFields&gt;    &lt;RowLimit Paged=&quot;TRUE&quot; &gt;        30    &lt;/RowLimit&gt;    &lt;JSLink&gt;sp.ui.blogs.js&lt;/JSLink&gt;    &lt;XslLink&gt;        blog.xsl    &lt;/XslLink&gt;    &lt;Toolbar Type=&quot;None&quot; /&gt;&lt;/View&gt;</property>
-					<property name="Title" type="string">Categories</property>
-					<property name="Description" type="string"></property>
-					<property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
-            &lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;
-            &lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;
-            &lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
-            &lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;
-            &lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;
-            &lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;
-            &lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt; &lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noXinviewofY_LIST)" /&gt;
-           &lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(core,noXinviewofY_DEFAULT)" /&gt;
-           &lt;ParameterBinding Name="AddNewAnnouncement" Location="Resource(wss,addnewitem)" /&gt;
-           &lt;ParameterBinding Name="MoreAnnouncements" Location="Resource(wss,moreItemsParen)" /&gt;</property>
-					<property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
-	          </properties>
-	        </data>
-	      </webPart>
-	    </webParts>]]></WebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
 								</AllUsersWebPart>
 								
 								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
@@ -390,7 +374,27 @@
 									</AllUsersWebPart>
 								-->
 								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
 								
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
 								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
 									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
   <Title>News Date Cloud</Title>
@@ -534,7 +538,27 @@
 								<AllUsersWebPart Title="New Archives" DeleteWebPart="True" />
 								<AllUsersWebPart Title="Categories" DeleteWebPart="True" />
 								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
 								
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
 								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
 									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
   <Title>News Date Cloud</Title>
@@ -561,7 +585,27 @@
 								<AllUsersWebPart Title="Archives" DeleteWebPart="True" />
 								<AllUsersWebPart Title="Categories" DeleteWebPart="True" />
 								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
-
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
+								
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
 								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
 									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
   <Title>News Date Cloud</Title>
@@ -588,7 +632,27 @@
 								<AllUsersWebPart Title="Archives" DeleteWebPart="True" />
 								<AllUsersWebPart Title="Categories" DeleteWebPart="True" />
 								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
 								
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
 								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
 									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
   <Title>News Date Cloud</Title>

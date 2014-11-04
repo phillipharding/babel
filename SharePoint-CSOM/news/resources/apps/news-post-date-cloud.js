@@ -55,7 +55,18 @@ $(function() {
                     .text(months[m]) )
             .appendTo($e);
     }
-    $e.stop().fadeIn(1000);
+    /* append an Archives link */
+    var $l = $('<h2>')
+                .append($('<a>')
+                        .attr('href', _spPageContextInfo.webServerRelativeUrl + '/Lists/Posts/Archive.aspx')
+                        .attr('title', 'show the news archives')
+                        .text('Archives'));
+    $("<li/>")
+        .addClass('archive')
+        .append($l)
+        .appendTo($e);
+
+    $e.stop().fadeIn(100);
 });
 
 })(jQuery);

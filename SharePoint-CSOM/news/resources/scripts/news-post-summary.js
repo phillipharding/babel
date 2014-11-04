@@ -84,7 +84,8 @@ csr.templateoverride = function() {
 			html = String.format("<div class='news-post-pageimage'>{0}</div>",ctx.CurrentItem.NewsPageImage);
 		}
 		html += ctx.CurrentItem.Body;
-
+		/* remove ZWB (zero width breaks which sharepoint occasionally puts in the markup for rich html field content */
+		html = html.replace(/\u200B/g,'');
 		return html;
 	}
 	function OnPreRender(ctx) {
