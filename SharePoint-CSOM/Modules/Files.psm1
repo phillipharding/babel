@@ -97,20 +97,20 @@ function Upload-File {
             $fileServerRelativeUrl = "$folderServerRelativeUrl/$($FileXml.Url)"
             Write-Host "`tFile: $fileServerRelativeUrl" -ForegroundColor Green
     
-            $ClientContext.Load($List.ParentWeb)
+            $webUrl = ""
+            $siteUrl = ""
+            $clientContext.Load($List.ParentWeb)
+            $ClientContext.Load($List.ParentWeb.SiteUserInfoList)
+            $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb)
+            $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder)
             $ClientContext.ExecuteQuery()
+            $siteUrl = $($list.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
+            $webUrl = $($list.ParentWeb.ServerRelativeUrl) -replace "/$",""
 
             $fileContent = Get-ResourceFile -FilePath $FileXml.Path -ResourcesPath $ResourcesPath -RemoteContext $RemoteContext
             if ($FileXml.ReplaceContentTokens -and $FileXml.ReplaceContentTokens -ne "") {
                 $replaceTokens = [bool]::Parse($FileXml.ReplaceContentTokens)
                 if ($replaceTokens) {
-                    $ClientContext.Load($List.ParentWeb.SiteUserInfoList)
-                    $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb)
-                    $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder)
-                    $ClientContext.ExecuteQuery()
-                    $siteUrl = $($List.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
-                    $webUrl = $($List.ParentWeb.ServerRelativeUrl) -replace "/$",""
-
                     $strContent = [System.Text.Encoding]::UTF8.GetString($fileContent)
                     $strContent = $strContent -replace "{{~sitecollection}}",$siteUrl
                     $strContent = $strContent -replace "{{~site}}",$webUrl
@@ -167,19 +167,38 @@ function Upload-File {
                 $propertyXml.Value = $propertyXml.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
                 
                 if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
-                    Write-Host "`t`t..Set file TaxonomyField property $($propertyXml.Name) = $($propertyXml.Value)" -ForegroundColor Green
-                    $field = $List.Fields.GetByInternalNameOrTitle($propertyXml.Name)
-                    $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($ClientContext, $field)
-                    $taxFieldValueCol = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection($ClientContext, "", $taxField)
+                    Write-Host "`t..Setting TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
+                    $field = $list.Fields.GetByInternalNameOrTitle($propertyXml.Name)
+                    $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
+                    $taxFieldValueCol = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection($clientContext, "", $taxField)
                     $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
                     $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
                     $updateItem = $true
+                } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
+                    if ($propertyXml.Type -eq "LookupId") {
+                        $li = Get-LookupListItem -id $propertyXml.Value -ListName $propertyXml.LookupListName -Web $List.ParentWeb -ClientContext $ClientContext
+                    } elseif ($propertyXml.Type -eq "LookupValue") {
+                        $li = Get-LookupListItem -title $propertyXml.Value -ListName $propertyXml.LookupListName -Web $List.ParentWeb -ClientContext $ClientContext
+                    }
+                    if ($li -ne $null) {
+                        $lv = New-Object Microsoft.SharePoint.Client.FieldLookupValue
+                        $lv.LookupId = $li["ID"]
+                        
+                        $item[$propertyXml.Name] = $lv
+                        Write-Host "`t`tSet page LOOKUP property: $($propertyXml.Name) = $($li["ID"]):$($li["Title"])" -ForegroundColor Green
+                        $updateItem = $true
+                    }
+                } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
+                    $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                    $item[$propertyXml.Name] = $pval
+                    Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
+                    $updateItem = $true
                 } else {
                     if($propertyXml.Name -ne "ContentType") {
+                        Write-Host "`t..Setting field property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
                         $item[$propertyXml.Name] = $propertyXml.Value
                         $updateItem = $true
                     }
-                    Write-Host "`t`tSet file property: $($propertyXml.Name) = $($propertyXml.Value)" -ForegroundColor Green
                 }
             }
             if ($updateItem) {

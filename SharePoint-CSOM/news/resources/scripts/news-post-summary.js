@@ -44,8 +44,10 @@ csr.templateoverride = function() {
 		/* close the <A/> and <H2/> tags first */
 
 		var html = '', headerimage = '';
-		if (ctx.CurrentItem.NewsRollupImage) {
+		if (ctx.CurrentItem.NewsRollupImage && ctx.CurrentItem.NewsRollupImage.match(/<img /gi)) {
 			headerimage = String.format("<div class='news-post-title-image'>{0}</div>",ctx.CurrentItem.NewsRollupImage);
+		} else {
+			headerimage = String.format("<div class='news-post-title-image'><img src='{0}/SiteAssets/news/images/news-icon.png' class='default' /></div>",ctx.HttpRoot);
 		}
 		if (ctx.BaseViewID == 0 || ctx.BaseViewID == 7) {
 		/* summary view or post view */
@@ -56,7 +58,7 @@ csr.templateoverride = function() {
 								headerimage);
 		} else if (ctx.BaseViewID == 9 || ctx.BaseViewID == 8) {
 		/* category view or date (range) view */
-			var body = String.format("<div class='news-post-bodysummary'>{2}<div class='ellipsis'><a href='{0}/Post.aspx?ID={1}' class=''>&hellip;</a></div></div>", 
+			var body = String.format("<div class='news-post-bodysummary'>{2}<div class='ellipsis'><a href='{0}/Post.aspx?ID={1}' title='read the rest of this article'>...</a></div></div>", 
 								ctx.listUrlDir,
 								ctx.CurrentItem.ID,
 								ctx.CurrentItem.Body);
@@ -80,8 +82,8 @@ csr.templateoverride = function() {
 	function FieldBodyViewRender(ctx) {
 		console.log(String.format(">>In FieldBodyViewRender -2, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
 		var html = "";
-		if (ctx.CurrentItem.NewsPageImage) {
-			html = String.format("<div class='news-post-pageimage'>{0}</div>",ctx.CurrentItem.NewsPageImage);
+		if (ctx.CurrentItem.NewsPageImage && ctx.CurrentItem.NewsPageImage.match(/<img /gi)) {
+			html = String.format("<div class='news-post-pageimage {1}'>{0}</div>",ctx.CurrentItem.NewsPageImage,ctx.CurrentItem.NewsPageImageOrientation);
 		}
 		html += ctx.CurrentItem.Body;
 		/* remove ZWB (zero width breaks which sharepoint occasionally puts in the markup for rich html field content */
