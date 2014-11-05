@@ -364,7 +364,17 @@ function New-PublishingPage {
 
         # Get List information
         $pagesList = $Web.Lists.GetByTitle("Pages")
-		$clientContext.Load($pagesList)
+		$ClientContext.Load($pagesList)
+
+        $webUrl = ""
+        $siteUrl = ""
+        $clientContext.Load($pagesList.ParentWeb)
+        $ClientContext.Load($pagesList.ParentWeb.SiteUserInfoList)
+        $ClientContext.Load($pagesList.ParentWeb.SiteUserInfoList.ParentWeb)
+        $ClientContext.Load($pagesList.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder)
+        $ClientContext.ExecuteQuery()
+        $siteUrl = $($pagesList.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
+        $webUrl = $($pagesList.ParentWeb.ServerRelativeUrl) -replace "/$",""
 
         # Check for existing Page
         $existingPageFile = Get-File "$($web.ServerRelativeUrl)/Pages/$($PageXml.Url)" $web $ClientContext
@@ -457,11 +467,18 @@ function New-PublishingPage {
                 } else {
                     $publishingPage.ListItem[$propertyXml.Name] = $propertyXml.Value
                 }
-
-            } elseif ($propertyXml.Name -eq "ContentType") {
-                # Do Nothing, use ContentTypeId to set content type
+            } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
+                $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $pagesList.ParentWeb -ClientContext $ClientContext
+                if ($lfv -ne $null) {
+                    $publishingPage.ListItem[$propertyXml.Name] = $lfv
+                    Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                }
             } elseif($propertyXml.Type -and $propertyXml.Type -match "image") {
-                $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$site.RootWeb.ServerRelativeUrl) -replace `"~site`",$web.ServerRelativeUrl)' style='border: 0px solid;'>"
+                if ($propertyXml.Value -and $propertyXml.Value -ne "") {
+                    $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                } else {
+                    $pval = ""
+                }
                 $publishingPage.ListItem[$propertyXml.Name] = $pval
                 Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
             } elseif($propertyXml.Type -and $propertyXml.Type -match "html") {
@@ -469,9 +486,11 @@ function New-PublishingPage {
                 $publishingPage.ListItem[$propertyXml.Name] = $pval
                 Write-Host "`t`tSet page HTML property: $($propertyXml.Name) = $pval" -ForegroundColor Green
             } else {
-                $pval = (($propertyXml.Value -replace "~sitecollection",$site.RootWeb.ServerRelativeUrl) -replace "~site",$web.ServerRelativeUrl)
-                $publishingPage.ListItem[$propertyXml.Name] = $pval
-                Write-Host "`t`tSet page property: $($propertyXml.Name) = $($pval)" -ForegroundColor Green
+                if ($propertyXml.Name -ne "ContentType") {
+                    $pval = (($propertyXml.Value -replace "~sitecollection",$site.RootWeb.ServerRelativeUrl) -replace "~site",$web.ServerRelativeUrl)
+                    $publishingPage.ListItem[$propertyXml.Name] = $pval
+                    Write-Host "`t`tSet page property: $($propertyXml.Name) = $($pval)" -ForegroundColor Green
+                }
             }
         }
         $publishingPage.ListItem.Update()

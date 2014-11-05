@@ -33,44 +33,23 @@
 					<Webs/>
 						<Web/>
 				-->
-				<UserCustomActions>
-					<UserCustomAction Scope="Web">
-						<Name>jQuery</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>100</Sequence>
-						<ScriptLink>~site/SiteAssets/news/scripts/jquery-1.11.0.min.js</ScriptLink>
-					</UserCustomAction>
-					<UserCustomAction Scope="Web">
-						<Name>jQuery-UI</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>101</Sequence>
-						<ScriptLink>~site/SiteAssets/news/scripts/jquery-ui-1.10.4.custom.min.js</ScriptLink>
-					</UserCustomAction>
-					<UserCustomAction Scope="Web">
-						<Name>jQuery-UI-CSS</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>102</Sequence>
-						<ScriptLink>~site/SiteAssets/news/css/jquery-ui-1.10.4.custom.min.css</ScriptLink>
-					</UserCustomAction>
-					<UserCustomAction Scope="Web">
-						<Name>Pure-CSS</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>110</Sequence>
-						<ScriptLink>~site/SiteAssets/news/css/pure-min.css</ScriptLink>
-					</UserCustomAction>
-					<UserCustomAction Scope="Web">
-						<Name>Responsive-CSS</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>111</Sequence>
-						<ScriptLink>~site/SiteAssets/news/css/grids-responsive-min.css</ScriptLink>
-					</UserCustomAction>
-					<UserCustomAction Scope="Web">
-						<Name>News-CSS</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>112</Sequence>
-						<ScriptLink>~site/SiteAssets/news/css/news.css</ScriptLink>
-					</UserCustomAction>
-				</UserCustomActions>
+				<Lists>
+					<List Title="Posts" ContentTypesEnabled="True">
+						<UpdateItems>
+							<Item Title="Understanding Query Rules">
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Understanding Query Rules" />
+								<Property Name="Body" Value="​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​ ​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​ ​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​" />
+								<Property Name="PostCategory" Value="T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="PublishedDate" Value="2014-10-20T17:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+						</UpdateItems>
+					</List>
+				</Lists>
+
 			</Web>
 		</Webs>
 

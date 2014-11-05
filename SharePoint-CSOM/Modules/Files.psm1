@@ -175,23 +175,20 @@ function Upload-File {
                     $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
                     $updateItem = $true
                 } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                    if ($propertyXml.Type -eq "LookupId") {
-                        $li = Get-LookupListItem -id $propertyXml.Value -ListName $propertyXml.LookupListName -Web $List.ParentWeb -ClientContext $ClientContext
-                    } elseif ($propertyXml.Type -eq "LookupValue") {
-                        $li = Get-LookupListItem -title $propertyXml.Value -ListName $propertyXml.LookupListName -Web $List.ParentWeb -ClientContext $ClientContext
-                    }
-                    if ($li -ne $null) {
-                        $lv = New-Object Microsoft.SharePoint.Client.FieldLookupValue
-                        $lv.LookupId = $li["ID"]
-                        
-                        $item[$propertyXml.Name] = $lv
-                        Write-Host "`t`tSet page LOOKUP property: $($propertyXml.Name) = $($li["ID"]):$($li["Title"])" -ForegroundColor Green
+                    $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                    if ($lfv -ne $null) {
+                        $item[$propertyXml.Name] = $lfv
                         $updateItem = $true
+                        Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
                     }
                 } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
-                    $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                    if ($propertyXml.Value -and $propertyXml.Value -ne "") {
+                        $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                    } else {
+                        $pval = ""
+                    }
                     $item[$propertyXml.Name] = $pval
-                    Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
+                    Write-Host "`t..Setting IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
                     $updateItem = $true
                 } else {
                     if($propertyXml.Name -ne "ContentType") {

@@ -29,24 +29,21 @@
                 $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
                 $taxFieldValueCol = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection($clientContext, "", $taxField)
                 $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
-                $taxField.SetFieldValueByValueCollection($newItem, $taxFieldValueCol)
+                $taxField.SetFieldValueByValueCollection($newitem, $taxFieldValueCol)
             } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                if ($propertyXml.Type -eq "LookupId") {
-                    $li = Get-LookupListItem -id $propertyXml.Value -ListName $propertyXml.LookupListName -Web $list.ParentWeb -ClientContext $ClientContext
-                } elseif ($propertyXml.Type -eq "LookupValue") {
-                    $li = Get-LookupListItem -title $propertyXml.Value -ListName $propertyXml.LookupListName -Web $list.ParentWeb -ClientContext $ClientContext
-                }
-                if ($li -ne $null) {
-                    $lv = New-Object Microsoft.SharePoint.Client.FieldLookupValue
-                    $lv.LookupId = $li["ID"]
-                    
-                    $newItem[$propertyXml.Name] = $lv
-                    Write-Host "`t`tSet page LOOKUP property: $($propertyXml.Name) = $($li["ID"]):$($li["Title"])" -ForegroundColor Green
+                $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                if ($lfv -ne $null) {
+                    $newItem[$propertyXml.Name] = $lfv
+                    Write-Host "`t`tSet LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
                 }
             } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
-                $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                if ($propertyXml.Value -and $propertyXml.Value -ne "") {
+                    $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                } else {
+                    $pval = ""
+                }
                 $newItem[$propertyXml.Name] = $pval
-                Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
+                Write-Host "`t`tSet IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
             } else {
                 if($propertyXml.Name -ne "ContentType") {
                     Write-Host "`t..Setting field property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
@@ -96,22 +93,19 @@ function Add-ListItems {
                 $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
                 $taxField.SetFieldValueByValueCollection($newItem, $taxFieldValueCol)
             } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                if ($propertyXml.Type -eq "LookupId") {
-                    $li = Get-LookupListItem -id $propertyXml.Value -ListName $propertyXml.LookupListName -Web $list.ParentWeb -ClientContext $ClientContext
-                } elseif ($propertyXml.Type -eq "LookupValue") {
-                    $li = Get-LookupListItem -title $propertyXml.Value -ListName $propertyXml.LookupListName -Web $list.ParentWeb -ClientContext $ClientContext
-                }
-                if ($li -ne $null) {
-                    $lv = New-Object Microsoft.SharePoint.Client.FieldLookupValue
-                    $lv.LookupId = $li["ID"]
-                    
-                    $newItem[$propertyXml.Name] = $lv
-                    Write-Host "`t`tSet page LOOKUP property: $($propertyXml.Name) = $($li["ID"]):$($li["Title"])" -ForegroundColor Green
+                $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                if ($lfv -ne $null) {
+                    $newItem[$propertyXml.Name] = $lfv
+                    Write-Host "`t`tSet LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
                 }
             } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
-                $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                if ($propertyXml.Value -and $propertyXml.Value -ne "") {
+                    $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                } else {
+                    $pval = ""
+                }
                 $newItem[$propertyXml.Name] = $pval
-                Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
+                Write-Host "`t`tSet IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
             } else {
                 if($propertyXml.Name -ne "ContentType") {
                     Write-Host "`t..Setting field property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
@@ -285,23 +279,20 @@ function Update-ListItem {
                         $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
                         $updateItem = $true
                     } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                        if ($propertyXml.Type -eq "LookupId") {
-                            $li = Get-LookupListItem -id $propertyXml.Value -ListName $propertyXml.LookupListName -Web $list.ParentWeb -ClientContext $ClientContext
-                        } elseif ($propertyXml.Type -eq "LookupValue") {
-                            $li = Get-LookupListItem -title $propertyXml.Value -ListName $propertyXml.LookupListName -Web $list.ParentWeb -ClientContext $ClientContext
-                        }
-                        if ($li -ne $null) {
-                            $lv = New-Object Microsoft.SharePoint.Client.FieldLookupValue
-                            $lv.LookupId = $li["ID"]
-                            
-                            $item[$propertyXml.Name] = $lv
+                        $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                        if ($lfv -ne $null) {
+                            $item[$propertyXml.Name] = $lfv
                             $updateItem = $true
-                            Write-Host "`t`tSet page LOOKUP property: $($propertyXml.Name) = $($li["ID"]):$($li["Title"])" -ForegroundColor Green
+                            Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
                         }
                     } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
-                        $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                        if ($propertyXml.Value -and $propertyXml.Value -ne "") {
+                            $pval = "<img alt='' src='$(($propertyXml.Value -replace `"~sitecollection`",$siteUrl) -replace `"~site`",$webUrl)' style='border: 0px solid;'>"
+                        } else {
+                            $pval = ""
+                        }
                         $item[$propertyXml.Name] = $pval
-                        Write-Host "`t`tSet page IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
+                        Write-Host "`t..Setting IMAGE property: $($propertyXml.Name) = $pval" -ForegroundColor Green
                         $updateItem = $true
                     } else {
                         if($propertyXml.Name -ne "ContentType") {
@@ -366,3 +357,47 @@ function Remove-ListItem {
         }
     }
 }
+function Get-LookupFieldValue {
+    param(
+        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][System.Xml.XmlElement] $propertyXml, 
+        [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $Web, 
+        [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext] $ClientContext
+    )
+    process {
+        if ($propertyXml -eq $null) { return $null }
+        $fieldvalue = $null
+
+        if ($propertyXml.Mult -and $propertyXml.Mult -match "true") {
+            $coll = @()
+            $values = $propertyXml.Value -split ","
+            foreach($val in $values) {
+                $li = $null
+                if ($propertyXml.Type -eq "LookupId") {
+                    $li = Get-LookupListItem -id $val -ListName $propertyXml.LookupListName -Web $Web -ClientContext $ClientContext
+                } elseif ($propertyXml.Type -eq "LookupValue") {
+                    $li = Get-LookupListItem -title $val -ListName $propertyXml.LookupListName -Web $Web -ClientContext $ClientContext
+                }
+                if ($li -ne $null) {
+                    $lfv = New-Object Microsoft.SharePoint.Client.FieldLookupValue
+                    $lfv.LookupId = $li["ID"]
+                    $coll += $lfv
+                }
+            }
+            $fieldvalue = [Microsoft.SharePoint.Client.FieldLookupValue[]]$coll
+        } else {
+            $li = $null
+            if ($propertyXml.Type -eq "LookupId") {
+                $li = Get-LookupListItem -id $propertyXml.Value -ListName $propertyXml.LookupListName -Web $Web -ClientContext $ClientContext
+            } elseif ($propertyXml.Type -eq "LookupValue") {
+                $li = Get-LookupListItem -title $propertyXml.Value -ListName $propertyXml.LookupListName -Web $Web -ClientContext $ClientContext
+            }
+            if ($li -ne $null) {
+                $fieldvalue = New-Object Microsoft.SharePoint.Client.FieldLookupValue
+                $fieldvalue.LookupId = $li["ID"]
+            }
+        }
+        $fieldvalue
+    }
+    end {}
+}
+

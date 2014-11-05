@@ -3,7 +3,7 @@ $modulesPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 # load and init the CSOM modules
 ."$modulesPath\load-spo-modules.ps1"
-cls
+#cls
 Add-CSOM
 Add-TenantCSOM
 
