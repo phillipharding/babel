@@ -452,6 +452,7 @@ function New-PublishingPage {
         $publishingPageInformation.Name = $PageXml.Url;
         $publishingPageInformation.PageLayoutListItem = $pageLayout
 
+        $propCount = 0
         $publishingPage = $publishingWeb.AddPublishingPage($publishingPageInformation)
         foreach($propertyXml in $PageXml.Property) {
             if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
@@ -468,10 +469,14 @@ function New-PublishingPage {
                     $publishingPage.ListItem[$propertyXml.Name] = $propertyXml.Value
                 }
             } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $pagesList.ParentWeb -ClientContext $ClientContext
-                if ($lfv -ne $null) {
-                    $publishingPage.ListItem[$propertyXml.Name] = $lfv
-                    Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                if ($propCount -eq 0) {
+                    $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $pagesList.ParentWeb -ClientContext $ClientContext
+                    if ($lfv -ne $null) {
+                        $publishingPage.ListItem[$propertyXml.Name] = $lfv
+                        Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                    }
+                } else {
+                    Write-Host "`t..Ignoring LOOKUP property: $($propertyXml.Name), LookupId or LookupValue type properties must be the first property set!" -ForegroundColor Red
                 }
             } elseif($propertyXml.Type -and $propertyXml.Type -match "image") {
                 if ($propertyXml.Value -and $propertyXml.Value -ne "") {
@@ -492,6 +497,7 @@ function New-PublishingPage {
                     Write-Host "`t`tSet page property: $($propertyXml.Name) = $($pval)" -ForegroundColor Green
                 }
             }
+            $propCount += 1
         }
         $publishingPage.ListItem.Update()
         $publishingPageFile = $publishingPage.ListItem.File

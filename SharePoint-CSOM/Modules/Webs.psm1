@@ -437,6 +437,14 @@ function Update-Web {
         if($xml.Webs) {
             Add-Webs -Xml $xml.Webs -Site $site -Web $web -ClientContext $ClientContext
         }
+
+        if ($xml.Comments) {
+            Write-Host "`nAUTHOR COMMENTS:"
+            foreach($comment in $xml.Comments) {
+                Write-Host "`t- $comment" -ForegroundColor White
+            }
+            Write-Host ""
+        }
     }
     end {}
 }

@@ -95,7 +95,7 @@ function Upload-File {
         try {
             $folderServerRelativeUrl = $Folder.ServerRelativeUrl
             $fileServerRelativeUrl = "$folderServerRelativeUrl/$($FileXml.Url)"
-            Write-Host "`tFile: $fileServerRelativeUrl" -ForegroundColor Green
+            Write-Host "`tTARGET FILE [$fileServerRelativeUrl]" -ForegroundColor White
     
             $webUrl = ""
             $siteUrl = ""
@@ -160,6 +160,7 @@ function Upload-File {
                 Write-Host "`t..Checkout uploaded file" -ForegroundColor Green
             }
 
+            $propCount = 0
             $updateItem = $false
             foreach($propertyXml in $FileXml.Property) {
                 $propertyXml.Value = $propertyXml.Value -replace "~folderUrl", $folderServerRelativeUrl
@@ -175,11 +176,15 @@ function Upload-File {
                     $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
                     $updateItem = $true
                 } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                    $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
-                    if ($lfv -ne $null) {
-                        $item[$propertyXml.Name] = $lfv
-                        $updateItem = $true
-                        Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                    if ($propCount -eq 0) {
+                        $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                        if ($lfv -ne $null) {
+                            $item[$propertyXml.Name] = $lfv
+                            $updateItem = $true
+                            Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                        }
+                    } else {
+                        Write-Host "`t..Ignoring LOOKUP property: $($propertyXml.Name), LookupId or LookupValue type properties must be the first property set!" -ForegroundColor Red
                     }
                 } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
                     if ($propertyXml.Value -and $propertyXml.Value -ne "") {
@@ -197,6 +202,7 @@ function Upload-File {
                         $updateItem = $true
                     }
                 }
+                $propCount += 1
             }
             if ($updateItem) {
                 $item.Update()
@@ -252,7 +258,7 @@ function Update-Folders {
     )
     process {
         if ($FoldersXml -eq $null -or $FoldersXml -eq "") { return }
-        Write-Host "Start Folders.." -ForegroundColor Green
+        Write-Host "START FOLDERS.." -ForegroundColor Green
         foreach($folderXml in $FoldersXml.Folder) {
             if ($folderXml.Url -and $folderXml.Url -ne "") {
                 $folderPath = ""
@@ -287,7 +293,7 @@ function Update-Folders {
                 Add-Files $list $folder $folderXml $resourcesPath $ClientContext $null
             }
         }
-        Write-Host "Finish Folders.." -ForegroundColor Green
+        Write-Host "FINISH FOLDERS..`n" -ForegroundColor Green
     }
     end {}
 }
@@ -309,15 +315,15 @@ function Add-Files {
         $ClientContext.Load($List.ParentWeb)
         $ClientContext.ExecuteQuery()
 
-        Write-Host "`t`tFolder: $($Folder.ServerRelativeUrl)" -ForegroundColor Green
+        Write-Host "`tFOLDER [$($Folder.ServerRelativeUrl)]" -ForegroundColor Green
         foreach($fileXml in $FolderXml.File) {
             if ($fileXml.Path -and $fileXml.Path -ne "") {
-                Write-Host "$($fileXml.Path)"
+                Write-Host "`tSOURCE FILE [$($fileXml.Path)]"
                 $file = Upload-File -List $List -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath -ClientContext $clientContext -RemoteContext $RemoteContext
 
                 Update-WebParts -PageXml $fileXml -List $List -Web $List.ParentWeb -ClientContext $ClientContext
             } elseif ($fileXml.Url -and $fileXml.Url -ne "") {
-                Write-Host "$($fileXml.Url)"
+                Write-Host "`tSOURCE FILE [$($fileXml.Url)]"
                 $file = Get-File "$($Folder.ServerRelativeUrl)/$($fileXml.Url)" $List.ParentWeb $ClientContext
                 if ($file -ne $null -and $file.Exists) {
                     Update-WebParts -PageXml $fileXml -List $List -Web $List.ParentWeb -ClientContext $ClientContext

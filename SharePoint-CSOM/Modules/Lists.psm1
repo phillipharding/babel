@@ -389,7 +389,7 @@ param (
 )
     process {
         if ($CatalogsXml -eq $null -or $CatalogsXml -eq "") { return }
-        Write-Host "Start Catalogs.." -ForegroundColor Green
+        Write-Host "START CATALOGS.." -ForegroundColor Green
         foreach($catalogXml in $CatalogsXml.Catalog) {
             if ($catalogXml.Type -eq "MasterPageCatalog") {
                 $SPList = $site.RootWeb.GetCatalog([Microsoft.SharePoint.Client.ListTemplateType]::$($catalogXml.Type))
@@ -405,7 +405,7 @@ param (
                 Write-Host "`tCatalog loaded: $($catalogXml.Title)" -ForegroundColor Green
             }
 
-            Write-Host "`tDelete Items" -ForegroundColor Green
+            Write-Host "`tDELETE ITEMS" -ForegroundColor Green
             if($catalogXml.DeleteItems) {
                 foreach($itemXml in $catalogXml.DeleteItems.Item) {
                     $item = Get-ListItem -itemUrl $itemXml.Url -Folder $itemXml.Folder -List $SPList -ClientContext $clientContext
@@ -414,14 +414,14 @@ param (
                     }
                 }
             }
-            Write-Host "`tUpdate Items" -ForegroundColor Green
+            Write-Host "`tUPDATE ITEMS" -ForegroundColor Green
             if($catalogXml.UpdateItems) {
                 foreach($itemXml in $catalogXml.UpdateItems.Item) {
                     Update-ListItem -listItemXml $itemXml -List $SPList -ClientContext $clientContext
                 }
             }
 
-            Write-Host "`tFiles and Folders" -ForegroundColor Green
+            Write-Host "`tFILES AND FOLDERS" -ForegroundColor Green
             foreach($folderXml in $catalogXml.Folder) {
             #    Write-Host "`t`t$(if ($folderXml.Url) { $folderXml.Url } else { `"{root folder}`" })" -ForegroundColor Green
                 $resourcesPath = $($folderXml.SelectSingleNode("ancestor::*[@ResourcesPath][1]/@ResourcesPath")).Value
@@ -431,7 +431,7 @@ param (
             }
 
             if($catalogXml.Type -eq "DesignCatalog") {
-                Write-Host "`t..ComposedLooks" -ForegroundColor Green
+                Write-Host "`t..COMPOSEDLOOKS" -ForegroundColor Green
                 foreach($composedLookXml in $catalogXml.ComposedLook) {
                     if ($composedLookXml.Title -ne $null -and $composedLookXml.Title -ne "") {
                         $composedLookListItem = Get-ComposedLook -Name $composedLookXml.Title -ComposedLooksList $SPList -Web $web -ClientContext $ClientContext
@@ -442,7 +442,7 @@ param (
                 }
             }
         }
-        Write-Host "Finish Catalogs.." -ForegroundColor Green
+        Write-Host "FINISH CATALOGS.." -ForegroundColor Green
     }
     end {}
 }
@@ -455,7 +455,7 @@ param (
 )
     process {
         if ($ListsXml -eq $null -or $ListsXml -eq "") { return }
-        Write-Host "Start Remove Lists.." -ForegroundColor Green
+        Write-Host "START REMOVE LISTS.." -ForegroundColor Green
         foreach($listXml in $ListsXml.RemoveList) {
             if ($listXml.Title -and $listXml.Title -ne "") {
                 Write-Host "`tRemoving list '$($listXml.Title)'" -ForegroundColor Green
@@ -472,7 +472,7 @@ param (
                 }
             }
         }
-        Write-Host "Finish Remove Lists.." -ForegroundColor Green
+        Write-Host "FINISH REMOVE LISTS.." -ForegroundColor Green
     }
     end {}
 }
@@ -485,7 +485,7 @@ param (
 )
     process {
         if ($ListsXml -eq $null -or $ListsXml -eq "") { return }
-        Write-Host "Start Lists.." -ForegroundColor Green
+        Write-Host "START LISTS.." -ForegroundColor Green
         foreach($listXml in $ListsXml.List) {
             if ($listXml.Title -and $listXml.Title -ne "") {
                 if ((-not $ListsXml.Scope) -or ($ListsXml.Scope -match "web")) {
@@ -495,7 +495,7 @@ param (
                 }
             }
         }
-        Write-Host "Finish Lists.." -ForegroundColor Green
+        Write-Host "FINISH LISTS.." -ForegroundColor Green
     }
     end {}
 }
@@ -509,9 +509,9 @@ param(
         $SPList = Get-List -ListName $listxml.Title -Web $web -ClientContext $ClientContext
         if($SPList -eq $null) {
             $SPList = New-ListFromXml -listxml $listxml -Web $web -ClientContext $ClientContext
-            Write-Host "List created: $($listxml.Title)" -ForegroundColor Green
+            Write-Host "LIST CREATED [$($listxml.Title)]" -ForegroundColor White
         } else {
-            Write-Host "List already created: $($listxml.Title)" -ForegroundColor Green
+            Write-Host "LIST ALREADY EXISTS [$($listxml.Title)]" -ForegroundColor White
         }
 
         Write-Host "`tContent Types" -ForegroundColor Green
@@ -546,6 +546,7 @@ param(
                         $folder.UniqueContentTypeOrder = $currentContentTypeOrder
                         $folder.Update()
                         $ClientContext.ExecuteQuery()
+                        Write-Host "`t`t..Set as default content type" -ForegroundColor Yellow
                     }
                 }
             }
@@ -721,7 +722,7 @@ param(
             }
         }
 
-        Write-Host "`tFiles and Folders" -ForegroundColor Green
+        Write-Host "`tFILES AND FOLDERS" -ForegroundColor White
         foreach($folderXml in $listxml.Folder) {
         #    Write-Host "`t`t$(if ($folderXml.Url) { $folderXml.Url } else { `"{root folder}`" })" -ForegroundColor Green
             $resourcesPath = $($folderXml.SelectSingleNode("ancestor::*[@ResourcesPath][1]/@ResourcesPath")).Value
@@ -731,7 +732,7 @@ param(
             Add-Files $SPList $spFolder $folderXml $resourcesPath $ClientContext $null
         }
 
-        Write-Host "`tPropertyBag Values" -ForegroundColor Green
+        Write-Host "`tPROPERTYBAG VALUES" -ForegroundColor Green
         foreach ($ProperyBagValueXml in $listxml.PropertyBag.PropertyBagValue) {
             if ($ProperyBagValueXml.Key -and $ProperyBagValueXml.Key -ne "") {
                 $Indexable = $false
@@ -743,7 +744,7 @@ param(
             }
         }
         
-        Write-Host "`tUpdating Other List Settings" -ForegroundColor Green
+        Write-Host "`tUPDATING OTHER LIST SETTINGS" -ForegroundColor Green
         $listNeedsUpdate = $false
         
         if($listxml.ContentTypesEnabled -and $listxml.ContentTypesEnabled -ne "") {

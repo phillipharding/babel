@@ -8,8 +8,6 @@
     begin {
     }
     process {
-        $listItemCreationInformation = New-Object Microsoft.SharePoint.Client.ListItemCreationInformation 
-        $newItem = $list.AddItem($listItemCreationInformation);
         Write-Host "`t`tCreating List Item.." -ForegroundColor Green
         
         $webUrl = ""
@@ -22,6 +20,9 @@
         $siteUrl = $($list.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder.ServerRelativeUrl) -replace "/$",""
         $webUrl = $($list.ParentWeb.ServerRelativeUrl) -replace "/$",""
 
+        $listItemCreationInformation = New-Object Microsoft.SharePoint.Client.ListItemCreationInformation 
+        $newItem = $list.AddItem($listItemCreationInformation)
+        $propCount = 0
         foreach($propertyXml in $listItemXml.Property) {
             if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
                 Write-Host "`t..Setting TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
@@ -31,10 +32,14 @@
                 $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
                 $taxField.SetFieldValueByValueCollection($newitem, $taxFieldValueCol)
             } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
-                if ($lfv -ne $null) {
-                    $newItem[$propertyXml.Name] = $lfv
-                    Write-Host "`t`tSet LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                if ($propCount -eq 0) {
+                    $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                    if ($lfv -ne $null) {
+                        $newItem[$propertyXml.Name] = $lfv
+                        Write-Host "`t`tSet LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                    }
+                } else {
+                    Write-Host "`t..Ignoring LOOKUP property: $($propertyXml.Name), LookupId or LookupValue type properties must be the first property set!" -ForegroundColor Red
                 }
             } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
                 if ($propertyXml.Value -and $propertyXml.Value -ne "") {
@@ -50,9 +55,10 @@
                     $newItem[$propertyXml.Name] = $propertyXml.Value
                 }
             }
+            $propCount += 1
         }
 
-        $newItem.Update();
+        $newItem.Update()
         $clientContext.Load($newItem)
         $clientContext.ExecuteQuery()
         Write-Host "`t`t..Created List Item" -ForegroundColor Green
@@ -82,7 +88,8 @@ function Add-ListItems {
         $webUrl = $($list.ParentWeb.ServerRelativeUrl) -replace "/$",""
 
         $listItemCreationInformation = New-Object Microsoft.SharePoint.Client.ListItemCreationInformation 
-        $newItem = $list.AddItem($listItemCreationInformation);
+        $newItem = $list.AddItem($listItemCreationInformation)
+        $propCount = 0
         Write-Host "Creating List Item"
         foreach($propertyXml in $listItemXml.Property) {
             if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
@@ -93,10 +100,14 @@ function Add-ListItems {
                 $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
                 $taxField.SetFieldValueByValueCollection($newItem, $taxFieldValueCol)
             } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
-                if ($lfv -ne $null) {
-                    $newItem[$propertyXml.Name] = $lfv
-                    Write-Host "`t`tSet LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                if ($propCount -eq 0) {
+                    $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                    if ($lfv -ne $null) {
+                        $newItem[$propertyXml.Name] = $lfv
+                        Write-Host "`t`tSet LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                    }
+                } else {
+                    Write-Host "`t..Ignoring LOOKUP property: $($propertyXml.Name), LookupId or LookupValue type properties must be the first property set!" -ForegroundColor Red
                 }
             } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
                 if ($propertyXml.Value -and $propertyXml.Value -ne "") {
@@ -112,8 +123,9 @@ function Add-ListItems {
                     $newItem[$propertyXml.Name] = $propertyXml.Value
                 }
             }
+            $propCount += 1
         }
-        $newItem.Update();
+        $newItem.Update()
         $clientContext.Load($newItem)
         $clientContext.ExecuteQuery()
         Write-Host "Created List Item"
@@ -216,7 +228,7 @@ function Update-ListItem {
         if ($listItemXml.folder -ne $null -and $listItemXml.folder -ne "") {
             $fileServerRelativeUrl += "/$($listItemXml.folder)"
         }
-        $fileServerRelativeUrl += "/$($listItemXml.Url)"
+        
         $webUrl = ""
         $siteUrl = ""
         $clientContext.Load($list.ParentWeb)
@@ -232,10 +244,13 @@ function Update-ListItem {
         $camlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
         if ($listItemXml.Url) {
             $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($listItemXml.Url)</Value></Eq></Where></Query></View>"
+            $fileServerRelativeUrl += "/$($listItemXml.Url)"
         } elseif ($listItemXml.Title) {
             $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>$($listItemXml.Title)</Value></Eq></Where></Query></View>"
+            $fileServerRelativeUrl += "/$($listItemXml.Title)"
         } elseif ($listItemXml.Id) {
             $camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='ID' /><Value Type='Counter'>$($listItemXml.Id)</Value></Eq></Where></Query></View>"
+            $fileServerRelativeUrl += "/$($listItemXml.Id)"
         }
         if ((-not $camlQuery.ViewXml) -or ($camlQuery.ViewXml -eq "")) {
             return
@@ -269,6 +284,7 @@ function Update-ListItem {
                 }
 
                 $updateItem = $false
+                $propCount = 0
                 foreach($propertyXml in $listItemXml.Property) {
                     if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
                         Write-Host "`t..Setting TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
@@ -279,11 +295,15 @@ function Update-ListItem {
                         $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
                         $updateItem = $true
                     } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
-                        $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
-                        if ($lfv -ne $null) {
-                            $item[$propertyXml.Name] = $lfv
-                            $updateItem = $true
-                            Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                        if ($propCount -eq 0) {
+                            $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext
+                            if ($lfv -ne $null) {
+                                $item[$propertyXml.Name] = $lfv
+                                $updateItem = $true
+                                Write-Host "`t..Setting LOOKUP property: $($propertyXml.Name) = $($lfv.LookupId):" -ForegroundColor Green
+                            }
+                        } else {
+                            Write-Host "`t..Ignoring LOOKUP property: $($propertyXml.Name), LookupId or LookupValue type properties must be the first property set!" -ForegroundColor Red
                         }
                     } elseif ($propertyXml.Type -and $propertyXml.Type -match "image") {
                         if ($propertyXml.Value -and $propertyXml.Value -ne "") {
@@ -301,6 +321,7 @@ function Update-ListItem {
                             $updateItem = $true
                         }
                     }
+                    $propCount += 1
                 }
 
                 if ($updateItem) {
@@ -353,7 +374,7 @@ function Remove-ListItem {
         if($listItem -ne $null) {
             $listItem.DeleteObject()
             $ClientContext.ExecuteQuery()
-            Write-Host "Deleted List Item"
+            Write-Host "`t`tDeleted List Item" -ForegroundColor Yellow
         }
     }
 }

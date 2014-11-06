@@ -63,9 +63,9 @@ news.popular.getPosts = function() {
             p.resolve(populardata);
         })
         .fail(function (xhrObj, textStatus, err) {
-            var e = null,
+            var e = JSON.parse(xhrObj.responseText),
                 m = '<div style="color:red;font-family:Calibri,Verdana,Arial;font-size:1.2em;">Exception<br/>&raquo; ' +
-                       ((e && e.error && e.error.message && e.error.message.value) ? e.error.message.value : (xhrObj.status + ' ' + xhrObj.statusText))
+                       ((e && e["odata.error"] && e["odata.error"].message && e["odata.error"].message.value) ? e["odata.error"].message.value : (xhrObj.status + ' ' + xhrObj.statusText))
                        +' <br/>&raquo; '+r.url+'</div>';
           p.resolve({ success: false, error: m, uri: r.url });
         });
