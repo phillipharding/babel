@@ -99,7 +99,8 @@ function Upload-File {
     
             $webUrl = ""
             $siteUrl = ""
-            $clientContext.Load($List.ParentWeb)
+            $ClientContext.Load($List.Fields)
+            $ClientContext.Load($List.ParentWeb)
             $ClientContext.Load($List.ParentWeb.SiteUserInfoList)
             $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb)
             $ClientContext.Load($List.ParentWeb.SiteUserInfoList.ParentWeb.RootFolder)
@@ -171,10 +172,29 @@ function Upload-File {
                     Write-Host "`t..Setting TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
                     $field = $list.Fields.GetByInternalNameOrTitle($propertyXml.Name)
                     $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
-                    $taxFieldValueCol = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection($clientContext, "", $taxField)
-                    $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
-                    $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
-                    $updateItem = $true
+                    if ($propertyXml.Mult -and $propertyXml.Mult -match "true") {
+                        $p = ($propertyXml.Value -split ";") -split "\|"
+                        if ($p.length % 2 -eq 0) {
+                            $taxFieldValueCol = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection($clientContext, "", $taxField)
+                            $taxFieldValueCol.PopulateFromLabelGuidPairs($propertyXml.Value)
+                            $taxField.SetFieldValueByValueCollection($item, $taxFieldValueCol)
+                            $updateItem = $true
+                        } else {
+                            Write-Host "`t`t..Ignore Setting TaxonomyField property $($propertyXml.Name), the property value is not in the correct format!" -ForegroundColor Red
+                        }
+                    } else {
+                        $p = $propertyXml.Value -split "\|"
+                        if ($p.length -gt 1) {
+                            $taxFieldValue = New-Object Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValue
+                            $taxFieldValue.Label = $p[0]
+                            $taxFieldValue.TermGuid = $p[1]
+                            $taxFieldValue.WssId = -1
+                            $taxField.SetFieldValueByValue($item, $taxFieldValue)
+                            $updateItem = $true
+                        } else {
+                            Write-Host "`t`t..Ignore Setting TaxonomyField property $($propertyXml.Name), the property value is not in the correct format!" -ForegroundColor Red
+                        }
+                    }
                 } elseif ($propertyXml.Type -and ($propertyXml.Type -eq "LookupId" -or $propertyXml.Type -eq "LookupValue")) {
                     if ($propCount -eq 0) {
                         $lfv = Get-LookupFieldValue -propertyXml $propertyXml -Web $list.ParentWeb -ClientContext $ClientContext

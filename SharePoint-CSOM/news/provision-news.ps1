@@ -33,8 +33,6 @@ $configFiles | ? { $_ -eq "news" } | % {
     Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
     Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
 
-    Write-Host
-    Get-CustomAction -Site $connection.Site -ClientContext $connection.Context | % { Write-Host "Name: $($_.Name)`nLocation: $($_.Location)`nSequence: $($_.Sequence)`n" }
 }
 
 "Done."

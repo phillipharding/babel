@@ -439,9 +439,9 @@ function Update-Web {
         }
 
         if ($xml.Comments) {
-            Write-Host "`nAUTHOR COMMENTS:"
-            foreach($comment in $xml.Comments) {
-                Write-Host "`t- $comment" -ForegroundColor White
+            Write-Host "`nAUTHOR COMMENTS:" -ForegroundColor Yellow
+            foreach($comment in $xml.Comments.Comment) {
+                Write-Host "`t**- $comment" -ForegroundColor White
             }
             Write-Host ""
         }
