@@ -128,18 +128,18 @@ public static extern bool CredFree([In] IntPtr cred);
                 $cred = $null
                 return new-object System.Management.Automation.PSCredential $username, $securePassword
             } else {
-                Write-Error "No credentials where found in Windows Credential Manager for TargetName: $TargetName"
+                Write-Error "No credentials were found in Windows Credential Manager for TargetName: $TargetName"
                 return $null
             }
         }
         catch {
-            Write-Error "No credentials where found in Windows Credential Manager for TargetName: $TargetName"
+            Write-Error "No credentials were found in Windows Credential Manager for TargetName: $TargetName"
             return $null
         }
     }
     end {}
 }
-function Init-CSOMConnection {
+function Init-CSOMConnector {
     process {
         return @{ `
             csomUrl = $null; `

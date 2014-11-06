@@ -1,7 +1,8 @@
 ﻿
-$modulesRoot = "C:\Dev\github\babel\SharePoint-CSOM"
-$modulesPath = "$modulesRoot\Modules"
-$assemblyPath = "$modulesRoot\Assemblies"
+$cwd = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+Write-Host "Base folder for PoSH+CSOM Provisioning: $cwd" -ForegroundColor White
+$modulesPath = "$cwd\..\Modules"
+$assemblyPath = "$cwd\..\Modules\assemblies"
 
 Import-Module "$modulesPath\Load-CSOM.psm1"
 Add-InternalDlls -assemblyPath $assemblyPath
@@ -22,3 +23,7 @@ Import-Module "$modulesPath\Taxonomy.psm1"
 Import-Module "$modulesPath\CustomActions.psm1"
 Import-Module "$modulesPath\Webs.psm1"
 Import-Module "$modulesPath\SearchCenter.psm1"
+
+# now load the binaries
+Add-CSOM
+Add-TenantCSOM

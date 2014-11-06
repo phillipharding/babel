@@ -1,27 +1,27 @@
-﻿cls
-$modulesPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
+﻿<#
+   Demonstrates how to create a CSOM connection to a SharePoint Server/SharePoint Online site and web
+#>
+cls
+$cwd = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 # load and init the CSOM modules
-."$modulesPath\load-spo-modules.ps1"
-#cls
-Add-CSOM
-Add-TenantCSOM
+."..\modules\load-spo-modules.ps1"
 
-# init a blank connector
-$connector = Init-CSOMConnection
+# create a blank connector
+$connector = Init-CSOMConnector
 
-# set connection url
+<# set the connection url #>
 $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
 #$connector.csomUrl = "http://pub.pdogs.local"
 
-# set credentials with username/password
+<# set credentials with username/password #>
 $connector.csomUsername = ""
 $connector.csomPassword = ""
 
-# set credentials using Windows Credential Manager
+<# set credentials using Windows Credential Manager #>
 $connector.csomCredentialLabel = "SPO"
 
-# set credentials with Get-Credentials (prompts for creds)
+<# set credentials with Get-Credentials (prompts for creds) #>
 #$connector.csomCredentials = (Get-Credential | Out-Null)
 
 # connect...

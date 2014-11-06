@@ -3,14 +3,12 @@ $configurationName = "Default"
 $configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\test"
 
 # load and init the CSOM modules
-$modulesPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
-."$modulesPath\load-spo-modules.ps1"
-cls
-Add-CSOM
-Add-TenantCSOM
+$cwd = Split-Path -Parent $MyInvocation.MyCommand.Definition
+# load and init the CSOM modules
+."..\modules\load-spo-modules.ps1"
 
 # init an empty connector
-$connector = Init-CSOMConnection
+$connector = Init-CSOMConnector
 
 # set connection url
 $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
