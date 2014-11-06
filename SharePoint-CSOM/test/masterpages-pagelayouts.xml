@@ -1,0 +1,44 @@
+<Configurations>
+	<Configuration Name="Default">
+		<Catalogs>
+			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
+			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+			<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+
+			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+				
+				<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+					<Folder Url="Indivior">
+						<File Path="masterpages\RBPMasterPage-v2.master" Url="RBPMasterPage-v2.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="RBPMasterPage-v2" />
+							<Property Name="MasterPageDescription" Value="The RBP Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+						<File Path="pagelayouts\BuzzStandardPageLayout.aspx" Url="BuzzStandardPageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811"/>
+							<Property Name="Title" Value="BuzzStandardPageLayout"/>
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#"/>
+							<Property Name="PublishingHidden" Value="False"/>
+						</File>
+			
+						<Folder Url="Indivior Images" ResourcesPath="">
+						</Folder>
+					</Folder>
+					<Folder Url="Display Templates">
+						<File Path="docs\pd.listnavigation.js" Url="pd.listnavigation.js" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
+							<Property Name="Title" Value="pd.listnavigation" />
+							<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
+							<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
+							<Property Name="DisplayTemplateJSTargetScope" Value="~sitecollection" />
+							<Property Name="DisplayTemplateJSTargetListTemplate" Value="" />
+						</File>
+					</Folder>
+				</Folder>
+
+			</Catalog>
+
+		</Catalogs>
+	</Configuration>
+</Configurations>

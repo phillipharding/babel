@@ -48,11 +48,13 @@ function Remove-SiteColumn {
 function Remove-SiteColumns {
     [cmdletbinding()]
     param(
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$fieldsXml,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$fieldsXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        if ($fieldsXml -eq $null -or $fieldsXml -eq "") { return }
+        Write-Host "Removing Site Columns" -ForegroundColor Green
 
         $ClientContext.Load($web.Fields)
         $ClientContext.ExecuteQuery()
@@ -61,27 +63,29 @@ function Remove-SiteColumns {
         foreach ($fieldXml in $fieldsXml.RemoveField) {
             $field = $web.Fields | Where {$_.Id -eq $fieldXml.ID}
             if($field -ne $null) {
-                Write-Output "Deleting Site Column $($fieldXml.Name)"
+                Write-Output "`tDeleting site column $($fieldXml.Name)"
                 $field.DeleteObject()
             } else {
-                Write-Verbose "Site Column $($fieldXml.Name) already deleted"
+                Write-Host "`tSite column $($fieldXml.Name) already deleted"
             }
         }
         if($deletedSiteColumns) {
             $ClientContext.ExecuteQuery()
-            Write-Output "Deleted Site Columns"
+            Write-Output "`tDeleted site columns"
         }
+        Write-Host "Removed Site Columns" -ForegroundColor Green
     }
 }
 function Update-SiteColumns {
     [cmdletbinding()]
     param(
-        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$fieldsXml,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][System.Xml.XmlElement]$fieldsXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $web, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
-        Write-Verbose "Updating Site Columns" -Verbose
+        if ($fieldsXml -eq $null -or $fieldsXml -eq "") { return }
+        Write-Host "Updating Site Columns" -ForegroundColor Green
         $taxonomySession = Get-TaxonomySession -ClientContext $ClientContext
         $defaultSiteCollectionTermStore = Get-DefaultSiteCollectionTermStore -TaxonomySession $taxonomySession -ClientContext $ClientContext
         $ClientContext.Load($web.Fields)
@@ -90,30 +94,43 @@ function Update-SiteColumns {
         foreach ($fieldXml in $fieldsXml.Field) {
             $field = $web.Fields | Where {$_.Id -eq $fieldXml.ID}
 	        if($field -eq $null) {
+                Write-Host "`tCreating site column $($fieldXml.Name)" -ForegroundColor Green
                 $fieldStr = $fieldXml.OuterXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
                 $field = $web.Fields.AddFieldAsXml($fieldStr, $false, ([Microsoft.SharePoint.Client.AddFieldOptions]::AddToNoContentType))
-                if(($fieldXml.Type -eq "TaxonomyFieldType") -or ($fieldXml.Type -eq "TaxonomyFieldTypeMulti")) {
-                    $termSetId = $null
-                    $field = [SharePointClient.PSClientContext]::CastToTaxonomyField($ClientContext, $field)
-                    $field.SspId = $defaultSiteCollectionTermStore.Id
-                    foreach($property in $fieldXml.Customization.ArrayOfProperty.Property) {
-                        if($property.Name -eq "TermSetId") {
-                            $termSetId = $property.Value.InnerText
-                        }
-                    }
-                    if($termSetId) {                      
-                        $field.TermSetId = $termSetId   
-                    }
-                    $field.UpdateAndPushChanges($false)
-                }
+                $ClientContext.Load($field)
                 $ClientContext.ExecuteQuery()
-		        Write-Verbose "Created Site Column $($fieldXml.Name)" -Verbose
+                $id = $field.ID
+                Write-Host "`t..Created site column $($fieldXml.Name), ID:$id" -ForegroundColor Green
+
+                if(($fieldXml.Type -eq "TaxonomyFieldType") -or ($fieldXml.Type -eq "TaxonomyFieldTypeMulti")) {
+                    $ClientContext.Load($web.Fields)
+                    $ClientContext.ExecuteQuery()
+                    $field = $web.Fields.GetById(([guid]$id))
+                    $ClientContext.Load($field)
+                    if($field -ne $null) {
+                        Write-Host "`t..Updating TaxonomyField site column $($fieldXml.Name)" -ForegroundColor Green
+                        $termSetId = $null
+                        $taxfield = [SharePointClient.PSClientContext]::CastToTaxonomyField($ClientContext, $field)
+                        $taxfield.SspId = $defaultSiteCollectionTermStore.Id
+                        foreach($property in $fieldXml.Customization.ArrayOfProperty.Property) {
+                            if($property.Name -eq "TermSetId") {
+                                $termSetId = $property.Value.InnerText
+                            }
+                        }
+                        if($termSetId) {                      
+                            $taxfield.TermSetId = $termSetId   
+                        }
+                        $taxfield.UpdateAndPushChanges($false)
+                        $ClientContext.ExecuteQuery()
+                        Write-Host "`t..Updated TaxonomyField site column $($fieldXml.Name)" -ForegroundColor Green
+                    }
+                }
 	        } else {
                 $updatedField = $false
                 if($fieldXml.Name -ne $field.InternalName) {
                     $SchemaXml = $field.SchemaXml
                     $SchemaXml = $SchemaXml -replace " Name=""$($field.InternalName)"" ", " Name=""$($fieldXml.Name)"" "
-                    Write-Verbose "Updating field schema xml $($SchemaXml)" -Verbose
+                    Write-Host "`tUpdating field schema xml $($SchemaXml)" -ForegroundColor Green
                     $field.SchemaXml = $SchemaXml
                     $field.UpdateAndPushChanges($true)
                     $ClientContext.Load($field)
@@ -139,12 +156,12 @@ function Update-SiteColumns {
                 if($updatedField) {
                     $field.UpdateAndPushChanges($true)
                     $ClientContext.ExecuteQuery()
-                    Write-Verbose "Updated Site Column $($fieldXml.Name)" -Verbose
+                    Write-Host "`tUpdated site column $($fieldXml.Name)" -ForegroundColor Green
                 } else {
-		            Write-Verbose "Site Column $($fieldXml.Name) already exists"
+		            Write-Host "`tSite column $($fieldXml.Name) already exists" -ForegroundColor Yellow
                 }
 	        }
         }
-        Write-Verbose "Updated Site Columns" -Verbose
+        Write-Host "Updated Site Columns" -ForegroundColor Green
     }
 }

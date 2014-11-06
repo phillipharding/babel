@@ -1,0 +1,22 @@
+<Configurations>
+	<Configuration Name="Default">
+		<!--
+			Add/Update Roles.
+
+		-->
+		<Roles>
+			<Role Name="WCM Author" Description="An author of web content" Permissions="ViewListItems,AddListItems,EditListItems,ApproveItems,ViewVersions,ViewFormPages,ViewPages" />
+			<Role Name="WCM Reader" Description="An reader of web content" Permissions="ViewListItems,ViewFormPages,ViewPages" />
+		</Roles>
+
+		<Groups>
+			<Group Title="WCM Authors" Description="The WCM Authors group" OnlyAllowMembersViewMembership="false">
+				<Permission Roles="WCM Author,Edit,Contribute" />
+				<User />
+			</Group>
+			<Group Title="WCM Readers" Description="The WCM Reader group" OnlyAllowMembersViewMembership="false">
+			</Group>
+		</Groups>
+
+	</Configuration>
+</Configurations>

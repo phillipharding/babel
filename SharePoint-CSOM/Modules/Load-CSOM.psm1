@@ -11,12 +11,10 @@ namespace SharePointClient
 {
     public class PSClientContext: ClientContext
     {
-        public PSClientContext(string siteUrl)
-            : base(siteUrl)
+        public PSClientContext(string siteUrl) : base(siteUrl)
         {
         }
-        // need a plain Load method here, the base method is a generic method
-        // which isn't supported in PowerShell.
+        // need a plain Load method here, the base method is a generic method which isn't supported in PowerShell.
         public void Load(ClientObject objectToLoad)
         {
             base.Load(objectToLoad);
@@ -33,12 +31,14 @@ namespace SharePointClient
         {
             return base.CastTo<TaxonomyField>(field);
         }
-        public static Folder loadContentTypeOrderForFolder(Folder folder, ClientContext ctx) {
+        public static Folder loadContentTypeOrderForFolder(Folder folder, ClientContext ctx) 
+        {
             ctx.Load(folder, f => f.UniqueContentTypeOrder, f => f.ContentTypeOrder);
             ctx.ExecuteQuery();
             return folder;
         }
-        public static void CreateWebRoleAssignment(ClientContext clientContext, Web web, string groupName, string roleDefName) {
+        public static void CreateWebRoleAssignment(ClientContext clientContext, Web web, string groupName, string roleDefName)
+        {
             clientContext.Load(web);
             clientContext.ExecuteQuery(); 
             
@@ -51,7 +51,8 @@ namespace SharePointClient
             clientContext.ExecuteQuery(); 
 
         } 
-        public static void CreateListRoleAssignment(ClientContext clientContext, Web web, List list, Principal principal, string roleDefName) {
+        public static void CreateListRoleAssignment(ClientContext clientContext, Web web, List list, Principal principal, string roleDefName) 
+        {
             RoleDefinitionBindingCollection rdb = new RoleDefinitionBindingCollection(clientContext);
             rdb.Add(web.RoleDefinitions.GetByName(roleDefName));
             list.RoleAssignments.Add(principal, rdb);
@@ -59,7 +60,8 @@ namespace SharePointClient
             clientContext.ExecuteQuery(); 
 
         } 
-        public static void AddUserToGroup(ClientContext clientContext, Web web, string groupName, string userLoginName) {
+        public static void AddUserToGroup(ClientContext clientContext, Web web, string groupName, string userLoginName) 
+        {
             
             var grp = web.SiteGroups.GetByName(groupName);
             clientContext.Load(grp);
@@ -71,7 +73,8 @@ namespace SharePointClient
             clientContext.ExecuteQuery(); 
 
         } 
-        public static bool ListHasUniqueRoleAssignments(ClientContext clientContext, Web web, List list) {
+        public static bool ListHasUniqueRoleAssignments(ClientContext clientContext, Web web, List list) 
+        {
             clientContext.Load(list, l => l.HasUniqueRoleAssignments);
             clientContext.ExecuteQuery(); 
             return list.HasUniqueRoleAssignments;
@@ -82,20 +85,18 @@ namespace SharePointClient
 
 }
 
-
 function Add-CSOM {
+    # try for SPO (16) binaries first
     $CSOMdir = "${env:CommonProgramFiles}\microsoft shared\Web Server Extensions\16\ISAPI"
     $excludeDlls = "*.Portable.dll"
     
-    if ((Test-Path $CSOMdir -pathType container) -ne $true)
-    {
+    if ((Test-Path $CSOMdir -pathType container) -ne $true) {
+        # if not found then try for Server (15) binaries
         $CSOMdir = "${env:CommonProgramFiles}\microsoft shared\Web Server Extensions\15\ISAPI"
-        if ((Test-Path $CSOMdir -pathType container) -ne $true)
-        {
+        if ((Test-Path $CSOMdir -pathType container) -ne $true) {
             Throw "Please install the SharePoint 2013[1] or SharePoint Online[2] Client Components SDK`n `n[1] http://www.microsoft.com/en-us/download/details.aspx?id=35585`n[2] http://www.microsoft.com/en-us/download/details.aspx?id=42038`n `n "
         }
     }
-    
     
     $CSOMdlls = Get-Item "$CSOMdir\*.dll" -exclude $excludeDlls
     
@@ -104,9 +105,7 @@ function Add-CSOM {
     }
 
     Add-PSClientContext
-    
 }
-
 function Add-TenantCSOM {
     $tenantDllPath = "${env:ProgramFiles}\SharePoint Client Components\16.0\Assemblies"
     if((Test-Path $tenantDllPath -pathType container) -ne $true) {
@@ -115,9 +114,7 @@ function Add-TenantCSOM {
 
     $tenantDll =  Get-Item "$tenantDllPath\Microsoft.Online.SharePoint.Client.Tenant.dll"
     [System.Reflection.Assembly]::LoadFrom($tenantDll.FullName) | Out-Null
-
 }
-
 function Add-PreloadedSPdlls {
 	[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SharePoint.Client") | Out-Null
 	[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SharePoint.Client.Runtime") | Out-Null
@@ -126,13 +123,9 @@ function Add-PreloadedSPdlls {
     
     Add-PSClientContext
 }
-
-
 function Add-PreloadedSPTenantdlls {
     [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.Online.SharePoint.Client.Tenant") | Out-Null
-
 }
-
 function Add-InternalDlls {
     param(
     [parameter(Mandatory=$true, ValueFromPipeline=$true)][string] $assemblyPath

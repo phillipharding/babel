@@ -1,0 +1,110 @@
+<Configurations>
+	<Configuration Name="Default">
+		<Fields>
+			<Field CalType="0" DisplayName="Item Content Date" EnforceUniqueValues="FALSE" Format="DateOnly" FriendlyDisplayFormat="Relative" Group="Graphicboost" ID="{625EEBA2-64CB-4EF7-8B3B-F7A74CC41D3D}" Indexed="FALSE" Name="ItemContentDate" Required="TRUE" StaticName="ItemContentDate" Type="DateTime" />
+			<Field DisplayName="Pro Forma Invoice" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{39B429D7-7B20-49D3-B07A-AE63B408D5A8}" Indexed="FALSE" Name="ProFormaInvoice" Required="FALSE" StaticName="ProFormaInvoice" Type="Boolean">
+				<Default>1</Default>
+			</Field>
+		</Fields>
+
+		<ContentTypes>
+			<ContentType ID="0x010100D0E1F9655151477181395257AD4FF568" Name="Pro Forma Invoice" Group="Graphicboost" Description="" ParentContentType="Document">
+				<FieldRefs>
+					<FieldRef ID="{625EEBA2-64CB-4EF7-8B3B-F7A74CC41D3D}" Required="False" Hidden="" />
+					<FieldRef ID="{39B429D7-7B20-49D3-B07A-AE63B408D5A8}" Required="False" Hidden="" />
+				</FieldRefs>
+			</ContentType>
+		</ContentTypes>
+
+		<Lists Scope="Site">
+			<RemoveList Title="Documents" />
+			<RemoveList Title="Tasks" />
+			<List Title="Simple List" Description="List of simple items" OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-DE22-43B2-A848-C05709900100" Type="100" Url="Lists/SimpleList">
+				<Items>
+					<Item>
+						<Property Name="Title" Type="" Value="Simple Item 1" />
+					</Item>
+					<Item>
+						<Property Name="Title" Type="" Value="Simple Item 2" />
+					</Item>
+					<Item>
+						<Property Name="Title" Type="" Value="Simple Item 3" />
+					</Item>
+				</Items>
+			</List>
+
+			<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
+				<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+					<Folder Url="Apps">
+						<Folder Url="App1">
+							<Folder Url="css" />
+							<Folder Url="js" />
+							<Folder Url="html" />
+						</Folder>
+						<Folder Url="App2">
+							<Folder Url="css" />
+							<Folder Url="js" />
+							<Folder Url="html" />
+						</Folder>
+					</Folder>
+				</Folder>
+			</List>
+
+			<List Title="My Invoices" Description="Library of my documents" OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="MyInvoices"
+					 ContentTypesEnabled="True" EnableAttachments="" EnableFolderCreation="False" EnableMinorVersions="" EnableModeration="" EnableVersioning="" ForceCheckout="" Hidden="" NoCrawl="">
+				<ContentType Name="Pro Forma Invoice" Default="True" />
+				<RemoveContentType Name="Document" />
+				
+				<Fields>
+					<Field />
+					<UpdateField />
+					<RemoveField />
+				</Fields>
+
+				<PropertyBag>
+					<PropertyBagValue Key="" Value="" Indexable="" />
+				</PropertyBag>
+
+				<DeleteItems>
+					<Item />
+				</DeleteItems>
+				<UpdateItems>
+					<Item />
+				</UpdateItems>
+
+				<Views>
+					<View DisplayName="My Invoices" DefaultView="True" PersonalView="False" Type="html">
+						<Query>
+							<OrderBy>
+								<FieldRef Name="FileLeafRef" />
+							</OrderBy>
+						</Query>
+						<ViewFields>
+							<FieldRef Name="DocIcon" />
+							<FieldRef Name="LinkFilename" />
+							<FieldRef Name="Modified" />
+							<FieldRef Name="Editor" />
+							<FieldRef Name="CheckoutUser" />
+						</ViewFields>
+						<RowLimit Paged="True">50</RowLimit>
+						<JSLink>~sitecollection/_catalogs/masterpage/display templates/pd.listnavigation.js</JSLink>
+					</View>
+				</Views>
+
+				<Folder Url="" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\test\resources">
+					<File Path="docs\Admin Document.docx" Url="Admins Invoice.docx" ReplaceContent="True">
+						<Property Name="ContentTypeId" Value="0x010100D0E1F9655151477181395257AD4FF568" />
+						<Property Name="Title" Value="Admins Big Invoice.docx" />
+					</File>
+
+					<Folder Url="ENA">
+						<Folder Path="Europe" Url="Europe" ResourcesPath="" />
+						<Folder Path="Africa" Url="Africa" ResourcesPath="" />
+					</Folder>
+					<Folder Url="LATAM" />
+				</Folder>
+			</List>
+		</Lists>
+
+	</Configuration>
+</Configurations>

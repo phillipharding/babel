@@ -1,0 +1,24 @@
+<Configurations>
+	<Configuration Name="Default">
+		<TermStore Languages="1031, 1033, 1036, 1053">
+			<!-- use existing term group -->
+			<TermGroup Name="LOB2" ID="{b3fe8d52-506b-4d51-8acf-95ab0218a8e3}">
+
+				<TermSet Name="MegaMenu" ID="{d00ca60f-e1d8-41cc-921a-31f629590ec0}" Language="1033" Navigation="True" Tagging="False" Open="False">
+					<Term Name="Root" ID="{60ad9b4a-5074-431e-bea4-c3efb4ca72fd}" Language="1033" Description="Root MegaMenu Nodes">
+						<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB">
+						</Term>
+						<Term Name="NEWS" ID="" Language="1033" Description="News">
+						</Term>
+						<Term Name="IMEx" ID="" Language="1033" Description="IMEx">
+						</Term>
+						<Term Name="FUNCTIONS" ID="" Language="1033" Description="Global Functions">
+						</Term>
+						<Term Name="MY RB" ID="" Language="1033" Description="My RB">
+						</Term>
+					</Term>
+				</TermSet>
+			</TermGroup>
+		</TermStore>
+	</Configuration>
+</Configurations>

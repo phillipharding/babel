@@ -1,0 +1,40 @@
+<Configurations>
+	<Configuration Name="Default">
+		<!--
+			Add/Update Webs.
+
+		-->
+		<Webs>
+			<Web Url="news" Title="News Site" Description="Welcome to the Corporate News Site" WebTemplate="BLOG#0">
+				<!-- Allowed schema
+					
+					<Fields/>
+					<ContentTypes/>
+					<Pages/>
+					<Lists/>
+					<Features/>
+						<WebFeatures/>
+						<SiteFeatures/>
+					<Catalogs/>
+					<UserCustomActions/>
+					<RemoveUserCustomActions/>
+					<PropertyBag/>
+						<PropertyBagValue/>
+
+					<WelcomePage/>
+					<CustomMasterUrl/>
+					<MasterUrl/>
+					<NoCrawl/>
+
+					<ColorPaletteUrl/>
+					<FontSchemeUrl/>
+					<BackgroundImageUrl/>
+
+					<Webs/>
+						<Web/>
+				-->
+			</Web>
+		</Webs>
+
+	</Configuration>
+</Configurations>
