@@ -4,6 +4,19 @@
 
 	<Configuration Name="News" ID="1" Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
 
+		<SetWebtemplates Inherit="False">
+			<!-- disable non-english web templates -->
+			<lcid id="all"></lcid>
+			<!-- set the available (english only) web tenmplates -->
+			<lcid id="1033">
+				<webtemplate name="BLOG#0"/>
+				<webtemplate name="CMSPUBLISHING#0"/>
+				<webtemplate name="SRCHCEN#0"/>
+				<webtemplate name="ENTERWIKI#0"/>
+				<webtemplate name="STS#0"/>
+			</lcid>
+		</SetWebtemplates>
+
 		<Webs>
 			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="True">
 				<!-- Allowed schema
@@ -102,6 +115,12 @@
 								<ColorPaletteUrl/>
 								<FontSchemeUrl/>
 								<BackgroundImageUrl/>
+
+								<SetWebtemplates Inherit="False"/>
+									<lcid id="all"></lcid>
+									<lcid id="1033"/>
+										<webtemplate name="BLOG#0"/>
+										<webtemplate name="SRCHCEN#0"/>
 
 								<Webs/>
 									<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
@@ -1001,6 +1020,16 @@
 						<ScriptLink>~site/SiteAssets/news/css/news.css</ScriptLink>
 					</UserCustomAction>
 				</UserCustomActions>
+
+				<SetWebtemplates Inherit="False">
+					<!-- disable non-english web templates -->
+					<lcid id="all"></lcid>
+					<!-- set the available (english only) web tenmplates -->
+					<lcid id="1033">
+						<webtemplate name="BLOG#0"/>
+						<webtemplate name="SRCHCEN#0"/>
+					</lcid>
+				</SetWebtemplates>
 
 				<Comments>
 					<Comment>Enable Ratings on the 'Posts' list and set the voting/rating experience to 'Likes'</Comment>

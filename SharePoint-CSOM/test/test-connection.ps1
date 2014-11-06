@@ -12,6 +12,7 @@ $connector = Init-CSOMConnector
 
 <# set the connection url #>
 $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+#$connector.csomUrl = "https://rbcom.sharepoint.com/"
 #$connector.csomUrl = "http://pub.pdogs.local"
 
 <# set credentials with username/password #>
@@ -19,6 +20,7 @@ $connector.csomUsername = ""
 $connector.csomPassword = ""
 
 <# set credentials using Windows Credential Manager #>
+#$connector.csomCredentialLabel = "RB.COM SPO"
 $connector.csomCredentialLabel = "SPO"
 
 <# set credentials with Get-Credentials (prompts for creds) #>

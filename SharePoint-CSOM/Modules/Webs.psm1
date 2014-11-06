@@ -434,6 +434,10 @@ function Update-Web {
             Set-Theme -ColorPaletteUrl $xml.ColorPaletteUrl -FontSchemeUrl $FontSchemeUrl -BackgroundImageUrl $BackgroundImageUrl -Web $web -ClientContext $ClientContext
         }
 
+        if ($xml.SetWebtemplates) {
+            Update-WebTemplates -WebTemplateXml $xml.SetWebtemplates -Site $site -Web $web -ClientContext $ClientContext
+        }
+
         if($xml.Webs) {
             Add-Webs -Xml $xml.Webs -Site $site -Web $web -ClientContext $ClientContext
         }
@@ -449,6 +453,31 @@ function Update-Web {
     end {}
 }
 
+function Update-WebTemplates {
+    param(
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$WebTemplateXml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $Site, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $Web, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        $webtemplates = ""
+        $inherit = $(if ($WebTemplateXml.Inherit -and $WebTemplateXml.Inherit -ne "") { [bool]::Parse($WebTemplateXml.Inherit)} else { $false })
+        foreach ($wtInfo in $WebTemplateXml.lcid) {
+            $webtemplates = "$webtemplates$($wtInfo.OuterXml)"
+        }
+        # __InheritWebTemplates
+        $inheritvalue = $(if ($inherit) { "True" } else { "False" })
+        Set-PropertyBagValue -Key "__InheritWebTemplates" -Value $inheritvalue -Indexable $false -Web $Web -ClientContext $ClientContext
+        
+        # __WebTemplates
+        if ($webtemplates -ne "") {
+            $webtemplates = "<webtemplates>$webtemplates</webtemplates>"
+        }
+        Set-PropertyBagValue -Key "__WebTemplates" -Value $webtemplates -Indexable $false -Web $Web -ClientContext $ClientContext
+    }
+    end {}
+}
 function Remove-RecentNavigationItem {
     param(
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][string]$Title,
