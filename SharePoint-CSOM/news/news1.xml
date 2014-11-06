@@ -1,0 +1,36 @@
+<Configurations ResourcesPath="">
+	<Configuration Name="News" ID="0" Description="Applies Corporate News capability to an existing site" ResourcesPath="">
+	</Configuration>
+
+	<Configuration Name="News" ID="1" Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+
+		<SetWebtemplates Inherit="False">
+			<!-- disable non-english web templates -->
+			<lcid id="all"></lcid>
+			<!-- set the available (english only) web tenmplates -->
+			<lcid id="1033">
+				<webtemplate name="BLOG#0"/>
+				<webtemplate name="CMSPUBLISHING#0"/>
+				<webtemplate name="SRCHCEN#0"/>
+				<webtemplate name="ENTERWIKI#0"/>
+				<webtemplate name="STS#0"/>
+			</lcid>
+		</SetWebtemplates>
+
+		<Webs>
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+
+				<SetWebtemplates Inherit="False">
+					<!-- disable non-english web templates -->
+					<lcid id="all"></lcid>
+					<!-- set the available (english only) web tenmplates -->
+					<lcid id="1033">
+						<webtemplate name="BLOG#0"/>
+						<webtemplate name="SRCHCEN#0"/>
+					</lcid>
+				</SetWebtemplates>
+			</Web>
+		</Webs>
+
+	</Configuration>
+</Configurations>

@@ -1,0 +1,242 @@
+<Configurations>
+	<Configuration Name="Default">
+		<TermStore>
+			<TermGroup Name="LOB2" ID="{b3fe8d52-506b-4d51-8acf-95ab0218a8e3}">
+				<TermSet Name="Navigation" ID="{3da55880-b73e-4cdf-9709-578aa8014293}" Language="1033" Navigation="True" Tagging="False" Open="True">
+					<Term Name="Global" ID="{fd6fb7ad-5f5a-4fd1-b77c-b390931bc202}" Language="1033" NavigateUrl="" Description="Global Navigation Nodes">
+						<Term Name="Global Functions" ID="" Language="1033" NavigateUrl="http://bing.com" Description="Globals Function Nodes">
+							<Term Name="IS" ID="" Language="1033" NavigateUrl="http://apple.com" Description="IS Dept">
+							</Term>
+							<Term Name="CDLP" ID="" Language="1033" NavigateUrl="http://youtube.com" Description="CDLP Dept">
+							</Term>
+						</Term>
+						<Term Name="HR" ID="" Language="1033" NavigateUrl="http://google.com" Description="HR Dept">
+						</Term>
+					</Term>
+				</TermSet>
+			</TermGroup>
+			<TermGroup Name="LOB" ID="{336c4d17-9b45-498c-9d6e-d3fbef4fe28c}">
+				<TermSet Name="Business" ID="{18be237b-3da8-4232-b682-db96a4bee3f4}" Language="1033" Navigation="False" Tagging="True" Open="False">
+					<Term Name="Client Names" ID="{0f9d579b-7d91-4508-a8a8-15f7847eacfe}" Language="1033">
+						<Term Name="ATOS" ID="" Language="">
+							<Term Name="ATOS Managed Services" ID="" Language="">
+							</Term>
+							<Term Name="ATOS Security Services" ID="" Language="">
+							</Term>
+						</Term>
+						<Term Name="Camelot" ID="" Language="">
+						</Term>
+						<Term Name="Central Lancs PCT" ID="" Language="">
+						</Term>
+						<Term Name="ID-Live" ID="" Language="">
+						</Term>
+						<Term Name="LCFT" ID="" Language="">
+						</Term>
+						<Term Name="Manheim" ID="" Language="">
+						</Term>
+						<Term Name="NIHR" ID="" Language="">
+						</Term>
+						<Term Name="Polymorph" ID="" Language="">
+						</Term>
+						<Term Name="Reckitt Benckiser" ID="" Language="">
+						</Term>
+						<Term Name="SAB Miller" ID="" Language="">
+						</Term>
+					</Term>
+				</TermSet>
+			</TermGroup>
+		</TermStore>
+
+		<Fields>
+			<RemoveField ID="{3193775c-4ae3-4bf8-801d-993417ccf181}" Name="Clients" />
+			<RemoveField ID="{7c2a0782-28fe-4bde-b0f0-d193ca76b101}" Name="Clients_0" />
+			<RemoveField ID="{a9eba363-fe7d-4fdf-8e00-c5fcfba12dd2}" Name="ClientName" />
+			<RemoveField ID="{99fc660e-b478-458f-9f55-59b75e60e4d8}" Name="ClientName_0" />
+			<RemoveField ID="{61c099a5-3fec-469f-9de3-57abf113afdc}" Name="ActionDate" />
+
+			<Field CanToggleHidden="TRUE" DisplayName="ClientName_0" Hidden="TRUE" ID="{99fc660e-b478-458f-9f55-59b75e60e4d8}" Name="ClientName_0" Required="FALSE" ShowInViewForms="FALSE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="ClientName_0" Type="Note" />
+			<Field DisplayName="Client Name" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{a9eba363-fe7d-4fdf-8e00-c5fcfba12dd2}" Name="ClientName" Required="TRUE" ShowField="Term1033" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="ClientName" Type="TaxonomyFieldType">
+				<Default/>
+				<Customization>
+					<ArrayOfProperty>
+						<Property>
+							<Name>SspId</Name>
+							<Value p4:type="q1:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q1="http://www.w3.org/2001/XMLSchema">41cd106d-7365-4f94-a372-d14fe9fd67fa</Value>
+						</Property>
+						<Property>
+							<Name>GroupId</Name>
+						</Property>
+						<Property>
+							<Name>TermSetId</Name>
+							<Value p4:type="q2:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q2="http://www.w3.org/2001/XMLSchema">18be237b-3da8-4232-b682-db96a4bee3f4</Value>
+						</Property>
+						<Property>
+							<Name>AnchorId</Name>
+							<Value p4:type="q3:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q3="http://www.w3.org/2001/XMLSchema">0f9d579b-7d91-4508-a8a8-15f7847eacfe</Value>
+						</Property>
+						<Property>
+							<Name>UserCreated</Name>
+							<Value p4:type="q4:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q4="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>Open</Name>
+							<Value p4:type="q5:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q5="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>TextField</Name>
+							<Value p4:type="q6:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q6="http://www.w3.org/2001/XMLSchema">{99fc660e-b478-458f-9f55-59b75e60e4d8}</Value>
+						</Property>
+						<Property>
+							<Name>IsPathRendered</Name>
+							<Value p4:type="q7:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q7="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>IsKeyword</Name>
+							<Value p4:type="q8:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q8="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>TargetTemplate</Name>
+						</Property>
+						<Property>
+							<Name>CreateValuesInEditForm</Name>
+							<Value p4:type="q9:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q9="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>FilterAssemblyStrongName</Name>
+							<Value p4:type="q10:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q10="http://www.w3.org/2001/XMLSchema">Microsoft.SharePoint.Taxonomy, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Value>
+						</Property>
+						<Property>
+							<Name>FilterClassName</Name>
+							<Value p4:type="q11:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q11="http://www.w3.org/2001/XMLSchema">Microsoft.SharePoint.Taxonomy.TaxonomyField</Value>
+						</Property>
+						<Property>
+							<Name>FilterMethodName</Name>
+							<Value p4:type="q12:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q12="http://www.w3.org/2001/XMLSchema">GetFilteringHtml</Value>
+						</Property>
+						<Property>
+							<Name>FilterJavascriptProperty</Name>
+							<Value p4:type="q13:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q13="http://www.w3.org/2001/XMLSchema">FilteringJavascript</Value>
+						</Property>
+					</ArrayOfProperty>
+				</Customization>
+			</Field>
+
+			<Field CanToggleHidden="TRUE" DisplayName="Clients_0" Hidden="TRUE" ID="{7c2a0782-28fe-4bde-b0f0-d193ca76b101}" Name="Clients_0" Required="FALSE" ShowInViewForms="FALSE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="Clients_0" Type="Note" />
+			<Field DisplayName="Clients" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{3193775c-4ae3-4bf8-801d-993417ccf181}" Name="Clients" Required="TRUE" ShowField="Term1033" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="Clients" Type="TaxonomyFieldTypeMulti" Mult="TRUE">
+				<Default/>
+				<Customization>
+					<ArrayOfProperty>
+						<Property>
+							<Name>SspId</Name>
+							<Value p4:type="q1:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q1="http://www.w3.org/2001/XMLSchema">41cd106d-7365-4f94-a372-d14fe9fd67fa</Value>
+						</Property>
+						<Property>
+							<Name>GroupId</Name>
+						</Property>
+						<Property>
+							<Name>TermSetId</Name>
+							<Value p4:type="q2:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q2="http://www.w3.org/2001/XMLSchema">18be237b-3da8-4232-b682-db96a4bee3f4</Value>
+						</Property>
+						<Property>
+							<Name>AnchorId</Name>
+							<Value p4:type="q3:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q3="http://www.w3.org/2001/XMLSchema">0f9d579b-7d91-4508-a8a8-15f7847eacfe</Value>
+						</Property>
+						<Property>
+							<Name>UserCreated</Name>
+							<Value p4:type="q4:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q4="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>Open</Name>
+							<Value p4:type="q5:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q5="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>TextField</Name>
+							<Value p4:type="q6:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q6="http://www.w3.org/2001/XMLSchema">{7c2a0782-28fe-4bde-b0f0-d193ca76b101}</Value>
+						</Property>
+						<Property>
+							<Name>IsPathRendered</Name>
+							<Value p4:type="q7:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q7="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>IsKeyword</Name>
+							<Value p4:type="q8:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q8="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>TargetTemplate</Name>
+						</Property>
+						<Property>
+							<Name>CreateValuesInEditForm</Name>
+							<Value p4:type="q9:boolean" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q9="http://www.w3.org/2001/XMLSchema">false</Value>
+						</Property>
+						<Property>
+							<Name>FilterAssemblyStrongName</Name>
+							<Value p4:type="q10:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q10="http://www.w3.org/2001/XMLSchema">Microsoft.SharePoint.Taxonomy, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Value>
+						</Property>
+						<Property>
+							<Name>FilterClassName</Name>
+							<Value p4:type="q11:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q11="http://www.w3.org/2001/XMLSchema">Microsoft.SharePoint.Taxonomy.TaxonomyField</Value>
+						</Property>
+						<Property>
+							<Name>FilterMethodName</Name>
+							<Value p4:type="q12:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q12="http://www.w3.org/2001/XMLSchema">GetFilteringHtml</Value>
+						</Property>
+						<Property>
+							<Name>FilterJavascriptProperty</Name>
+							<Value p4:type="q13:string" xmlns:p4="http://www.w3.org/2001/XMLSchema-instance" xmlns:q13="http://www.w3.org/2001/XMLSchema">FilteringJavascript</Value>
+						</Property>
+					</ArrayOfProperty>
+				</Customization>
+			</Field>
+
+			<Field CalType="0" DisplayName="Action Date" EnforceUniqueValues="FALSE" Format="DateOnly" FriendlyDisplayFormat="Relative" Group="Graphicboost" ID="{61c099a5-3fec-469f-9de3-57abf113afdc}" Indexed="FALSE" Name="ActionDate" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="ActionDate" Type="DateTime" />
+			<Field CalType="0" DisplayName="Content Date" EnforceUniqueValues="FALSE" Format="DateOnly" FriendlyDisplayFormat="Relative" Group="Graphicboost" ID="{1be4e8d0-c3f5-4fae-9b49-b1e5097f476f}" Indexed="FALSE" Name="ContentDate" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="ContentDate" Type="DateTime" />
+			<Field DisplayName="Invoice Paid" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{95621a9b-2920-4a84-900d-922e75279c14}" Indexed="FALSE" Name="InvoicePaid" Required="FALSE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="InvoicePaid" Type="Boolean">
+				<Default>1</Default>
+			</Field>
+			<Field Decimals="0" DisplayName="Invoice Term Days" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{9393bd34-43f8-4c83-b4e2-4c2153075622}" Indexed="FALSE" Max="90" Min="1" Name="InvoiceTermDays" Percentage="FALSE" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="InvoiceTermDays" Type="Number">
+				<Default>30</Default>
+			</Field>
+			<Field Decimals="2" DisplayName="Net Invoice" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Indexed="FALSE" LCID="2057" Name="NetInvoice" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="NetInvoice" Type="Currency" />
+			<Field Decimals="2" DisplayName="Vat Rate" EnforceUniqueValues="FALSE" Group="Graphicboost" ID="{9345a769-b1a9-4828-abf7-bac46f8fc36f}" Indexed="FALSE" Name="VatRate" Percentage="TRUE" Required="TRUE" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="VatRate" Type="Number">
+				<Default>.002</Default>
+			</Field>
+			<Field DisplayName="Content Action Date" EnforceUniqueValues="FALSE" Format="DateOnly" Group="Graphicboost" ID="{a59fe2f1-e2d4-41a7-b597-42330842afa1}" Indexed="FALSE" LCID="2057" Name="ContentActionDate" ReadOnly="TRUE" Required="FALSE" ResultType="DateTime" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="ContentActionDate" Type="Calculated">
+				<Formula>=ContentDate+InvoiceTermDays</Formula>
+				<FieldRefs>
+					<FieldRef ID="{1be4e8d0-c3f5-4fae-9b49-b1e5097f476f}" Name="ContentDate"/>
+					<FieldRef ID="{9393bd34-43f8-4c83-b4e2-4c2153075622}" Name="InvoiceTermDays"/>
+				</FieldRefs>
+			</Field>
+			<Field Decimals="2" DisplayName="Gross Invoice" EnforceUniqueValues="FALSE" Format="DateOnly" Group="Graphicboost" ID="{9e66ca6d-fc64-43c9-a989-7a49eb14c805}" Indexed="FALSE" LCID="2057" Name="GrossInvoice" ReadOnly="TRUE" Required="FALSE" ResultType="Currency" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="GrossInvoice" Type="Calculated">
+				<Formula>=NetInvoice+VatInvoice</Formula>
+				<FieldRefs>
+					<FieldRef ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Name="NetInvoice"/>
+					<FieldRef ID="{38b002c0-c193-4252-9af7-d6b1475a89d6}" Name="VatInvoice"/>
+				</FieldRefs>
+			</Field>
+			<Field Decimals="2" DisplayName="Vat Invoice" EnforceUniqueValues="FALSE" Format="DateOnly" Group="Graphicboost" ID="{38b002c0-c193-4252-9af7-d6b1475a89d6}" Indexed="FALSE" LCID="2057" Name="VatInvoice" ReadOnly="TRUE" Required="FALSE" ResultType="Currency" SourceID="{1dce39cd-3541-4d63-96c6-c70976108c2a}" StaticName="VatInvoice" Type="Calculated">
+				<Formula>=NetInvoice*VatRate</Formula>
+				<FieldRefs>
+					<FieldRef ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Name="NetInvoice"/>
+					<FieldRef ID="{9345a769-b1a9-4828-abf7-bac46f8fc36f}" Name="VatRate"/>
+				</FieldRefs>
+			</Field>
+		</Fields>
+
+		<ContentTypes>
+			<ContentType ID="0x0101004D8C2FEC8291D44686C767D8D59B42FC" Name="Invoice" Group="Graphicboost" Description="" ParentContentType="Document">
+				<FieldRefs>
+					<FieldRef ID="{1be4e8d0-c3f5-4fae-9b49-b1e5097f476f}" Required="False" Hidden="" />
+					<FieldRef ID="{95621a9b-2920-4a84-900d-922e75279c14}" Required="False" Hidden="" />
+					<FieldRef ID="{9393bd34-43f8-4c83-b4e2-4c2153075622}" Required="False" Hidden="" />
+					<FieldRef ID="{89cb19be-cd27-4df1-a86b-b9168955493c}" Required="False" Hidden="" />
+					<FieldRef ID="{9345a769-b1a9-4828-abf7-bac46f8fc36f}" Required="False" Hidden="" />
+					<FieldRef ID="{a59fe2f1-e2d4-41a7-b597-42330842afa1}" Required="False" Hidden="" />
+					<FieldRef ID="{9e66ca6d-fc64-43c9-a989-7a49eb14c805}" Required="False" Hidden="" />
+					<FieldRef ID="{38b002c0-c193-4252-9af7-d6b1475a89d6}" Required="False" Hidden="" />
+				</FieldRefs>
+			</ContentType>
+		</ContentTypes>
+
+	</Configuration>
+</Configurations>

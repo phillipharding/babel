@@ -1,16 +1,10 @@
-﻿# Author: Mikael Svenson - @mikaelsvenson
-# Company: Puzzlepart
-# Date: December, 2013
-# Reference: http://www.sharepointnutsandbolts.com/2013/12/Using-CSOM-in-PowerShell-scripts-with-Office365.html
-cls
+﻿cls
 
 # replace these details (also consider using Get-Credential to enter password securely as script runs).. 
 $username = "phil.harding@platinumdogsconsulting.onmicrosoft.com"
 $password = "Pa`$`$w0rd2"
-$password
 
 $url = "https://platinumdogsconsulting.sharepoint.com/search"
-# the path to the SharePoint Client dlls' 
 $dllPath = "C:\Dev\github\MyPnP\Assemblies\16\"
   
 $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force
@@ -27,8 +21,7 @@ $clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url)
 $credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($username, $securePassword) 
 $clientContext.Credentials = $credentials
   
-if (!$clientContext.ServerObjectIsNull.Value) 
-{ 
+if (!$clientContext.ServerObjectIsNull.Value) { 
     Write-Host "Connected to SharePoint site: '$Url'" -ForegroundColor Green 
 } 
  
@@ -48,12 +41,12 @@ $url = $list.RootFolder.ServerRelativeUrl
  
 $page = $web.GetFileByServerRelativeUrl($url +"/results.aspx");
  
-try{
-$page.CheckOut()
-$clientContext.ExecuteQuery()
-Write-Host "Checking out page" -ForegroundColor Green 
+try {
+    $page.CheckOut()
+    $clientContext.ExecuteQuery()
+    Write-Host "Checking out page" -ForegroundColor Green 
 }
-catch{ Write-Host "Page already checked out" -ForegroundColor Yellow}
+catch { Write-Host "Page already checked out" -ForegroundColor Yellow }
 $wpm = $page.GetLimitedWebPartManager([Microsoft.SharePoint.Client.WebParts.PersonalizationScope]::Shared) 
 $clientContext.Load($wpm.WebParts)
 $clientContext.ExecuteQuery()
