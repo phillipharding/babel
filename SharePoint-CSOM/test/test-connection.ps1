@@ -12,7 +12,7 @@ $connector = Init-CSOMConnector
 
 <# set the connection url #>
 $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-#$connector.csomUrl = "https://rbcom.sharepoint.com/"
+#$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
 #$connector.csomUrl = "http://pub.pdogs.local"
 
 <# set credentials with username/password #>
@@ -31,3 +31,8 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected."
 
+Write-Host "AllProperties @ $($connection.RootWeb.ServerRelativeUrl)"
+$connection.RootWeb.AllProperties.FieldValues|%{ $_ }|ft 
+Write-Host ""
+Write-Host "AllProperties @ $($connection.Web.ServerRelativeUrl)"
+$connection.Web.AllProperties.FieldValues|%{ $_ }|ft 
