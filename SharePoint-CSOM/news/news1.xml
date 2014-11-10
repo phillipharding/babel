@@ -1,15 +1,11 @@
 <Configurations ResourcesPath="">
-	<Configuration Name="News" ID="0" Description="Applies Corporate News capability to an existing site" ResourcesPath="">
-	</Configuration>
+	<Configuration Description="Applies Corporate News capability to an existing site" ID="0" Name="News" ResourcesPath=""/>
 
-	<Configuration Name="News" ID="1" Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
-
+	<Configuration Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ID="1" Name="News" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+		<!--
 		<SetWebtemplates Inherit="False">
-			<!-- disable non-english web templates -->
-			<lcid id="all"></lcid>
-			<!-- set the available (english only) web tenmplates -->
+			<lcid id="all"/>
 			<lcid id="1033">
-				<webtemplate name="BLOG#0"/>
 				<webtemplate name="CMSPUBLISHING#0"/>
 				<webtemplate name="SRCHCEN#0"/>
 				<webtemplate name="ENTERWIKI#0"/>
@@ -17,12 +13,39 @@
 			</lcid>
 		</SetWebtemplates>
 
-		<Webs>
-			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+		<UpdateWebTemplates Inherit="False">
+			<lcid id="all">
+				<webtemplate name="STS#0"/>
+			</lcid>
+			<lcid id="1033" remove="true"/>
+			<lcid id="1033">
+				<webtemplate name="BLOG#0"/>
+				<webtemplate name="PROJECTSITE#0"/>
+			</lcid>
+			<lcid id="1036">
+				<webtemplate name="BLOG#0"/>
+			</lcid>
+			<lcid id="3082">
+				<webtemplate name="CMSPUBLISHING#0"/>
+			</lcid>
+		</UpdateWebTemplates>-->
+		<UpdateWebTemplates Inherit="False">
+			<lcid id="all" remove="true" />
+			<lcid id="1033">
+				<webtemplate name="BLOG#0"/>
+				<webtemplate name="CMSPUBLISHING#0"/>
+				<webtemplate name="SRCHCEN#0"/>
+				<webtemplate name="ENTERWIKI#0"/>
+				<webtemplate name="STS#0"/>
+				<webtemplate name="PROJECTSITE#0"/>
+			</lcid>
+		</UpdateWebTemplates>
 
+		<Webs>
+			<Web AlwaysDeleteWeb="False" Description="Welcome to the Corporate News Site" Title="Corporate News Site" Url="news" WebTemplate="STS#0">
 				<SetWebtemplates Inherit="False">
 					<!-- disable non-english web templates -->
-					<lcid id="all"></lcid>
+					<lcid id="all"/>
 					<!-- set the available (english only) web tenmplates -->
 					<lcid id="1033">
 						<webtemplate name="BLOG#0"/>
@@ -31,6 +54,5 @@
 				</SetWebtemplates>
 			</Web>
 		</Webs>
-
 	</Configuration>
 </Configurations>

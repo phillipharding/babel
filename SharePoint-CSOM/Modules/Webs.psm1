@@ -435,7 +435,10 @@ function Update-Web {
         }
 
         if ($xml.SetWebtemplates) {
-            Update-WebTemplates -WebTemplateXml $xml.SetWebtemplates -Site $site -Web $web -ClientContext $ClientContext
+            Set-WebTemplates -WebTemplateXml $xml.SetWebtemplates -Site $site -Web $web -ClientContext $ClientContext
+        }
+        if ($xml.UpdateWebTemplates) {
+            Update-WebTemplates -WebTemplateXml $xml.UpdateWebTemplates -Site $site -Web $web -ClientContext $ClientContext
         }
 
         if($xml.Webs) {
@@ -453,7 +456,7 @@ function Update-Web {
     end {}
 }
 
-function Update-WebTemplates {
+function Set-WebTemplates {
     param(
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$WebTemplateXml,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $Site, 
@@ -461,6 +464,7 @@ function Update-WebTemplates {
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        Write-Host "Applying Available WebTemplates" -ForegroundColor Green
         $webtemplates = ""
         $inherit = $(if ($WebTemplateXml.Inherit -and $WebTemplateXml.Inherit -ne "") { [bool]::Parse($WebTemplateXml.Inherit)} else { $false })
         foreach ($wtInfo in $WebTemplateXml.lcid) {
@@ -475,6 +479,90 @@ function Update-WebTemplates {
             $webtemplates = "<webtemplates>$webtemplates</webtemplates>"
         }
         Set-PropertyBagValue -Key "__WebTemplates" -Value $webtemplates -Indexable $false -Web $Web -ClientContext $ClientContext
+        Write-Host "Finished Applying Available WebTemplates" -ForegroundColor Green
+    }
+    end {}
+}
+function Update-WebTemplates {
+    param(
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$WebTemplateXml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $Site, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web] $Web, 
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        Write-Host "Updating Available WebTemplates" -ForegroundColor Green
+
+        $inherit = $(if ($WebTemplateXml.Inherit -and $WebTemplateXml.Inherit -ne "") { [bool]::Parse($WebTemplateXml.Inherit)} else { $false })
+        # __InheritWebTemplates
+        $inheritvalue = $(if ($inherit) { "True" } else { "False" })
+        Set-PropertyBagValue -Key "__InheritWebTemplates" -Value $inheritvalue -Indexable $false -Web $Web -ClientContext $ClientContext
+        
+        # __WebTemplates
+        $webtemplates = ""
+
+        $currentWtStr = Get-PropertyBagValue -Key "__WebTemplates" -Web $Web -ClientContext $ClientContext
+        if ($currentWtStr -eq $null -or $currentWtStr -eq "") {
+            $currentWtStr = "<webtemplates></webtemplates>"
+        }
+        $currentWtXml = [xml]$currentWtStr
+        $currentWtDocXml = $currentWtXml.DocumentElement
+
+        foreach($lcidXml in $WebTemplateXml.lcid) {
+            Write-Host "`t`tSearch for LCID: $($lcidXml.id)" -ForegroundColor Green
+            $curLcidXml = $currentWtDocXml.SelectSingleNode("./lcid[@id='$($lcidXml.id)']")
+            if ($curLcidXml -eq $null) {
+                if (-not $lcidXml.Remove) {
+                    Write-Host "`t`t..Creating LCID: $($lcidXml.id)" -ForegroundColor Green
+                    $idattr = $currentWtXml.CreateAttribute("id")
+                    $idattr.Value = $lcidXml.id
+                    $node = $currentWtXml.CreateElement("lcid")
+                    $node.Attributes.Append($idattr) | Out-Null
+                    $currentWtDocXml.AppendChild($node) | Out-Null
+                    $curLcidXml = $node
+                } else {
+                    continue
+                }
+            } else {
+                Write-Host "`t`t..Already have LCID: $($lcidXml.id)" -ForegroundColor Green
+                if ($lcidXml.Remove -and $lcidXml.Remove -match "true") {
+                    Write-Host "`t`t`tRemoving LCID: $($lcidXml.id)" -ForegroundColor Green
+                    $curLcidXml.ParentNode.RemoveChild($curLcidXml) | Out-Null
+                    continue
+                }
+            }
+            
+            # $curLcidXml is the current LCID node
+            foreach($lcidwtXml in $lcidXml.webtemplate) {
+                Write-Host "`t`t`tSearch for webtemplate $($lcidwtXml.name) in LCID $($curLcidXml.id)" -ForegroundColor Green
+                $wtnode = $curLcidXml.SelectSingleNode("./webtemplate[@name='$($lcidwtXml.name)']")
+                if ($wtnode -eq $null) {
+                    if (-not $lcidwtXml.Remove) {
+                        Write-Host "`t`t`t..Creating webtemplate $($lcidwtXml.name) in LCID $($curLcidXml.id)" -ForegroundColor Green
+
+                        $nameattr = $currentWtXml.CreateAttribute("name")
+                        $nameattr.Value = $lcidwtXml.name
+                        $node = $currentWtXml.CreateElement("webtemplate")
+                        $node.Attributes.Append($nameattr) | Out-Null
+                        $curLcidXml.AppendChild($node) | Out-Null
+                        $wtnode = $node
+                    } else {
+                        continue
+                    }
+                } else {
+                    Write-Host "`t`t`t..Already have Webtemplate $($lcidwtXml.name) in LCID $($curLcidXml.id)" -ForegroundColor Green
+                    if ($lcidwtXml.Remove -and $lcidwtXml.Remove -match "true") {
+                        Write-Host "`t`t`t`tRemoving Webtemplate $($lcidwtXml.name) from LCID $($curLcidXml.id)" -ForegroundColor Green
+                        $wtnode.ParentNode.RemoveChild($wtnode) | Out-Null
+                        continue
+                    }
+                }
+            }
+        }
+        $webtemplates = $currentWtDocXml.OuterXml
+        Set-PropertyBagValue -Key "__WebTemplates" -Value $webtemplates -Indexable $false -Web $Web -ClientContext $ClientContext
+
+        Write-Host "Finished Updating Available WebTemplates" -ForegroundColor Green
     }
     end {}
 }

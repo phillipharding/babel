@@ -153,6 +153,7 @@ function Upload-File {
             $file = $Folder.Files.Add($fileCreationInformation)
             $ClientContext.Load($file)
             $ClientContext.ExecuteQuery()
+            Write-Host "`t..Uploaded file, CheckOutType: [$($file.CheckOutType)]" -ForegroundColor Green
 
             $item = $file.ListItemAllFields
 
@@ -228,8 +229,9 @@ function Upload-File {
                 $item.Update()
             }
 
+            Write-Host "`t..Checkin uploaded file, CheckOutType: [$($file.CheckOutType)]" -ForegroundColor Green
             $file.CheckIn("Checkin file", [Microsoft.SharePoint.Client.CheckinType]::MajorCheckIn)
-            Write-Host "`t..Checkin uploaded file" -ForegroundColor Green
+            
             if ($List.EnableVersioning -and $List.EnableMinorVersions) {
                 $file.Publish("Publish file")
                 Write-Host "`t..Published uploaded file" -ForegroundColor Green
@@ -241,6 +243,7 @@ function Upload-File {
             }
             $ClientContext.Load($item)
             $ClientContext.ExecuteQuery()
+            Write-Host "`t`t..CheckOutType: [$($file.CheckOutType)]" -ForegroundColor Green
 
             if($FileXml.WelcomePage -and ($FileXml.Url -match ".aspx")) {
                 $isWelcomePage = $false
