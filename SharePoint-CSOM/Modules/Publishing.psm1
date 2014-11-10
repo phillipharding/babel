@@ -79,7 +79,7 @@ function Update-WebParts {
         $CheckOutRequired = $pagesList.ForceCheckout
 
         # get page
-        $pageFile = Get-File "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" $web $ClientContext
+        $pageFile = Get-File -FileServerRelativeUrl "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
         if ($pageFile -eq $null) {
             Write-Host "`t..Page '$($PageXml.Url)' was not found" -ForegroundColor Red
             return
@@ -212,9 +212,15 @@ function Update-WebParts {
             }
         }
         if ($updatePage) {
+            Write-Host "`t`t..File requires update"
             $ClientContext.ExecuteQuery()
             Write-Host "`t`t..Finished adding webparts"
         }
+
+#
+Write-Host "`t`t..Request file again: $($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)"
+$pageFile = Get-File -FileServerRelativeUrl "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
+#
 
         # now save/checkin/publish/approve
         Write-Host "`t`t..Checkout Status [$($pageFile.CheckOutType)]"

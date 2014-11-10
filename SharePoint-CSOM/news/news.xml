@@ -1,130 +1,142 @@
 <Configurations ResourcesPath="">
+<!-- Allowed schema
+
+<Configurations ResourcesPath=""/>
+	<Configuration Name="" ID="" Description="" ResourcesPath=""/>
+		<Webs/>
+			<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
+				<TermStore Languages="1031, 1033, 1036, 1053"/>
+					<TermGroup Name="LOB2" ID="{b3fe8d52-506b-4d51-8acf-95ab0218a8e3}"/>
+						<TermSet Name="MegaMenu" ID="{d00ca60f-e1d8-41cc-921a-31f629590ec0}" Language="1033" Navigation="True" Tagging="False" Open="False"/>
+							<Term Name="Root" ID="{60ad9b4a-5074-431e-bea4-c3efb4ca72fd}" Language="1033" Description="Root MegaMenu Nodes"/>
+								<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB"/>
+
+				<Fields/>
+					<Field/>
+				<ContentTypes/>
+					<ContentType/>
+				<Pages/>
+					<RemovePage/>
+					<Page Url="" ReplaceContent="True|False" PageLayout="" WelcomePage="True|False"/>
+						<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
+						<Property Type="LookupValue" LookupListName="Categories"/>
+						<Property Type="Image"/>
+						<Property Type="HTML"/>
+						<Property/>
+				<Lists/>
+					<List/>
+						<ContentType/>
+						<RemoveContentType/>
+						<DeleteItems/>
+							<Item/>
+						<UpdateItems/>
+							<Item/>
+								<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
+								<Property Type="LookupValue" LookupListName="Categories"/>
+								<Property Type="Image"/>
+								<Property Type="HTML"/>
+								<Property/>
+						<Views/>
+							<View DisplayName="" DefaultView="True" PersonalView="False" Type="html" ServerRelativeUrl="" BaseViewID="7"/>
+								<Query/>
+									<OrderBy/>
+									<GroupBy/>
+									<Where/>
+								<ViewFields/>
+									<FieldRef/>
+								<RowLimit Paged="True">30</RowLimit>
+								<JSLink/>
+						<Folder ResourcesPath=""/>
+							<Folder ResourcesPath=""/>
+								<Folder ResourcesPath=""/>
+							<File Path="" Url="" WelcomePage="True|False" ReplaceContent="True" ReplaceContentTokens="True" Flags="nocheckout"/>
+								<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
+								<Property Type="LookupValue" LookupListName="Categories"/>
+								<Property Type="Image"/>
+								<Property Type="HTML"/>
+								<Property/>
+								<AllUsersWebPart WebPartZoneID="" WebPartOrder="" ListTitle=""/>
+									<WebPart/>
+										<![CDATA[]]>
+									<Query/>
+										<OrderBy/>
+										<GroupBy/>
+										<Where/>
+									<ViewFields/>
+										<FieldRef/>
+									<RowLimit Paged="True">30</RowLimit>
+									<JSLink/>
+			
+				<Features/>
+					<WebFeatures/>
+						<ActivateFeatures/>
+							<Feature/>
+						<DeactivateFeatures/>
+							<Feature/>
+					<SiteFeatures/>
+						<ActivateFeatures/>
+							<Feature/>
+						<DeactivateFeatures/>
+							<Feature/>
+				<Catalogs/>
+					<Catalog/>
+				<UserCustomActions/>
+					<UserCustomAction Scope="Web|Site"/>
+				<RemoveUserCustomActions/>
+					<UserCustomAction Scope="Web|Site"/>
+				<PropertyBag/>
+					<PropertyBagValue Key="" Value="" Indexable="true|false" />
+
+				<WelcomePage/>
+				<CustomMasterUrl/>
+				<MasterUrl/>
+				<NoCrawl/>
+
+				<ColorPaletteUrl/>
+				<FontSchemeUrl/>
+				<BackgroundImageUrl/>
+
+				<SetWebtemplates Inherit="true|false"/>
+					<lcid id="all"></lcid>
+					<lcid id="1033"/>
+						<webtemplate name="BLOG#0"/>
+						<webtemplate name="SRCHCEN#0"/>
+
+				<UpdateWebtemplates Inherit="true|false"/>
+					<lcid id="all" remove="true|false"></lcid>
+					<lcid id="1033" remove="true|false"/>
+						<webtemplate name="BLOG#0" remove="true|false"/>
+						<webtemplate name="SRCHCEN#0" remove="true|false"/>
+
+				<Webs/>
+					<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
+-->
+
 	<Configuration Name="News" ID="0" Description="Applies Corporate News capability to an existing site" ResourcesPath="">
 	</Configuration>
 
 	<Configuration Name="News" ID="1" Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
 
-		<SetWebtemplates Inherit="False">
-			<!-- disable non-english web templates -->
-			<lcid id="all"></lcid>
-			<!-- set the available (english only) web tenmplates -->
+		<!--
+			remove webtemplates for all languages
+			then add the Blog/Publishing/Ent Search Centre/Ent Wiki/Team/Project webtemplates for english language 
+			this removes the ability to create site in non-english languages
+		-->
+		<UpdateWebTemplates Inherit="False">
+			<lcid id="all" remove="true" />
 			<lcid id="1033">
 				<webtemplate name="BLOG#0"/>
 				<webtemplate name="CMSPUBLISHING#0"/>
 				<webtemplate name="SRCHCEN#0"/>
 				<webtemplate name="ENTERWIKI#0"/>
 				<webtemplate name="STS#0"/>
+				<webtemplate name="PROJECTSITE#0"/>
 			</lcid>
-		</SetWebtemplates>
+		</UpdateWebTemplates>
 
 		<Webs>
 			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="True">
-				<!-- Allowed schema
-				
-				<Configurations ResourcesPath=""/>
-					<Configuration Name="" ID="" Description="" ResourcesPath=""/>
-						<Webs/>
-							<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
-								<TermStore Languages="1031, 1033, 1036, 1053"/>
-									<TermGroup Name="LOB2" ID="{b3fe8d52-506b-4d51-8acf-95ab0218a8e3}"/>
-										<TermSet Name="MegaMenu" ID="{d00ca60f-e1d8-41cc-921a-31f629590ec0}" Language="1033" Navigation="True" Tagging="False" Open="False"/>
-											<Term Name="Root" ID="{60ad9b4a-5074-431e-bea4-c3efb4ca72fd}" Language="1033" Description="Root MegaMenu Nodes"/>
-												<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB"/>
 
-								<Fields/>
-									<Field/>
-								<ContentTypes/>
-									<ContentType/>
-								<Pages/>
-									<RemovePage/>
-									<Page Url="" ReplaceContent="True|False" PageLayout="" WelcomePage="True|False"/>
-										<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
-										<Property Type="LookupValue" LookupListName="Categories"/>
-										<Property Type="Image"/>
-										<Property Type="HTML"/>
-										<Property/>
-								<Lists/>
-									<List/>
-										<ContentType/>
-										<RemoveContentType/>
-										<DeleteItems/>
-											<Item/>
-										<UpdateItems/>
-											<Item/>
-												<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
-												<Property Type="LookupValue" LookupListName="Categories"/>
-												<Property Type="Image"/>
-												<Property Type="HTML"/>
-												<Property/>
-										<Views/>
-											<View DisplayName="" DefaultView="True" PersonalView="False" Type="html" ServerRelativeUrl="" BaseViewID="7"/>
-												<Query/>
-													<OrderBy/>
-													<GroupBy/>
-													<Where/>
-												<ViewFields/>
-													<FieldRef/>
-												<RowLimit Paged="True">30</RowLimit>
-												<JSLink/>
-										<Folder ResourcesPath=""/>
-											<Folder ResourcesPath=""/>
-												<Folder ResourcesPath=""/>
-											<File Path="" Url="" WelcomePage="True|False" ReplaceContent="True" ReplaceContentTokens="True" Flags="nocheckout"/>
-												<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
-												<Property Type="LookupValue" LookupListName="Categories"/>
-												<Property Type="Image"/>
-												<Property Type="HTML"/>
-												<Property/>
-												<AllUsersWebPart WebPartZoneID="" WebPartOrder="" ListTitle=""/>
-													<WebPart/>
-														<![CDATA[]]>
-													<Query/>
-														<OrderBy/>
-														<GroupBy/>
-														<Where/>
-													<ViewFields/>
-														<FieldRef/>
-													<RowLimit Paged="True">30</RowLimit>
-													<JSLink/>
-							
-								<Features/>
-									<WebFeatures/>
-										<ActivateFeatures/>
-											<Feature/>
-										<DeactivateFeatures/>
-											<Feature/>
-									<SiteFeatures/>
-										<ActivateFeatures/>
-											<Feature/>
-										<DeactivateFeatures/>
-											<Feature/>
-								<Catalogs/>
-									<Catalog/>
-								<UserCustomActions/>
-									<UserCustomAction Scope="Web|Site"/>
-								<RemoveUserCustomActions/>
-									<UserCustomAction Scope="Web|Site"/>
-								<PropertyBag/>
-									<PropertyBagValue Key="" Value="" Indexable="true|false" />
-
-								<WelcomePage/>
-								<CustomMasterUrl/>
-								<MasterUrl/>
-								<NoCrawl/>
-
-								<ColorPaletteUrl/>
-								<FontSchemeUrl/>
-								<BackgroundImageUrl/>
-
-								<SetWebtemplates Inherit="False"/>
-									<lcid id="all"></lcid>
-									<lcid id="1033"/>
-										<webtemplate name="BLOG#0"/>
-										<webtemplate name="SRCHCEN#0"/>
-
-								<Webs/>
-									<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
-				-->
 				<Features>
 					<SiteFeatures>
 						<ActivateFeatures>
@@ -1021,10 +1033,10 @@
 					</UserCustomAction>
 				</UserCustomActions>
 
+				<!-- remove all webtemplates for all languages -->
+				<!-- then add the BLOG and SEARCH CENTRE (Enterprise) web templates for english  -->
 				<SetWebtemplates Inherit="False">
-					<!-- disable non-english web templates -->
 					<lcid id="all"></lcid>
-					<!-- set the available (english only) web tenmplates -->
 					<lcid id="1033">
 						<webtemplate name="BLOG#0"/>
 						<webtemplate name="SRCHCEN#0"/>
@@ -1032,6 +1044,7 @@
 				</SetWebtemplates>
 
 				<Comments>
+					<Comment>Congratulations, you've just provisioned a 'Corporate News Site'</Comment>
 					<Comment>Enable Ratings on the 'Posts' list and set the voting/rating experience to 'Likes'</Comment>
 					<Comment>HIDE the OOTB Categories webpart on the '.../Lists/Categories/Category.aspx' page, but DO NOT Delete or Close it</Comment>
 					<Comment>Ensure that RSS feeds are enabled in the site collection, then ensure that RSS feeds are enabled in the site</Comment>
