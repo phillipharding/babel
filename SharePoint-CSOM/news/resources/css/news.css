@@ -8,7 +8,13 @@
 	margin:auto;
 }
 /* SET FLUID WIDTH */
+#sideNavBox {
+	margin-left: 10px;
+	margin-right: 10px;
+	min-width: 200px;
+}
 #contentBox {
+	margin-top: 10px;
 	min-width: 200px;
 }
 .ms-blog-adminLinks {
@@ -22,6 +28,7 @@
 .ms-blog-postList {
 	min-width: 200px;
 	max-width: 100%;
+	margin-right: 10px;
 }
 .ms-blog-quickLinksTitle {
 	font-size: 1.8em;
@@ -80,7 +87,8 @@
 .news-post-pageimage img,
 .news-post-pageimage.Right img {
 	border: 0;
-	width: 600px;
+	max-width: 600px;
+	width: 100%;
 	margin-left: 10px;
 }
 .news-post-pageimage.Left img {
@@ -176,7 +184,7 @@ h2.news-post-title .news-post-title-image img.default {
 }
 
 /* MONTH/DATE TAG CLOUD */
-.news-post-date-cloud { margin: 10px 10px 10px 0px; }
+.news-post-date-cloud { margin: 0 10px 10px 0px; }
 .news-post-date-cloud ul { margin: 0; padding: 0; display: none; }
 .news-post-date-cloud li { margin:0; padding: 2px 0; list-style: none; font-family: Calibri; }
 
@@ -189,15 +197,17 @@ h2.news-post-title .news-post-title-image img.default {
     font-size: 1em; 
     color: #666666; 
     text-decoration: none; 
-    margin-left: 15px; 
+    margin-left: 10px; 
     padding:0px 5px;
     transition: background-color 150ms ease-out;
 }
+.news-post-date-cloud .month,
+.news-post-date-cloud .month.reveal { display: block; }
 .news-post-date-cloud li.month a:hover
 { background-color: rgba(128,128,128,0.2); }
 
-.news-post-date-cloud li.year { margin: 5px 0 0 10px; }
-.news-post-date-cloud li.year h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; }
+.news-post-date-cloud li.year { margin: 5px 0 0 0; }
+.news-post-date-cloud li.year h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; height: 48px; line-height: 48px; }
 .news-post-date-cloud li.archive h2 { font-size: 1.3em; color: #0072C6; margin: 0; padding:0; }
 .news-post-date-cloud li.year h2[rel='1'] { font-size: 1.6em; }
 
@@ -226,12 +236,13 @@ h2.news-post-title .news-post-title-image img.default {
 .news-post-date-cloud li.archive a:visited {
 	color: #0072C6;
 	font-size: 1.2em; 
-	margin-left: 5px; 
+	margin-left: 0;
+	padding-left: 0;
 }
 
 
 /* CATEGORY TAG CLOUD */
-.news-post-category-cloud { margin: 10px 10px 10px 0px; }
+.news-post-category-cloud { margin: 10px 10px 0 0; }
 .news-post-category-cloud ul { margin: 0; padding: 0; display: none; }
 .news-post-category-cloud li { margin:0; padding: 2px 0; list-style: none; font-family: Calibri; }
 
@@ -244,15 +255,17 @@ h2.news-post-title .news-post-title-image img.default {
     font-size: 1.3em; 
     color: #666666; 
     text-decoration: none; 
-    margin-left: 15px; 
+    margin-left: 10px; 
     padding:0px 5px;
     transition: background-color 150ms ease-out;
 }
+.news-post-category-cloud .category,
+.news-post-category-cloud .category.reveal { display: block; }
 .news-post-category-cloud li.category a:hover
 { background-color: rgba(128,128,128,0.2); }
 
-.news-post-category-cloud li.title { margin: 5px 0 0 10px; }
-.news-post-category-cloud li.title h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; }
+.news-post-category-cloud li.title { margin: 5px 0 0 0; }
+.news-post-category-cloud li.title h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; height: 48px; line-height: 48px; }
 
 
 /* POPULAR POSTS */
@@ -278,4 +291,50 @@ h2.news-post-title .news-post-title-image img.default {
 
 .news-post-popular li.title { margin: 0; padding: 0; }
 .news-post-popular li.title h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; }
+
+/* RESPONSIVE ICON MENU BAR / BUTTON */
+.responsive-nonvisible { display: block; }
+.collapse-button-container {
+	position: relative;
+	height: 48px;
+	line-height: 48px;
+}
+.collapse-button {
+	 display: none;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    width: 40px;
+    background-color: #0E0E0E;
+    background-image: linear-gradient(to bottom, #151515, #040404);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.075);
+    padding: 7px 10px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+
+    transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box
+}
+.collapse-button .icon-bar {
+    background-color: #F5F5F5;
+    display: block;
+    height: 2px;
+    width: 18px;
+    margin: 2px 0;
+}
 

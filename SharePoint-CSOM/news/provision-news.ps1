@@ -20,8 +20,8 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configFiles = @("news")
-$configFiles | ? { $_ -eq "news" } | % {
+$configFiles = @("news1")
+$configFiles | ? { $_ -eq "news1" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration

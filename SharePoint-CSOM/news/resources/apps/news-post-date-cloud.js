@@ -38,9 +38,11 @@ $(function() {
         }
         
         if (c != y) {
+            var $button = $("<div class='collapse-button'><span class='icon-bar'> </span><span class='icon-bar'> </span><span class='icon-bar'> </span></div>");
             $("<li/>")
-                .addClass('year')
-            .append($('<h2>').attr('rel',nowY==y?0:1).text(y))
+                .addClass('year collapse-button-container')
+                .append($('<h2>').attr('rel',nowY==y?0:1).text(y))
+                .append($button)
                 .appendTo($e);
             c = y;
         }
@@ -67,6 +69,10 @@ $(function() {
         .appendTo($e);
 
     $e.stop().fadeIn(100);
+    /* setup responsive menu collapser */
+    $('.news-post-date-cloud .year .collapse-button').click(function(e) {
+        $(this).parent().nextUntil('.year,.archive').toggleClass('reveal');
+    });
 });
 
 })(jQuery);

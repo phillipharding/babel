@@ -135,7 +135,7 @@
 		</UpdateWebTemplates>
 
 		<Webs>
-			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="True">
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
 
 				<Features>
 					<SiteFeatures>
@@ -238,6 +238,7 @@
 								</Folder>
 								<Folder Url="css">
 									<File Path="css\news.css" Url="news.css" ReplaceContent="True" />
+									<File Path="css\news-responsive.css" Url="news-responsive.css" ReplaceContent="True" />
 									<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
 									<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
 									<File Path="css\jquery-ui-1.10.4.custom.css" Url="jquery-ui-1.10.4.custom.css" ReplaceContent="True" />
@@ -994,13 +995,7 @@
 
 				</Lists>
 
-				<UserCustomActions>
-					<UserCustomAction Scope="Web">
-						<Name>jQuery</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>100</Sequence>
-						<ScriptLink>~site/SiteAssets/news/scripts/jquery-1.11.0.min.js</ScriptLink>
-					</UserCustomAction>
+				<RemoveUserCustomActions>
 					<UserCustomAction Scope="Web">
 						<Name>jQuery-UI</Name>
 						<Location>ScriptLink</Location>
@@ -1012,6 +1007,14 @@
 						<Location>ScriptLink</Location>
 						<Sequence>102</Sequence>
 						<ScriptLink>~site/SiteAssets/news/css/jquery-ui-1.10.4.custom.min.css</ScriptLink>
+					</UserCustomAction>
+				</RemoveUserCustomActions>
+				<UserCustomActions>
+					<UserCustomAction Scope="Web">
+						<Name>jQuery</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>100</Sequence>
+						<ScriptLink>~site/SiteAssets/news/scripts/jquery-1.11.0.min.js</ScriptLink>
 					</UserCustomAction>
 					<UserCustomAction Scope="Web">
 						<Name>Pure-CSS</Name>
@@ -1030,6 +1033,12 @@
 						<Location>ScriptLink</Location>
 						<Sequence>112</Sequence>
 						<ScriptLink>~site/SiteAssets/news/css/news.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>News-CSS-Responsive</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>120</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/news-responsive.css</ScriptLink>
 					</UserCustomAction>
 				</UserCustomActions>
 
