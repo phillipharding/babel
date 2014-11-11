@@ -10,6 +10,8 @@ $configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news"
 $connector = Init-CSOMConnector
 
 # set connection url, set credentials using Windows Credential Manager
+#$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
+#$connector.csomCredentialLabel = "CAM SPO"
 #$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
 #$connector.csomCredentialLabel = "RB.COM SPO"
 $connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
@@ -20,8 +22,8 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configFiles = @("news1")
-$configFiles | ? { $_ -eq "news1" } | % {
+$configFiles = @("news")
+$configFiles | ? { $_ -eq "news" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration

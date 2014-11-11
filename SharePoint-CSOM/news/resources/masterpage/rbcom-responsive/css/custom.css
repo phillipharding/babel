@@ -1,0 +1,218 @@
+﻿/* ==========================================================================
+RB Header
+========================================================================== */
+
+header {
+	margin: 0px auto 25px auto;
+	max-width: 1220px;
+	padding: 15px 0px 0px 0px;
+	height: 25px;
+}
+
+header ul,
+header .icons {
+	float: right;
+	margin: 0px 0px 0px 0px;
+	max-height: 25px;
+	width: auto;
+}
+
+header ul li {
+	display: inline-block;
+	float: left;
+}
+
+header .social ul {
+	float: left;
+	display: inline-block;
+	clear: none;
+	padding-left: 0px;
+	margin-top: 24px;
+}
+
+header .social img {
+	float: left;
+	display: block;
+}
+
+header ul li .search {
+	min-width: 200px;
+	padding: 8px 5px 5px 8px;
+	margin-left: 10px;
+	text-align: left;
+	color: #CCC;
+	border: 1px solid #CCC;
+}
+
+header ul li i {
+	color: #E93591;
+	text-align: right;
+	margin-left: 10px;
+	font-size: 25px;
+}
+
+header ul li a:hover i {
+	opacity: 0.9;
+}
+
+header img.user {
+	display: block;
+	float: right;
+}
+
+
+
+ /* ==========================================================================
+ Off Canvas Menus
+ ========================================================================== */
+
+ #no-bg #mobile-nav {
+ 	display: none;
+ }
+
+  #mobile-nav {
+      display: none;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+
+ .sidr-inner li {
+  display: block;
+  position: relative;
+ }
+
+ .sidr-inner .sidr-class-dropdown:before {
+  content: '\f149';
+  font-family: FontAwesome;
+  position: absolute;
+  right: 20px;
+  font-size: 14px;
+ }
+
+ .sidr-inner {
+ 	background-color: #466076;
+ }
+
+ .sidr li a {
+ 	font-size: 15px !important;
+ 	color: #FFF !important;
+ }
+
+ .sidr li a span {
+ 	display: inline-block;
+ 	padding-left: 0px;
+ }
+
+ .sidr li a,
+ .sidr li.active a:hover,
+ .sidr li a:hover {
+ 	box-shadow: none !important;
+ 	border: 0px !important;
+ }
+
+ .sidr ul li {
+ 	border: 0px !important;
+ }
+
+
+ /* ========================================================================== 
+ Twitter / FB Feeds
+ ========================================================================== */
+
+ .header {
+ 	padding: 10px 10px 10px 45px;
+ 	color: #FFF;
+ }
+
+ .twitter {
+ 	background: #1AB2E8 url('../images/twitter.png') no-repeat 10px 7px;
+ }
+
+ .fb {
+ 	background: #43609C url('../images/fb.png') no-repeat 10px 7px;
+ }
+
+ .social-footer {
+ 	text-align: center;
+ 	color: #FFF;
+ 	padding: 12px 10px 12px 10px;
+ 	background: #7F7F7F url('../images/white-arrow.png') no-repeat 96% 50%;
+ 	margin-bottom: 25px;
+ }
+
+
+/* ==========================================================================
+ Media Queries
+ ========================================================================== */
+
+@media screen and (min-width: 980px) {
+
+}
+
+@media screen and (max-width: 480px) {
+
+	header {
+		padding: 15px 15px 0px 15px;
+	}
+
+	header .logo {
+		max-width: 250px;
+		margin: 0px auto 0px auto;
+	}
+
+	header ul, 
+	header img.user {
+	display: none;
+	}
+
+	.container {
+		padding: 0px 15px 0px 15px;
+	}
+
+	.marg-r {
+	margin-right: 0px;
+	}
+
+	.marg-l {
+	margin-left: 0px;
+	}
+}
+
+@media screen and  (max-width: 767px) {
+
+     #mobile-nav {
+      display: block;
+    }
+
+	header {
+		padding: 15px 15px 0px 15px;
+	}
+
+	header .logo {
+		max-width: 250px;
+		margin: 0px auto 0px auto;
+	}
+
+	header ul, 
+	header img.user {
+	display: none;
+	}
+
+	.container {
+		padding: 0px 15px 0px 15px;
+	}
+
+	.marg-r {
+	margin-right: 0px;
+	}
+
+	.marg-l {
+	margin-left: 0px;
+	}
+   
+}
+
+@media screen and (min-width: 768px) and (max-width: 979px) {
+   
+}

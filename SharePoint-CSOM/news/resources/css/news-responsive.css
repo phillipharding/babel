@@ -23,13 +23,13 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d6dade',GradientType=0 );
 }
 
-.container {
-	max-width: 1200px;
+.news-container {
+	max-width: 1440px;
 	margin: auto;
 	clear: both;
 }
-.container-maxwidth {
-	max-width: 1200px;
+.news-container-maxwidth {
+	max-width: 1440px;
 }
 
 article,aside,details,figcaption,figure,
@@ -44,17 +44,25 @@ footer,header,hgroup,nav,section,summary {
 /* desktop */
 @media screen and (min-width: 980px) {
 	.news-post-pageimage img,
-	.news-post-pageimage.Right img { max-width: 400px; margin-left: 5px; }
+	.news-post-pageimage.Right img { max-width: 325px; margin-left: 5px; }
 	.news-post-pageimage.Left img { margin-right: 5px; }
+	
+	.ms-blog-postBoxMargin > h2.news-post-title {}
+	.ms-blog-postBoxMargin > h2.news-post-title { font-size: 2.0em; } /* reduce the post title size */
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1280px) {
+	.news-post-pageimage img,
+	.news-post-pageimage.Right img { max-width: 520px; margin-left: 10px; }
+	.news-post-pageimage.Left img { margin-right: 10px; }
+}
+@media screen and (min-width: 1440px) {
 	.news-post-pageimage img,
 	.news-post-pageimage.Right img { max-width: 600px; margin-left: 10px; }
 	.news-post-pageimage.Left img { margin-right: 10px; }
 }
 
 /* phablet (landscape) */
-@media screen and (min-width: 768px) and (max-width: 979px) {
+@media screen and (min-width: 769px) and (max-width: 979px) {
 	.news-post-pageimage,
 	.news-post-pageimage.Right { float: none; clear: both; }
 	.news-post-pageimage.Left { float: none; clear: both; }
@@ -62,13 +70,17 @@ footer,header,hgroup,nav,section,summary {
 	.news-post-pageimage img,
 	.news-post-pageimage.Right img { max-width: 100%; margin-left: 0; }
 	.news-post-pageimage.Left img { margin-right: 0; }
+
+	.news-post-title-image { display: none; } /* hide the post rollup image */
+	.ms-blog-postBoxMargin > h2.news-post-title { font-size: 1.8em; } /* reduce the post title size */
+	.ms-blog-postBoxMargin > h2.news-post-title { margin: 0 80px 3px 0; }
 }
 
 /* phablet (portrait) */
-@media screen and (max-width: 767px) {
-	.news-post-date-cloud { margin: 0 10px 10px 0px; }
-	.news-post-category-cloud { margin: 10px 10px 0 0px; }
-	.news-post-title-image { display: none; }
+@media screen and (max-width: 768px) {
+	.news-post-date-cloud { margin: 0 20px 10px 0px; }
+	.news-post-category-cloud { margin: 10px 20px 0 0px; }
+	.news-post-title-image { display: none; } /* hide the post rollup image */
 
 	.news-post-pageimage,
 	.news-post-pageimage.Right { float: none; clear: both; }
@@ -79,7 +91,10 @@ footer,header,hgroup,nav,section,summary {
 	.news-post-pageimage.Left img { margin-right: 0; }
 
 /* start: stacked display */
-	.ms-blog-postBoxMargin > h2.news-post-title { font-size: 1.8em; }
+	.ms-blog-postBoxMargin > h2.news-post-title { 
+		font-size: 1.6em; 
+		margin: 0 80px 3px 0;
+	}
 
 /* start: responsive cloud menus */
 	.news-post-category-cloud .category,
@@ -101,20 +116,20 @@ footer,header,hgroup,nav,section,summary {
 	.ms-webpartzone-cell { margin: auto auto 0; }
 	/* Post.aspx */
 	.ms-blog-MainArea .ms-blog-LeftColumn { width: 0; }
-	.ms-blog-MainArea .ms-blog-LeftColumn .ms-webpart-zone { position: absolute; left: 0; bottom: -100px; margin-left: 10px; }
+	.ms-blog-MainArea .ms-blog-LeftColumn .ms-webpart-zone { position: absolute; left: 0; bottom: -150px; margin-left: 10px; }
 	.ms-blog-MainArea .ms-blog-postBox { padding-right: 2px; }
 	.ms-blog-MainArea .ms-blog-postList { margin-right: 0; }
 	.ms-blog-MainArea { width: 100%; position: relative; }
 /* end: responsive stacked display */
 }
 
-@media screen and (min-width: 481px) and (max-width: 766px) {}
+@media screen and (min-width: 481px) and (max-width: 767px) {
+
+}
 
 /* smartphone */
 @media screen and (max-width: 480px) {
-	.news-post-date-cloud { margin: 0 10px 10px 0px; }
-	.news-post-category-cloud { margin: 10px 10px 0 0px; }
-	.news-post-title-image { display: none; }
+	.news-post-title-image { display: none; } /* hide news rollup image */
 
 	.news-post-pageimage,
 	.news-post-pageimage.Right,
@@ -122,8 +137,7 @@ footer,header,hgroup,nav,section,summary {
 
 /* start: stacked display */
 	.news-main-content .ms-blog-postBody { max-height: 55px; }
-	.ms-blog-postBoxMargin > h2.news-post-title { font-size: 1.6em; }
-
+	.ms-blog-postBoxMargin > h2.news-post-title { 
+		font-size: 1.4em; 
+	}
 }
-
-

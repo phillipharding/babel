@@ -52,24 +52,35 @@
 
 /* POSTS */
 .news-main-content { margin-top: 10px; }
-.ms-blog-postBoxDate { 
-	background-color: #E24912;
+.ms-blog-postBox {
+	padding: 16px 14px 14px 0;
 }
-.ms-blog-postBoxDate {
-	color: #fff;
+.ms-blog-postBoxDate { 
+	height: 55px;
+	padding-top: 5px;
 	background-color: #E24912;
-	border-color: #e24912;
+	border-color: #E24912;
+	color: #fff;
+	float: right;
+	margin-right: 0;
+	margin-top: -4px;
+}
+.ms-blog-postBoxDate .ms-textSmall {
+	font-size: 1.1em;
 }
 .ms-blog-command-noLeftPadding a:visited,
 #blgcat {
 	color: #008444;
 }
-.ms-blog-postBoxMargin { position: relative; }
+.ms-blog-postBoxMargin { 
+	position: relative; 
+	margin-left: 10px;
+}
 .ms-blog-postBoxMargin > h2 { display: none; }
 .ms-blog-postBoxMargin > h2.news-post-title { 
-	display: block; 
+	display: block;
 	font-size: 2.5em;
-	margin: -12px 0 3px 0;
+	margin: 0 80px 10px 58px;
 }
 .ms-blog-postBoxMargin > h2.news-post-title a:link,
 .ms-blog-postBoxMargin > h2.news-post-title a:hover,
@@ -101,15 +112,22 @@
 .news-post-pageimage + div[class^='ExternalClass'] p:first-of-type {
 	margin-top: 0px;
 }
-.ms-blog-postBody {}
+.ms-blog-postBody {
+	padding-top: 0;
+}
 
 h2.news-post-title .news-post-title-image {
+	height: 45px;
+	width: 48px;
+	left: 0;
+	overflow: hidden;
 	position: absolute;
-	right: 0;
 }
 h2.news-post-title .news-post-title-image img {
-	height: 50px;
 	border: 0;
+	height: 48px;
+	position: absolute;
+	right: 0;
 }
 h2.news-post-title .news-post-title-image img.default {
 	opacity: 0.5;
@@ -120,15 +138,8 @@ h2.news-post-title .news-post-title-image img.default {
 .ms-blog-postList .ms-shadow {
 	box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.47);
 }
-.ms-blog-postBoxDate {
-	height: 55px;
-	padding-top: 5px;
-}
 .ms-textXLarge.ms-blog-dateText {
 	font-size: 1.8em;
-}
-.ms-blog-postBoxDate .ms-textSmall {
-	font-size: 1.1em;
 }
 .news-post-bodysummary {
 	position: relative;

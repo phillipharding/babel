@@ -13,7 +13,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderId="PlaceHolderLeftNavBar" runat="server">
-	<div class='posts-navigator container pure-g'>
+	<div class='posts-navigator news-container pure-g'>
 		<div class='pure-u-1'>
 			<SharePoint:SPSecurityTrimmedControl runat="server" permission="AddAndCustomizePages">
 				<table id="Hero-WPQ2" class="add-a-new-post" dir="none" border="0" cellspacing="0" cellpadding="0">
@@ -39,7 +39,7 @@
 </asp:Content>
 
 <asp:Content ContentPlaceHolderId="PlaceHolderMain" runat="server">
-	<div class='news-main-content container-maxwidth pure-g'>
+	<div class='news-main-content news-container-maxwidth pure-g'>
 		<div class='pure-u-1 pure-u-lg-3-4 pure-u-md-3-4 news-main-content-left'>
 			<WebPartPages:WebPartZone runat="server" FrameType="TitleBarOnly" ID="Left" Title="Left" AllowPersonalization="false" />
 		</div>

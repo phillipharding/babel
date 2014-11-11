@@ -149,7 +149,8 @@
 							<Feature FeatureID="0D1C50F7-0309-431c-ADFB-B777D5473A65" Name="BlogContent" />
 						</ActivateFeatures>
 						<DeactivateFeatures>
-							<Feature FeatureID="87294C72-F260-42f3-A41B-981A2FFCE37A" Name="Minimal Download Strategy" Force="" Ignore="" />
+							<Feature FeatureID="87294C72-F260-42f3-A41B-981A2FFCE37A" Name="Minimal Download Strategy" />
+							<Feature FeatureID="D95C97F3-E528-4DA2-AE9F-32B3535FBB59" Name="Mobile Browser View" />
 						</DeactivateFeatures>
 					</WebFeatures>
 				</Features>
