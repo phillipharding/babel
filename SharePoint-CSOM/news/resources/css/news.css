@@ -244,7 +244,7 @@ h2.news-post-title .news-post-title-image img.default {
 { background-color: rgba(128,128,128,0.2); }
 
 .news-post-date-cloud li.year { margin: 5px 0 0 0; }
-.news-post-date-cloud li.year h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; height: 48px; line-height: 48px; }
+.news-post-date-cloud li.year h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; }
 .news-post-date-cloud li.archive h2 { font-size: 1.3em; color: #0072C6; margin: 0; padding:0; }
 .news-post-date-cloud li.year h2[rel='1'] { font-size: 1.6em; }
 
@@ -302,7 +302,7 @@ h2.news-post-title .news-post-title-image img.default {
 { background-color: rgba(128,128,128,0.2); }
 
 .news-post-category-cloud li.title { margin: 5px 0 0 0; }
-.news-post-category-cloud li.title h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; height: 48px; line-height: 48px; }
+.news-post-category-cloud li.title h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; }
 
 
 /* POPULAR POSTS */
@@ -333,8 +333,6 @@ h2.news-post-title .news-post-title-image img.default {
 .responsive-nonvisible { display: block; }
 .collapse-button-container {
 	position: relative;
-	height: 48px;
-	line-height: 48px;
 }
 .collapse-button {
 	 display: none;
