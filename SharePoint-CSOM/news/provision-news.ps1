@@ -38,5 +38,4 @@ $configFiles | ? { $_ -eq "news" } | % {
     Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
 
 }
-
 "Done."
