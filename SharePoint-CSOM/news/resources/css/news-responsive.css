@@ -72,8 +72,18 @@ footer,header,hgroup,nav,section,summary {
 	.news-post-pageimage.Left img { margin-right: 0; }
 
 	.news-post-title-image { display: none; } /* hide the post rollup image */
-	.ms-blog-postBoxMargin > h2.news-post-title { font-size: 1.8em; } /* reduce the post title size */
-	.ms-blog-postBoxMargin > h2.news-post-title { margin: 0 80px 3px 0; }
+	.ms-blog-postBoxMargin > h2.news-post-title { 
+		font-size: 1.4em;  /* reduce the post title size */
+		margin: 0 70px 3px 0; 
+	}
+
+	/* post tag line */
+	.news-post-title + .ms-metadata { margin-right: 70px; }
+	/* new-post-date */
+	.news-post-postdate { height: 28px; width: 56px; }
+	.news-post-postdate span { margin-top: 0; }
+
+	.news-post-bodysummary {}
 }
 
 /* phablet (portrait) */
@@ -90,10 +100,18 @@ footer,header,hgroup,nav,section,summary {
 	.news-post-pageimage.Right img { max-width: 100%; margin-left: 0; }
 	.news-post-pageimage.Left img { margin-right: 0; }
 
+	.news-post-bodysummary { margin-top: 0; }
+
+	/* post tag line */
+	.news-post-title + .ms-metadata { margin-right: 70px; }
+	/* new-post-date */
+	.news-post-postdate { height: 32px; width: 56px; }
+	.news-post-postdate span { margin-top: 0; }
+
 /* start: stacked display */
 	.ms-blog-postBoxMargin > h2.news-post-title { 
-		font-size: 1.6em; 
-		margin: 0 80px 3px 0;
+		font-size: 1.8em; 
+		margin: 0 70px 3px 0;
 	}
 
 /* start: responsive cloud menus */
@@ -117,7 +135,7 @@ footer,header,hgroup,nav,section,summary {
 	/* Post.aspx */
 	.ms-blog-MainArea .ms-blog-LeftColumn { width: 0; }
 	.ms-blog-MainArea .ms-blog-LeftColumn .ms-webpart-zone { position: absolute; left: 0; bottom: -150px; margin-left: 10px; }
-	.ms-blog-MainArea .ms-blog-postBox { padding-right: 2px; }
+	.ms-blog-MainArea .ms-blog-postBox { padding-right: 2px; margin-right: 10px; }
 	.ms-blog-MainArea .ms-blog-postList { margin-right: 0; }
 	.ms-blog-MainArea { width: 100%; position: relative; }
 /* end: responsive stacked display */
@@ -135,9 +153,19 @@ footer,header,hgroup,nav,section,summary {
 	.news-post-pageimage.Right,
 	.news-post-pageimage.Left { display: none; }
 
+	/* new-post-date */
+	.news-post-postdate { height: 22px; width: 52px; }
+	.news-post-postdate span { margin-top: 1px; }
+
 /* start: stacked display */
 	.news-main-content .ms-blog-postBody { max-height: 55px; }
 	.ms-blog-postBoxMargin > h2.news-post-title { 
 		font-size: 1.4em; 
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.ms-blog-postBoxMargin > h2.news-post-title { 
+		font-size: 1.2em; 
 	}
 }

@@ -236,6 +236,9 @@
 							<Folder Url="news">
 								<Folder Url="images">
 									<File Path="images\news-icon.png" Url="news-icon.png" ReplaceContent="True" />
+									<File Path="images\news-icon-01.png" Url="news-icon-01.png" ReplaceContent="True" />
+									<File Path="images\news-icon-02.png" Url="news-icon-02.png" ReplaceContent="True" />
+									<File Path="images\news-icon-03.png" Url="news-icon-03.png" ReplaceContent="True" />
 								</Folder>
 								<Folder Url="css">
 									<File Path="css\news.css" Url="news.css" ReplaceContent="True" />
@@ -411,7 +414,7 @@
 								<Property Name="PublishedDate" Value="2014-10-10T17:00:00Z" />
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/cogs.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Right" />
-								<Property Name="NewsRollupImage" Value="~site/Lists/Photos/lightbulbs.jpg" Type="Image" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
 							</Item>
 							<Item Title="Query Conditions">
 								<Property Name="PostCategory" Value="RB Better Business,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
@@ -424,7 +427,7 @@
 								<Property Name="PublishedDate" Value="2014-09-27T17:00:00Z" />
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
-								<Property Name="NewsRollupImage" Value="~site/Lists/Photos/compass.jpg" Type="Image" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-02.png" Type="Image" />
 							</Item>
 							<Item Title="Query Rules">
 								<Property Name="PostCategory" Value="Highlights,T400,RB Appointments" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
@@ -450,7 +453,7 @@
 								<Property Name="PublishedDate" Value="2014-08-15T10:00:00Z" />
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/cogs.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
-								<Property Name="NewsRollupImage" Value="~site/Lists/Photos/compass.jpg" Type="Image" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-03.png" Type="Image" />
 							</Item>
 							<Item Title="Search Display Templates">
 								<Property Name="PostCategory" Value="RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
@@ -463,7 +466,7 @@
 								<Property Name="PublishedDate" Value="2014-10-25T10:00:00Z" />
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/cogsmore.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Right" />
-								<Property Name="NewsRollupImage" Value="~site/Lists/Photos/cogs.jpg" Type="Image" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
 							</Item>
 							<Item Title="Workflow for Beginners">
 								<Property Name="PostCategory" Value="Highlights,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
@@ -476,7 +479,7 @@
 								<Property Name="PublishedDate" Value="2014-11-24T10:00:00Z" />
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
-								<Property Name="NewsRollupImage" Value="~site/Lists/Photos/cogs.jpg" Type="Image" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-03.png" Type="Image" />
 							</Item>
 							<Item Title="Managed Metadata Navigation">
 								<Property Name="PostCategory" Value="Highlights" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
@@ -489,7 +492,7 @@
 								<Property Name="PublishedDate" Value="2014-10-17T10:00:00Z" />
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/compass.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Right" />
-								<Property Name="NewsRollupImage" Value="~site/Lists/Photos/cogsmore.jpg" Type="Image" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-02.png" Type="Image" />
 							</Item>
 							<Item Title="Structural Navigation">
 								<Property Name="PostCategory" Value="T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
@@ -502,7 +505,7 @@
 								<Property Name="PublishedDate" Value="2014-10-13T10:00:00Z" />
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
-								<Property Name="NewsRollupImage" Value="~site/Lists/Photos/cogsmore.jpg" Type="Image" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
 							</Item>
 						</UpdateItems>
 

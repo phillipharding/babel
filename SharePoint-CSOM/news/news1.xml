@@ -4,6 +4,22 @@
 	<Configuration Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ID="1" Name="News" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
 		<Webs>
 			<Web AlwaysDeleteWeb="False" Description="Welcome to the Corporate News Site" Title="Corporate News Site" Url="news" WebTemplate="STS#0">
+				<Catalogs>
+					<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+						<Folder Url="">
+							<Folder Url="Display Templates">
+								<File Path="scripts\news-post-summary.js" Url="news-post-summary.js" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
+									<Property Name="Title" Value="news-post-summary" />
+									<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
+									<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
+									<Property Name="DisplayTemplateJSTargetScope" Value="~sitecollection" />
+									<Property Name="DisplayTemplateJSTargetListTemplate" Value="301" />
+								</File>
+							</Folder>
+						</Folder>
+					</Catalog>
+				</Catalogs>
 
 				<Lists>
 
