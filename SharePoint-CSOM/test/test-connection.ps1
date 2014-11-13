@@ -10,20 +10,30 @@ $cwd = Split-Path -Parent $MyInvocation.MyCommand.Definition
 # create a blank connector
 $connector = Init-CSOMConnector
 
-<# set the connection url #>
-$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+<# 
+    set the connection url 
+#>
+$connector.csomUrl = "http://pub.pdogs.local"
+#$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
 #$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
 #$connector.csomUrl = "http://pub.pdogs.local"
 
-<# set credentials with username/password #>
-$connector.csomUsername = ""
-$connector.csomPassword = ""
+<# 
+    set credentials with username/password 
+#>
+#$connector.csomUsername = ""
+#$connector.csomPassword = ""
 
-<# set credentials using Windows Credential Manager #>
+<# 
+    set credentials using Windows Credential Manager 
+#>
 #$connector.csomCredentialLabel = "RB.COM SPO"
-$connector.csomCredentialLabel = "SPO"
+#$connector.csomCredentialLabel = "SPO"
+$connector.csomCredentialLabel = "OnPrem"
 
-<# set credentials with Get-Credentials (prompts for creds) #>
+<# 
+    set credentials with Get-Credentials (prompts for creds) 
+#>
 #$connector.csomCredentials = (Get-Credential | Out-Null)
 
 # connect...

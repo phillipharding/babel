@@ -9,11 +9,13 @@ function Add-Web {
         Write-Host "Create Web '$($xml.Title)' [$($xml.WebTemplate)] $($xml.Url)" -ForegroundColor Green
         $newWeb = $null
         try {
-            $newWebUrl = "$($Web.ServerRelativeUrl)/$($xml.Url)"
+            $newWebUrl = $Web.ServerRelativeUrl -replace "/$",""
+            $newWebUrl = "$newWebUrl/$($xml.Url)"
+
             $newWeb = $site.OpenWeb($newWebUrl)
             $ClientContext.Load($newWeb)
             $ClientContext.ExecuteQuery()
-            Write-Host "`t..Web already exists" -ForegroundColor Green
+            Write-Host "`t..Web [$($newWebUrl)] already exists" -ForegroundColor Green
 
             $delete = $false
             if ($xml.AlwaysDeleteWeb -and $xml.AlwaysDeleteWeb -ne "") { $delete = [bool]::Parse($xml.AlwaysDeleteWeb) }
@@ -30,7 +32,7 @@ function Add-Web {
                 throw $_
             } else {
                 # the web doesn't exist
-                Write-Host "`t..Web doesn't exist" -ForegroundColor Green
+                Write-Host "`t..Web [$($newWebUrl)] doesn't exist" -ForegroundColor Green
                 $newWeb = $null
             }
         }

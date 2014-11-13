@@ -10,7 +10,9 @@ news.categorycloud.getCategories = function() {
             url: _spPageContextInfo.webServerRelativeUrl + "/_api/web/lists/getbytitle('Categories')/items?$select=Id,Title&$orderby=Title",
             type: 'GET',
             headers: {
-                ACCEPT: 'application/json;odata=minimalmetadata'
+                ACCEPT: _spPageContextInfo.siteClientTag.match(/^\d+\$\$16./g)
+                            ? 'application/json;odata=minimalmetadata' /* SPO/Office365 */
+                            : 'application/json;odata=verbose' /* OnPremise */
             }
         };
     $.ajax(r)
