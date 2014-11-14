@@ -27,6 +27,9 @@ function Get-WebVersionMatch {
         $xmlwebversion = "^$($xmlwebversion)"
         $webversion = Get-WebVersion -Web $Web -ClientContext $ClientContext
         $versionmatch = $webversion -match $xmlwebversion
+        if (-not $versionmatch) {
+            Write-Host "XML Element requires version [$xmlwebversion] and Web '$($Web.Url)' is version [$($webversion)]" -ForegroundColor Yellow
+        }
         $versionmatch
     }
     end {}
