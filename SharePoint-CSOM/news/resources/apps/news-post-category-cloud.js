@@ -10,7 +10,9 @@ news.categorycloud.getCategories = function() {
             url: _spPageContextInfo.webServerRelativeUrl + "/_api/web/lists/getbytitle('Categories')/items?$select=Id,Title&$orderby=Title",
             type: 'GET',
             headers: {
-                ACCEPT: 'application/json;odata=minimalmetadata'
+                ACCEPT: _spPageContextInfo.siteClientTag.match(/^\d+\$\$16./g)
+                            ? 'application/json;odata=minimalmetadata' /* SPO/Office365 */
+                            : 'application/json;odata=verbose' /* OnPremise */
             }
         };
     $.ajax(r)
@@ -34,9 +36,11 @@ news.categorycloud.render = function(data) {
         return;
     }
     var $e = $('.news-post-category-cloud ul');
+    var $button = $("<div class='collapse-button'><span class='icon-bar'> </span><span class='icon-bar'> </span><span class='icon-bar'> </span></div>");
     $("<li/>")
-        .addClass('title')
+        .addClass('title collapse-button-container')
         .append($('<h2>').text('Categories'))
+        .append($button)
         .appendTo($e);
     $.each(data, function(i,e) {
         $("<li/>")
@@ -48,6 +52,10 @@ news.categorycloud.render = function(data) {
             .appendTo($e);
     });
     $e.stop().fadeIn(100);
+    /* setup responsive menu collapser */
+    $('.news-post-category-cloud .title .collapse-button').click(function(e) {
+        $(this).parent().nextUntil('.title').toggleClass('reveal');
+    });
 }
 news.categorycloud.start = function() {
     news.categorycloud.getCategories()

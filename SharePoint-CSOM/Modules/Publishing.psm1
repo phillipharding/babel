@@ -174,14 +174,19 @@ function Update-WebParts {
                 $wpInstDef = $limitedWebPartManager.AddWebPart($wpD.WebPart, $wpZoneID, $wpZoneOrder)
                 Write-Host "`t`t....Loading" -ForegroundColor Green
                 $ClientContext.Load($wpInstDef)
-                $updatePage = $true
+                Write-Host "`t`t....Loaded" -ForegroundColor Green
+
+                Write-Host "`t`t....Synchronising changes"
+                $ClientContext.ExecuteQuery()
+                Write-Host "`t`t....Done" -ForegroundColor Green
 
                 if ($wpDefXml.ListTitle) {
+                    Write-Host "`t`t..Attempt to Update ListView for Webpart: $($wpInstDef.Id)"
                     $wpList = Get-List $wpDefXml.ListTitle $web $ClientContext
                     if ($wpList -ne $null) {
                         # update the hidden list view for the list view webpart
                         $view = Get-ListViewById $wpList $wpInstDef.Id $ClientContext
-                        Write-Host "`t`t....Update Webpart ListView: $($view.Id)"
+                        Write-Host "`t`t..Update Webpart ListView: $($view.Id)"
 
                         $DefaultView = $view.DefaultView
                         $ViewJslink = $(if ($wpDefXml.JSLink) {$wpDefXml.JSLink} else { $view.JSLink })
@@ -205,8 +210,10 @@ function Update-WebParts {
                         }
 
                         $spView = Update-ListView -List $wpList -ViewNameOrId $wpInstDef.Id -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
-                        Write-Host "`t`t......Updated Webpart ListView: $($view.Id)"
+                        Write-Host "`t`t....Updated Webpart ListView: $($view.Id)"
 
+                    } else {
+                        Write-Host "`t`t..Could not find list '$($wpDefXml.ListTitle)' for list view webpart: $($wpInstDef.Id)" -ForegroundColor Red
                     }
                 }
             }
@@ -217,10 +224,10 @@ function Update-WebParts {
             Write-Host "`t`t..Finished adding webparts"
         }
 
-#
-Write-Host "`t`t..Request file again: $($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)"
-$pageFile = Get-File -FileServerRelativeUrl "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
-#
+        #
+        Write-Host "`t`t..Request file again: $($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)"
+        $pageFile = Get-File -FileServerRelativeUrl "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
+        #
 
         # now save/checkin/publish/approve
         Write-Host "`t`t..Checkout Status [$($pageFile.CheckOutType)]"

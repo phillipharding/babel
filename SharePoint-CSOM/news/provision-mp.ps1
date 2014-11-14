@@ -1,5 +1,5 @@
 ﻿cls
-$configurationName = "News"
+$configurationName = "Masterpage"
 $configurationId = "1"
 $configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news"
 
@@ -14,18 +14,18 @@ $connector = Init-CSOMConnector
 #$connector.csomCredentialLabel = "CAM SPO"
 #$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
 #$connector.csomCredentialLabel = "RB.COM SPO"
-#$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-#$connector.csomCredentialLabel = "SPO"
-$connector.csomUrl = "http://pub.pdogs.local/"
-$connector.csomCredentialLabel = "OnPrem"
+$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+$connector.csomCredentialLabel = "SPO"
+#$connector.csomUrl = "http://pub.pdogs.local/"
+#$connector.csomCredentialLabel = "OnPrem"
 
 # connect...
 $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configFiles = @("news")
-$configFiles | ? { $_ -eq "news" } | % {
+$configFiles = @("masterpage")
+$configFiles | ? { $_ -eq "masterpage" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration
