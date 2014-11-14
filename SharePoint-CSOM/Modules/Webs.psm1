@@ -1,3 +1,36 @@
+function Get-WebVersion {
+    param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        if (($Web.AllProperties.ServerObjectIsNull -eq $null) -or ($Web.AllProperties.ServerObjectIsNull)) {
+            $ClientContext.Load($Web.AllProperties)
+            $ClientContext.ExecuteQuery()
+        }
+        $version = $Web.AllProperties["vti_extenderversion"]
+        $version
+    }
+    end {}
+}
+function Get-WebVersionMatch {
+    param (
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$xml,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
+    )
+    process {
+        $xmlwebversion = $(if ($xml.WebVersion -and $xml.WebVersion -ne "") { $xml.WebVersion } else { "" })
+        if ($xmlwebversion -eq $null -or $xmlwebversion -eq "") {
+            return $true
+        }
+        $xmlwebversion = "^$($xmlwebversion)"
+        $webversion = Get-WebVersion -Web $Web -ClientContext $ClientContext
+        $versionmatch = $webversion -match $xmlwebversion
+        $versionmatch
+    }
+    end {}
+}
 function Add-Web {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$xml,
@@ -107,6 +140,7 @@ function Set-MasterPage {
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        Write-Host "`tUPDATE MASTERPAGE SETTINGS" -ForegroundColor Green
         $rootWeb = $ClientContext.Site.RootWeb
         $ClientContext.Load($rootWeb)
         $ClientContext.ExecuteQuery()
@@ -117,6 +151,7 @@ function Set-MasterPage {
 
         $performUpdate = $false
         if($CustomMasterUrl) {
+            $CustomMasterUrl = $CustomMasterUrl -replace "^/",""
             $NewCustomMasterUrl = "$serverRelativeUrl/$CustomMasterUrl"
             if($oldCustomMasterUrl -ne $NewCustomMasterUrl) {
                 $Web.CustomMasterUrl = $NewCustomMasterUrl
@@ -125,6 +160,7 @@ function Set-MasterPage {
         }
 
         if($MasterUrl) {
+            $MasterUrl = $MasterUrl -replace "^/",""
             $NewMasterUrl = "$serverRelativeUrl/$MasterUrl"
             if($oldMasterUrl -ne $NewMasterUrl) {
                 $Web.MasterUrl = $NewMasterUrl
@@ -135,9 +171,9 @@ function Set-MasterPage {
         if($performUpdate) {
             $Web.Update()
             $ClientContext.ExecuteQuery()
-            Write-Host "`t`tUpdated MasterPage settings" -ForegroundColor Green
+            Write-Host "`t..Updated MasterPage settings" -ForegroundColor Green
         } else {
-            Write-Host "`t`tDid not need to update MasterPage settings" -ForegroundColor Blue
+            Write-Host "`t..No update required" -ForegroundColor White
         }
     }
     end {}
