@@ -1,3 +1,4 @@
+
 /* INVOKE a CUSTOMACTION CLUE */
 .ms-cui-topBar2 {
 	background-color: #FFE1E1;
@@ -49,63 +50,27 @@
 }
 
 /* CUSTOM SITE */
-.v-zigzag { /* Vertical */
-	background:
-	  linear-gradient(45deg, #ec173a 5px, transparent 0) 0 5px,
-	  linear-gradient(135deg, #ec173a 5px, #fff 0) 0 5px;
-	background-color: #ec173a;
-	background-position: right top;
-	background-repeat: repeat-y;
-	background-size: 10px 10px;
-}
 
 /* POSTS */
 .news-main-content { margin-top: 10px; }
-.ms-blog-postBox {
-	padding: 10px 14px 14px 0;
-}
 .ms-blog-postBoxDate { 
-	display: none;
+	background-color: #E24912;
 }
-/* post date */
-.news-post-postdate {
+.ms-blog-postBoxDate {
 	color: #fff;
-	display: table-cell;
-	height: 40px;
-	opacity: 0.5;
-	position: absolute;
-	right: 0;
-	text-align: center;
-	width: 70px;
+	background-color: #E24912;
+	border-color: #e24912;
 }
-.news-post-postdate span {
-	color: #fff;
-	display: block;
-	margin-left: -5px;
-}
-.news-post-postdate span.year { 
-	font-size: .6em;
-	font-weight: bold;
-}
-.news-post-postdate span.date { 
-	font-size: .6em;
-	font-weight: bold;
-	margin-top: -4px;
-}
-/**/
 .ms-blog-command-noLeftPadding a:visited,
 #blgcat {
 	color: #008444;
 }
-.ms-blog-postBoxMargin { 
-	position: relative; 
-	margin-left: 10px;
-}
+.ms-blog-postBoxMargin { position: relative; }
 .ms-blog-postBoxMargin > h2 { display: none; }
 .ms-blog-postBoxMargin > h2.news-post-title { 
-	display: block;
+	display: block; 
 	font-size: 2.5em;
-	margin: 0 70px 10px 58px;
+	margin: -12px 48px 3px 0;
 }
 .ms-blog-postBoxMargin > h2.news-post-title a:link,
 .ms-blog-postBoxMargin > h2.news-post-title a:hover,
@@ -137,35 +102,39 @@
 .news-post-pageimage + div[class^='ExternalClass'] p:first-of-type {
 	margin-top: 0px;
 }
-.ms-blog-postBody {
-	padding-top: 0;
-}
+.ms-blog-postBody {}
 
 h2.news-post-title .news-post-title-image {
-	height: 43px;
 	width: 48px;
-	left: 0;
+	height: 48px;
 	overflow: hidden;
 	position: absolute;
+	right: 0;
 }
 h2.news-post-title .news-post-title-image img {
 	border: 0;
-	height: 43px;
+	height: 48px;
 	position: absolute;
-	left: 0;
-	top: 0;
+	right: 0;
 }
 h2.news-post-title .news-post-title-image img.default {
-/*	opacity: 0.5; */
+	opacity: 0.5;
 }
 #blgcat {
 	text-transform: uppercase;
 }
 .ms-blog-postList .ms-shadow {
-	box-shadow: none;
+	box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.47);
+}
+.ms-blog-postBoxDate {
+	height: 55px;
+	padding-top: 5px;
 }
 .ms-textXLarge.ms-blog-dateText {
 	font-size: 1.8em;
+}
+.ms-blog-postBoxDate .ms-textSmall {
+	font-size: 1.1em;
 }
 .news-post-bodysummary {
 	position: relative;
@@ -173,7 +142,7 @@ h2.news-post-title .news-post-title-image img.default {
 	overflow: hidden;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	margin-left: 2px;
+	margin-left: 30px;
 }
 .news-post-bodysummary > div[class^='ExternalClass'],
 .news-post-bodysummary > div[class^='ExternalClass'] * { 
@@ -223,7 +192,7 @@ h2.news-post-title .news-post-title-image img.default {
 /* MONTH/DATE TAG CLOUD */
 .news-post-date-cloud { margin: 0 10px 10px 0px; }
 .news-post-date-cloud ul { margin: 0; padding: 0; display: none; }
-.news-post-date-cloud li { margin:0; padding: 0; list-style: none; font-family: "Segoe UI Semilight","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif; }
+.news-post-date-cloud li { margin:0; padding: 2px 0; list-style: none; font-family: Calibri; }
 
 .news-post-date-cloud li a,
 .news-post-date-cloud li a:link,
@@ -244,17 +213,17 @@ h2.news-post-title .news-post-title-image img.default {
 { background-color: rgba(128,128,128,0.2); }
 
 .news-post-date-cloud li.year { margin: 5px 0 0 0; }
-.news-post-date-cloud li.year h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; }
+.news-post-date-cloud li.year h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; height: 48px; line-height: 48px; }
 .news-post-date-cloud li.archive h2 { font-size: 1.3em; color: #0072C6; margin: 0; padding:0; }
 .news-post-date-cloud li.year h2[rel='1'] { font-size: 1.6em; }
 
 .news-post-date-cloud li.month a:link[rel='12']
-{ font-size: 1.7em; }
+{ font-size: 1.8em; }
 .news-post-date-cloud li.month a:link[rel='11']
-{ font-size: 1.5em; }
+{ font-size: 1.6em; }
 .news-post-date-cloud li.month a:link[rel='10'],
 .news-post-date-cloud li.month a:link[rel='9']
-{ font-size: 1.4em; }
+{ font-size: 1.5em; }
 .news-post-date-cloud li.month a:link[rel='8'],
 .news-post-date-cloud li.month a:link[rel='7']
 { font-size: 1.3em; }
@@ -281,7 +250,7 @@ h2.news-post-title .news-post-title-image img.default {
 /* CATEGORY TAG CLOUD */
 .news-post-category-cloud { margin: 10px 10px 0 0; }
 .news-post-category-cloud ul { margin: 0; padding: 0; display: none; }
-.news-post-category-cloud li { margin:0; padding: 2px 0; list-style: none; font-family: "Segoe UI Semilight","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif; }
+.news-post-category-cloud li { margin:0; padding: 2px 0; list-style: none; font-family: Calibri; }
 
 .news-post-category-cloud li a,
 .news-post-category-cloud li a:link,
@@ -289,7 +258,7 @@ h2.news-post-title .news-post-title-image img.default {
 .news-post-category-cloud li a:hover,
 .news-post-category-cloud li a:visited
  { 
-    font-size: 1.2em; 
+    font-size: 1.3em; 
     color: #666666; 
     text-decoration: none; 
     margin-left: 10px; 
@@ -302,13 +271,13 @@ h2.news-post-title .news-post-title-image img.default {
 { background-color: rgba(128,128,128,0.2); }
 
 .news-post-category-cloud li.title { margin: 5px 0 0 0; }
-.news-post-category-cloud li.title h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; }
+.news-post-category-cloud li.title h2 { font-size: 2em; color: #0072C6; margin: 0; padding:0; height: 48px; line-height: 48px; }
 
 
 /* POPULAR POSTS */
 .news-post-popular { margin: 0 0 30px 0; }
 .news-post-popular ul { margin: 0; padding: 0; display: none; }
-.news-post-popular li { margin:0; padding: 2px 0; list-style: none; font-family: "Segoe UI Semilight","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif; }
+.news-post-popular li { margin:0; padding: 2px 0; list-style: none; font-family: Calibri; }
 
 .news-post-popular li a,
 .news-post-popular li a:link,
@@ -316,10 +285,10 @@ h2.news-post-title .news-post-title-image img.default {
 .news-post-popular li a:hover,
 .news-post-popular li a:visited
  { 
-    font-size: 1.2em; 
+    font-size: 1.3em; 
     color: #EA3692; 
     text-decoration: none; 
-    padding:2px 10px;
+    padding:5px 10px;
     display: inline-block;
     transition: background-color 150ms ease-out;
 }
@@ -333,6 +302,8 @@ h2.news-post-title .news-post-title-image img.default {
 .responsive-nonvisible { display: block; }
 .collapse-button-container {
 	position: relative;
+	height: 48px;
+	line-height: 48px;
 }
 .collapse-button {
 	 display: none;

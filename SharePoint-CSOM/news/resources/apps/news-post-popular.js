@@ -48,7 +48,9 @@ news.popular.getPosts = function() {
                     + getFilter(),
             type: 'GET',
             headers: {
-                ACCEPT: 'application/json;odata=minimalmetadata'
+                ACCEPT: _spPageContextInfo.siteClientTag.match(/^\d+\$\$16./g)
+                            ? 'application/json;odata=minimalmetadata' /* SPO/Office365 */
+                            : 'application/json;odata=verbose' /* OnPremise */
             }
         };
     $.ajax(r)
