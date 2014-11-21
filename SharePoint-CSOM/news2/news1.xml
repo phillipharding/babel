@@ -1,0 +1,252 @@
+<Configurations ResourcesPath="">
+	<Configuration Description="Applies Corporate News capability to an existing site" ID="0" Name="News" ResourcesPath=""/>
+
+	<Configuration Description="Creates a new Corporate News subsite or configures an existing one if it already exists" ID="1" Name="News" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news\resources">
+		<Webs>
+			<Web AlwaysDeleteWeb="False" Description="Welcome to the Corporate News Site" Title="Corporate News Site" Url="news" WebTemplate="STS#0">
+				<Catalogs>
+					<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+						<Folder Url="">
+							<Folder Url="Display Templates">
+								<File Path="scripts\news-post-summary.js" Url="news-post-summary.js" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
+									<Property Name="Title" Value="news-post-summary" />
+									<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
+									<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
+									<Property Name="DisplayTemplateJSTargetScope" Value="~sitecollection" />
+									<Property Name="DisplayTemplateJSTargetListTemplate" Value="301" />
+								</File>
+							</Folder>
+						</Folder>
+					</Catalog>
+				</Catalogs>
+
+				<Lists>
+
+					<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
+						<Folder Url="">
+							<Folder Url="news">
+								<Folder Url="images">
+									<File Path="images\news-icon.png" Url="news-icon.png" ReplaceContent="True" />
+								</Folder>
+								<Folder Url="css">
+									<File Path="css\news.css" Url="news.css" ReplaceContent="True" />
+									<File Path="css\news-responsive.css" Url="news-responsive.css" ReplaceContent="True" />
+								</Folder>
+								<Folder Url="scripts">
+								</Folder>
+								<Folder Url="apps">
+									<File Path="apps\news-post-popular.html" Url="news-post-popular.html" ReplaceContent="True" ReplaceContentTokens="True" />
+									<File Path="apps\news-post-popular.js" Url="news-post-popular.js" ReplaceContent="True" />
+									<File Path="apps\news-post-category-cloud.html" Url="news-post-category-cloud.html" ReplaceContent="True" ReplaceContentTokens="True" />
+									<File Path="apps\news-post-category-cloud.js" Url="news-post-category-cloud.js" ReplaceContent="True" />
+									<File Path="apps\news-post-date-cloud.html" Url="news-post-date-cloud.html" ReplaceContent="True" ReplaceContentTokens="True" />
+									<File Path="apps\news-post-date-cloud.js" Url="news-post-date-cloud.js" ReplaceContent="True" />
+								</Folder>
+							</Folder>
+						</Folder>
+					</List>
+
+					<List Title="Site Pages" Description="Site Pages Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-C796-4402-9F2F-0EB9A6E71B18" Type="119" Url="SitePages">
+						<Folder Url="">
+							<File Path="pages\News Articles.aspx" Url="Home.aspx" ReplaceFile="True" WelcomePage="True" ReplaceContentTokens="True">
+								<Property Name="ContentTypeId" Value="0x01010901" />
+								<Property Name="Title" Value="News Articles" />
+
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">  <!-- news-post-popular -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Popular Posts</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-popular.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="1">
+									<WebPart><![CDATA[<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.BlogLinksWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Description" type="string">Provides quick links to register for blog posts notifications using Alerts or RSS feed.</property>
+        <property name="HelpUrl" type="string" />
+        <property name="Hidden" type="bool">False</property>
+        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+        <property name="ListUrl" type="string">Lists/Posts</property>
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="Title" type="string">Post Notifications</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="HideAlertMeLink" type="bool">False</property>
+        <property name="TitleUrl" type="string" />
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Width" type="string" />
+        <property name="Height" type="string" />
+        <property name="HelpMode" type="helpmode">Modeless</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="2">
+									<WebPart><![CDATA[<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.BlogAdminWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="HelpUrl" type="string" />
+        <property name="Hidden" type="bool">False</property>
+        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+        <property name="CategoryUrl" type="string">Lists/Categories/Category.aspx?CategoryId={CategoryId}</property>
+        <property name="Description" type="string">Provides owners and administrators with quick links to common settings pages and content lists for managing a site.</property>
+        <property name="PostUrl" type="string">Lists/Posts/Post.aspx?ID={ID}</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="Title" type="string">Post Tools</property>
+        <property name="TitleUrl" type="string" />
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Width" type="string" />
+        <property name="Height" type="string" />
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="HelpMode" type="helpmode">Modeless</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Date Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-date-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="Left" WebPartOrder="0" ListTitle="Posts">
+									<ViewFields>
+										<FieldRef Name="Title" />
+										<FieldRef Name="Body" />
+										<FieldRef Name="Author" />
+										<FieldRef Name="PostedByWithDate" />
+										<FieldRef Name="CategoryWithLink" />
+										<FieldRef Name="Permalink" />
+										<FieldRef Name="EmailPostLink" />
+										<FieldRef Name="NumCommentsWithLink" />
+										<FieldRef Name="PublishedDate" />
+										<FieldRef Name="PostCategory" />
+										<FieldRef Name="NewsRollupImage"/>
+										<FieldRef Name="NewsPageImage"/>
+										<FieldRef Name="NewsPageImageOrientation" />
+									</ViewFields>
+									<RowLimit Paged="TRUE">5</RowLimit>
+									<JSLink>sp.ui.blogs.js|~sitecollection/_catalogs/masterpage/Display Templates/news-post-summary.js</JSLink>
+									<WebPart><![CDATA[<webParts>
+    <webPart
+        xmlns="http://schemas.microsoft.com/WebPart/v3">
+        <metaData>
+            <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"/>
+            <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+        </metaData>
+        <data>
+            <properties>
+                <property name="ListUrl" type="string">Lists/Posts</property>
+                <property name="TitleUrl" type="string">#</property>
+                <property name="ListDisplayName" type="string">Posts</property>
+                <property name="ChromeType" type="chrometype">None</property>
+                <property name="XmlDefinition" type="string">&lt;View BaseViewID="0" DisplayName="" Hidden="TRUE" Level="1" Name="{9168C16C-131A-4797-9DDE-AF2448B69B0F}" Type="HTML"&gt;&lt;Query&gt;&lt;Where&gt;&lt;And&gt;&lt;Leq&gt;&lt;FieldRef Name="PublishedDate"/&gt;&lt;Value Type="DateTime"&gt;&lt;Today/&gt;&lt;/Value&gt;&lt;/Leq&gt;&lt;Eq&gt;&lt;FieldRef Name="_ModerationStatus"/&gt;&lt;Value Type="ModStat"&gt;0&lt;/Value&gt;&lt;/Eq&gt;&lt;/And&gt;&lt;/Where&gt;&lt;OrderBy&gt;&lt;FieldRef Ascending="FALSE" Name="PublishedDate"/&gt;&lt;FieldRef Ascending="FALSE" Name="ID"/&gt;&lt;/OrderBy&gt;&lt;/Query&gt;&lt;ViewFields&gt;&lt;FieldRef Name="Title"/&gt;&lt;FieldRef Name="Body"/&gt;&lt;FieldRef Name="Author"/&gt;&lt;FieldRef Name="PostedByWithDate"/&gt;&lt;FieldRef Name="CategoryWithLink"/&gt;&lt;FieldRef Name="Permalink"/&gt;&lt;FieldRef Name="EmailPostLink"/&gt;&lt;FieldRef Name="NumCommentsWithLink"/&gt;&lt;FieldRef Name="PublishedDate"/&gt;&lt;FieldRef Name="PostCategory"/&gt;&lt;FieldRef Name="LikesCount"/&gt;&lt;FieldRef Explicit="TRUE" Name="LikedBy"/&gt;&lt;FieldRef Name="NewsRollupImage" /&gt;&lt;FieldRef Name="NewsPageImage" /&gt;&lt;FieldRef Name="NewsPageImageOrientation" /&gt;&lt;/ViewFields&gt;&lt;RowLimit Paged="TRUE"&gt;5&lt;/RowLimit&gt;&lt;JSLink&gt;sp.ui.blogs.js&lt;/JSLink&gt;&lt;XslLink&gt;blog.xsl&lt;/XslLink&gt;&lt;Toolbar Type="None"/&gt;&lt;/View&gt;</property>
+                <property name="Title" type="string">Posts</property>
+                <property name="Description" type="string"></property>
+                <property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;
+&lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;
+&lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;
+&lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;
+&lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt; &lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noXinviewofY_LIST)" /&gt;
+&lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(core,noXinviewofY_DEFAULT)" /&gt;
+&lt;ParameterBinding Name="AddNewAnnouncement" Location="Resource(wss,addnewitem)" /&gt;
+&lt;ParameterBinding Name="MoreAnnouncements" Location="Resource(wss,moreItemsParen)" /&gt;</property>
+                <property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
+            </properties>
+        </data>
+    </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+							</File>
+						</Folder>
+					</List>
+					
+				</Lists>
+
+			</Web>
+		</Webs>
+	</Configuration>
+</Configurations>

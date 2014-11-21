@@ -1,0 +1,1271 @@
+<Configurations ResourcesPath="">
+<!-- Allowed schema
+
+<Configurations ResourcesPath=""/>
+	<Configuration Name="" ID="" Description="" ResourcesPath=""/>
+		<Webs/>
+			<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
+				<TermStore Languages="1031, 1033, 1036, 1053"/>
+					<TermGroup Name="LOB2" ID="{b3fe8d52-506b-4d51-8acf-95ab0218a8e3}"/>
+						<TermSet Name="MegaMenu" ID="{d00ca60f-e1d8-41cc-921a-31f629590ec0}" Language="1033" Navigation="True" Tagging="False" Open="False"/>
+							<Term Name="Root" ID="{60ad9b4a-5074-431e-bea4-c3efb4ca72fd}" Language="1033" Description="Root MegaMenu Nodes"/>
+								<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB"/>
+
+				<Fields/>
+					<Field/>
+				<ContentTypes/>
+					<ContentType/>
+				<Pages/>
+					<RemovePage/>
+					<Page Url="" ReplaceContent="True|False" PageLayout="" WelcomePage="True|False"/>
+						<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
+						<Property Type="LookupValue" LookupListName="Categories"/>
+						<Property Type="Image"/>
+						<Property Type="HTML"/>
+						<Property/>
+				<Lists/>
+					<List/>
+						<ContentType/>
+						<RemoveContentType/>
+						<DeleteItems/>
+							<Item/>
+						<UpdateItems/>
+							<Item/>
+								<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
+								<Property Type="LookupValue" LookupListName="Categories"/>
+								<Property Type="Image"/>
+								<Property Type="HTML"/>
+								<Property/>
+						<Views/>
+							<View DisplayName="" DefaultView="True" PersonalView="False" Type="html" ServerRelativeUrl="" BaseViewID="7"/>
+								<Query/>
+									<OrderBy/>
+									<GroupBy/>
+									<Where/>
+								<ViewFields/>
+									<FieldRef/>
+								<RowLimit Paged="True">30</RowLimit>
+								<JSLink/>
+						<Folder ResourcesPath=""/>
+							<Folder ResourcesPath=""/>
+								<Folder ResourcesPath=""/>
+							<File Path="" Url="" WelcomePage="True|False" ReplaceContent="True" ReplaceContentTokens="True" Flags="nocheckout"/>
+								<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
+								<Property Type="LookupValue" LookupListName="Categories"/>
+								<Property Type="Image"/>
+								<Property Type="HTML"/>
+								<Property/>
+								<AllUsersWebPart WebPartZoneID="" WebPartOrder="" ListTitle=""/>
+									<WebPart/>
+										<![CDATA[]]>
+									<Query/>
+										<OrderBy/>
+										<GroupBy/>
+										<Where/>
+									<ViewFields/>
+										<FieldRef/>
+									<RowLimit Paged="True">30</RowLimit>
+									<JSLink/>
+			
+				<Features/>
+					<WebFeatures/>
+						<ActivateFeatures/>
+							<Feature/>
+						<DeactivateFeatures/>
+							<Feature/>
+					<SiteFeatures/>
+						<ActivateFeatures/>
+							<Feature/>
+						<DeactivateFeatures/>
+							<Feature/>
+				<Catalogs/>
+					<Catalog/>
+				<UserCustomActions/>
+					<UserCustomAction Scope="Web|Site"/>
+				<RemoveUserCustomActions/>
+					<UserCustomAction Scope="Web|Site"/>
+				<PropertyBag/>
+					<PropertyBagValue Key="" Value="" Indexable="true|false" />
+
+				<WelcomePage/>
+				<CustomMasterUrl/>
+				<MasterUrl/>
+				<NoCrawl/>
+
+				<ColorPaletteUrl/>
+				<FontSchemeUrl/>
+				<BackgroundImageUrl/>
+
+				<SetWebtemplates Inherit="true|false"/>
+					<lcid id="all"></lcid>
+					<lcid id="1033"/>
+						<webtemplate name="BLOG#0"/>
+						<webtemplate name="SRCHCEN#0"/>
+
+				<UpdateWebtemplates Inherit="true|false"/>
+					<lcid id="all" remove="true|false"></lcid>
+					<lcid id="1033" remove="true|false"/>
+						<webtemplate name="BLOG#0" remove="true|false"/>
+						<webtemplate name="SRCHCEN#0" remove="true|false"/>
+
+				<Webs/>
+					<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
+-->
+
+	<Configuration Name="News" ID="0" Description="Applies Corporate News capability to an existing site" ResourcesPath="">
+	</Configuration>
+
+	<Configuration Name="News" 
+						ID="1" 
+						Description="Creates a new Corporate News subsite or configures an existing one if it already exists" 
+						ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news2\resources">
+
+		<!--
+			remove webtemplates for all languages
+			then add the Blog/Publishing/Ent Search Centre/Ent Wiki/Team/Project webtemplates for english language 
+			this removes the ability to create site in non-english languages
+		-->
+		<UpdateWebTemplates Inherit="False">
+			<lcid id="all" remove="true" />
+			<lcid id="1033">
+				<webtemplate name="BLOG#0"/>
+				<webtemplate name="CMSPUBLISHING#0"/>
+				<webtemplate name="SRCHCEN#0"/>
+				<webtemplate name="ENTERWIKI#0"/>
+				<webtemplate name="STS#0"/>
+				<webtemplate name="PROJECTSITE#0"/>
+			</lcid>
+		</UpdateWebTemplates>
+
+		<Webs>
+			<Web Url="news2" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+
+				<!--
+				<CustomMasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</CustomMasterUrl>
+				<MasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</MasterUrl>
+				-->
+				
+				<Features>
+					<SiteFeatures>
+						<ActivateFeatures>
+						</ActivateFeatures>
+						<DeactivateFeatures>
+						</DeactivateFeatures>
+					</SiteFeatures>
+					<WebFeatures>
+						<ActivateFeatures>
+							<Feature FeatureID="0D1C50F7-0309-431c-ADFB-B777D5473A65" Name="BlogContent" />
+						</ActivateFeatures>
+						<DeactivateFeatures>
+							<Feature FeatureID="87294C72-F260-42f3-A41B-981A2FFCE37A" Name="Minimal Download Strategy" />
+							<Feature FeatureID="D95C97F3-E528-4DA2-AE9F-32B3535FBB59" Name="Mobile Browser View" />
+						</DeactivateFeatures>
+					</WebFeatures>
+				</Features>
+
+				<Catalogs>
+					<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
+					<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+					<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+
+					<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+						<Folder Url="">
+							<Folder Url="Display Templates">
+								<File Path="scripts\news-csr.js" Url="news-csr.js" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F3851068" />
+									<Property Name="Title" Value="news-csr" />
+									<Property Name="DisplayTemplateJSTargetControlType" Value="Form" />
+									<Property Name="DisplayTemplateJSTemplateType" Value="Standalone" />
+									<Property Name="DisplayTemplateJSTargetScope" Value="~sitecollection" />
+									<Property Name="DisplayTemplateJSTargetListTemplate" Value="301" />
+								</File>
+							</Folder>
+						</Folder>
+					</Catalog>
+				</Catalogs>
+
+				<PropertyBag>
+					<PropertyBagValue Key="SaveSiteAsTemplateEnabled" Value="true" Indexable="true" />
+					<PropertyBagValue Key="ms-blogs-skinid" Value="1" Indexable="false" />
+					<PropertyBagValue Key="RB-WebTemplate-NewsCorp" Value="v1-0-0-0" />
+				</PropertyBag>
+
+				<Fields>
+					<Field Type="Image" RichText="TRUE" RichTextMode="FullHtml" DisplayName="News Rollup Image" Required="FALSE" ID="{3C8B42B3-A9D4-4542-9D45-4D36228477F3}" StaticName="NewsRollupImage" Name="NewsRollupImage" Group="News Columns" />
+					<Field Type="Image" RichText="TRUE" RichTextMode="FullHtml" DisplayName="News Page Image" Required="FALSE" ID="{AC2E4A9F-DC0A-4337-9A0F-F35F8E9FB7C7}" StaticName="NewsPageImage" Name="NewsPageImage" Group="News Columns" />
+					<Field Type="Choice" DisplayName="Page Image Orientation" ID="{1C40F0D6-626F-48AC-925C-A056DBED7B3D}" Name="NewsPageImageOrientation" Description="Display the page image on the left or the right" FillInChoice="FALSE" Format="Dropdown" Group="News Columns" Required="TRUE" StaticName="NewsPageImageOrientation">
+						<Default>Right</Default>
+						<CHOICES>
+							<CHOICE>Left</CHOICE>
+							<CHOICE>Right</CHOICE>
+						</CHOICES>
+					</Field>
+				</Fields>
+
+				<ContentTypes>
+					<ContentType ID="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" Group="News ContentTypes" Name="News Post" Description="Create a new News Post.">
+						<FieldRefs>
+							<FieldRef ID="{AC2E4A9F-DC0A-4337-9A0F-F35F8E9FB7C7}" Required="False" Hidden="False" />
+							<FieldRef ID="{3C8B42B3-A9D4-4542-9D45-4D36228477F3}" Required="False" Hidden="False" />
+							<FieldRef ID="{1C40F0D6-626F-48AC-925C-A056DBED7B3D}" Required="True" Hidden="False" />
+						</FieldRefs>
+					</ContentType>
+				</ContentTypes>
+
+				<Lists>
+					<List Title="Photos" Description="A library created to store images that are used on pages in this site." OnQuickLaunchBar="True" TemplateFeatureId="4bcccd62-dcaf-46dc-a7d4-e38277ef33f4" Type="851" Url="Lists/Photos">
+						<Folder Url="">
+							<!-- ContentTypeId for Image is 0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214 -->
+							<File Path="images\cogs.jpg" Url="cogs.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="cogs.jpg" />
+							</File>
+							<File Path="images\cogsmore.jpg" Url="cogsmore.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="cogsmore.jpg" />
+							</File>
+							<File Path="images\compass.jpg" Url="compass.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="compass.jpg" />
+							</File>
+							<File Path="images\corn-hand-focus.jpg" Url="corn-hand-focus.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="corn-hand-focus.jpg" />
+							</File>
+							<File Path="images\lightbulbs.jpg" Url="lightbulbs.jpg" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="lightbulbs.jpg" />
+							</File>
+						</Folder>
+					</List>
+
+					<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
+						<Folder Url="">
+							<Folder Url="news">
+								<Folder Url="images">
+									<File Path="images\news-icon.png" Url="news-icon.png" ReplaceContent="True" />
+									<File Path="images\news-icon-01.png" Url="news-icon-01.png" ReplaceContent="True" />
+									<File Path="images\news-icon-02.png" Url="news-icon-02.png" ReplaceContent="True" />
+									<File Path="images\news-icon-03.png" Url="news-icon-03.png" ReplaceContent="True" />
+									<File Path="images\postdefault-image-kites.jpg" Url="postdefault-image-kites.jpg" ReplaceContent="True" />
+								</Folder>
+								<Folder Url="css">
+									<File Path="css\news.css" Url="news.css" ReplaceContent="True" />
+									<File Path="css\news-responsive.css" Url="news-responsive.css" ReplaceContent="True" />
+									<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
+									<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
+									<File Path="css\jquery-ui-1.10.4.custom.css" Url="jquery-ui-1.10.4.custom.css" ReplaceContent="True" />
+									<File Path="css\jquery-ui-1.10.4.custom.min.css" Url="jquery-ui-1.10.4.custom.min.css" ReplaceContent="True" />
+									<Folder Url="images">
+										<File Path="css\images\animated-overlay.gif" Url="animated-overlay.gif" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_0_eeeeee_40x100.png" Url="ui-bg_flat_0_eeeeee_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_55_ffffff_40x100.png" Url="ui-bg_flat_55_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" Url="ui-bg_highlight-soft_100_f6f6f6_1x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_highlight-soft_25_0073ea_1x100.png" Url="ui-bg_highlight-soft_25_0073ea_1x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-bg_highlight-soft_50_dddddd_1x100.png" Url="ui-bg_highlight-soft_50_dddddd_1x100.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_0073ea_256x240.png" Url="ui-icons_0073ea_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_666666_256x240.png" Url="ui-icons_666666_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_ff0084_256x240.png" Url="ui-icons_ff0084_256x240.png" ReplaceContent="True" />
+										<File Path="css\images\ui-icons_ffffff_256x240.png" Url="ui-icons_ffffff_256x240.png" ReplaceContent="True" />
+									</Folder>
+								</Folder>
+								<Folder Url="scripts">
+									<File Path="scripts\jquery-1.11.0.js" Url="jquery-1.11.0.js" ReplaceContent="True" />
+									<File Path="scripts\jquery-1.11.0.min.js" Url="jquery-1.11.0.min.js" ReplaceContent="True" />
+									<File Path="scripts\jquery-ui-1.10.4.custom.js" Url="jquery-ui-1.10.4.custom.js" ReplaceContent="True" />
+									<File Path="scripts\jquery-ui-1.10.4.custom.min.js" Url="jquery-ui-1.10.4.custom.min.js" ReplaceContent="True" />
+								</Folder>
+								<Folder Url="apps">
+									<File Path="apps\news-post-popular.html" Url="news-post-popular.html" ReplaceContent="True" ReplaceContentTokens="True" />
+									<File Path="apps\news-post-popular.js" Url="news-post-popular.js" ReplaceContent="True" />
+									<File Path="apps\news-post-category-cloud.html" Url="news-post-category-cloud.html" ReplaceContent="True" ReplaceContentTokens="True" />
+									<File Path="apps\news-post-category-cloud.js" Url="news-post-category-cloud.js" ReplaceContent="True" />
+									<File Path="apps\news-post-date-cloud.html" Url="news-post-date-cloud.html" ReplaceContent="True" ReplaceContentTokens="True" />
+									<File Path="apps\news-post-date-cloud.js" Url="news-post-date-cloud.js" ReplaceContent="True" />
+								</Folder>
+							</Folder>
+						</Folder>
+					</List>
+
+					<List Title="Posts">
+						<DeleteItems>
+							<Item Title="Welcome to my blog!" /> <!-- remove OOTB post -->
+						</DeleteItems>
+					</List>
+
+					<List Title="Categories">
+						<DeleteItems>
+							<!-- remove OOTB categories -->
+							<Item Title="Events" />
+							<Item Title="Opinions" />
+							<Item Title="Ideas" />
+						</DeleteItems>
+						<UpdateItems>
+							<!-- add corp news categories -->
+							<Item Title="Highlights">
+								<Property Name="Title" Value="Highlights" />
+							</Item>
+							<Item Title="RB Better Business">
+								<Property Name="Title" Value="RB Better Business" />
+							</Item>
+							<Item Title="RB Appointments">
+								<Property Name="Title" Value="RB Appointments" />
+							</Item>
+							<Item Title="T400">
+								<Property Name="Title" Value="T400" />
+							</Item>
+						</UpdateItems>
+
+						<Folder Url="">
+							<!--  update pages here, add/remove webparts -->
+							<File Url="Category.aspx" Flags="nocheckout">
+								<!-- Remove: About this blog, Archives, Categories -->
+								<AllUsersWebPart Title="About this blog" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Archives" DeleteWebPart="True" />
+								<!-- we need to hide this webpart but it can't be done using CSOM
+									<AllUsersWebPart Title="Categories">
+										<Property Name="Hidden" Value="True" />
+									</AllUsersWebPart>
+								-->
+								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Popular Posts" DeleteWebPart="True" />
+								
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">  <!-- news-post-popular -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Popular Posts</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-popular.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Date Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-date-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+							</File>
+						</Folder>
+					</List>
+					
+					<List Title="Posts" ContentTypesEnabled="True">
+						<ContentType Name="News Post" Default="True" />
+						<RemoveContentType Name="Post" />
+
+						<UpdateItems>
+							<!-- add some default news posts -->
+							<Item Title="Understanding Query Rules">
+								<Property Name="PostCategory" Value="Highlights,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Understanding Query Rules" />
+								<Property Name="Body" Value="​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​ ​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​ ​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​" />
+								<Property Name="PublishedDate" Value="2014-10-20T17:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+							<Item Title="Defining a Query Rule">
+								<Property Name="PostCategory" Value="Highlights" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Defining a Query Rule" />
+								<Property Name="Body" Value="​&lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.&lt;/p&gt;
+&lt;p&gt;Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien.&lt;/p&gt;
+&lt;p&gt;Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.&lt;/p&gt;
+&lt;p&gt;Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Vestibulum fringilla pede sit amet augue. In turpis. Pellentesque posuere. Praesent turpis. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce id purus. Ut varius tincidunt libero. Phasellus dolor. Maecenas vestibulum mollis&lt;/p&gt;" />
+								<Property Name="PublishedDate" Value="2014-10-10T17:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/cogs.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Right" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
+							</Item>
+							<Item Title="Query Conditions">
+								<Property Name="PostCategory" Value="RB Better Business,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Query Conditions" />
+								<Property Name="Body" Value="​&lt;p&gt;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?&lt;/p&gt;
+&lt;p&gt;Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.&lt;/p&gt;
+&lt;p&gt;Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.&lt;/p&gt;
+&lt;p&gt;Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Sed ut&lt;/p&gt;" />
+								<Property Name="PublishedDate" Value="2014-09-27T17:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-02.png" Type="Image" />
+							</Item>
+							<Item Title="Query Rules">
+								<Property Name="PostCategory" Value="Highlights,T400,RB Appointments" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Query Rules" />
+								<Property Name="Body" Value="​&lt;div&gt;&lt;p&gt;Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues.&lt;/p&gt;
+&lt;p&gt;It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles.&lt;/p&gt;
+&lt;p&gt;Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules.&lt;/p&gt;
+&lt;p&gt;Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues.&lt;/p&gt;&lt;/div&gt;" />
+								<Property Name="PublishedDate" Value="2014-11-02T17:00:00Z" />
+								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Right" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+							<Item Title="Client Side Rendering">
+								<Property Name="PostCategory" Value="RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Client Side Rendering" />
+								<Property Name="Body" Value="​&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&lt;/p&gt;
+&lt;p&gt;The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way. On her way she met a copy.&lt;/p&gt;
+&lt;p&gt;The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word 'and' and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their projects again and again. And if she hasn’t been rewritten, then they are still using her.&lt;/p&gt;
+&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline&lt;/p&gt;" />
+								<Property Name="PublishedDate" Value="2014-08-15T10:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/cogs.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-03.png" Type="Image" />
+							</Item>
+							<Item Title="Search Display Templates">
+								<Property Name="PostCategory" Value="RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Search Display Templates" />
+								<Property Name="Body" Value="​&lt;p&gt;A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now.&lt;/p&gt;
+&lt;p&gt;When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner sanctuary, I throw myself down among the tall grass by the trickling stream; and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects and flies, then I feel the presence of the Almighty, who formed us in his own image, and the breath of that universal love which bears and sustains us, as it floats around us in an eternity of bliss; and then, my friend, when darkness overspreads my eyes, and heaven and earth seem to dwell in my soul and absorb its power, like the form of a beloved mistress, then I often think with longing, Oh, would I could describe these conceptions, could impress upon paper all that is living so full and warm within me, that it might be the mirror of my soul, as my soul is the mirror of the infinite God!&lt;/p&gt;
+&lt;p&gt;O my friend -- but it is too much for my strength -- I sink under the weight of the splendour of these visions! A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.&lt;/p&gt;
+&lt;p&gt;I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now. When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner sanctuary, I throw myself down among the tall grass by the trickling stream; and, as I lie close to the earth, a thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects and&lt;/p&gt;" />
+								<Property Name="PublishedDate" Value="2014-10-25T10:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/cogsmore.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Right" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
+							</Item>
+							<Item Title="Workflow for Beginners">
+								<Property Name="PostCategory" Value="Highlights,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Workflow for Beginners" />
+								<Property Name="Body" Value="​&lt;p&gt;One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. 'What's happened to me?' he thought. It wasn't a dream.&lt;/p&gt;
+&lt;p&gt;His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.&lt;/p&gt;
+&lt;p&gt;Drops of rain could be heard hitting the pane, which made him feel quite sad. 'How about if I sleep a little bit longer and forget all this nonsense', he thought, but that was something he was unable to do because he was used to sleeping on his right, and in his present state couldn't get into that position. However hard he threw himself onto his right, he always rolled back to where he was. He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before.&lt;/p&gt;
+&lt;p&gt;'Oh, God', he thought, 'what a strenuous career it is that I've chosen! Travelling day in and day out. Doing business like this takes much more effort than doing your own business at home, and on top of that there's the curse of travelling, worries about making train connections, bad and irregular food, contact with different people all the time so that you can never get to know anyone or become friendly with them. It can all go to Hell! He felt a slight itch up on his belly; pushed himself slowly up on his back towards the headboard so that he could lift his head better; found where the itch was, and saw that it was covered with lots of little white spots which he didn't know what to make of; and when he tried to feel the place with one of his legs he drew it quickly back because as soon as he touched it he was overcome by a cold shudder. He slid back into his former position. 'Getting up early all the time', he thought, 'it makes you stupid. You've got&lt;/p&gt;" />
+								<Property Name="PublishedDate" Value="2014-11-24T10:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-03.png" Type="Image" />
+							</Item>
+							<Item Title="Managed Metadata Navigation">
+								<Property Name="PostCategory" Value="Highlights" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Managed Metadata Navigation" />
+								<Property Name="Body" Value="​&lt;p&gt;The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox. Bright vixens jump; dozy fowl quack. Quick wafting zephyrs vex bold Jim. Quick zephyrs blow, vexing daft Jim. Sex-charged fop blew my junk TV quiz. How quickly daft jumping zebras vex. Two driven jocks help fax my big quiz. Quick, Baz, get my woven flax jodhpurs! 'Now fax quiz Jack!' my brave ghost pled.&lt;/p&gt;
+&lt;p&gt;Five quacking zephyrs jolt my wax bed. Flummoxed by job, kvetching W. zaps Iraq. Cozy sphinx waves quart jug of bad milk. A very bad quack might jinx zippy fowls. Few quips galvanized the mock jury box. Quick brown dogs jump over the lazy fox. The jay, pig, fox, zebra, and my wolves quack! Blowzy red vixens fight for a quick jump. Joaquin Phoenix was gazed by MTV for luck. A wizard’s job is to vex chumps quickly in fog. Watch Jeopardy!, Alex Trebek's fun TV quiz game. Woven silk pyjamas exchanged for blue quartz. Brawny gods just flocked up to quiz and vex him.&lt;/p&gt;
+&lt;p&gt;Adjusting quiver and bow, Zompyc[1] killed the fox. My faxed joke won a pager in the cable TV quiz show. Amazingly few discotheques provide jukeboxes. My girl wove six dozen plaid jackets before she quit. Six big devils from Japan quickly forgot how to waltz. Big July earthquakes confound zany experimental vow. Foxy parsons quiz and cajole the lovably dim wiki-girl. Have a pick: twenty six letters - no forcing a jumbled quiz! Crazy Fredericka bought many very exquisite opal jewels. Sixty zippers were quickly picked from the woven jute bag. A quick movement of the enemy will jeopardize six gunboats.&lt;/p&gt;
+&lt;p&gt;All questions asked by five watch experts amazed the judge. Jack quietly moved up front and seized the big ball of wax. The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox. Bright vixens jump; dozy fowl quack. Quick wafting zephyrs vex bold Jim. Quick zephyrs blow, vexing daft Jim. Sex-charged fop blew my junk TV quiz. How quickly daft jumping zebras vex. Two driven jocks help fax my big quiz. Quick, Baz, get my woven flax jodhpurs! Now fax quiz Jack! my brave ghost pled. Five quacking zephyrs jolt my wax bed. Flummoxed by job, kvetching W. zaps Iraq. Cozy sphinx waves quart jug of bad milk. A very bad quack might jinx zippy fowls. Few quips galvanized the mock jury box. Quick brown dogs jump over the lazy fox. The jay, pig, fox, zebra, and my wolves quack! Blowzy red vixens fight for a quick jump. Joaquin Phoenix was gazed by MTV&lt;/p&gt;" />
+								<Property Name="PublishedDate" Value="2014-10-17T10:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/compass.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Right" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-02.png" Type="Image" />
+							</Item>
+							<Item Title="Structural Navigation">
+								<Property Name="PostCategory" Value="T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Structural Navigation" />
+								<Property Name="Body" Value="​&lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.&lt;/p&gt;
+&lt;p&gt;Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien.&lt;/p&gt;
+&lt;p&gt;Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.&lt;/p&gt;
+&lt;p&gt;Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Vestibulum fringilla pede sit amet augue. In turpis. Pellentesque posuere. Praesent turpis. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce id purus. Ut varius tincidunt libero. Phasellus dolor. Maecenas vestibulum mollis&lt;/p&gt;" />
+								<Property Name="PublishedDate" Value="2014-10-13T10:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
+							</Item>
+						</UpdateItems>
+
+						<Folder Url="">
+							<!--  update Posts pages here, add/remove webparts -->
+							<File Url="Post.aspx" Flags="nocheckout">
+								<!-- Remove: About this blog, Archives, Categories -->
+								<AllUsersWebPart Title="About this blog" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Archives" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Categories" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Popular Posts" DeleteWebPart="True" />
+								
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">  <!-- news-post-popular -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Popular Posts</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-popular.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Date Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-date-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+							</File>
+							<File Url="Date.aspx" Flags="nocheckout">
+								<!-- Remove: About this blog, Archives, Categories -->
+								<AllUsersWebPart Title="About this blog" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Archives" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Categories" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Popular Posts" DeleteWebPart="True" />
+								
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">  <!-- news-post-popular -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Popular Posts</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-popular.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Date Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-date-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+							</File>
+							<File Url="Summary.aspx" Flags="nocheckout">
+								<!-- Remove: About this blog, Archives, Categories -->
+								<AllUsersWebPart Title="About this blog" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Archives" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Categories" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Date Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="News Category Cloud" DeleteWebPart="True" />
+								<AllUsersWebPart Title="Popular Posts" DeleteWebPart="True" />
+								
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">  <!-- news-post-popular -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Popular Posts</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-popular.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Date Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-date-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+							</File>
+						</Folder>
+
+						<Views>
+							<View ServerRelativeUrl="Post.aspx" BaseViewID="7">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage" />
+									<FieldRef Name="NewsPageImage" />
+									<FieldRef Name="NewsPageImageOrientation" />
+								</ViewFields>
+							</View>
+							<View ServerRelativeUrl="Date.aspx" BaseViewID="9">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage" />
+									<FieldRef Name="NewsPageImage" />
+									<FieldRef Name="NewsPageImageOrientation" />
+								</ViewFields>
+							</View>
+							<View ServerRelativeUrl="Category.aspx" BaseViewID="8">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage" />
+									<FieldRef Name="NewsPageImage" />
+									<FieldRef Name="NewsPageImageOrientation" />
+								</ViewFields>
+							</View>
+							<View ServerRelativeUrl="Summary.aspx" BaseViewID="0">
+								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
+								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage" />
+									<FieldRef Name="NewsPageImage" />
+									<FieldRef Name="NewsPageImageOrientation" />
+								</ViewFields>
+							</View>
+						</Views>
+
+						<PropertyBag>
+							<!-- enable ratings and likes - looks like this doesn't work ~ DODGY!! -->
+							<!--<PropertyBagValue Key="Ratings_VotingExperience" Value="Likes" />-->
+						</PropertyBag>
+
+					</List>
+					
+					<List Title="Site Pages" Description="Site Pages Library." OnQuickLaunchBar="True" TemplateFeatureId="00BFEA71-C796-4402-9F2F-0EB9A6E71B18" Type="119" Url="SitePages">
+						<Folder Url="">
+							<File Path="pages\News Articles.aspx" Url="Home.aspx" ReplaceFile="True" WelcomePage="True" ReplaceContentTokens="True">
+								<Property Name="ContentTypeId" Value="0x01010901" />
+								<Property Name="Title" Value="News Articles" />
+
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">  <!-- news-post-popular -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Popular Posts</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-popular.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="1">
+									<WebPart><![CDATA[<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.BlogLinksWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Description" type="string">Provides quick links to register for blog posts notifications using Alerts or RSS feed.</property>
+        <property name="HelpUrl" type="string" />
+        <property name="Hidden" type="bool">False</property>
+        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+        <property name="ListUrl" type="string">Lists/Posts</property>
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="Title" type="string">Post Notifications</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="HideAlertMeLink" type="bool">False</property>
+        <property name="TitleUrl" type="string" />
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Width" type="string" />
+        <property name="Height" type="string" />
+        <property name="HelpMode" type="helpmode">Modeless</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="2">
+									<WebPart><![CDATA[<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.BlogAdminWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="HelpUrl" type="string" />
+        <property name="Hidden" type="bool">False</property>
+        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+        <property name="CategoryUrl" type="string">Lists/Categories/Category.aspx?CategoryId={CategoryId}</property>
+        <property name="Description" type="string">Provides owners and administrators with quick links to common settings pages and content lists for managing a site.</property>
+        <property name="PostUrl" type="string">Lists/Posts/Post.aspx?ID={ID}</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="Title" type="string">Post Tools</property>
+        <property name="TitleUrl" type="string" />
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Width" type="string" />
+        <property name="Height" type="string" />
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="HelpMode" type="helpmode">Modeless</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Date Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-date-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="Left" WebPartOrder="0" ListTitle="Posts">
+									<ViewFields>
+										<FieldRef Name="Title" />
+										<FieldRef Name="Body" />
+										<FieldRef Name="Author" />
+										<FieldRef Name="PostedByWithDate" />
+										<FieldRef Name="CategoryWithLink" />
+										<FieldRef Name="Permalink" />
+										<FieldRef Name="EmailPostLink" />
+										<FieldRef Name="NumCommentsWithLink" />
+										<FieldRef Name="PublishedDate" />
+										<FieldRef Name="PostCategory" />
+										<FieldRef Name="NewsRollupImage"/>
+										<FieldRef Name="NewsPageImage"/>
+										<FieldRef Name="NewsPageImageOrientation" />
+									</ViewFields>
+									<RowLimit Paged="TRUE">6</RowLimit>
+									<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+									<WebPart><![CDATA[<webParts>
+    <webPart
+        xmlns="http://schemas.microsoft.com/WebPart/v3">
+        <metaData>
+            <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"/>
+            <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+        </metaData>
+        <data>
+            <properties>
+                <property name="ListUrl" type="string">Lists/Posts</property>
+                <property name="TitleUrl" type="string">#</property>
+                <property name="ListDisplayName" type="string">Posts</property>
+                <property name="ChromeType" type="chrometype">None</property>
+                <property name="XmlDefinition" type="string">&lt;View BaseViewID="0" DisplayName="" Hidden="TRUE" Level="1" Name="{9168C16C-131A-4797-9DDE-AF2448B69B0F}" Type="HTML"&gt;&lt;Query&gt;&lt;Where&gt;&lt;And&gt;&lt;Leq&gt;&lt;FieldRef Name="PublishedDate"/&gt;&lt;Value Type="DateTime"&gt;&lt;Today/&gt;&lt;/Value&gt;&lt;/Leq&gt;&lt;Eq&gt;&lt;FieldRef Name="_ModerationStatus"/&gt;&lt;Value Type="ModStat"&gt;0&lt;/Value&gt;&lt;/Eq&gt;&lt;/And&gt;&lt;/Where&gt;&lt;OrderBy&gt;&lt;FieldRef Ascending="FALSE" Name="PublishedDate"/&gt;&lt;FieldRef Ascending="FALSE" Name="ID"/&gt;&lt;/OrderBy&gt;&lt;/Query&gt;&lt;ViewFields&gt;&lt;FieldRef Name="Title"/&gt;&lt;FieldRef Name="Body"/&gt;&lt;FieldRef Name="Author"/&gt;&lt;FieldRef Name="PostedByWithDate"/&gt;&lt;FieldRef Name="CategoryWithLink"/&gt;&lt;FieldRef Name="Permalink"/&gt;&lt;FieldRef Name="EmailPostLink"/&gt;&lt;FieldRef Name="NumCommentsWithLink"/&gt;&lt;FieldRef Name="PublishedDate"/&gt;&lt;FieldRef Name="PostCategory"/&gt;&lt;FieldRef Name="LikesCount"/&gt;&lt;FieldRef Explicit="TRUE" Name="LikedBy"/&gt;&lt;FieldRef Name="NewsRollupImage" /&gt;&lt;FieldRef Name="NewsPageImage" /&gt;&lt;FieldRef Name="NewsPageImageOrientation" /&gt;&lt;/ViewFields&gt;&lt;RowLimit Paged="TRUE"&gt;6&lt;/RowLimit&gt;&lt;JSLink&gt;~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js&lt;/JSLink&gt;&lt;XslLink&gt;blog.xsl&lt;/XslLink&gt;&lt;Toolbar Type="None"/&gt;&lt;/View&gt;</property>
+                <property name="Title" type="string">Posts</property>
+                <property name="Description" type="string"></property>
+                <property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;
+&lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;
+&lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;
+&lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;
+&lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt; &lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noXinviewofY_LIST)" /&gt;
+&lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(core,noXinviewofY_DEFAULT)" /&gt;
+&lt;ParameterBinding Name="AddNewAnnouncement" Location="Resource(wss,addnewitem)" /&gt;
+&lt;ParameterBinding Name="MoreAnnouncements" Location="Resource(wss,moreItemsParen)" /&gt;</property>
+                <property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
+            </properties>
+        </data>
+    </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+							</File>
+							
+							<File Path="pages\News Articles.aspx" Url="Categories.aspx" ReplaceFile="True" ReplaceContentTokens="True">
+								<Property Name="ContentTypeId" Value="0x01010901" />
+								<Property Name="Title" Value="News Articles by Catgeory" />
+
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="0">  <!-- news-post-popular -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Popular Posts</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-popular.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="1">
+									<WebPart><![CDATA[<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.BlogLinksWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Description" type="string">Provides quick links to register for blog posts notifications using Alerts or RSS feed.</property>
+        <property name="HelpUrl" type="string" />
+        <property name="Hidden" type="bool">False</property>
+        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+        <property name="ListUrl" type="string">Lists/Posts</property>
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="Title" type="string">Post Notifications</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="HideAlertMeLink" type="bool">False</property>
+        <property name="TitleUrl" type="string" />
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Width" type="string" />
+        <property name="Height" type="string" />
+        <property name="HelpMode" type="helpmode">Modeless</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="Right" WebPartOrder="2">
+									<WebPart><![CDATA[<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.BlogAdminWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="HelpUrl" type="string" />
+        <property name="Hidden" type="bool">False</property>
+        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+        <property name="CategoryUrl" type="string">Lists/Categories/Category.aspx?CategoryId={CategoryId}</property>
+        <property name="Description" type="string">Provides owners and administrators with quick links to common settings pages and content lists for managing a site.</property>
+        <property name="PostUrl" type="string">Lists/Posts/Post.aspx?ID={ID}</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="Title" type="string">Post Tools</property>
+        <property name="TitleUrl" type="string" />
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Width" type="string" />
+        <property name="Height" type="string" />
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="HelpMode" type="helpmode">Modeless</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="0">  <!-- news-post-category-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Category Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-category-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+								
+								<AllUsersWebPart WebPartZoneID="BlogNavigator" WebPartOrder="1"> <!-- news-post-date-cloud -->
+									<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>News Date Cloud</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <ZoneID>Right</ZoneID>
+  <PartOrder>0</PartOrder>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/news/apps/news-post-date-cloud.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+								</AllUsersWebPart>
+
+								<AllUsersWebPart WebPartZoneID="Left" WebPartOrder="0" ListTitle="Posts">
+									<ViewFields>
+										<FieldRef Name="Title" />
+										<FieldRef Name="Body" />
+										<FieldRef Name="Author" />
+										<FieldRef Name="PostedByWithDate" />
+										<FieldRef Name="CategoryWithLink" />
+										<FieldRef Name="Permalink" />
+										<FieldRef Name="EmailPostLink" />
+										<FieldRef Name="NumCommentsWithLink" />
+										<FieldRef Name="PublishedDate" />
+										<FieldRef Name="PostCategory" />
+										<FieldRef Name="NewsRollupImage"/>
+										<FieldRef Name="NewsPageImage"/>
+										<FieldRef Name="NewsPageImageOrientation" />
+									</ViewFields>
+									<RowLimit Paged="TRUE">6</RowLimit>
+									<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+									<WebPart><![CDATA[<webParts>
+    <webPart
+        xmlns="http://schemas.microsoft.com/WebPart/v3">
+        <metaData>
+            <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"/>
+            <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+        </metaData>
+        <data>
+            <properties>
+                <property name="ListUrl" type="string">Lists/Posts</property>
+                <property name="TitleUrl" type="string">#</property>
+                <property name="ListDisplayName" type="string">Posts</property>
+                <property name="ChromeType" type="chrometype">None</property>
+                <property name="XmlDefinition" type="string">&lt;View BaseViewID="8" DisplayName="" Hidden="TRUE" Level="1" Name="{F128C16C-131A-4797-9DDE-AF2448B69B0F}" Type="HTML"&gt;&lt;Query&gt;&lt;OrderBy&gt;&lt;FieldRef Name="PublishedDate" Ascending="FALSE" /&gt;&lt;FieldRef Name="ID" Ascending="FALSE" /&gt;&lt;/OrderBy&gt;&lt;Where&gt;&lt;And&gt;&lt;And&gt;&lt;In&gt;&lt;FieldRef Name="PostCategory" LookupId="TRUE" /&gt;&lt;Values&gt;&lt;Value Type="Integer" &gt;&lt;IfEqual&gt;&lt;Expr1&gt;&lt;GetVar Scope="Request" Name="CategoryId" /&gt;&lt;/Expr1&gt;&lt;Expr2/&gt;&lt;Then&gt;-1&lt;/Then&gt;&lt;Else&gt;&lt;GetVar Scope="Request" Name="CategoryId" /&gt;&lt;/Else&gt;&lt;/IfEqual&gt;&lt;/Value&gt;&lt;/Values&gt;&lt;/In&gt;&lt;Leq&gt;&lt;FieldRef Name="PublishedDate" /&gt;&lt;Value Type="DateTime"&gt;&lt;Today/&gt;&lt;/Value&gt;&lt;/Leq&gt;&lt;/And&gt;&lt;Eq&gt;&lt;FieldRef Name="_ModerationStatus" /&gt;&lt;Value Type="ModStat" &gt;0&lt;/Value&gt;&lt;/Eq&gt;&lt;/And&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;ViewFields&gt;&lt;FieldRef Name="Title" /&gt;&lt;FieldRef Name="Body" /&gt;&lt;FieldRef Name="Author" /&gt;&lt;FieldRef Name="PostedByWithDate" /&gt;&lt;FieldRef Name="CategoryWithLink" /&gt;&lt;FieldRef Name="Permalink" /&gt;&lt;FieldRef Name="EmailPostLink" /&gt;&lt;FieldRef Name="NumCommentsWithLink" /&gt;&lt;FieldRef Name="PublishedDate" /&gt;&lt;FieldRef Name="PostCategory" /&gt;&lt;FieldRef Name="NewsRollupImage" /&gt;&lt;FieldRef Name="NewsPageImage" /&gt;&lt;FieldRef Name="NewsPageImageOrientation" /&gt;&lt;FieldRef Name="LikesCount" /&gt;&lt;FieldRef Name="LikedBy" Explicit="TRUE" /&gt;&lt;/ViewFields&gt;&lt;RowLimit Paged="TRUE"&gt;10&lt;/RowLimit&gt;&lt;JSLink&gt;~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js&lt;/JSLink&gt;&lt;XslLink&gt;blog.xsl&lt;/XslLink&gt;&lt;Toolbar Type="None" /&gt;&lt;/View&gt;</property>
+                <property name="Title" type="string">Posts by Category</property>
+                <property name="Description" type="string"></property>
+                <property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;
+&lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;
+&lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;
+&lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;
+&lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt; &lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noXinviewofY_LIST)" /&gt;
+&lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(core,noXinviewofY_DEFAULT)" /&gt;
+&lt;ParameterBinding Name="AddNewAnnouncement" Location="Resource(wss,addnewitem)" /&gt;
+&lt;ParameterBinding Name="MoreAnnouncements" Location="Resource(wss,moreItemsParen)" /&gt;</property>
+                <property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
+            </properties>
+        </data>
+    </webPart>
+</webParts>]]></WebPart>
+								</AllUsersWebPart>
+							</File>						
+						</Folder>
+					</List>
+
+				</Lists>
+
+				<RemoveUserCustomActions>
+					<UserCustomAction Scope="Web">
+						<Name>jQuery-UI</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>101</Sequence>
+						<ScriptLink>~site/SiteAssets/news/scripts/jquery-ui-1.10.4.custom.min.js</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>jQuery-UI-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>102</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/jquery-ui-1.10.4.custom.min.css</ScriptLink>
+					</UserCustomAction>
+				</RemoveUserCustomActions>
+				<UserCustomActions>
+					<UserCustomAction Scope="Web">
+						<Name>jQuery</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>100</Sequence>
+						<ScriptLink>~site/SiteAssets/news/scripts/jquery-1.11.0.min.js</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>Pure-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>110</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/pure-min.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>Responsive-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>111</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/grids-responsive-min.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>News-CSS</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>112</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/news.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>News-CSS-Responsive</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>120</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/news-responsive.css</ScriptLink>
+					</UserCustomAction>
+				</UserCustomActions>
+
+				<!-- remove all webtemplates for all languages -->
+				<!-- then add the BLOG and SEARCH CENTRE (Enterprise) web templates for english  -->
+				<SetWebtemplates Inherit="False">
+					<lcid id="all"></lcid>
+					<lcid id="1033">
+						<webtemplate name="BLOG#0"/>
+						<webtemplate name="SRCHCEN#0"/>
+					</lcid>
+				</SetWebtemplates>
+
+				<Comments>
+					<Comment>Congratulations, you've just provisioned a 'Corporate News Site'</Comment>
+					<Comment>Enable Ratings on the 'Posts' list and set the voting/rating experience to 'Likes'</Comment>
+					<Comment>HIDE the OOTB Categories webpart on the '.../Lists/Categories/Category.aspx' page, but DO NOT Delete or Close it</Comment>
+					<Comment>Ensure that RSS feeds are enabled in the site collection, then ensure that RSS feeds are enabled in the site</Comment>
+				</Comments>
+			</Web>
+		</Webs>
+
+	</Configuration>
+</Configurations>

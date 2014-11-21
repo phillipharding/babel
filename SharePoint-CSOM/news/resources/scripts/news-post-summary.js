@@ -50,13 +50,13 @@ csr.templateoverride = function() {
 		console(String.format(">>In BodyRender, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
 		return "";
 	}
-	function FieldPublishedDateViewRender(ctx) {
+	function FieldPublishedDateViewRender(ctx, field, listItem, listSchema) {
 		console(String.format(">>PublishedDate=", ctx.CurrentItem.PublishedDate));
 		var html = "<div class='news-post-postdate v-zigzag'><span class='year'>2014</span><span class='date'>20/11</span></div>";
 
 		return html;
 	}
-	function FieldTitleViewRender(ctx) {
+	function FieldTitleViewRender(ctx, field, listItem, listSchema) {
 		console(String.format(">>In FieldTitleViewRender [{3}], List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType, ctx.CurrentItem.PublishedDate));
 		/* close the <A/> and <H2/> tags first */
 
