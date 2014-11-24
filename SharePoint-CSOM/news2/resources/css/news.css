@@ -50,6 +50,50 @@
 
 /* CUSTOM SITE */
 
+/* NEW ARTICLE BUTTON */
+ .news-newarticle-container {
+     margin: 10px 0 0 0;
+}
+.news-newarticle-container > span {
+    background-color: #415A6C;
+    display: inline-block;
+    padding: 5px 15px 3px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+.news-newarticle-container > span:hover {
+    transition: all 0.5s;
+    opacity: 0.8;
+}
+.news-newarticle-container .fa-stack {
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 5px;
+}
+.news-newarticle-container a:link, .news-newarticle-container a:visited, .news-newarticle-container a:hover, .news-newarticle-container a:active {
+    text-decoration: none;
+    color: #fff;
+    height: 1.5em;
+    line-height: 1.5em;
+}
+.news-newarticle-container .fa-circle-o {
+    font-size: 1.5em;
+    top: -2px;
+}
+.news-newarticle-container .fa-plus {
+    font-size: 0.85em;
+    top: -6px;
+}
+/**/
+
+/* LOADING */
+ .news-loading-container {
+    opacity: 0.25;
+}
+/**/
+
 /* POSTS */
 .news-main-content { margin-top: 10px; }
 .ms-blog-postBox {
@@ -59,26 +103,89 @@
 }
 .ms-blog-postBoxDate,
 .ms-blog-postBoxMargin .ms-blog-postBody,
-.ms-blog-postBoxMargin .ms-metadata.ms-textSmall,
+.ms-blog-postBoxMargin > .ms-metadata.ms-textSmall,
 .ms-blog-postBoxMargin .ms-metadata.ms-textSmall + p { 
 	display: none;
 }
 
-.ms-blog-command-noLeftPadding a:visited,
-#blgcat {
-	text-transform: uppercase;
-	color: #008444;
-}
 .ms-blog-postBoxMargin { 
 	position: relative; 
 	margin-left: 10px;
 }
+.ms-blog-postBoxMargin span[id^='commandBar0'] { display: none; }
 .ms-blog-postBoxMargin > h2 { display: none; }
+.ms-blog-postList .ms-shadow { box-shadow: none; }
+/**/
 
-.ms-blog-postList .ms-shadow {
-	box-shadow: none;
+/* SOCIAL BUTTONS */
+.social, .social2 {
+    margin: 5px 0 0 0;
+    padding: 5px 0 0 0;
+    background-color: #fff;
 }
-
+.social > span,
+.social2 > span {
+    color: #fff;
+    background-color: #415A6C;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+.social2 > span {
+    color: #415A6C;
+    background-color: #fff;
+    border-right: 1px solid #DDE0E4;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.social2 > span:last-of-type {
+    border-right: none;
+}
+.social > span:hover {
+    opacity: 0.8;
+    transition: all 0.5s;
+}
+.social > span.passive:hover {
+    opacity: 1;
+}
+.social2 a:link, .social2 a:hover, .social2 a:visited, .social2 a:active {
+    text-decoration: none;
+    color: #415A6C;
+}
+.social a:link, .social a:hover, .social a:visited, .social a:active {
+    text-decoration: none;
+    color: #fff;
+}
+.social .passive a:hover {
+    cursor: default;
+}
+.social2 .comments a:hover,
+.social2 .edit a:hover,
+.social2 .share a:hover,
+.social2 .ratings a:hover,
+.social2 .tags a:hover,
+.social .comments a:hover,
+.social .edit a:hover,
+.social .share a:hover,
+.social .ratings a:hover,
+.social .tags a:hover {
+    color: #FFCB00;
+    transition: all 0.25s;
+}
+.social .tags a:after {
+    content: ",";
+    padding-right:5px;
+}
+.social .tags a:last-of-type:after {
+    content: "";
+    padding-right:0;
+}
+/**/
 
 /* MONTH/DATE TAG CLOUD */
 .news-post-date-cloud { margin: 0 10px 10px 0px; }
@@ -235,6 +342,9 @@
 
 /* NEW NEWS STYLING */
 .news-post-container {}
+/* FIX AN IE10 ISSUE WITH .pure-g display: -m-flexbox */
+.news-post-container > .pure-g { display: inherit; }
+
 .news-post-container ul {
 	margin: 0; 
 	padding: 0;
@@ -248,8 +358,38 @@
 	.news-post-item .box {
 		background-color: #fff;
 		margin: 0 20px 20px 0;
-		padding: 0 0 15px;		
+		padding: 0 0 15px;	
+        position: relative;	
 	}
+    .ms-blog-postBoxMargin .news-post-item-date,
+    .news-post-item .news-post-item-date {
+        background-color: #ea3692;
+        padding: 10px 15px;
+        position: absolute;
+        right: 0;
+        text-align: center;
+    }
+    .new-post-item-by {
+        margin: 5px 0 0 0;
+        font-size: 1.1em;
+    }
+    .ms-blog-postBoxMargin .new-post-item-by {
+        margin: 10px 0;
+        font-size: 1.3em;
+    }
+
+    .news-post-item .news-post-item-date {
+        padding: 5px;
+    }
+        .news-post-item-date span {
+            display: block;
+            color: #fff;
+            font-size: 1.3em;
+        }
+        .news-post-item .news-post-item-date span {
+            font-size: 1.1em;
+        }
+
 	.news-post-item h2 {
 		margin: 0 0 5px 0; 
 	}

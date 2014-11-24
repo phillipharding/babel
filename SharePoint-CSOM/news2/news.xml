@@ -256,6 +256,8 @@
 									<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
 									<File Path="css\jquery-ui-1.10.4.custom.css" Url="jquery-ui-1.10.4.custom.css" ReplaceContent="True" />
 									<File Path="css\jquery-ui-1.10.4.custom.min.css" Url="jquery-ui-1.10.4.custom.min.css" ReplaceContent="True" />
+									<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
+									<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 									<Folder Url="images">
 										<File Path="css\images\animated-overlay.gif" Url="animated-overlay.gif" ReplaceContent="True" />
 										<File Path="css\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
@@ -272,6 +274,13 @@
 										<File Path="css\images\ui-icons_ff0084_256x240.png" Url="ui-icons_ff0084_256x240.png" ReplaceContent="True" />
 										<File Path="css\images\ui-icons_ffffff_256x240.png" Url="ui-icons_ffffff_256x240.png" ReplaceContent="True" />
 									</Folder>
+								</Folder>
+								<Folder Url="fonts">
+									<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
+									<File Path="fonts\FontAwesome.otf" Url="FontAwesome.otf" ReplaceContent="True" />
+									<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
+									<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
+									<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
 								</Folder>
 								<Folder Url="scripts">
 									<File Path="scripts\jquery-1.11.0.js" Url="jquery-1.11.0.js" ReplaceContent="True" />
@@ -426,7 +435,7 @@
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
 							</Item>
 							<Item Title="Query Conditions">
-								<Property Name="PostCategory" Value="RB Better Business,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="PostCategory" Value="Highlights,RB Better Business,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Query Conditions" />
 								<Property Name="Body" Value="​&lt;p&gt;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?&lt;/p&gt;
@@ -452,7 +461,7 @@
 								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
 							<Item Title="Client Side Rendering">
-								<Property Name="PostCategory" Value="RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
+								<Property Name="PostCategory" Value="Highlights,RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Client Side Rendering" />
 								<Property Name="Body" Value="​&lt;p&gt;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&lt;/p&gt;
@@ -465,7 +474,7 @@
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-03.png" Type="Image" />
 							</Item>
 							<Item Title="Search Display Templates">
-								<Property Name="PostCategory" Value="RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
+								<Property Name="PostCategory" Value="Highlights,RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Search Display Templates" />
 								<Property Name="Body" Value="​&lt;p&gt;A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now.&lt;/p&gt;
@@ -504,7 +513,7 @@
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-02.png" Type="Image" />
 							</Item>
 							<Item Title="Structural Navigation">
-								<Property Name="PostCategory" Value="T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="PostCategory" Value="Highlights,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Structural Navigation" />
 								<Property Name="Body" Value="​&lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.&lt;/p&gt;
@@ -746,6 +755,7 @@
 							<View ServerRelativeUrl="Date.aspx" BaseViewID="9">
 								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
 								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<RowLimit Paged='TRUE'>6</RowLimit>
 								<ViewFields>
 									<FieldRef Name="Title" />
 									<FieldRef Name="Body" />
@@ -765,6 +775,7 @@
 							<View ServerRelativeUrl="Category.aspx" BaseViewID="8">
 								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
 								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<RowLimit Paged='TRUE'>6</RowLimit>
 								<ViewFields>
 									<FieldRef Name="Title" />
 									<FieldRef Name="Body" />
@@ -784,6 +795,7 @@
 							<View ServerRelativeUrl="Summary.aspx" BaseViewID="0">
 								<!-- update an existing (hidden) list view, set the viewfields and update the jslink -->
 								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<RowLimit Paged='TRUE'>6</RowLimit>
 								<ViewFields>
 									<FieldRef Name="Title" />
 									<FieldRef Name="Body" />
@@ -1175,7 +1187,7 @@
                 <property name="TitleUrl" type="string">#</property>
                 <property name="ListDisplayName" type="string">Posts</property>
                 <property name="ChromeType" type="chrometype">None</property>
-                <property name="XmlDefinition" type="string">&lt;View BaseViewID="8" DisplayName="" Hidden="TRUE" Level="1" Name="{F128C16C-131A-4797-9DDE-AF2448B69B0F}" Type="HTML"&gt;&lt;Query&gt;&lt;OrderBy&gt;&lt;FieldRef Name="PublishedDate" Ascending="FALSE" /&gt;&lt;FieldRef Name="ID" Ascending="FALSE" /&gt;&lt;/OrderBy&gt;&lt;Where&gt;&lt;And&gt;&lt;And&gt;&lt;In&gt;&lt;FieldRef Name="PostCategory" LookupId="TRUE" /&gt;&lt;Values&gt;&lt;Value Type="Integer" &gt;&lt;IfEqual&gt;&lt;Expr1&gt;&lt;GetVar Scope="Request" Name="CategoryId" /&gt;&lt;/Expr1&gt;&lt;Expr2/&gt;&lt;Then&gt;-1&lt;/Then&gt;&lt;Else&gt;&lt;GetVar Scope="Request" Name="CategoryId" /&gt;&lt;/Else&gt;&lt;/IfEqual&gt;&lt;/Value&gt;&lt;/Values&gt;&lt;/In&gt;&lt;Leq&gt;&lt;FieldRef Name="PublishedDate" /&gt;&lt;Value Type="DateTime"&gt;&lt;Today/&gt;&lt;/Value&gt;&lt;/Leq&gt;&lt;/And&gt;&lt;Eq&gt;&lt;FieldRef Name="_ModerationStatus" /&gt;&lt;Value Type="ModStat" &gt;0&lt;/Value&gt;&lt;/Eq&gt;&lt;/And&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;ViewFields&gt;&lt;FieldRef Name="Title" /&gt;&lt;FieldRef Name="Body" /&gt;&lt;FieldRef Name="Author" /&gt;&lt;FieldRef Name="PostedByWithDate" /&gt;&lt;FieldRef Name="CategoryWithLink" /&gt;&lt;FieldRef Name="Permalink" /&gt;&lt;FieldRef Name="EmailPostLink" /&gt;&lt;FieldRef Name="NumCommentsWithLink" /&gt;&lt;FieldRef Name="PublishedDate" /&gt;&lt;FieldRef Name="PostCategory" /&gt;&lt;FieldRef Name="NewsRollupImage" /&gt;&lt;FieldRef Name="NewsPageImage" /&gt;&lt;FieldRef Name="NewsPageImageOrientation" /&gt;&lt;FieldRef Name="LikesCount" /&gt;&lt;FieldRef Name="LikedBy" Explicit="TRUE" /&gt;&lt;/ViewFields&gt;&lt;RowLimit Paged="TRUE"&gt;10&lt;/RowLimit&gt;&lt;JSLink&gt;~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js&lt;/JSLink&gt;&lt;XslLink&gt;blog.xsl&lt;/XslLink&gt;&lt;Toolbar Type="None" /&gt;&lt;/View&gt;</property>
+                <property name="XmlDefinition" type="string">&lt;View BaseViewID="8" DisplayName="" Hidden="TRUE" Level="1" Name="{F128C16C-131A-4797-9DDE-AF2448B69B0F}" Type="HTML"&gt;&lt;Query&gt;&lt;OrderBy&gt;&lt;FieldRef Name="PublishedDate" Ascending="FALSE" /&gt;&lt;FieldRef Name="ID" Ascending="FALSE" /&gt;&lt;/OrderBy&gt;&lt;Where&gt;&lt;And&gt;&lt;And&gt;&lt;In&gt;&lt;FieldRef Name="PostCategory" LookupId="TRUE" /&gt;&lt;Values&gt;&lt;Value Type="Integer" &gt;&lt;IfEqual&gt;&lt;Expr1&gt;&lt;GetVar Scope="Request" Name="CategoryId" /&gt;&lt;/Expr1&gt;&lt;Expr2/&gt;&lt;Then&gt;-1&lt;/Then&gt;&lt;Else&gt;&lt;GetVar Scope="Request" Name="CategoryId" /&gt;&lt;/Else&gt;&lt;/IfEqual&gt;&lt;/Value&gt;&lt;/Values&gt;&lt;/In&gt;&lt;Leq&gt;&lt;FieldRef Name="PublishedDate" /&gt;&lt;Value Type="DateTime"&gt;&lt;Today/&gt;&lt;/Value&gt;&lt;/Leq&gt;&lt;/And&gt;&lt;Eq&gt;&lt;FieldRef Name="_ModerationStatus" /&gt;&lt;Value Type="ModStat" &gt;0&lt;/Value&gt;&lt;/Eq&gt;&lt;/And&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;ViewFields&gt;&lt;FieldRef Name="Title" /&gt;&lt;FieldRef Name="Body" /&gt;&lt;FieldRef Name="Author" /&gt;&lt;FieldRef Name="PostedByWithDate" /&gt;&lt;FieldRef Name="CategoryWithLink" /&gt;&lt;FieldRef Name="Permalink" /&gt;&lt;FieldRef Name="EmailPostLink" /&gt;&lt;FieldRef Name="NumCommentsWithLink" /&gt;&lt;FieldRef Name="PublishedDate" /&gt;&lt;FieldRef Name="PostCategory" /&gt;&lt;FieldRef Name="NewsRollupImage" /&gt;&lt;FieldRef Name="NewsPageImage" /&gt;&lt;FieldRef Name="NewsPageImageOrientation" /&gt;&lt;FieldRef Name="LikesCount" /&gt;&lt;FieldRef Name="LikedBy" Explicit="TRUE" /&gt;&lt;/ViewFields&gt;&lt;RowLimit Paged="TRUE"&gt;6&lt;/RowLimit&gt;&lt;JSLink&gt;~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js&lt;/JSLink&gt;&lt;XslLink&gt;blog.xsl&lt;/XslLink&gt;&lt;Toolbar Type="None" /&gt;&lt;/View&gt;</property>
                 <property name="Title" type="string">Posts by Category</property>
                 <property name="Description" type="string"></property>
                 <property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
@@ -1239,6 +1251,12 @@
 						<Location>ScriptLink</Location>
 						<Sequence>112</Sequence>
 						<ScriptLink>~site/SiteAssets/news/css/news.css</ScriptLink>
+					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>Fontawesome</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>113</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/font-awesome.min.css</ScriptLink>
 					</UserCustomAction>
 					<UserCustomAction Scope="Web">
 						<Name>News-CSS-Responsive</Name>

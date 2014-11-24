@@ -19,13 +19,21 @@
 				<table id="Hero-WPQ2" class="add-a-new-post" dir="none" border="0" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr>
-							<td class="ms-list-addnew ms-textXLarge ms-list-addnew-aligntop ms-soften">
-								<a title="Add a new item to this list or library." class="ms-heroCommandLink ms-hero-command-enabled-alt" id="idHomePageNewItem" onclick='_EasyUploadOrNewItem2(event, false, "{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=", "WPQ2"); return false;' href="{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=" target="_self">
-									<span class="ms-list-addnew-imgSpan20">
-										<img class="ms-list-addnew-img20" id="idHomePageNewItem-img" src="/_layouts/15/images/spcommon.png?rev=38">
-									</span>
-									<span>New Article</span>
-								</a>
+							<td class="ms-textXLarge">
+
+								<!-- NEW ARTICLE BUTTON -->
+								<div class='news-newarticle-container'>
+								    <span>
+								        <a title="Add a new News Article." id="idHomePageNewItem" onclick='_EasyUploadOrNewItem2(event, false, "{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=", "WPQ2"); return false;' href="{{~site}}/Lists/Posts/NewPost.aspx?Source={{~site}}&amp;RootFolder=" target="_self">
+								            <span class="fa-stack ">
+								              <i class="fa fa-circle-o fa-stack-2x"></i>
+								              <i class="fa fa-plus fa-stack-1x"></i>
+								            </span>
+								            New Article
+								        </a>
+								    </span>
+								</div>
+
 							</td>
 						</tr>
 					</tbody>

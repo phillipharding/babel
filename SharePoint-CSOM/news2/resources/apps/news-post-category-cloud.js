@@ -36,28 +36,31 @@ news.categorycloud.render = function(data) {
         return;
     }
     var $e = $('.news-post-category-cloud ul');
-    var $button = $("<div class='collapse-button'><span class='icon-bar'> </span><span class='icon-bar'> </span><span class='icon-bar'> </span></div>");
+/*    var $button = $("<div class='collapse-button'><span class='icon-bar'> </span><span class='icon-bar'> </span><span class='icon-bar'> </span></div>");
     $("<li/>")
         .addClass('title collapse-button-container')
         .append($('<h2>').text('Categories'))
         .append($button)
         .appendTo($e);
+        */
     $.each(data, function(i,e) {
         $("<li/>")
             .addClass('category')
             .append($('<a>')
-                    .attr('href', _spPageContextInfo.webServerRelativeUrl + '/SitePages/Categories.aspx?CategoryId='+e.Id)
+                    .attr('href', _spPageContextInfo.webServerRelativeUrl + '/SitePages/Categories.aspx?CategoryId='+e.Id+'&CategoryTitle='+encodeURIComponent(e.Title))
                     .attr('title', 'show all news for ' + e.Title)
                     .text(e.Title) )
             .appendTo($e);
     });
-    $e.stop().fadeIn(100);
+    $e.find('li.loading').remove();
     /* setup responsive menu collapser */
     $('.news-post-category-cloud .title .collapse-button').click(function(e) {
         $(this).parent().nextUntil('.title').toggleClass('reveal');
     });
 }
 news.categorycloud.start = function() {
+    var $e = $('.news-post-category-cloud ul');
+    $e.stop().fadeIn(100);
     news.categorycloud.getCategories()
         .done(news.categorycloud.render);
 }

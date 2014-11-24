@@ -28,6 +28,16 @@ RBNews.EditCommand.prototype = {
     },
     onClick: function RBNews_EditCommand$onClick() {
         STSNavigate(this.get_href());
+    },
+    render: function News_EditCommand$render($hb) {
+    	/* <span class='share'><a href='#'><i class="fa fa-edit"></i>&nbsp;Edit</a> */
+    	$hb.addCssClass('edit');
+    	$hb.renderBeginTag('span');
+    		$hb.addAttribute('href', this.$EditUrl);
+    		$hb.renderBeginTag('a');
+    		$hb.write("<i class='fa fa-edit'></i>&nbsp;Edit");
+    		$hb.renderEndTag();
+    	$hb.renderEndTag();
     }
 };
 RBNews.EditCommand.registerClass('RBNews.EditCommand', SP.UI.Command);
@@ -45,6 +55,16 @@ RBNews.ShareCommand.prototype = {
     $LinkText: null,
     onClick: function News_ShareCommand$onClick() {
         RBNews.ShareCommand.click(this.$Url, this.$LinkText);
+    },
+    render: function News_ShareCommand$render($hb) {
+    	/* <span class='share'><a href='#'><i class="fa fa-envelope"></i>&nbsp;Share</a> */
+    	$hb.addCssClass('share');
+    	$hb.renderBeginTag('span');
+    		$hb.addAttribute('href', this.$Url);
+    		$hb.renderBeginTag('a');
+    		$hb.write(String.format("<i class='fa fa-envelope'></i>&nbsp;Share", this.$LinkText));
+    		$hb.renderEndTag();
+    	$hb.renderEndTag();
     }
 };
 RBNews.ShareCommand.registerClass('RBNews.ShareCommand', SP.UI.Command);
@@ -52,21 +72,32 @@ RBNews.ShareCommand.registerClass('RBNews.ShareCommand', SP.UI.Command);
 RBNews.FieldRendererCommand = function News_FieldRendererCommand(fieldName, elemid, ctx) {
     RBNews.FieldRendererCommand.initializeBase(this, ['', '']);
     this.$elementId = elemid;
+    this.$itemid = ctx.CurrentItem.ID;
+    this.$listid = ctx.ListSchema.ListId;
     this.$ctx = ctx;
     this.$fieldName = fieldName;
 };
 RBNews.FieldRendererCommand.prototype = {
-    $J_1: null,
+    $element: null,
     $elementId: null,
     $ctx: null,
     $fieldName: null,
     get_linkElement: function News_FieldRendererCommand$get_linkElement() {
-        if (!this.$J_1) {
-            this.$J_1 = $get(this.$elementId);
+        if (!this.$element) {
+            this.$element = $get(this.$elementId);
         }
-        return this.$J_1;
+        return this.$element;
     },
     render: function News_FieldRendererCommand$render($hb) {
+    	/*
+		    <span class='ratings'>
+		        <span class='rating' title='likes'>1</span>
+		        <i class="fa fa-thumbs-up"></i>&nbsp;|&nbsp;
+		        <a href='#' onclick='social.likeunlike(this,3)'>Like</a>
+		    </span>
+    	*/
+      
+
         $hb.addCssClass('ms-comm-cmdSpaceListItem');
         $hb.renderBeginTag('span');
         $hb.write(spMgr.RenderFieldByName(this.$ctx, this.$fieldName, this.$ctx.CurrentItem, this.$ctx.ListSchema));
@@ -92,6 +123,8 @@ RBNews.TemplateOverride = function() {
 		ctxOverride = {}, 
 		ctxSingleArticleOverride = {}, 
 		module = {
+			share: shareArticle,
+			setLike: likeUnlikeArticle,
 			register: function() {
 				SPClientTemplates.TemplateManager.RegisterTemplateOverrides(ctxSingleArticleOverride);
 				SPClientTemplates.TemplateManager.RegisterTemplateOverrides(ctxOverride);
@@ -121,6 +154,51 @@ RBNews.TemplateOverride = function() {
 		BaseViewID: 7
 	};
 
+	function shareArticle($e) {
+		var
+			url = $e.getAttribute('href'),
+			title = $e.getAttribute('data-title');
+		window.location.href = 'mailto:?body=' + escapeProperlyCore(url, false) + '&subject=' + escapeProperlyCore(title, false);
+		return false;
+	}
+	function likeUnlikeArticle($e) {
+		var
+			setLike = false,
+			listid = $e.getAttribute('data-listid'),
+			itemid = $e.getAttribute('data-itemid'),
+			userid = $e.getAttribute('data-userid'),
+			$c = $e.parentNode.querySelector('.rating'),
+			currentLikeCount = parseInt(parseInt($c.innerHTML)),
+			newEText = '';
+		if ($e.blur) $e.blur();
+		if ($e.innerHTML.match(/unlike/gi)) {
+			currentLikeCount = Math.max(0,currentLikeCount-1);
+			newEText = 'Like';
+			setLike = false;
+		} else if ($e.innerHTML.match(/like/gi)) {
+			currentLikeCount++;
+			newEText = 'Unlike';
+			setLike = true;
+		} else { 
+			/* do nothing */
+			return false;
+		}
+		$e.innerHTML = "<i class='fa fa-refresh fa-spin'></i>";
+	
+		var clientContext = new SP.ClientContext();
+		EnsureScriptFunc('reputation.js', 'Microsoft.Office.Server.ReputationModel.Reputation', function() {
+			Microsoft.Office.Server.ReputationModel.Reputation.setLike(clientContext,listid,itemid,setLike);
+			clientContext.executeQueryAsync(function() {
+				$c.innerHTML = String.format("{0}&nbsp;", currentLikeCount);
+				$e.innerHTML = newEText;
+			}, function(sender, args) {
+				// custom error handling if needed
+				$e.innerHTML = "<i class='fa fa-exclamation-triangle'></i>";
+			});
+		});
+
+		return false;
+	}
 	function console(msg) {
 		if (!window.console) return;
 		try { 
@@ -133,7 +211,8 @@ RBNews.TemplateOverride = function() {
 	function OnPreRender(ctx) {
 		console(String.format(">>In OnPreRender, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
 	   var $v0 = SP.ScriptHelpers.getDocumentQueryPairs();
-	   
+		
+		JSRequest.EnsureSetup();	   
 		_config.BaseViewID = ctx.BaseViewID;
       _config.PrevHref = ctx.ListData['PrevHref'];
       _config.NextHref = ctx.ListData['NextHref'];
@@ -154,13 +233,13 @@ RBNews.TemplateOverride = function() {
 		   _config.EndDateTime = $v0['EndDateTime'];
 		   _config.LMY = $v0['LMY'];
 
-	      if (!SP.ScriptHelpers.isNullOrUndefined(_config.StartDateTime)) {
+	      if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.StartDateTime)) {
 				_config.StartDateTime = unescapeProperly(_config.StartDateTime);
 	      }
-	      if (!SP.ScriptHelpers.isNullOrUndefined(_config.EndDateTime)) {
+	      if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.EndDateTime)) {
 				_config.EndDateTime = unescapeProperly(_config.EndDateTime);
 	      }
-	      if (!SP.ScriptHelpers.isNullOrUndefined(_config.LMY)) {
+	      if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.LMY)) {
 				_config.LMY = unescapeProperly(_config.LMY);
 	      }
 
@@ -181,12 +260,39 @@ RBNews.TemplateOverride = function() {
 	function HeaderRender(ctx) {
 		console(String.format(">>In HeaderRender, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
 		
+		var html = [];
 		_config.RootElementId = String.format("{0}_{1}", ctx.wpq, SP.UI.UIUtility.generateRandomElementId());
-		return String.format("<div id='{0}' class='news-post-container'><ul class='pure-g'>", _config.RootElementId);
+		html.push(String.format("<div id='{0}' class='news-post-container'>", _config.RootElementId));
+
+		if (_config.BaseViewID == 8) { /* category view */
+			if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(JSRequest.QueryString["CategoryTitle"])) {
+				html.push(String.format("<h1 class='ms-core-pageTitle' id='pageTitle'><span>{0}</span></h1>", decodeURIComponent(JSRequest.QueryString["CategoryTitle"])));
+			}
+		} else if (_config.BaseViewID == 9) { /* Date view */
+			if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(JSRequest.QueryString["LMY"])) {
+				html.push(String.format("<h1 class='ms-core-pageTitle' id='pageTitle'><span>{0}</span></h1>", decodeURIComponent(JSRequest.QueryString["LMY"])));
+			}
+		}
+
+		if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.PrevHref) || !SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.NextHref)) {
+			html.push("<div class='navigation'>");
+			if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.PrevHref)) {
+				html.push(String.format("<a href='javascript:' onclick='RefreshPageTo(event, \"{0}\");return false;'>&nbsp;<i class='fa fa-chevron-left'></i>&nbsp;{1}&nbsp;</a>", ctx.ListData['PrevHref'], Strings.STS.L_SPClientPrevious));
+			}
+			html.push(String.format("&nbsp;Displaying articles {0} to {1}&nbsp;", ctx.ListData.FirstRow, ctx.ListData.LastRow));
+			if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.NextHref)) {
+				html.push(String.format("<a href='javascript:' onclick='RefreshPageTo(event, \"{0}\");return false;'>&nbsp;{1}&nbsp;<i class='fa fa-chevron-right'></i>&nbsp;</a>", ctx.ListData['NextHref'], Strings.STS.L_SPClientNext));
+			}
+			html.push("</div>");
+		}
+
+		html.push("<div class='pure-g'>");
+
+		return html.join('');
 	}
 	function FooterRender(ctx) {
 		console(String.format(">>In FooterRender, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
-		return "</ul></div>";
+		return "</div></div>";
 	}
 	function ItemRenderDebug(ctx, field, listItem, listSchema) {
 		console(String.format(">>In ItemRenderDebug, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
@@ -204,15 +310,22 @@ RBNews.TemplateOverride = function() {
 		return url;
 	}
 	function getItemCategoryUrl(ctx, category) {
-		var url = String.format("{0}/SitePages/Categories.aspx?CategoryId={{CategoryId}}", ctx.HttpRoot);
+		var url = String.format("{0}/SitePages/Categories.aspx?CategoryId={{CategoryId}}&CategoryTitle={{CategoryTitle}}", ctx.HttpRoot);
 		url = url.replace("{CategoryId}", category['lookupId']);
+		url = url.replace("{CategoryTitle}", encodeURIComponent(category['lookupValue']));
 		return url;
 	}
-	function renderItemNumComments(ctx, $nc, $h, $left) {
-		$h.addCssClass($left ? 'ms-blog-command-noLeftPadding ms-textSmall' : 'ms-blog-command');
-		$h.renderBeginTag('a');
+	function renderItemNumComments(ctx, $nc, $h, $posturl) {
+		/*<span class='comments' title='comments'><a href='#'><i class="fa fa-comment"></i>&nbsp;33</a></span>*/
 		var $v1 = SP.Utilities.LocUtility.getLocalizedCountValue(Strings.STS.L_SPClientNumCommentsTemplate, Strings.STS.L_SPClientNumCommentsTemplateIntervals, Number.parseLocale($nc));
-		$h.write(String.format($v1, $nc));
+
+		$h.addCssClass('comments');
+		$h.addAttribute('title', String.format($v1, $nc));
+		$h.renderBeginTag('span');
+			$h.addAttribute('href', $posturl + '#comments');
+			$h.renderBeginTag('a');
+			$h.write(String.format("{0}&nbsp;<i class='fa fa-comment'></i>", Number.parseLocale($nc)));
+			$h.renderEndTag();			
 		$h.renderEndTag();
 	}
 	function renderItemCategories(ctx, categories) {
@@ -221,17 +334,98 @@ RBNews.TemplateOverride = function() {
 			var 
 				$category = categories[$v1],
 				$url = getItemCategoryUrl(ctx, $category);
-			$v0.addAttribute('class', 'news-post-item-category');
+		
+			/* <span class='tags'><a href='#'>#News</a></span> */
+			$v0.addCssClass('tags');
 			$v0.renderBeginTag('span');
-			$v0.addAttribute('href', $url);
-			$v0.addAttribute('id', 'blgcat');
-			$v0.addAttribute('class', 'ms-link');
-			$v0.renderBeginTag('a');
-			$v0.writeEncoded($category['lookupValue']);
-			$v0.renderEndTag();
+				$v0.addAttribute('href', $url);
+				$v0.addAttribute('id', 'blgcat');
+				$v0.renderBeginTag('a');
+				$v0.writeEncoded($category['lookupValue']);
+				$v0.renderEndTag();
 			$v0.renderEndTag();
 		}
 		return $v0.toString();
+	}
+	function renderRatings(ctx, $h) {
+    	/*
+			var ratingFields = ['LikesCount', 'AverageRating'];
+			var ratingElemIds = ['likesElement-', 'averageRatingElement-'];
+			for (var $v6 = 0; $v6 < ratingFields.length; $v6++) {
+			   if (SP.ScriptHelpers.getFieldFromSchema(ctx.ListSchema, ratingFields[$v6])) {
+			       cmdBar.addCommand(new RBNews.FieldRendererCommand(ratingFields[$v6], ratingElemIds[$v6] + ctx.CurrentItem['ID'], ctx));
+			   }
+			}
+
+		    <span class='ratings'>
+		        <span class='rating' title='likes'>1</span>
+		        <i class="fa fa-thumbs-up"></i>&nbsp;|&nbsp;
+		        <a href='#' onclick='social.likeunlike(this,3)'>Like</a>
+		    </span>
+    	*/
+    	if (!SP.ScriptHelpers.getFieldFromSchema(ctx.ListSchema, "LikesCount")) {
+    		/* do nothing if Ratings w/Likes are not enabled on the list */
+    		return;
+    	}
+    	var
+    		isLikedByMe = false,
+    		myUserId = ctx.CurrentUserId.toString(),
+    		likescount = ctx.CurrentItem['LikesCount'],
+    		likedby = ctx.CurrentItem['LikedBy'];
+    	if (SP.ScriptHelpers.isNullOrUndefinedOrEmpty(likescount)) {
+    		likescount = '0';
+    	}
+		if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(likedby)) {
+			for (var $v0 = 0; $v0 < likedby.length; $v0++) {
+				var $v1 = likedby[$v0];
+				if ($v1.id === myUserId) {
+					isLikedByMe = true;
+					break;
+				}
+			}
+		}
+
+    	$h.addCssClass('ratings');
+    	$h.renderBeginTag('span');
+	    	$h.addCssClass('rating');
+	    	$h.addAttribute('title', 'likes');
+	    	$h.renderBeginTag('span');
+	    	$h.write(String.format("{0}&nbsp;", likescount));
+	    	$h.renderEndTag();
+
+	    	$h.write("<i class='fa fa-thumbs-up' title='likes'></i>&nbsp;|&nbsp;");
+
+	   	$h.addAttribute('href', 'javascript:');
+	   	$h.addAttribute('data-listid', ctx.listName);
+	   	$h.addAttribute('data-itemid', ctx.CurrentItem['ID']);
+	   	$h.addAttribute('data-userid', myUserId);
+	   	$h.addAttribute('onclick',String.format("RBNews.TemplateOverride.setLike(this);return false;"));
+	   	$h.renderBeginTag('a');
+	   	$h.write(isLikedByMe ? "Unlike" : "Like");
+	   	$h.renderEndTag();
+    	$h.renderEndTag();
+	}
+	function renderShareLink(ctx, $h, postUrl) {
+		var
+			title = ctx.CurrentItem["Title"];
+    	$h.addCssClass('share');
+    	$h.renderBeginTag('span');
+    		$h.addAttribute('href', postUrl);
+    		$h.addAttribute('data-title', title);
+	   	$h.addAttribute('onclick',String.format("RBNews.TemplateOverride.share(this);return false;"));
+    		$h.renderBeginTag('a');
+    		$h.write("<i class='fa fa-envelope'></i>&nbsp;Share");
+    		$h.renderEndTag();
+    	$h.renderEndTag();
+	}
+	function renderEditLink(ctx, $h, editUrl) {
+    	$h.addCssClass('edit');
+    	$h.renderBeginTag('span');
+    		$h.addAttribute('href', editUrl);
+    		$h.renderBeginTag('a');
+    		$h.write("<i class='fa fa-edit'></i>&nbsp;Edit");
+    		$h.renderEndTag();
+    	$h.renderEndTag();
 	}
 	function ItemRender(ctx, field, listItem, listSchema) {
 		console(String.format(">>In ItemRender, List={1} ListtemplateType={2} BaseViewID={0}", ctx.BaseViewID, ctx.ListTitle, ctx.ListTemplateType));
@@ -239,14 +433,13 @@ RBNews.TemplateOverride = function() {
 			html = [],
 			$itemElemId = String.format("{0}_post_{1}", ctx.wpq, ctx.CurrentItem['ID']),
 			$cmdItemElemId = String.format("{0}_cmd_{1}", ctx.wpq, ctx.CurrentItem['ID']);
-		html.push(String.format("<li class='pure-u-1 pure-u-lg-1-2 pure-u-xl-1-2 news-post-item' id='{0}'><div class='box'>", $itemElemId));
+		html.push(String.format("<div class='pure-u-1 pure-u-lg-1-2 pure-u-xl-1-3 news-post-item' id='{0}'><div class='box'>", $itemElemId));
 
 		var
 			postUrl = getItemPostUrl(ctx),
 			author = spMgr.RenderFieldByName(ctx, 'Author', ctx.CurrentItem, ctx.ListSchema),
 			postTime = spMgr.RenderFieldByName(ctx, 'PublishedDate.TimeOnly', ctx.CurrentItem, ctx.ListSchema)
 			categories = ctx.CurrentItem["PostCategory"],
-			categoriesHtml = renderItemCategories(ctx, categories),
 			body = ctx.CurrentItem["Body"],
 			newsPageImage = ctx.CurrentItem["NewsPageImage"];
 		var
@@ -266,63 +459,60 @@ RBNews.TemplateOverride = function() {
 			body = SP.ScriptHelpers.removeHtmlAndTrimStringWithEllipsis(body, 200);
 			if (body && body.match(/[.]{3}$/g)) {
 				/* copy was truncated, add the Read More link */
-				body += String.format("<a class='news-post-readmore' href='{0}'>Read More</a>", postUrl);
+				body += String.format("<a class='news-post-readmore' href='{0}'>&nbsp;Read More</a>", postUrl);
 			}
 		}
 
-		html.push(String.format("<div class='news-post-item-image'>{0}</div>", newsPageImage));
-		html.push(String.format("<h2><a href='{0}'>{1}</a></h2>", postUrl, ctx.CurrentItem.Title));
-		html.push(String.format("<div>By:&nbsp;{0}</div>", author));
 		html.push(newspostdate);
-		html.push(String.format("<div>At:&nbsp;{0}</div>", postTime));
-		html.push(String.format("<div>In:&nbsp;{0}</div>", categoriesHtml));
+		html.push(String.format("<div class='news-post-item-image'>{0}</div>", newsPageImage));
+		html.push(String.format("<div class='new-post-item-by'><span class='ms-metadata ms-textSmall'>By</span><span class='author'>&nbsp;{0}&nbsp;</span><span class='ms-metadata ms-textSmall'>at {1}</span></div>", author, postTime));
+		html.push(String.format("<h2><a href='{0}'>{1}</a></h2>", postUrl, ctx.CurrentItem.Title));
 		html.push(String.format("<div>{0}</div>", body));
 
 		var $h = new SP.HtmlBuilder();
-		var cmdBar = new SP.UI.CommandBar();
-		$h.addCssClass('ms-blog-commandSpace');
+
+		/* categories social bar */
+		var categoriesHtml = renderItemCategories(ctx, categories);
+		if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(categoriesHtml)) {
+			$h.addCssClass('social');
+			$h.renderBeginTag('div');
+			$h.write(categoriesHtml);
+			$h.renderEndTag();
+		}
+
+		/* behaviour social bar */
+		$h.addCssClass('ms-blog-commandSpace social2');
 		$h.renderBeginTag('div');
 
 		/* Comand: comments */
 		var $nc = ctx.CurrentItem['NumComments'];
-		if (/*ctx.BaseViewID !== 7 &&*/ !SP.ScriptHelpers.isNullOrUndefined($nc)) {
-		   $h.addAttribute('href', postUrl + '#comments');
-		   $h.addCssClass('ms-comm-metalineItemSeparator');
-		   renderItemNumComments(ctx, $nc, $h, true);
-		   $h.addCssClass('ms-blog-command');
-		   $h.addAttribute('style', 'display: inline-block;');
+		if (SP.ScriptHelpers.isNullOrUndefinedOrEmpty($nc)) {
+		   $nc = '0';
 		}
+		renderItemNumComments(ctx, $nc, $h, postUrl);
 
 		/* Comand: likes/ratings */
-		var $v2 = ['LikesCount', 'AverageRating'];
-		var $v3 = ['likesElement-', 'averageRatingElement-'];
-		for (var $v6 = 0; $v6 < $v2.length; $v6++) {
-		   if (SP.ScriptHelpers.getFieldFromSchema(ctx.ListSchema, $v2[$v6])) {
-		       cmdBar.addCommand(new RBNews.FieldRendererCommand($v2[$v6], $v3[$v6] + ctx.CurrentItem['ID'], ctx));
-		   }
-		}
+		renderRatings(ctx, $h);
+
 		/* Comand: share link */
-		cmdBar.addCommand(new RBNews.ShareCommand($cmdItemElemId, postUrl, ctx.CurrentItem["Title"]));
+		renderShareLink(ctx, $h, postUrl);
 
 		/* Comand: edit */
 		var $v4 = SP.ScriptHelpers.getListLevelPermissionMask(ctx.CurrentItem);
 		var $v5 = Number.parseInvariant(SP.ScriptHelpers.getUserFieldProperty(ctx.CurrentItem, 'Author', 'id'));
 		if (ctx.CurrentUserId === $v5 && SP.ScriptHelpers.hasPermission($v4, 4) || SP.ScriptHelpers.hasPermission($v4, 2048)) {
-		   var $v7 = SP.ScriptHelpers.replaceOrAddQueryString(ctx.editFormUrl, 'ID', ctx.CurrentItem['ID']);
+		   var editUrl = SP.ScriptHelpers.replaceOrAddQueryString(ctx.editFormUrl, 'ID', ctx.CurrentItem['ID']);
 		   var $v8 = window.self.ajaxNavigate;
 
-		   $v7 = SP.ScriptHelpers.replaceOrAddQueryString($v7, 'Source', $v8.get_href());
-		   cmdBar.addCommand(new  RBNews.EditCommand($cmdItemElemId, $v7));
+		   editUrl = SP.ScriptHelpers.replaceOrAddQueryString(editUrl, 'Source', $v8.get_href());
+			renderEditLink(ctx, $h, editUrl);
 		}
 		/**/
 
-		cmdBar.render($h);
 		$h.renderEndTag();
 		html.push($h.toString());
 
-		_cmdBars.push(cmdBar);
-
-		html.push('</div></li>');
+		html.push('</div></div>');
 		return html.join('').replace(/\u200B/g,'');;
 	}
 	function OnPostRender(ctx) {
@@ -346,7 +536,6 @@ RBNews.TemplateOverride = function() {
 			author = spMgr.RenderFieldByName(ctx, 'Author', ctx.CurrentItem, ctx.ListSchema),
 			postTime = spMgr.RenderFieldByName(ctx, 'PublishedDate.TimeOnly', ctx.CurrentItem, ctx.ListSchema)
 			categories = ctx.CurrentItem["PostCategory"],
-			categoriesHtml = renderItemCategories(ctx, categories),
 			body = ctx.CurrentItem["Body"],
 			newsPageImage = ctx.CurrentItem["NewsPageImage"];
 		var
@@ -362,13 +551,56 @@ RBNews.TemplateOverride = function() {
 			body = body.replace(/\u200B/g,'');
 		}
 
-		html.push(String.format("<div class='news-post-item-image'>{0}</div>", newsPageImage));
-		html.push(String.format("<div class='news-post-item-title'><h2>{0}</h2></div>", ctx.CurrentItem.Title));
-		html.push(String.format("<div>By:&nbsp;{0}</div>", author));
 		html.push(newspostdate);
-		html.push(String.format("<div>At:&nbsp;{0}</div>", postTime));
-		html.push(String.format("<div>In:&nbsp;{0}</div>", categoriesHtml));
+		html.push(String.format("<div class='news-post-item-image'>{0}</div>", newsPageImage));
+		html.push(String.format("<div class='new-post-item-by'><span class='ms-metadata ms-textSmall'>By</span><span class='author'>&nbsp;{0}&nbsp;</span><span class='ms-metadata ms-textSmall'>at {1}</span></div>", author, postTime));
+		html.push(String.format("<h2><a href='{0}'>{1}</a></h2>", postUrl, ctx.CurrentItem.Title));
 		html.push(String.format("<div>{0}</div>", body));
+
+		/* social start */
+		var $h = new SP.HtmlBuilder();
+
+		/* categories social bar */
+		var categoriesHtml = renderItemCategories(ctx, categories);
+		if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(categoriesHtml)) {
+			$h.addCssClass('social');
+			$h.renderBeginTag('div');
+			$h.write(categoriesHtml);
+			$h.renderEndTag();
+		}
+
+		/* behaviour social bar */
+		$h.addCssClass('ms-blog-commandSpace social2');
+		$h.renderBeginTag('div');
+
+		/* Comand: comments */
+		var $nc = ctx.CurrentItem['NumComments'];
+		if (SP.ScriptHelpers.isNullOrUndefinedOrEmpty($nc)) {
+		   $nc = '0';
+		}
+		renderItemNumComments(ctx, $nc, $h, postUrl);
+
+		/* Comand: likes/ratings */
+		renderRatings(ctx, $h);
+
+		/* Comand: share link */
+		renderShareLink(ctx, $h, postUrl);
+
+		/* Comand: edit */
+		var $v4 = SP.ScriptHelpers.getListLevelPermissionMask(ctx.CurrentItem);
+		var $v5 = Number.parseInvariant(SP.ScriptHelpers.getUserFieldProperty(ctx.CurrentItem, 'Author', 'id'));
+		if (ctx.CurrentUserId === $v5 && SP.ScriptHelpers.hasPermission($v4, 4) || SP.ScriptHelpers.hasPermission($v4, 2048)) {
+		   var editUrl = SP.ScriptHelpers.replaceOrAddQueryString(ctx.editFormUrl, 'ID', ctx.CurrentItem['ID']);
+		   var $v8 = window.self.ajaxNavigate;
+
+		   editUrl = SP.ScriptHelpers.replaceOrAddQueryString(editUrl, 'Source', $v8.get_href());
+			renderEditLink(ctx, $h, editUrl);
+		}
+		/**/
+
+		$h.renderEndTag();
+		html.push($h.toString());
+		/* social end */
 
 		return html.join('').replace(/\u200B/g,'');;
 	}
@@ -392,10 +624,18 @@ RBNews.TemplateOverride = function() {
 function RegisterContext() {
 	SP.SOD.executeFunc("clienttemplates.js", "SPClientTemplates", function() {
 		RBNews.TemplateOverride.register();
-	});		
+	});
+
 	ExecuteOrDelayUntilScriptLoaded(function() {
 		if (window.console) window.console.log('SP.INIT.JS loaded');
+
 	}, 'SP.init.js');
+	ExecuteOrDelayUntilScriptLoaded(function() {
+		if (window.console) window.console.log('SP.JS loaded');
+
+		SP.SOD.registerSod('reputation.js', SP.Utilities.Utility.getLayoutsPageUrl('reputation.js'));
+		SP.SOD.executeFunc('reputation.js', false, function() {if (window.console) window.console.log('REPUTATION.JS loaded');});
+	}, 'SP.js');
 }
 
 function RegisterInMDS() {
