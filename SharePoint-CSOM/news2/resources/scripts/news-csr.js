@@ -454,7 +454,7 @@ RBNews.TemplateOverride = function() {
 		html.push(newspostdate);
 		html.push(String.format("<div class='news-post-item-image'>{0}</div>", newsPageImage));
 		html.push(String.format("<div class='new-post-item-by'><span class='ms-metadata ms-textSmall'>By</span><span class='author'>&nbsp;{0}&nbsp;</span><span class='ms-metadata ms-textSmall'>at {1}</span></div>", author, postTime));
-		html.push(String.format("<h2><a href='{0}'>{1}</a></h2>", postUrl, ctx.CurrentItem.Title));
+		html.push(String.format("<div class='new-post-title'><h2><a href='{0}'>{1}</a></h2></div>", postUrl, ctx.CurrentItem.Title));
 		html.push(String.format("<div>{0}</div>", body));
 
 		/* social start */

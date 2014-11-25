@@ -138,7 +138,7 @@
 		</UpdateWebTemplates>
 
 		<Webs>
-			<Web Url="news2" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+			<Web Url="news2" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="True">
 
 				<!--
 				<CustomMasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</CustomMasterUrl>
@@ -324,8 +324,8 @@
 							<Item Title="RB Appointments">
 								<Property Name="Title" Value="RB Appointments" />
 							</Item>
-							<Item Title="T400">
-								<Property Name="Title" Value="T400" />
+							<Item Title="RB EC">
+								<Property Name="Title" Value="RB EC" />
 							</Item>
 						</UpdateItems>
 
@@ -412,7 +412,7 @@
 						<UpdateItems>
 							<!-- add some default news posts -->
 							<Item Title="Understanding Query Rules">
-								<Property Name="PostCategory" Value="Highlights,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="PostCategory" Value="Highlights,RB EC" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Understanding Query Rules" />
 								<Property Name="Body" Value="​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​ ​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​ ​Attention, and so on ~ for example, a query condition can be that a query keyword matches a specified phrase or a term from a dictionary (such as ‘picture’, ‘download’ or a product name from the term store), or that the query is more popular for a certain result type (such as images when for example searching for ‘cameras’), or that it matches a given regular expression (useful for matching phone numbers for example). The correlated actions can consist of promoting individual results on top of the ranked search results (promoting for example the image library), promoting a group of search results (such as image results, or search results federated from a web search engine), or changing the ranking of the search results by modifying the query (by changing the sorting of results or filtering on a content type). Another thing to consider is where you define the rule. Query rules can be created at Search Service Application, Site Collection, or Site level. The rules are inherited by default but you can remove, add, configure and change the order of query rules at each level. Fortunately, it also allows you to test a query and see which rules will fire.​" />
@@ -435,7 +435,7 @@
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
 							</Item>
 							<Item Title="Query Conditions">
-								<Property Name="PostCategory" Value="Highlights,RB Better Business,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="PostCategory" Value="Highlights,RB Better Business,RB EC" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Query Conditions" />
 								<Property Name="Body" Value="​&lt;p&gt;Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?&lt;/p&gt;
@@ -448,7 +448,7 @@
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-02.png" Type="Image" />
 							</Item>
 							<Item Title="Query Rules">
-								<Property Name="PostCategory" Value="Highlights,T400,RB Appointments" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="PostCategory" Value="Highlights,RB EC,RB Appointments" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Query Rules" />
 								<Property Name="Body" Value="​&lt;div&gt;&lt;p&gt;Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues.&lt;/p&gt;
@@ -487,7 +487,7 @@
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
 							</Item>
 							<Item Title="Workflow for Beginners">
-								<Property Name="PostCategory" Value="Highlights,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
+								<Property Name="PostCategory" Value="Highlights,RB EC" Type="LookupValue" LookupListName="Categories" Mult="TRUE" /> 
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Workflow for Beginners" />
 								<Property Name="Body" Value="​&lt;p&gt;One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. 'What's happened to me?' he thought. It wasn't a dream.&lt;/p&gt;
@@ -513,7 +513,7 @@
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-02.png" Type="Image" />
 							</Item>
 							<Item Title="Structural Navigation">
-								<Property Name="PostCategory" Value="Highlights,T400" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="PostCategory" Value="Highlights,RB EC" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
 								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
 								<Property Name="Title" Value="Structural Navigation" />
 								<Property Name="Body" Value="​&lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.&lt;/p&gt;
@@ -524,6 +524,77 @@
 								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
 								<Property Name="NewsRollupImage" Value="~site/SiteAssets/news/images/news-icon-01.png" Type="Image" />
+							</Item>
+							<Item Title="What is Business Connectivity Services?">
+								<Property Name="PostCategory" Value="Highlights,RB EC" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="What is Business Connectivity Services?" />
+								<Property Name="Body" Value="​Business Connectivity Services is a centralized infrastructure in SharePoint 2013 and Office 2013 that supports integrated data solutions. With Business Connectivity Services, you can use SharePoint 2013 and Office 2013 clients as interfaces into data that doesn’t live in SharePoint 2013 itself. For example, this external data may be in a database and it is accessed by using the out-of-the-box Business Connectivity Services connector for that database. Business Connectivity Services can also connect to data that is available through a web service, or data that is published as an OData source or many other types of external data. Business Connectivity Services does this through out-of-the box or custom connectors. The connectors, as the name implies, are the communication bridge between SharePoint 2013 and the external system that hosts the external data. For an overview of using OData in BCS from a developers perspective, see Using OData sources with Business Connectivity Services in SharePoint 2013 in the MSDN Library
+SharePoint 2013 has several ways to present the external data. Probably the most common way is to present the data in an external list. External lists look and feel like regular SharePoint lists, except that they can only display external data. If you want to integrate external data alongside other data in a list or library, you would use an external data column. An external data column is a column type that you can create and add to a SharePoint list just as you would add a Person or Group or Date and Time column, except that it is displays external data. For more information about external data and external lists from an information worker perspective, see Introduction to External Data and Differences between native and external lists on Office.com. SharePoint 2013 includes Business Data Web Parts for presenting and interacting with external data and apps for SharePoint, which can also use external data. For information about apps for SharePoint, see Overview of apps for SharePoint 2013. For an overview of BCS from a developers perspective, see Business Connectivity Services in SharePoint 2013 in the MSDN Library." />
+								<Property Name="PublishedDate" Value="2014-11-13T10:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+							<Item Title="How does Business Connectivity Services work?">
+								<Property Name="PostCategory" Value="Highlights,RB EC" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="How does Business Connectivity Services work?" />
+								<Property Name="Body" Value="Business Connectivity Services has server-side components and client-side components. Business Connectivity Services solutions can include one or the other or both in a single solution. These two component stacks work completely independently of one another. However, they are structured very similarly. They both use the same configuration data. For the server-side, the configuration data is stored in an external content type. External content types are stored in the Business Data Connectivity (BDC) Metadata Store database. For the client-side, the configuration data is stored in a BDC model on the client in the BDC client-side cache. The BDC model is just a version of the external content type that is exported to an XML file. The XML file is imported into the Office client. The server component stack and the client component stack can access the same external content sources. The two stacks are distinguished by the user interfaces, where and how the data that define the external connection and external system are stored, and where the services run. Business Connectivity Services has server-side components and client-side components. Business Connectivity Services solutions can include one or the other or both in a single solution. These two component stacks work completely independently of one another. However, they are structured very similarly. They both use the same configuration data. For the server-side, the configuration data is stored in an external content type. External content types are stored in the Business Data Connectivity (BDC) Metadata Store database. For the client-side, the configuration data is stored in a BDC model on the client in the BDC client-side cache. The BDC model is just a version of the external content type that is exported to an XML file. The XML file is imported into the Office client. The server component stack and the client component stack can access the same external content sources. The two stacks are distinguished by the user interfaces, where and how the data that define the external connection and external system are stored, and where the services run." />
+								<Property Name="PublishedDate" Value="2014-11-25T19:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/compass.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+							<Item Title="Which Business Problems does Business Connectivity Services Solve?">
+								<Property Name="PostCategory" Value="Highlights,RB EC" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Which Business Problems does Business Connectivity Services Solve?" />
+								<Property Name="Body" Value="Every company deals with data that is located in different places, is accessed in different ways, and is used for different purposes. Some of this data might live in SharePoint 2013 and some of it might not. Companies might have complete control over some of that data in file shares and databases and SharePoint 2013, as in the case of their sensitive employee records and content about product research. It is just as likely that they will use other data that they do not have control over, data that is provided by a third party, such as customer information or stock quotes. Companies then have to develop business processes that use the important data from each of those sources to accomplish their business goals.
+Frequently, companies create custom applications that take data from these different data sources — both structured and unstructured — and make them available to their employees through custom interfaces that bring the structured and unstructured data together. This is usually done by in-house developers and it incurs some level of overhead to develop and maintain. Business Connectivity Services gives companies a way to easily integrate external data into SharePoint 2013 solutions and Office 2013 clients. Depending on the type of solution, you can manipulate the data and update it in the external system. You can also take it and work with it offline. Users can then work with SharePoint 2013 data and external data in the familiar SharePoint 2013 and Office 2013 tools." />
+								<Property Name="PublishedDate" Value="2014-11-25T19:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/cogs.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+							<Item Title="Examples of Business Connectivity Services Solve Solutions">
+								<Property Name="PostCategory" Value="Highlights,RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Examples of Business Connectivity Services Solve Solutions" />
+								<Property Name="Body" Value="You can use Business Connectivity Services to build many types of data integration solutions. Here are some examples.
+Help desk   Enterprise help desks that provide internal technical support can use Business Connectivity Services. For example, the support tickets and the knowledge base that the help desk technicians use are stored in two separate databases, both of which are not in SharePoint 2013. By using Business Connectivity Services, the company can retrieve data from both sources, filter and sort it, and then present it for interaction in an external list in SharePoint 2013. What’s more, with the correctly configured permissions, the help desk technicians can manipulate the data, while users with support questions only have permissions to search for their open support tickets to check the status. Technicians and information workers can also access the data through various Office 2013 clients. Open support tickets are routed through predefined steps by workflows. Help desk managers can view current support ticket data by technician in reports and dashboards. Typical reports indicate the number of support issues assigned to each support specialist, the most critical issues currently, and the number of support incidents that are handled by each support specialist during a given time period.
+Artist tracker   A talent agency integrates its database of artists into its internal website. The complete list of artists, their contact information, and schedules can be taken offline in SharePoint Workspace or in Outlook. Recording contracts can be generated and filled from the website, or Outlook, and a workflow guides each contract through its various stages. New artists can be added from the website or from Outlook. By using this solution, agents always have the information that they need and they can perform many key tasks by using familiar Office interfaces.
+Sales dashboard   A sales dashboard application helps sales associates in an organization quickly find the information that they need and enter new data. Sales orders and customer information are managed in an external application, such as Salesforce.com, and integrated into the solution by using Business Connectivity Services. Depending on their roles, team members can view sales analytics information, individual team members’ sales performance data, sales leads, and a customer’s contact information and orders. Sales professionals can view their daily calendars, view tasks assigned to them by their managers, collaborate with team members, and read industry news from a web browser, or from Outlook. By using Word 2013, managers can author monthly status reports that include data from the external systems." />
+								<Property Name="PublishedDate" Value="2014-11-22T20:00:00Z" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/lightbulbs.jpg" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+							<Item Title="Server-Side Solutions">
+								<Property Name="PostCategory" Value="Highlights,RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Server-Side Solutions" />
+								<Property Name="Body" Value="In Business Connectivity Services server-side solutions, users interact only with external data in a browser on a SharePoint site. This can be on any type of SharePoint site that supports external lists, external data columns, external Web Parts, or apps for SharePoint. SharePoint Enterprise Search of external data is supported in the browser as well.
+For Business Connectivity Services to connect to an external data source and interact with the data there, that external system must be defined in a way that Business Connectivity Services understands in an external content type. An external content type contains the name of the external system and what kind of data source it is, what type of authentication to use for connections, where it can connect to, which operations can be performed, and, optionally, any filters and sorting instructions to be used so that only the desired data is returned and that the data is in the correct order." />
+								<Property Name="PublishedDate" Value="2014-11-22T20:00:00Z" />
+								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
+							</Item>
+							<Item Title="Client-Side Solutions">
+								<Property Name="PostCategory" Value="Highlights,RB Better Business" Type="LookupValue" LookupListName="Categories" Mult="TRUE" />
+								<Property Name="ContentTypeId" Value="0x01100074A89C5A2DE6CB4CBCF38FD426520A4F" />
+								<Property Name="Title" Value="Client-Side Solutions" />
+								<Property Name="Body" Value="In the client-side version of Business Connectivity Services solutions, the Office 2013 applications interact with external data. A client-side solution can run independently of SharePoint. Not all of the Office 2013 applications interact with external data and some of them only do so in a read-only manner. The following table provides details on which operations are supported, how the applications can access the data, and how the connection is made. Before you can work with external data in an Office 2013 client you must have the prerequisite software listed here Prerequisite software that is needed to work with external data on Office.com
+In the client-side solutions, there is some work that must be done before users can access external data through the Office client applications.
+First, when the developer creates the external content type, it must be configured to support Office clients.
+If the solution uses Access, the external content type must be exported as a BDC file and then imported into Access.
+If the solution uses Word, InfoPath, or Excel, the application will install Microsoft SQL Server Compact 4.0 and Microsoft .NET Framework 4, and then connect to the external data the first time that the application is used.
+If the solution uses Visio, you will use the Link Data To Shapes feature in Visio to browse to an external list and connect to it." />
+								<Property Name="PublishedDate" Value="2014-11-25T09:00:00Z" />
+								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImageOrientation" Value="Left" />
+								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
 						</UpdateItems>
 

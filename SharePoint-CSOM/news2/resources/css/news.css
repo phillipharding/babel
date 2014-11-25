@@ -439,7 +439,7 @@
         font-size: 1.1em;
     }
     .ms-blog-postBoxMargin .new-post-item-by {
-        margin: 10px 0;
+        margin: 5px 0 0 0;
         font-size: 1.3em;
     }
 
@@ -455,10 +455,15 @@
             font-size: 1.1em;
         }
 
+    .new-post-title h2,
 	.news-post-item h2 {
 		margin: 0 0 5px 0; 
 	}
-		.news-post-item h2 a:link,
+        .new-post-title h2 a:link,
+        .new-post-title h2 a:visited,
+        .new-post-title h2 a:hover,
+        .new-post-title h2 a:active,
+        .news-post-item h2 a:link,
 		.news-post-item h2 a:visited,
 		.news-post-item h2 a:hover,
 		.news-post-item h2 a:active {
