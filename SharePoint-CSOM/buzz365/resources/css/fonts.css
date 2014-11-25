@@ -1,0 +1,59 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("../fonts/flaticon.eot");
+	src: url("../fonts/flaticon.eot#iefix") format("embedded-opentype"),
+	url("../fonts/flaticon.woff") format("woff"),
+	url("../fonts/flaticon.ttf") format("truetype"),
+	url("../fonts/flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+font-style: normal;
+}.flaticon-arrow18:before {
+	content: "\e000";
+}
+.flaticon-circular116:before {
+	content: "\e001";
+}
+.flaticon-facebook44:before {
+	content: "\e002";
+}
+.flaticon-favourites7:before {
+	content: "\e003";
+}
+.flaticon-inbox3:before {
+	content: "\e004";
+}
+.flaticon-information13:before {
+	content: "\e005";
+}
+.flaticon-linkedin21:before {
+	content: "\e006";
+}
+.flaticon-pencil43:before {
+	content: "\e007";
+}
+.flaticon-person277:before {
+	content: "\e008";
+}
+.flaticon-plus24:before {
+	content: "\e009";
+}
+.flaticon-small58:before {
+	content: "\e00a";
+}
+.flaticon-social18:before {
+	content: "\e00b";
+}
+.flaticon-social71:before {
+	content: "\e00c";
+}
+.flaticon-weibo3:before {
+	content: "\e00d";
+}
+.flaticon-whistle9:before {
+	content: "\e00e";
+}

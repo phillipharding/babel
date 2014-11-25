@@ -138,7 +138,7 @@
 		</UpdateWebTemplates>
 
 		<Webs>
-			<Web Url="news2" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="True">
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="True">
 
 				<!--
 				<CustomMasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</CustomMasterUrl>

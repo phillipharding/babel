@@ -234,6 +234,7 @@ function Get-CSOMConnection {
             $clientContext.Load($csomRootweb.AllProperties)
             $clientContext.Load($csomWeb.AllProperties)
             $clientContext.ExecuteQuery()
+            $webversion = Get-WebVersion -Web $csomWeb -ClientContext $clientContext
             $csomHasconnection = $true
         }
         catch { 
@@ -251,6 +252,7 @@ function Get-CSOMConnection {
                 Write-Host "Loaded On-Premises rootweb $($csomRootweb.Url)" -ForegroundColor Green
                 Write-Host "Loaded On-Premises web $($csomWeb.Url)" -ForegroundColor Green
             }
+            Write-Host "Web version is $($webversion)"-ForegroundColor Green
         } else {
             # no connection!!
         }
