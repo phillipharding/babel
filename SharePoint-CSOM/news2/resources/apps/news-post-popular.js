@@ -82,10 +82,13 @@ news.popular.render = function(data) {
         $('.news-post-popular').html(data.error);
         return;
     }
-    if (!data.length) return;
+    var $e = $('.news-post-popular ul');
+    if (!data.length) {
+        $e.find('li.loading').fadeOut(250).remove();
+        return;
+    }
 
-    var $e = $('.news-post-popular ul'),
-        tip = options.hasCategory ? 'popular articles in this category from the last 30 days' : 'popular articles from the last 30 days';
+    var tip = options.hasCategory ? 'popular articles in this category from the last 30 days' : 'popular articles from the last 30 days';
     $("<li/>")
         .addClass('title')
         .append($('<h2>').attr('title',tip).text('Popular'))
@@ -100,9 +103,11 @@ news.popular.render = function(data) {
                     .text(e.Title) )
             .appendTo($e);
     });
-    $e.stop().fadeIn(100);
+    $e.find('li.loading').fadeOut(250).remove();
 }
 news.popular.start = function() {
+    var $e = $('.news-post-popular ul');
+    $e.stop().fadeIn(100);
     news.popular.getPosts()
         .done(news.popular.render);
 }
