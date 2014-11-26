@@ -119,7 +119,6 @@
 						ID="1" 
 						Description="Creates a new Corporate News subsite or configures an existing one if it already exists" 
 						ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news2\resources">
-
 		<!--
 			remove webtemplates for all languages
 			then add the Blog/Publishing/Ent Search Centre/Ent Wiki/Team/Project webtemplates for english language 
@@ -138,11 +137,11 @@
 		</UpdateWebTemplates>
 
 		<Webs>
-			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="True">
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
 
 				<!--
-				<CustomMasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</CustomMasterUrl>
-				<MasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</MasterUrl>
+				<CustomMasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive.master</CustomMasterUrl>
+				<MasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive.master</MasterUrl>
 				-->
 				
 				<Features>

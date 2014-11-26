@@ -1,7 +1,7 @@
 ﻿cls
 $configurationName = "Masterpage"
 $configurationId = "1"
-$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news"
+$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news2"
 
 # load and init the CSOM modules
 ."..\modules\load-spo-modules.ps1"

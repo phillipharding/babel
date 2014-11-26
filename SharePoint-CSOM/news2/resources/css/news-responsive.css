@@ -56,8 +56,15 @@ footer,header,hgroup,nav,section,summary {
 
 /* phablet (portrait) */
 @media screen and (max-width: 768px) {
-	.news-post-date-cloud { margin: 0 20px 10px 0px; }
-	.news-post-category-cloud { margin: 10px 20px 0 0px; }
+	.news-post-date-cloud { margin: 0 0 10px 0px; }
+	.news-post-category-cloud { margin: 10px 0 0 0; }
+
+	.news-post-item .box {
+		margin: 0 0 20px;
+	}
+	.news-post-container #pageTitle {
+		margin-right: 0;
+	}
 
 /* start: stacked display */
 
@@ -93,14 +100,14 @@ footer,header,hgroup,nav,section,summary {
 
 @media screen and (min-width: 481px) and (max-width: 767px) {
 	.news-post-item .box {
-		margin-right: 10px;	
+		margin-right: 0;	
 	}
 }
 
 /* smartphone */
 @media screen and (max-width: 480px) {
 	.news-post-item .box {
-		margin-right: 10px;	
+		margin-right: 0;	
 	}
 }
 

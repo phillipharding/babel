@@ -1,0 +1,46 @@
+<Configurations ResourcesPath="">
+	<Configuration Name="Masterpage" ID="1" Description="Creates a responsive masterpage" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\buzz365\resources">
+
+		<Catalogs>
+			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
+			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+			<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+
+			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+				<Folder Url="">
+					<Folder Url="Buzz365">
+						<File Path="Buzz365.master" Url="Buzz365.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365" />
+							<Property Name="MasterPageDescription" Value="The RBCOM Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+						<File Path="Buzz365-responsive.master" Url="Buzz365-responsive.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365-responsive" />
+							<Property Name="MasterPageDescription" Value="The RBCOM[M] Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+
+						<Folder Url="css">
+							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
+							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
+						</Folder>
+						<Folder Url="js">
+							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+						</Folder>
+					</Folder>
+				</Folder>
+			</Catalog>
+		</Catalogs>
+
+		<!-- set the masterpage on the corp news site -->
+		<Webs>
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+				<CustomMasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive.master</CustomMasterUrl>
+				<MasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive.master</MasterUrl>
+			</Web>
+		</Webs>
+
+	</Configuration>
+</Configurations>

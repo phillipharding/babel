@@ -1,10 +1,3 @@
-<%-- SPG:
-
-This HTML file has been associated with a SharePoint Master Page (.master file) carrying the same name.  While the files remain associated, you will not be allowed to edit the .master file, and any rename, move, or deletion operations will be reciprocated.
-
-To build the master page directly from this HTML file, simply edit the page as you normally would.  Use the Snippet Generator at https://rbcom.sharepoint.com/_layouts/15/ComponentHome.aspx?Url=https%3A%2F%2Frbcom%2Esharepoint%2Ecom%2F%5Fcatalogs%2Fmasterpage%2FRB%2FBuzz365%2Emaster to create and customize useful SharePoint entities, then copy and paste them as HTML snippets into your HTML code.   All updates to this file will automatically sync to the associated Master Page.
-
- --%>
 <%@Master language="C#"%>
 <%@Register TagPrefix="SharePoint" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"%>
 <%@Register TagPrefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"%>
@@ -14,104 +7,81 @@ To build the master page directly from this HTML file, simply edit the page as y
 <%@Register TagPrefix="SearchWC" Namespace="Microsoft.Office.Server.Search.WebControls" Assembly="Microsoft.Office.Server.Search, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"%>
 <!DOCTYPE html >
 <SharePoint:SPHtmlTag runat="server" id="SPHtmlTag" dir="&lt;%$Resources:wss,multipages_direction_dir_value%&gt;">
-    <head runat="server">
-        <meta http-equiv="X-UA-Compatible" content="IE=10" />
-        
-        
-        
-        
-        <meta name="GENERATOR" content="Microsoft SharePoint" />
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <meta http-equiv="Expires" content="0" />
-        <SharePoint:RobotsMetaTag runat="server">
-        </SharePoint:RobotsMetaTag>
-        <SharePoint:PageTitle runat="server">
-            <asp:ContentPlaceHolder id="PlaceHolderPageTitle" runat="server">
-                <SharePoint:ProjectProperty Property="Title" runat="server">
-                </SharePoint:ProjectProperty>
-            </asp:ContentPlaceHolder>
-        </SharePoint:PageTitle>
-        <SharePoint:StartScript runat="server">
-        </SharePoint:StartScript>
-        <SharePoint:CssLink runat="server" Version="15">
-        </SharePoint:CssLink>
-        <SharePoint:CacheManifestLink runat="server">
-        </SharePoint:CacheManifestLink>
-        <SharePoint:PageRenderMode runat="server" RenderModeType="Standard">
-        </SharePoint:PageRenderMode>
-        <SharePoint:ScriptLink language="javascript" name="core.js" OnDemand="true" runat="server" Localizable="false">
-        </SharePoint:ScriptLink>
-        <SharePoint:ScriptLink language="javascript" name="menu.js" OnDemand="true" runat="server" Localizable="false">
-        </SharePoint:ScriptLink>
-        <SharePoint:ScriptLink language="javascript" name="callout.js" OnDemand="true" runat="server" Localizable="false">
-        </SharePoint:ScriptLink>
-        <SharePoint:ScriptLink language="javascript" name="sharing.js" OnDemand="true" runat="server" Localizable="false">
-        </SharePoint:ScriptLink>
-        <SharePoint:ScriptLink language="javascript" name="suitelinks.js" OnDemand="true" runat="server" Localizable="false">
-        </SharePoint:ScriptLink>
-        <SharePoint:CustomJSUrl runat="server">
-        </SharePoint:CustomJSUrl>
-        <SharePoint:SoapDiscoveryLink runat="server">
-        </SharePoint:SoapDiscoveryLink>
-        <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">
-            <asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server">
-            </asp:ContentPlaceHolder>
-            <SharePoint:DelegateControl runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true">
-            </SharePoint:DelegateControl>
-            <asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" runat="server">
-            </asp:ContentPlaceHolder>
-        </SharePoint:AjaxDelta>
-        <SharePoint:CssRegistration Name="Themable/corev15.css" runat="server">
-        </SharePoint:CssRegistration>
-        <SharePoint:AjaxDelta id="DeltaSPWebPartManager" runat="server">
-            <WebPartPages:SPWebPartManager runat="server">
-            </WebPartPages:SPWebPartManager>
-        </SharePoint:AjaxDelta>
-        
-        <meta name="viewport" content="width=device-width" />
-        
-        <link rel="stylesheet" href="/_catalogs/masterpage/RB/css/pure-min.css" />
-        <link rel="stylesheet" href="/_catalogs/masterpage/RB/css/jquery.sidr.dark.css" />
-        <link rel="stylesheet" href="/_catalogs/masterpage/RB/css/grids-responsive-min.css" />
-        <link href="/_catalogs/masterpage/RB/css/custom.css" rel="stylesheet" />
-        <link href="/_catalogs/masterpage/RB/css/fonts.css" rel="stylesheet" />
-        </head>
-    <body onhashchange="if (typeof(_spBodyOnHashChange) != 'undefined') _spBodyOnHashChange();"><SharePoint:SPClientIDGenerator runat="server" ServerControlID="DeltaPlaceHolderMain;DeltaPlaceHolderPageTitleInTitleArea;DeltaPlaceHolderUtilityContent" /><SharePoint:ImageLink runat="server" /><SharePoint:SharePointForm onsubmit="if (typeof(_spFormOnSubmitWrapper) != 'undefined') {return _spFormOnSubmitWrapper();} else {return true;}" runat="server"><asp:ScriptManager id="ScriptManager" runat="server" EnablePageMethods="false" EnablePartialRendering="true" EnableScriptGlobalization="false" EnableScriptLocalization="true" />
-        
-        
-        
+<head runat="server">
+    <meta name="viewport" content="initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta name="GENERATOR" content="Microsoft SharePoint" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Expires" content="0" />
+    <SharePoint:RobotsMetaTag runat="server" />
+    <SharePoint:PageTitle runat="server">
+        <asp:ContentPlaceHolder id="PlaceHolderPageTitle" runat="server">
+            <SharePoint:ProjectProperty Property="Title" runat="server" />
+        </asp:ContentPlaceHolder>
+    </SharePoint:PageTitle>
+    <SharePoint:StartScript runat="server" />
+    <SharePoint:CssLink runat="server" Version="15"/>
+    <SharePoint:CacheManifestLink runat="server"></SharePoint:CacheManifestLink>
+    <SharePoint:PageRenderMode runat="server" RenderModeType="Standard"></SharePoint:PageRenderMode>
+    <SharePoint:ScriptLink language="javascript" name="core.js" OnDemand="true" runat="server" Localizable="false" />
+    <SharePoint:ScriptLink language="javascript" name="menu.js" OnDemand="true" runat="server" Localizable="false" />
+    <SharePoint:ScriptLink language="javascript" name="callout.js" OnDemand="true" runat="server" Localizable="false" />
+    <SharePoint:ScriptLink language="javascript" name="sharing.js" OnDemand="true" runat="server" Localizable="false" />
+    <SharePoint:ScriptLink language="javascript" name="suitelinks.js" OnDemand="true" runat="server" Localizable="false" />
+    <SharePoint:CustomJSUrl runat="server" />
+    <SharePoint:SoapDiscoveryLink runat="server" />
+    <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">
+        <asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server" />
+        <SharePoint:DelegateControl runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true" />
+        <asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" Visible="true" runat="server" />
+    </SharePoint:AjaxDelta>
+    <SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
+    <SharePoint:AjaxDelta id="DeltaSPWebPartManager" runat="server">
+        <WebPartPages:SPWebPartManager runat="server"></WebPartPages:SPWebPartManager>
+    </SharePoint:AjaxDelta>
+
+    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/pure-min.css%>" After="corev15.css" runat="server" />
+    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/jquery.sidr.dark.css%>" After="corev15.css" runat="server" />
+    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/grids-responsive-min.css%>" After="corev15.css" runat="server" />
+    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/custom.css%>" After="corev15.css" runat="server" />
+    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/fonts.css%>" After="corev15.css" runat="server" />
+</head>
+<body onhashchange="if (typeof(_spBodyOnHashChange) != 'undefined') _spBodyOnHashChange();">
+    <SharePoint:SPClientIDGenerator runat="server" ServerControlID="DeltaPlaceHolderMain;DeltaPlaceHolderPageTitleInTitleArea;DeltaPlaceHolderUtilityContent" />
+    <SharePoint:ImageLink runat="server" />
+    <SharePoint:SharePointForm onsubmit="if (typeof(_spFormOnSubmitWrapper) != 'undefined') {return _spFormOnSubmitWrapper();} else {return true;}" runat="server">
+        <asp:ScriptManager id="ScriptManager" runat="server" EnablePageMethods="false" EnablePartialRendering="true" EnableScriptGlobalization="false" EnableScriptLocalization="true" />
+
         <SharePoint:SPSecurityTrimmedControl runat="server" HideFromSearchCrawler="true" EmitDiv="true">
             <div id="TurnOnAccessibility" style="display:none" class="s4-notdlg noindex">
                 <a id="linkTurnOnAcc" href="#" class="ms-accessible ms-acc-button" onclick="SetIsAccessibilityFeatureEnabled(true);UpdateAccessibilityUI();document.getElementById('linkTurnOffAcc').focus();return false;">
-                    <SharePoint:EncodedLiteral runat="server" text="&lt;%$Resources:wss,master_turnonaccessibility%&gt;" EncodeMethod="HtmlEncode">
-                    </SharePoint:EncodedLiteral>
+                    <SharePoint:EncodedLiteral runat="server" text="&lt;%$Resources:wss,master_turnonaccessibility%&gt;" EncodeMethod="HtmlEncode"></SharePoint:EncodedLiteral>
                 </a>
             </div>
             <div id="TurnOffAccessibility" style="display:none" class="s4-notdlg noindex">
                 <a id="linkTurnOffAcc" href="#" class="ms-accessible ms-acc-button" onclick="SetIsAccessibilityFeatureEnabled(false);UpdateAccessibilityUI();document.getElementById('linkTurnOnAcc').focus();return false;">
-                    <SharePoint:EncodedLiteral runat="server" text="&lt;%$Resources:wss,master_turnoffaccessibility%&gt;" EncodeMethod="HtmlEncode">
-                    </SharePoint:EncodedLiteral>
+                    <SharePoint:EncodedLiteral runat="server" text="&lt;%$Resources:wss,master_turnoffaccessibility%&gt;" EncodeMethod="HtmlEncode"></SharePoint:EncodedLiteral>
                 </a>
             </div>
         </SharePoint:SPSecurityTrimmedControl>
+    
         <div id="ms-designer-ribbon">
             <PublishingRibbon:PublishingRibbon runat="server" />
-            
         </div>
+
         <SharePoint:SPSecurityTrimmedControl runat="server" AuthenticationRestrictions="AnonymousUsersOnly">
-            <wssucw:Welcome runat="server" EnableViewState="false">
-            </wssucw:Welcome>
+            <wssucw:Welcome runat="server" EnableViewState="false"></wssucw:Welcome>
         </SharePoint:SPSecurityTrimmedControl>
         
         <div id="s4-workspace">
             <div id="s4-bodyContainer">
                 <header>
                     <a id="mobile-nav" href="#mobile-nav">
-                        <img src="/_catalogs/masterpage/RB/images/mob-nav.png" alt="" />
+                        <img src="/_catalogs/masterpage/Buzz365/images/mob-nav.png" alt="" />
                     </a>
                     <div class="pure-g" height="76">
                         <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-2 social">
-                            <img class="pure-img logo" src="/_catalogs/masterpage/RB/images/rb-the-buzz.png" alt="RB - The Buzz" height="52" width="126" />
+                            <img class="pure-img logo" src="/_catalogs/masterpage/Buzz365/images/rb-the-buzz.png" alt="RB - The Buzz" height="52" width="126" />
                             <ul>
                                 <li>
                                     <a href="http://www.facebook.com/discoverRB">
@@ -150,7 +120,7 @@ To build the master page directly from this HTML file, simply edit the page as y
                                 <div class="pure-u-1">
                                     <ul>
                                         <li>
-                                            <img class="icons" src="/_catalogs/masterpage/RB/images/icons.png" />
+                                            <img class="icons" src="/_catalogs/masterpage/Buzz365/images/icons.png" />
                                         </li>
                                         <li>
                                             <div class="search">
@@ -608,11 +578,11 @@ To build the master page directly from this HTML file, simply edit the page as y
                     </div>
                 </div>
                 <!-- End of Main Container -->
-                <script src="/_catalogs/masterpage/RB/js/jquery-2.1.1.min.js" type="text/javascript">//<![CDATA[
+                <script src="/_catalogs/masterpage/Buzz365/js/jquery-2.1.1.min.js" type="text/javascript">//<![CDATA[
                 
                 
                 //]]></script>
-                <script src="/_catalogs/masterpage/RB/js/jquery.sidr.min.js" type="text/javascript">//<![CDATA[
+                <script src="/_catalogs/masterpage/Buzz365/js/jquery.sidr.min.js" type="text/javascript">//<![CDATA[
                 
                 
                 //]]></script>
