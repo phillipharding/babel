@@ -52,7 +52,7 @@ $(function() {
             .addClass('month')
             .append($('<a>')
                     .attr('rel',12-i)
-                    .attr('href', _spPageContextInfo.webServerRelativeUrl + '/Lists/Posts/Date.aspx?StartDateTime='+som+'&EndDateTime='+eom+'&LMY='+months[m]+' '+y)
+                    .attr('href', _spPageContextInfo.webServerRelativeUrl + '/SitePages/Date.aspx?StartDateTime='+som+'&EndDateTime='+eom+'&LMY='+months[m]+' '+y)
                     .attr('title', 'show all news in ' + months[m])
                     .text(months[m]) )
             .appendTo($e);

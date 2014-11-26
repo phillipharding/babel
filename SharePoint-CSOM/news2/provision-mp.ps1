@@ -24,8 +24,8 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configFiles = @("masterpage")
-$configFiles | ? { $_ -eq "masterpage" } | % {
+$configFiles = @("mp")
+$configFiles | ? { $_ -eq "mp" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration

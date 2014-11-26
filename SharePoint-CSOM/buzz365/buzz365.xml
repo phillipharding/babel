@@ -1,118 +1,5 @@
-<Configurations ResourcesPath="">
-<!-- Allowed schema
-
-<Configurations ResourcesPath=""/>
-	<Configuration Name="" ID="" Description="" ResourcesPath=""/>
-		<Webs/>
-			<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
-				<TermStore Languages="1031, 1033, 1036, 1053"/>
-					<TermGroup Name="LOB2" ID="{b3fe8d52-506b-4d51-8acf-95ab0218a8e3}"/>
-						<TermSet Name="MegaMenu" ID="{d00ca60f-e1d8-41cc-921a-31f629590ec0}" Language="1033" Navigation="True" Tagging="False" Open="False"/>
-							<Term Name="Root" ID="{60ad9b4a-5074-431e-bea4-c3efb4ca72fd}" Language="1033" Description="Root MegaMenu Nodes"/>
-								<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB"/>
-
-				<Fields/>
-					<Field/>
-				<ContentTypes/>
-					<ContentType/>
-				<Pages/>
-					<RemovePage/>
-					<Page Url="" ReplaceContent="True|False" PageLayout="" WelcomePage="True|False"/>
-						<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
-						<Property Type="LookupValue" LookupListName="Categories"/>
-						<Property Type="Image"/>
-						<Property Type="HTML"/>
-						<Property/>
-				<Lists/>
-					<List/>
-						<ContentType/>
-						<RemoveContentType/>
-						<DeleteItems/>
-							<Item/>
-						<UpdateItems/>
-							<Item/>
-								<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
-								<Property Type="LookupValue" LookupListName="Categories"/>
-								<Property Type="Image"/>
-								<Property Type="HTML"/>
-								<Property/>
-						<Views/>
-							<View DisplayName="" DefaultView="True" PersonalView="False" Type="html" ServerRelativeUrl="" BaseViewID="7"/>
-								<Query/>
-									<OrderBy/>
-									<GroupBy/>
-									<Where/>
-								<ViewFields/>
-									<FieldRef/>
-								<RowLimit Paged="True">30</RowLimit>
-								<JSLink/>
-						<Folder ResourcesPath=""/>
-							<Folder ResourcesPath=""/>
-								<Folder ResourcesPath=""/>
-							<File Path="" Url="" WelcomePage="True|False" ReplaceContent="True" ReplaceContentTokens="True" Flags="nocheckout"/>
-								<Property Type="LookupValue" LookupListName="Categories" Mult="TRUE"/>
-								<Property Type="LookupValue" LookupListName="Categories"/>
-								<Property Type="Image"/>
-								<Property Type="HTML"/>
-								<Property/>
-								<AllUsersWebPart WebPartZoneID="" WebPartOrder="" ListTitle=""/>
-									<WebPart/>
-										<![CDATA[]]>
-									<Query/>
-										<OrderBy/>
-										<GroupBy/>
-										<Where/>
-									<ViewFields/>
-										<FieldRef/>
-									<RowLimit Paged="True">30</RowLimit>
-									<JSLink/>
-			
-				<Features/>
-					<WebFeatures/>
-						<ActivateFeatures/>
-							<Feature/>
-						<DeactivateFeatures/>
-							<Feature/>
-					<SiteFeatures/>
-						<ActivateFeatures/>
-							<Feature/>
-						<DeactivateFeatures/>
-							<Feature/>
-				<Catalogs/>
-					<Catalog/>
-				<UserCustomActions/>
-					<UserCustomAction Scope="Web|Site"/>
-				<RemoveUserCustomActions/>
-					<UserCustomAction Scope="Web|Site"/>
-				<PropertyBag/>
-					<PropertyBagValue Key="" Value="" Indexable="true|false" />
-
-				<WelcomePage/>
-				<CustomMasterUrl/>
-				<MasterUrl/>
-				<NoCrawl/>
-
-				<ColorPaletteUrl/>
-				<FontSchemeUrl/>
-				<BackgroundImageUrl/>
-
-				<SetWebtemplates Inherit="true|false"/>
-					<lcid id="all"></lcid>
-					<lcid id="1033"/>
-						<webtemplate name="BLOG#0"/>
-						<webtemplate name="SRCHCEN#0"/>
-
-				<UpdateWebtemplates Inherit="true|false"/>
-					<lcid id="all" remove="true|false"></lcid>
-					<lcid id="1033" remove="true|false"/>
-						<webtemplate name="BLOG#0" remove="true|false"/>
-						<webtemplate name="SRCHCEN#0" remove="true|false"/>
-
-				<Webs/>
-					<Web Url="weburl" Title="" Description="" WebTemplate="STS#0" AlwaysDeleteWeb="False"/>
--->
-
-	<Configuration Name="Masterpage" ID="1" Description="Creates a responsive masterpage" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\buzz365\resources">
+<Configurations ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\buzz365\resources">
+	<Configuration Name="Masterpage" ID="0" Description="Provisions the minimal set of assets for the Buzz365 Responsive Masterpages">
 
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
@@ -122,16 +9,60 @@
 			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
 				<Folder Url="">
 					<Folder Url="Buzz365">
-						<File Path="Buzz365.master" Url="Buzz365.master" ReplaceContent="True">
+						<File Path="Buzz365-responsive-v1.master" Url="Buzz365-responsive-v1.master" ReplaceContent="True">
 							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
-							<Property Name="Title" Value="Buzz365" />
-							<Property Name="MasterPageDescription" Value="The RBCOM Buzz365 Responsive Masterpage" />
+							<Property Name="Title" Value="Buzz365-responsive-v1" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v1 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
 						</File>
-						<File Path="Buzz365-responsive.master" Url="Buzz365-responsive.master" ReplaceContent="True">
+						<File Path="Buzz365-responsive-v2.master" Url="Buzz365-responsive-v2.master" ReplaceContent="True">
 							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
-							<Property Name="Title" Value="Buzz365-responsive" />
-							<Property Name="MasterPageDescription" Value="The RBCOM[M] Buzz365 Responsive Masterpage" />
+							<Property Name="Title" Value="Buzz365-responsive-v2" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+
+						<Folder Url="css">
+							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
+						</Folder>
+						<Folder Url="js">
+							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+						</Folder>
+					</Folder>
+				</Folder>
+			</Catalog>
+		</Catalogs>
+
+		<!-- set the masterpage on the corp news site -->
+		<Webs>
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+				<CustomMasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</CustomMasterUrl>
+				<MasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</MasterUrl>
+			</Web>
+		</Webs>
+
+	</Configuration>
+
+	<Configuration Name="Masterpage" ID="1" Description="Provisions the full set of assets for the Buzz365 Responsive Masterpages">
+
+		<Catalogs>
+			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
+			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+			<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+
+			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+				<Folder Url="">
+					<Folder Url="Buzz365">
+						<File Path="Buzz365-responsive-v1.master" Url="Buzz365-responsive-v1.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365-responsive-v1" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v1 Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+						<File Path="Buzz365-responsive-v2.master" Url="Buzz365-responsive-v2.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365-responsive-v2" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
 						</File>
 
@@ -198,8 +129,8 @@
 		<!-- set the masterpage on the corp news site -->
 		<Webs>
 			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
-				<CustomMasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive.master</CustomMasterUrl>
-				<MasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive.master</MasterUrl>
+				<CustomMasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</CustomMasterUrl>
+				<MasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</MasterUrl>
 			</Web>
 		</Webs>
 

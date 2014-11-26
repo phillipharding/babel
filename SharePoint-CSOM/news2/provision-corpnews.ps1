@@ -8,10 +8,10 @@ $connector = Init-CSOMConnector
 # set connection url, set credentials using Windows Credential Manager
 #$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
 #$connector.csomCredentialLabel = "CAM SPO"
-$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
-$connector.csomCredentialLabel = "RB.COM SPO"
-#$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-#$connector.csomCredentialLabel = "SPO"
+#$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
+#$connector.csomCredentialLabel = "RB.COM SPO"
+$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+$connector.csomCredentialLabel = "SPO"
 #$connector.csomUrl = "http://pub.pdogs.local/"
 #$connector.csomCredentialLabel = "OnPrem"
 
@@ -20,10 +20,10 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configurationName = "Masterpage"
-$configurationId = "1" # use 1 for the full provisioning and 0 for minimal provisioning
-$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\buzz365"
-$configurationFiles = @("buzz365")
+$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news2"
+$configurationName = "News"
+$configurationId = "0" # use 0 for provisioning to SPO w/Buzz365 Masterpage, and 1 for On-Prem wo/Masterpage
+$configurationFiles = @("corpnews")
 
 $configurationFiles | ? { $_ -match ".*" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
