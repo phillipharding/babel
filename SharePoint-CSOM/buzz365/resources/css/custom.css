@@ -26,6 +26,8 @@ body#no-bg {
 	background: none;
 }
 
+.PlaceHolderPageImage {
+}
 .container {
 	max-width: 1200px;
 	margin: auto;
@@ -190,9 +192,9 @@ RB Header
 ========================================================================== */
 
 header {
-	margin: 0px auto 25px auto;
-	max-width: 1200px;
-	padding: 15px 0px 0px 0px;
+	margin: 0 10px 15px 10px;
+	padding: 10px 0 0;
+	/*max-width: 1200px;*/
 }
 
 header ul,
@@ -206,6 +208,11 @@ header .icons {
 header ul li {
 	display: inline-block;
 	float: left;
+	transition: all 250ms;
+}
+header ul li:hover {
+	opacity: 0.5;
+	transition: all 250ms;
 }
 
 header .social ul {
@@ -222,12 +229,14 @@ header .social img {
 }
 
 header ul li .search {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	color: #ccc;
+	margin-left: 10px;
+	min-height: 34px;
 	min-width: 200px;
 	padding: 8px 5px 5px 8px;
-	margin-left: 10px;
 	text-align: left;
-	color: #CCC;
-	border: 1px solid #CCC;
 }
 
 header ul li i {
@@ -505,12 +514,12 @@ header img.user {
  	display: none;
  }
 
-  #mobile-nav {
-      display: none;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-    }
+#mobile-nav {
+	display: none;
+	position: absolute;
+	top: 20px;
+	left: 0px;
+}
 
  .sidr-inner li {
   display: block;
@@ -555,9 +564,8 @@ Main Menu
 ========================================================================== */
 
 section#main-menu {
-	margin: 0px auto 20px auto;
-	max-width: 1200px;
-
+	margin: 0 10px 10px;
+/*	max-width: 1200px;*/
 }
 
 /* ==========================================================================
@@ -1254,6 +1262,75 @@ ul#tab li.tab-content .edit-faves i {
 
 
 /* ==========================================================================
+ Office365/SharePoint Override CSS
+ ========================================================================== */
+
+.ms-core-pageTitle {
+	font-size: 2.7em;
+}
+.ms-core-pageTitle, 
+.ms-core-pageTitle a {
+	color: #415A53;
+	font-family: "Segoe UI Light","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+}
+
+#titleAreaBox {
+	margin: auto 10px;
+}
+.buzz365-responsive-v1 #titleAreaBox {
+	margin: auto 10px auto 0;
+}
+#contentRow {
+	padding: 0 10px 8px;
+}
+#s4-titlerow {
+	height: auto;
+	margin-bottom: 0;
+	margin-top: 0;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+#ctl00_PlaceHolderPageImage_ctl00 {
+	vertical-align: top;
+	width: 140px;
+}
+.ms-core-sideNavBox-removeLeftMargin {
+	margin-left: -10px;
+	padding-right: 20px;
+}
+.ms-core-listMenu-root {
+	margin: 0;
+	padding-left: 10px;
+}
+.ms-core-listMenu-verticalBox > .ms-core-listMenu-item, 
+.ms-core-listMenu-verticalBox li.static > .ms-core-listMenu-item {
+	display: block;
+	padding: 5px 10px;
+}
+.ms-core-listMenu-verticalBox .ms-listMenu-editLink {
+	border: 1px solid transparent;
+	margin: 15px 0 0 9px;
+}
+
+.ms-core-overlay {
+	background-color: rgba(255, 255, 255, 0.45);
+}
+#s4-workspace {
+	overflow: auto;
+	position: relative;
+}
+#s4-bodyContainer {
+	-webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+	-moz-box-shadow:    -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+	box-shadow:         -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+
+	background-color: rgba(255, 255, 255, 0.95);
+	margin: 0 auto;
+	max-width: 1200px;
+	margin-bottom: 35px;
+}
+/* ==========================================================================
  Media Queries
  ========================================================================== */
 
@@ -1346,6 +1423,24 @@ ul#tab li.tab-content .edit-faves i {
  }
 }
 
+@media screen and  (max-width: 360px) {
+
+	.ms-core-pageTitle {
+	    font-size: 2.1em;
+	}
+	header .social ul {
+		margin-top: 5px;
+	}
+	header ul li:first-child i,
+	header ul li:first-of-type i {
+		margin-left: 0;
+	}
+	#s4-titlerow {
+		margin-top: 10px;
+	}
+
+}
+
 @media screen and  (max-width: 767px) {
 
 	.archive, .cat-select, .date-button,
@@ -1408,7 +1503,8 @@ ul#tab li.tab-content .edit-faves i {
     }
 
 	header {
-		padding: 15px 15px 0px 15px;
+		padding: 0 15px 0 35px;
+		margin: 0 10px;
 	}
 
 	header .logo {
@@ -1466,36 +1562,40 @@ ul#tab li.tab-content .edit-faves i {
 /* .o365spo.o365cst.o365cs-base .o365cs-o365logo {
 	background-image:url()
 }*/
+
 /* ==========================================================================
  Fixes
  ========================================================================== */
- /* Custom Styles Fixing Responsive Images in Ribbon */
- *, *:before, *:after {
- -webkit-box-sizing: content-box; /*border-box causes many issues with SP*/
- -moz-box-sizing: content-box; /*border-box causes many issues with SP*/
- box-sizing: content-box; /*border-box causes many issues with SP*/
- }
- * [class^="span"], * [class^="span"]:before, , * [class^="span"]:after {
- -webkit-box-sizing: border-box; /*re-enable border-box for framework spans*/
- -moz-box-sizing: border-box; /*re-enable border-box for framework spans*/
- box-sizing: border-box; /*re-enable border-box for framework spans*/
- }
- img {
- max-width: none;
- width: auto;
- }
- * [class^="span"] img {
- max-width: 100%; /*for images inside span grid*/
- }
- #scriptWPQ2 img, img.ms-webpart-menuArrowImg, #applist img {
- /*within a span may still need to have width of image not 100% for SP2013 OOTB features/imges*/
- width: auto;
- max-width: none;
+/* Custom Styles Fixing Responsive Images in Ribbon */
+*, *:before, *:after {
+	-webkit-box-sizing: content-box; /*border-box causes many issues with SP*/
+	-moz-box-sizing: content-box; /*border-box causes many issues with SP*/
+	box-sizing: content-box; /*border-box causes many issues with SP*/
+}
+* [class^="span"], * [class^="span"]:before, , * [class^="span"]:after {
+	-webkit-box-sizing: border-box; /*re-enable border-box for framework spans*/
+	-moz-box-sizing: border-box; /*re-enable border-box for framework spans*/
+	box-sizing: border-box; /*re-enable border-box for framework spans*/
+}
+img {
+	max-width: none;
+	width: auto;
+}
+* [class^="span"] img {
+	max-width: 100%; /*for images inside span grid*/
+}
+/*#scriptWPQ2 img, */
+img.ms-webpart-menuArrowImg, 
+#applist img {
+	/* within a span may still need to have width of image not 100% for SP2013 OOTB features/imges */
+	width: auto;
+	max-width: none;
 }
 .ms-siteactions-imgspan {
 	float: none;
 	margin: 0px;
 }
+
 /* Custom Styles to Fix Ribbon Layout Issues */
 #s4-ribbonrow [class*="span"] {
 	float: none;
@@ -1511,8 +1611,9 @@ input.ms-cui-cb-input {
 	max-width: none;
 }
 .container * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
+
 /* ==========================================================================
  Corp Comms css
  ========================================================================== */
@@ -1532,6 +1633,4 @@ input.ms-cui-cb-input {
 	color: #fff;
 	font-family: sans-serif;
 }
-/* ==========================================================================
- Phil Harding's css
- ========================================================================== */
+

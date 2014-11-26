@@ -1,8 +1,4 @@
 ﻿cls
-$configurationName = "Masterpage"
-$configurationId = "1"
-$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news"
-
 # load and init the CSOM modules
 ."..\modules\load-spo-modules.ps1"
 
@@ -24,20 +20,27 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configFiles = @("masterpage")
-$configFiles | ? { $_ -eq "masterpage" } | % {
+$configurationName = "Masterpage"
+$configurationId = "1" # use 1 for the full provisioning and 0 for minimal provisioning
+$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\buzz365"
+$configurationFiles = @("buzz365")
+
+$configurationFiles | ? { $_ -match ".*" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration
     $configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName' and @ID='$configurationId']")
     if ($configurationXml -eq $null) {
-        Write-Host "Could not find configuration $configurationName#$configurationId`n" -ForegroundColor Red
+        Write-Host "Could not find configuration [$configurationName#$configurationId]`n" -ForegroundColor Red
         return
     }
-    Write-Host "Applying Configuration $configurationName#$configurationId - $($configurationXml.Description)`n" -ForegroundColor Yellow
-    
-    Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
-    Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
+    Write-Host "Applying Configuration [$configurationName#$configurationId]`n$($configurationXml.Description)`n" -ForegroundColor Yellow
+    Write-Host "Press any key to continue..." -ForegroundColor Yellow
+    $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
 
+    if (-not (($x.VirtualKeyCode -eq 17) -and ($x.ControlKeyState -match "LeftCtrlPressed"))) {
+        Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
+        Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
+    }
 }
 "Done."
