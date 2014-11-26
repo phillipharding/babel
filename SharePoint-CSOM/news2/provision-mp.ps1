@@ -1,7 +1,7 @@
 ﻿cls
 $configurationName = "Masterpage"
 $configurationId = "1"
-$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news"
+$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news2"
 
 # load and init the CSOM modules
 ."..\modules\load-spo-modules.ps1"
@@ -24,8 +24,8 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configFiles = @("masterpage")
-$configFiles | ? { $_ -eq "masterpage" } | % {
+$configFiles = @("mp")
+$configFiles | ? { $_ -eq "mp" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
 
     # get configuration

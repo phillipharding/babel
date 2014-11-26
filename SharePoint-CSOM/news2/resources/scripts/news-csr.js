@@ -129,13 +129,21 @@ RBNews.TemplateOverride = function() {
 	
 		if (_config.BaseViewID == 8) { /* category view */
 		   _config.CategoryId = $v0['CategoryId'];
+		   _config.CategoryTitle = $v0['CategoryTitle'];
+		   if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.CategoryTitle)) {
+		   	_config.CategoryTitle = decodeURIComponent(_config.CategoryTitle);
+		   } else {
+		   	_config.CategoryTitle = "Unknown Category";
+		   }
 
 			if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.PrevHref)) {
 				_config.PrevHref = SP.ScriptHelpers.replaceOrAddQueryString(_config.PrevHref, 'CategoryId', _config.CategoryId);
+				_config.PrevHref = SP.ScriptHelpers.replaceOrAddQueryString(_config.PrevHref, 'CategoryTitle', _config.CategoryTitle);
 				ctx.ListData['PrevHref'] = _config.PrevHref;
 			}
 			if (!SP.ScriptHelpers.isNullOrUndefinedOrEmpty(_config.NextHref)) {
 				_config.NextHref = SP.ScriptHelpers.replaceOrAddQueryString(_config.NextHref, 'CategoryId', _config.CategoryId);
+				_config.NextHref = SP.ScriptHelpers.replaceOrAddQueryString(_config.NextHref, 'CategoryTitle', _config.CategoryTitle);
 				ctx.ListData['NextHref'] = _config.NextHref;
 			}
 		} else if (_config.BaseViewID == 9) { /* Date view */
