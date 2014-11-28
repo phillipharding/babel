@@ -194,7 +194,6 @@ RB Header
 header {
 	margin: 0 10px 15px 10px;
 	padding: 10px 0 0;
-	/*max-width: 1200px;*/
 }
 
 header ul,
@@ -210,9 +209,12 @@ header ul li {
 	float: left;
 	transition: all 250ms;
 }
-header ul li:hover {
+header ul li.badge:hover {
 	opacity: 0.5;
 	transition: all 250ms;
+}
+header ul li a:hover {
+	text-decoration: none;
 }
 
 header .social ul {
@@ -221,6 +223,19 @@ header .social ul {
 	clear: none;
 	padding-left: 0px;
 	margin-top: 24px;
+	margin-left: 10px;
+}
+header .corporate ul {
+	clear: both;
+	float: none;
+	text-align: right;
+	margin-right: 5px;
+	padding-left: 0px;
+	margin-top: 5px;
+}
+header .corporate ul li {
+	float: none;
+	clear: both;
 }
 
 header .social img {
@@ -228,21 +243,9 @@ header .social img {
 	display: block;
 }
 
-header ul li .search {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	color: #ccc;
-	margin-left: 10px;
-	min-height: 34px;
-	min-width: 200px;
-	padding: 8px 5px 5px 8px;
-	text-align: left;
-}
-
 header ul li i {
 	color: #E93591;
 	text-align: right;
-	margin-left: 10px;
 	font-size: 25px;
 }
 
@@ -510,33 +513,61 @@ header img.user {
  Off Canvas Menus
  ========================================================================== */
 
- #no-bg #mobile-nav {
- 	display: none;
- }
+.mobile-button {}
+.mobile-button:hover { opacity: 0.8; }
+.mobile-button.active { background-color: #E24912!important; }
+#no-bg #mobile-nav,
+#no-bg #mobile-search { display: none; }
 
 #mobile-nav {
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-bottomright: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+
+	background-color: #415a6c;
+	color: #fff;
 	display: none;
+	left: 0;
+	padding: 6px 9px;
 	position: absolute;
 	top: 20px;
-	left: 0px;
+}
+#mobile-search {
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+
+	background-color: #415a6c;
+	color: #fff;
+	display: none;
+	padding: 6px 9px;
+	position: absolute;
+	right: 0;
+	top: 20px;
 }
 
- .sidr-inner li {
+.sidr-inner li {
   display: block;
   position: relative;
- }
+}
 
- .sidr-inner .sidr-class-dropdown:before {
+.sidr-inner .sidr-class-dropdown:before {
   content: '\f149';
   font-family: FontAwesome;
   position: absolute;
   right: 20px;
   font-size: 14px;
- }
+}
 
- .sidr-inner {
+.sidr-inner {
  	background-color: #466076;
- }
+}
 
  .sidr li a {
  	font-size: 15px !important;
@@ -565,7 +596,6 @@ Main Menu
 
 section#main-menu {
 	margin: 0 10px 10px;
-/*	max-width: 1200px;*/
 }
 
 /* ==========================================================================
@@ -1260,6 +1290,59 @@ ul#tab li.tab-content .edit-faves i {
  
  }
 
+/* ==========================================================================
+ Mobile Header Search
+ ========================================================================== */
+
+.mobile-header-search { display: none; }
+	.mobile-header-search .search-input { margin: 0; }
+		.mobile-header-search .search-input .search-input-box { margin: 0; }
+		.mobile-header-search .search-input a:link
+		.mobile-header-search .search-input a:visited
+		.mobile-header-search .search-input a:hover
+		.mobile-header-search .search-input a:active { margin: 0; text-decoration: none; }
+		.mobile-header-search .search-input a:hover { cursor: pointer; }
+			.mobile-header-search .search-input a .fa { margin: 0; }
+* ==========================================================================
+ SIDR Mobile Header Search
+ ========================================================================== */
+.sidr-inner {
+}
+	.sidr-inner .sidr-class-search-input { 
+		margin: 0; 
+	}
+		.sidr-inner .sidr-class-search-input .sidr-class-search-input-box { 
+			display: inline-block;
+			width: 90%;
+		}
+		.sidr-inner .sidr-class-search-input a:link
+		.sidr-inner .sidr-class-search-input a:visited
+		.sidr-inner .sidr-class-search-input a:hover
+		.sidr-inner .sidr-class-search-input a:active { 
+			margin: 0; 
+			text-decoration: none;
+		}
+		.sidr-inner .sidr-class-search-input a:hover {
+			cursor: pointer;
+		}
+			.sidr-inner .sidr-class-search-input a .sidr-class-fa { 
+				-moz-font-feature-settings: normal;
+				-moz-font-language-override: normal;
+				display: inline-block;
+				font-family: FontAwesome;
+				font-size: inherit;
+				font-size-adjust: none;
+				font-stretch: normal;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: normal;
+				line-height: 1;
+				text-rendering: auto;
+    		}
+			.sidr-inner .sidr-class-search-input a .sidr-class-fa-search:before {
+				content: "\f002";
+			}
+
 
 /* ==========================================================================
  Office365/SharePoint Override CSS
@@ -1273,7 +1356,6 @@ ul#tab li.tab-content .edit-faves i {
 	color: #415A53;
 	font-family: "Segoe UI Light","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
 }
-
 #titleAreaBox {
 	margin: auto 10px;
 }
@@ -1290,7 +1372,6 @@ ul#tab li.tab-content .edit-faves i {
 	padding-bottom: 0;
 	padding-top: 0;
 }
-
 #ctl00_PlaceHolderPageImage_ctl00 {
 	vertical-align: top;
 	width: 140px;
@@ -1312,7 +1393,6 @@ ul#tab li.tab-content .edit-faves i {
 	border: 1px solid transparent;
 	margin: 15px 0 0 9px;
 }
-
 .ms-core-overlay {
 	background-color: rgba(255, 255, 255, 0.45);
 }
@@ -1330,6 +1410,70 @@ ul#tab li.tab-content .edit-faves i {
 	max-width: 1200px;
 	margin-bottom: 35px;
 }
+
+/* ==========================================================================
+ Header Search Box / SearchBoxScriptWebPart Search Box
+ ========================================================================== */
+
+.mobile-header-search-box {
+	clear: both;
+	margin: 5px 0 0 0;
+	text-align: left;
+	display: none;
+	transition: all 500ms ease;
+}
+.mobile-header-search-box.active {
+	display: block;
+	transition: all 500ms ease;
+}
+.header-search-box {
+	margin: 5px 2px 0 0;
+	text-align: right;
+}
+.ms-srch-sb-border, 
+.ms-srch-sb-borderFocused,
+.ms-srch-sbLarge {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+.ms-srch-sb-border, 
+.ms-srch-sb-borderFocused {
+	margin-left: 10px;
+	padding: 3px 8px;
+	margin-top: 5px;
+}
+.mobile-header-search-box .ms-srch-sb-border, 
+.mobile-header-search-box .ms-srch-sb-borderFocused {
+	margin-left: 0;
+}
+.ms-srch-sb > input {
+	background-color: transparent;
+	border-style: none;
+	display: inline-block;
+	font-size: 1.4em;
+	height: auto;
+	margin: 0 0 0 5px;
+	outline-style: none;
+	padding: 0 1px 0 0;
+	right: 0;
+	width: 180px;
+	color: #415A6C;
+}
+.mobile-header-search-box .ms-srch-sb > input { 
+	width: 180px; 
+}
+.ms-srch-sb-searchImg, 
+.ms-srch-sb-searchImg:hover {
+	left: -7px;
+	top: -40px;
+}
+.ms-srch-sb > .ms-srch-sb-searchLink {
+	margin-left: 5px;
+	height: 22px;
+	width: 23px;
+}
+
+
 /* ==========================================================================
  Media Queries
  ========================================================================== */
@@ -1337,17 +1481,40 @@ ul#tab li.tab-content .edit-faves i {
  @media screen and (min-width: 980px) {
 
  	ul.slimmenu li > ul > li ul {
-    display: block;
-    left: 0;
-    position: absolute;
-    top: 100%;
-    width: 100%;
-    z-index: 999;
+		display: block;
+		left: 0;
+		position: absolute;
+		top: 100%;
+		width: 100%;
+		z-index: 999;
+	}
 }
-  
+@media screen and (max-width: 980px) {
+	.ms-srch-sb > input {
+		font-size: 1.25em;
+		width: 165px;
+	}
+	.mobile-header-search-box .ms-srch-sb > input { 
+		font-size: 1.3em;
+		width: 170px;
+	}
 }
 
 @media screen and (max-width: 480px) {
+
+	.ms-core-pageTitle {
+	    font-size: 2.1em;
+	}
+	header .social ul {
+		margin-top: 5px;
+		margin-left: 0;
+		float: none;
+		clear: both;
+		display: block;
+	}
+	#s4-titlerow {
+		margin-top: 10px;
+	}
 
 	.archive, .cat-select, .date-button,
 	.news-article {
@@ -1359,10 +1526,8 @@ ul#tab li.tab-content .edit-faves i {
 	}
 
 	ul.slimmenu li {
-   
-    border-right: 0px;
-
-}
+		border-right: 0px;
+	}
 
 	ul.slimmenu.collapsed li .sub-collapser {
     height: 30px;
@@ -1379,7 +1544,8 @@ ul#tab li.tab-content .edit-faves i {
       display: none;
     }
 
-     #mobile-nav {
+     #mobile-nav,
+     #mobile-search {
       display: block;
     }
 
@@ -1392,11 +1558,6 @@ ul#tab li.tab-content .edit-faves i {
 		margin: 0px auto 0px auto;
 	}
 
-	header ul, 
-	header img.user {
-	display: none;
-	}
-
 	.container {
 		padding: 0px 15px 0px 15px;
 	}
@@ -1406,11 +1567,11 @@ ul#tab li.tab-content .edit-faves i {
 	}
 
 	.marg-r {
-	margin-right: 0px;
+		margin-right: 0px;
 	}
 
 	.marg-l {
-	margin-left: 0px;
+		margin-left: 0px;
 	}
 
  	.world-clocks h4 {
@@ -1423,25 +1584,24 @@ ul#tab li.tab-content .edit-faves i {
  }
 }
 
-@media screen and  (max-width: 360px) {
-
-	.ms-core-pageTitle {
-	    font-size: 2.1em;
-	}
-	header .social ul {
+@media screen and  (max-width: 767px) {
+	/* hide desktop search box */
+	.header-search-box { display: none; }
+	/* pad the corporate buttons leftward to make way for the mobile search button */
+	header .corporate ul {
+		margin-right: 35px;
 		margin-top: 5px;
 	}
-	header ul li:first-child i,
-	header ul li:first-of-type i {
-		margin-left: 0;
-	}
-	#s4-titlerow {
-		margin-top: 10px;
+	/* increase the size of the corp icons */
+	header .corporate ul .badge .fa-lg {
+		font-size: 1.9em;
 	}
 
-}
-
-@media screen and  (max-width: 767px) {
+	/* hide search refiners */
+	.ms-ref-refiner,
+	#Refinement {
+		display:none;
+	}
 
 	.archive, .cat-select, .date-button,
 	.news-article {
@@ -1498,7 +1658,8 @@ ul#tab li.tab-content .edit-faves i {
       display: none;
     }
 
-     #mobile-nav {
+     #mobile-nav,
+     #mobile-search {
       display: block;
     }
 
@@ -1510,11 +1671,6 @@ ul#tab li.tab-content .edit-faves i {
 	header .logo {
 		max-width: 250px;
 		margin: 0px auto 0px auto;
-	}
-
-	header ul, 
-	header img.user {
-	display: none;
 	}
 
 	.container {
@@ -1544,9 +1700,30 @@ ul#tab li.tab-content .edit-faves i {
    
 }
 
+@media screen and  (max-width: 360px) {
+
+	.mobile-header-search-box { margin-left: -35px; }
+	.mobile-header-search-box .ms-srch-sb > input { 
+		font-size: 1em;
+		width: 130px;
+	}
+
+}
+
+@media screen and  (max-width: 320px) {
+
+	header .corporate ul .badge .fa-lg {
+	    font-size: inherit;
+	}
+
+
+}
+
 @media screen and (min-width: 768px) and (max-width: 979px) {
    
 }
+
+
 /* ==========================================================================
  365 Changes
  ========================================================================== */
@@ -1555,13 +1732,8 @@ ul#tab li.tab-content .edit-faves i {
 .o365cs-base.o365cst .o365cs-topnavBGColor {
 	background-color: #e93591!important;
 }
-.ms-srch-sb-border,
-.ms-srch-sb ms-srch-sb-border {
-	border: none!important;
-}
-/* .o365spo.o365cst.o365cs-base .o365cs-o365logo {
-	background-image:url()
-}*/
+
+
 
 /* ==========================================================================
  Fixes

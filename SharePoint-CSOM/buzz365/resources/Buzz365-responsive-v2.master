@@ -47,6 +47,8 @@
     <SharePoint:ScriptLink runat="server" language="javascript" LoadAfterUI="false" Defer="false" 
                            Name="~sitecollection/_catalogs/masterpage/Buzz365/js/jquery.sidr.min.js" />
     <SharePoint:ScriptLink runat="server" language="javascript" LoadAfterUI="true" Defer="false" 
+                           Name="~sitecollection/_catalogs/masterpage/Buzz365/js/megamenu.js" />
+    <SharePoint:ScriptLink runat="server" language="javascript" LoadAfterUI="true" Defer="false" 
                            Name="~sitecollection/_catalogs/masterpage/Buzz365/js/site.js" />
 </head>
 <body class='buzz365-responsive-v2'>
@@ -469,7 +471,10 @@
 <!-- START BUZZ HEADER -->
 <header>
   <a id="mobile-nav" href="#mobile-nav">
-        <img src='<asp:Literal Text="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/images/mob-nav.png%>" runat="server" />' alt="" />
+    <i class="fa fa-bars fa-2x"></i>
+  </a>
+  <a id="mobile-search" href="#mobile-search">
+    <i class="fa fa-search fa-2x"></i>
   </a>
   <div class="pure-g" height="76">
       <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-2 social">
@@ -479,32 +484,42 @@
           <ul>
               <li>
                   <a href="http://www.facebook.com/discoverRB">
-                      <i class="flaticon-facebook44">
-                      </i>
+                    <span class="fa-stack fa-lg">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>
                   </a>
               </li>
               <li>
                   <a href="http://twitter.com/discoverRB">
-                      <i class="flaticon-social71">
-                      </i>
+                    <span class="fa-stack fa-lg">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
                   </a>
               </li>
               <li>
                   <a href="http://www.linkedin.com/company/discoverRB">
-                      <i class="flaticon-linkedin21">
-                      </i>
+                    <span class="fa-stack fa-lg">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                    </span>
                   </a>
               </li>
               <li>
                   <a href="http://www.youtube.com/user/RBworldwide">
-                      <i class="flaticon-social18">
-                      </i>
+                    <span class="fa-stack fa-lg">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+                    </span>
                   </a>
               </li>
               <li>
                   <a href="http://weibo.com/">
-                      <i class="flaticon-weibo3">
-                      </i>
+                    <span class="fa-stack fa-lg">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                    </span>
                   </a>
               </li>
           </ul>
@@ -517,15 +532,18 @@
                         <img class="icons" src='<asp:Literal Text="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/images/icons.png%>" runat="server" />' alt="" />
                       </li>
                       <li>
-                          <div class="search">
+                          <div id='header-search-box' class="search">
                               <!-- Search Box Start -->
-                                        <SharePoint:AjaxDelta id="DeltaPlaceHolderSearchArea" BlockElement="true" CssClass="ms-mpSearchBox ms-floatRight" runat="server">
-                                            <asp:ContentPlaceHolder id="PlaceHolderSearchArea" runat="server">
-                                                <div id="searchInputBox">
-                                                  <SharePoint:DelegateControl runat="server" ControlId="SmallSearchInputBox" />
-                                                </div>
-                                            </asp:ContentPlaceHolder>
-                                        </SharePoint:AjaxDelta>
+                              <SearchWC:SearchBoxScriptWebPart runat="server" id="searchInputBox" DefaultDropdownNodeId="1001" ServerInitialRender="true" UseSharedSettings="true" ChromeType="none" EmitStyleReference="false" />
+                              <div style='display:none!important;'>
+                                <SharePoint:AjaxDelta id="DeltaPlaceHolderSearchArea" BlockElement="true" CssClass="ms-mpSearchBox ms-floatRight" runat="server">
+                                    <asp:ContentPlaceHolder id="PlaceHolderSearchArea" runat="server">
+                                        <div id="searchInputBox">
+                                          <SharePoint:DelegateControl runat="server" ControlId="SmallSearchInputBox" />
+                                        </div>
+                                    </asp:ContentPlaceHolder>
+                                </SharePoint:AjaxDelta>
+                              </div>
                               <!-- Search Box End -->
                           </div>
                       </li>
