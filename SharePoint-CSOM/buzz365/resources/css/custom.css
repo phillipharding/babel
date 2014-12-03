@@ -1593,9 +1593,9 @@ ul#tab li.tab-content .edit-faves i {
 		margin-top: 5px;
 	}
 	/* increase the size of the corp icons */
-	header .corporate ul .badge .fa-lg {
+	/*header .corporate ul .badge .fa-lg {
 		font-size: 1.9em;
-	}
+	}*/
 
 	/* hide search refiners */
 	.ms-ref-refiner,
@@ -1708,13 +1708,23 @@ ul#tab li.tab-content .edit-faves i {
 		width: 130px;
 	}
 
+	/* align the corporate buttons leftward to make way for the mobile search button */
+	header .corporate ul {
+		margin-right: 0;
+		margin-top: 5px;
+		text-align: left;
+	}
+	header .corporate ul li {
+		margin-right: 5px;
+	}
+
 }
 
 @media screen and  (max-width: 320px) {
 
-	header .corporate ul .badge .fa-lg {
+/*	header .corporate ul .badge .fa-lg {
 	    font-size: inherit;
-	}
+	}*/
 
 
 }
