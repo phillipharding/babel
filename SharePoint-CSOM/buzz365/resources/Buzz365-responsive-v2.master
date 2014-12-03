@@ -531,12 +531,12 @@
       </div>
       <div class="pure-u-1-3 corporate">
         <ul>
-            <li class='badge'>
+            <li class='badge disabled'>
                 <a href="#">
                   <i class="fa fa-institution fa-lg"></i>
                 </a>
             </li>
-            <li class='badge'>
+            <li class='badge disabled'>
                 <a href="#">
                   &nbsp;<i class="fa fa-exclamation-triangle fa-lg"></i>
                 </a>
