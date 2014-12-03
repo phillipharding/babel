@@ -92,12 +92,12 @@ header ul li {
   transition: all 250ms;
 }
 
-header ul li.badge:hover {
+header ul li.badge:hover a {
   opacity: 0.5;
   transition: all 250ms;
 }
 
-header ul li.badge.disabled:hover {
+header ul li.badge.disabled:hover a {
   opacity: 1;
 }
 
@@ -602,6 +602,22 @@ section#main-menu {
  Office365/SharePoint Override CSS
  ========================================================================== */
 
+.js-callout-mainElement {
+  z-index: 520;
+}
+.js-callout-closeButton {
+    height: 24px;
+    width: 24px;
+}
+#corbcom-siteusage_callout .js-callout-body {
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+#corbcom-siteusage_callout .js-callout-content {
+    width: 640px!important;
+    max-width: 640px;
+}
+
 .ms-core-pageTitle {
   font-size: 2.7em;
 }
@@ -761,6 +777,12 @@ section#main-menu {
 .ms-ref-refinername:visited {
   width: 140px;
 }
+.ms-srch-item h3,
+.ms-srch-item h3 a,
+.ms-srch-item h3 a.ms-srch-item-link,
+.ms-srch-item h3 a.ms-srch-item-link:visited {
+  color: #e93591;
+}
 
 
 /* ==========================================================================
@@ -795,6 +817,9 @@ section#main-menu {
 
 @media screen and (max-width: 480px) {
 
+  #corbcom-siteusage_callout .js-callout-content {
+      width: 370px!important;
+  }
 
   .ms-srch-sbLarge-navWidth {
     width: 180px;
@@ -813,9 +838,12 @@ section#main-menu {
   .ms-srch-item {
     width: 90%;
   }
-
   .ms-srch-item-path {
     width: 100%;
+  }
+  .ms-srch-ellipsis {
+    white-space: normal;
+    overflow: visible;
   }
 
   .ms-core-pageTitle {
@@ -885,6 +913,10 @@ section#main-menu {
 
 @media screen and  (max-width: 767px) {
 
+  #corbcom-siteusage_callout .js-callout-content {
+      width: 370px!important;
+  }
+
 	/* hide desktop search box */
   .header-search-box {
     display: none;
@@ -894,27 +926,10 @@ section#main-menu {
     margin-right: 35px;
     margin-top: 5px;
   }
-	/* increase the size of the corp icons */
-	/*header .corporate ul .badge .fa-lg {
-		font-size: 1.9em;
-	}*/
 
 	/* hide search refiners */
   .ms-ref-refiner,
 	#Refinement {
-    display: none;
-  }
-
-  .archive, .cat-select, .date-button,
-	.news-article {
-    margin-right: 0px;
-  }
-
-  #o365 div {
-    text-align: center;
-  }
-
-  #o365 ul li {
     display: none;
   }
 
@@ -987,6 +1002,16 @@ section#main-menu {
 
 @media screen and  (max-width: 360px) {
 
+  .ms-srch-item {
+    width: 300px;
+  }
+  .ms-srch-item-path {
+    width: 296px;
+  }
+
+  #corbcom-siteusage_callout .js-callout-content {
+      width: 270px!important;
+  }
 
   .mobile-header-search-box {
     margin-left: -35px;
@@ -1011,10 +1036,6 @@ section#main-menu {
 
 @media screen and  (max-width: 320px) {
 
-
-/*	header .corporate ul .badge .fa-lg {
-	    font-size: inherit;
-	}*/;
 }
 
 @media screen and (min-width: 768px) and (max-width: 979px) {
