@@ -465,24 +465,24 @@
         </div>
 </div>
 <div id="s4-workspace" class="ms-core-overlay">
-<div id="s4-bodyContainer">
+<div id="s4-bodyContainer" class='maxw-container'>
 <!-- START BUZZ -->
 
 <!-- START BUZZ HEADER -->
 <header>
-  <a id="mobile-nav" href="#mobile-nav">
+  <a id="mobile-nav" href="#mobile-nav" class='mobile-button'>
     <i class="fa fa-bars fa-2x"></i>
   </a>
-  <a id="mobile-search" href="#mobile-search">
+  <a id="mobile-search" href="#mobile-search" class='mobile-button'>
     <i class="fa fa-search fa-2x"></i>
   </a>
   <div class="pure-g" height="76">
-      <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-2 social">
-         <SharePoint:SPSimpleSiteLink CssClass="SPSimpleSiteLink" runat="server" id="onetidProjectPropertyTitleGraphic">
+      <div class="pure-u-2-3 social">
+          <SharePoint:SPSimpleSiteLink CssClass="SPSimpleSiteLink" runat="server" id="onetidProjectPropertyTitleGraphic">
             <img class="pure-img logo" src='<asp:Literal Text="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/images/rb-the-buzz.png%>" runat="server" />' alt="RB - The Buzz" />
-         </SharePoint:SPSimpleSiteLink>
+          </SharePoint:SPSimpleSiteLink>
           <ul>
-              <li>
+              <li class='badge'>
                   <a href="http://www.facebook.com/discoverRB">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
@@ -490,7 +490,7 @@
                     </span>
                   </a>
               </li>
-              <li>
+              <li class='badge'>
                   <a href="http://twitter.com/discoverRB">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
@@ -498,7 +498,7 @@
                     </span>
                   </a>
               </li>
-              <li>
+              <li class='badge'>
                   <a href="http://www.linkedin.com/company/discoverRB">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
@@ -506,7 +506,7 @@
                     </span>
                   </a>
               </li>
-              <li>
+              <li class='badge'>
                   <a href="http://www.youtube.com/user/RBworldwide">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
@@ -514,7 +514,7 @@
                     </span>
                   </a>
               </li>
-              <li>
+              <li class='badge'>
                   <a href="http://weibo.com/">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
@@ -523,36 +523,43 @@
                   </a>
               </li>
           </ul>
-      </div>
-      <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-2">
-          <div class="pure-g">
-              <div class="pure-u-1">
-                  <ul>
-                      <li>
-                        <img class="icons" src='<asp:Literal Text="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/images/icons.png%>" runat="server" />' alt="" />
-                      </li>
-                      <li>
-                          <div id='header-search-box' class="search">
-                              <!-- Search Box Start -->
-                              <SearchWC:SearchBoxScriptWebPart runat="server" id="searchInputBox" DefaultDropdownNodeId="1001" ServerInitialRender="true" UseSharedSettings="true" ChromeType="none" EmitStyleReference="false" />
-                              <div style='display:none!important;'>
-                                <SharePoint:AjaxDelta id="DeltaPlaceHolderSearchArea" BlockElement="true" CssClass="ms-mpSearchBox ms-floatRight" runat="server">
-                                    <asp:ContentPlaceHolder id="PlaceHolderSearchArea" runat="server">
-                                        <div id="searchInputBox">
-                                          <SharePoint:DelegateControl runat="server" ControlId="SmallSearchInputBox" />
-                                        </div>
-                                    </asp:ContentPlaceHolder>
-                                </SharePoint:AjaxDelta>
-                              </div>
-                              <!-- Search Box End -->
-                          </div>
-                      </li>
-                  </ul>
-              </div>
+          <div id='mobile-header-search-box' class='mobile-header-search-box'>
+              <!-- Search Box Start -->
+              <SearchWC:SearchBoxScriptWebPart runat="server" id="mobileSearchInputBox" DefaultDropdownNodeId="1001" ServerInitialRender="true" UseSharedSettings="true" ChromeType="none" EmitStyleReference="false" />
+              <!-- Search Box End -->
           </div>
+      </div>
+      <div class="pure-u-1-3 corporate">
+        <ul>
+            <li class='badge'>
+                <a href="#">
+                  <i class="fa fa-institution fa-lg"></i>
+                </a>
+            </li>
+            <li class='badge'>
+                <a href="#">
+                  &nbsp;<i class="fa fa-exclamation-triangle fa-lg"></i>
+                </a>
+            </li>
+        </ul>
+        <div id='header-search-box' class='header-search-box'>
+            <!-- Search Box Start -->
+            <SearchWC:SearchBoxScriptWebPart runat="server" id="searchInputBox" DefaultDropdownNodeId="1001" ServerInitialRender="true" UseSharedSettings="true" ChromeType="none" EmitStyleReference="false" />
+            <!-- Search Box End -->
+        </div>
       </div>
   </div>
 </header>
+
+<div style='display:none!important;'>
+  <SharePoint:AjaxDelta id="DeltaPlaceHolderSearchArea" BlockElement="true" CssClass="ms-mpSearchBox ms-floatRight" runat="server">
+      <asp:ContentPlaceHolder id="PlaceHolderSearchArea" runat="server">
+          <div id="searchInputBox">
+            <SharePoint:DelegateControl runat="server" ControlId="SmallSearchInputBox" />
+          </div>
+      </asp:ContentPlaceHolder>
+  </SharePoint:AjaxDelta>
+</div>
 <!-- END BUZZ HEADER -->
 
 <!-- START MEGA MENU/MEGA-MENU -->
@@ -560,8 +567,7 @@
   <nav>
       <ul class="nav">
           <li>
-              <a class="pink" href="#">About RB
-              </a>
+              <a class="pink" href="#">About RB</a>
               <!-- Start of Menu Content -->
               <div>
                   <div class="nav-column">
@@ -1217,6 +1223,25 @@
 
 </div>
 <!-- end #s4-bodyContainer -->
+
+<!-- start RB footer -->
+<footer class='maxw-container'>
+  <div class='pure-g'>
+    <div class='pure-u-1 pure-u-sm-19-24'>
+      <ul>
+        <!--
+        <li><a href="#"><i class="fa fa-link fa-lg"></i>&nbsp;Footer Link</a></li>
+        -->
+      </ul>
+    </div>
+    <div class='pure-u-1 pure-u-sm-5-24'>
+      <div class='bottom-strap'>
+        <span><i class="fa fa-copyright fa-lg"></i>&nbsp;Reckitt Benckiser.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end RB footer -->
 
 <%@ Register TagPrefix="wssuc" TagName="HelpPanel" src="~/_controltemplates/15/HelpPanel.ascx" %>
     <SharePoint:AjaxDelta id="DeltaHelpPanel" runat="server">

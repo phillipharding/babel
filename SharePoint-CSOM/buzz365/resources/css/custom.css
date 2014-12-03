@@ -28,6 +28,10 @@ body#no-bg {
 
 .PlaceHolderPageImage {
 }
+
+.maxw-container {
+	max-width: 1200px;
+}
 .container {
 	max-width: 1200px;
 	margin: auto;
@@ -58,133 +62,6 @@ ul li {
 	list-style-type: none;
 	margin: 0px;
 	padding: 0px;
-}
-
-/* ==========================================================================
-1200 max width
-========================================================================== */
-
-#test-2 .container,
-#test-2 header {
-	max-width: 1200px;
-}
-
-#test-2 li.sub-menu a {
-	background-color: #CCC;
-	margin: 0px;
-	padding: 10px 0px 10px 30px;
-}
-
-#test-2 .pad-15 {
-	padding: 15px;
-}
-
-#test-2 .bg-grey {
-	background-color: #CCC !important;
-}
-
-#test-2 .web-part {
-	background-color: #FFF;
-	min-height: 250px;
-}
-
-#test-2 .web-part img {
-	display: block;
-	width: 100%;
-	height: auto;
-}
-
-/* ==========================================================================
-100% Width Test
-========================================================================== */
-
-#test-100 .container,
-#test-100 header {
-	max-width: 99%;
-}
-
-#test-100 li.sub-menu a {
-	background-color: #CCC;
-	margin: 0px;
-	padding: 10px 0px 10px 30px;
-}
-
-#test-100 .pad-15 {
-	padding: 15px;
-}
-
-#test-100 .bg-grey {
-	background-color: #CCC !important;
-}
-
-#test-100 .web-part {
-	background-color: #FFF;
-	min-height: 250px;
-}
-
-#test-100 .web-part img {
-	display: block;
-	width: 100%;
-	height: auto;
-}
-
-/* ==========================================================================
-365 Header
-========================================================================== */
-
-#o365 {
-	margin: 0px;
-	width: 100%;
-	padding: 0px 0px 5px 30px;
-	height: 35px;
-	background-color: #e93591;
-}
-
-#o365 img {
-	display: block;
-	float: left;
-	max-height: 25px;
-	width: auto;
-	margin: 5px 20px 0px 0px;
-}
-
-#o365 div.user {
-	float: right;
-	background-color: #CCC;
-	height: 35px;
-	padding-left: 10px;
-}
-
-#o365 ul {
-	margin: 0px;
-	padding: 0px;
-	float: right;
-}
-
-#o365 ul li {
-	display: inline-block;
-	color: #FFF;
-	height: 35px;
-	border-left: 1px solid #ED5DA7;
-	position: relative;
-}
-
-#o365 ul li a {
-	font-size: 13px;
-	display: block;
-	height: 100%;
-	padding: 10px 20px 0px 20px;
-	width: 100%;
-}
-
-
-#o365 ul li a:hover {
-	color: #fff;
-
-}
-
-#o365 ul li a:hover {
-text-decoration: underline;
 }
 
 /* ==========================================================================
@@ -259,9 +136,67 @@ header img.user {
 }
 
 /* ==========================================================================
+ RB Footer
+ ========================================================================== */
+footer {
+	-webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+	-moz-box-shadow:    -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+	box-shadow:         -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+
+	background-color: #415A6C;
+	background-color: rgba(65, 90, 108, 0.95);
+	margin: 0 auto;
+	margin-bottom: 35px;
+	padding: 10px 12px;
+
+	font-size: 12px;
+}
+
+	footer ul {
+		margin: 0 20px 0 0;
+		padding: 0;
+	}
+		footer ul li {
+				color: #fff;
+				display: inline-block;
+				list-style: none;
+				margin: 0;
+				min-width: 189px;
+				padding: 0;
+    		}
+			footer ul li a,
+			footer ul li a:link,
+			footer ul li a:visited,
+			footer ul li a:hover,
+			footer ul li a:active {
+				color: #fff;
+				text-decoration: none;
+			}
+			footer ul li a:hover {
+				color: #FFCB00;
+			}
+	footer .bottom-strap {
+		margin: 0;
+		padding: 0;	
+		text-align: right;
+		color: #fff;
+	}
+		footer .bottom-strap span {
+			display: block;
+			margin-bottom: 5px;
+		}
+		footer .bottom-strap a,
+		footer .bottom-strap a:link,
+		footer .bottom-strap a:visited,
+		footer .bottom-strap a:hover,
+		footer .bottom-strap a:active {
+			color: #fff;
+			text-decoration: none;
+		}
+
+/* ==========================================================================
  Main Menu 
  ========================================================================== */
-
 .nav {
 	width: 100%;
 }
@@ -513,7 +448,9 @@ header img.user {
  Off Canvas Menus
  ========================================================================== */
 
-.mobile-button {}
+.sidr { z-index: 1000!important; }
+.mobile-button { z-index: 999999!important; }
+
 .mobile-button:hover { opacity: 0.8; }
 .mobile-button.active { background-color: #E24912!important; }
 #no-bg #mobile-nav,
@@ -599,31 +536,8 @@ section#main-menu {
 }
 
 /* ==========================================================================
- Web Parts
+ Layout
  ========================================================================== */
-
-.web-part {
-	margin-bottom: 20px;
-	position: relative;
-}
-
-.web-part h3 {
-	text-transform: uppercase;
-	margin-bottom: 8px;
-	font-size: 14px;
-
-}
-
-.web-part p {
-	line-height: 1.4em;
-}
-
-.web-part a {
-	display: block;
-	text-transform: uppercase;
-	margin-top: 15px;
-	font-weight: bold;
-}
 
 .marg-r {
 	margin-right: 20px;
@@ -633,11 +547,11 @@ section#main-menu {
 	margin-left: 20px;
 }
 
- .bg-grey {
+.bg-grey {
  	padding: 15px;
  	background-color: #CDD2DA;
  	color: #41596B;
- }
+}
 
   /* ==========================================================================
  Cat Select
@@ -1290,59 +1204,6 @@ ul#tab li.tab-content .edit-faves i {
  
  }
 
-/* ==========================================================================
- Mobile Header Search
- ========================================================================== */
-
-.mobile-header-search { display: none; }
-	.mobile-header-search .search-input { margin: 0; }
-		.mobile-header-search .search-input .search-input-box { margin: 0; }
-		.mobile-header-search .search-input a:link
-		.mobile-header-search .search-input a:visited
-		.mobile-header-search .search-input a:hover
-		.mobile-header-search .search-input a:active { margin: 0; text-decoration: none; }
-		.mobile-header-search .search-input a:hover { cursor: pointer; }
-			.mobile-header-search .search-input a .fa { margin: 0; }
-* ==========================================================================
- SIDR Mobile Header Search
- ========================================================================== */
-.sidr-inner {
-}
-	.sidr-inner .sidr-class-search-input { 
-		margin: 0; 
-	}
-		.sidr-inner .sidr-class-search-input .sidr-class-search-input-box { 
-			display: inline-block;
-			width: 90%;
-		}
-		.sidr-inner .sidr-class-search-input a:link
-		.sidr-inner .sidr-class-search-input a:visited
-		.sidr-inner .sidr-class-search-input a:hover
-		.sidr-inner .sidr-class-search-input a:active { 
-			margin: 0; 
-			text-decoration: none;
-		}
-		.sidr-inner .sidr-class-search-input a:hover {
-			cursor: pointer;
-		}
-			.sidr-inner .sidr-class-search-input a .sidr-class-fa { 
-				-moz-font-feature-settings: normal;
-				-moz-font-language-override: normal;
-				display: inline-block;
-				font-family: FontAwesome;
-				font-size: inherit;
-				font-size-adjust: none;
-				font-stretch: normal;
-				font-style: normal;
-				font-variant: normal;
-				font-weight: normal;
-				line-height: 1;
-				text-rendering: auto;
-    		}
-			.sidr-inner .sidr-class-search-input a .sidr-class-fa-search:before {
-				content: "\f002";
-			}
-
 
 /* ==========================================================================
  Office365/SharePoint Override CSS
@@ -1407,7 +1268,6 @@ ul#tab li.tab-content .edit-faves i {
 
 	background-color: rgba(255, 255, 255, 0.95);
 	margin: 0 auto;
-	max-width: 1200px;
 	margin-bottom: 35px;
 }
 
@@ -1420,10 +1280,12 @@ ul#tab li.tab-content .edit-faves i {
 	margin: 5px 0 0 0;
 	text-align: left;
 	display: none;
+	opacity: 0;
 	transition: all 500ms ease;
 }
 .mobile-header-search-box.active {
 	display: block;
+	opacity: 1;
 	transition: all 500ms ease;
 }
 .header-search-box {
@@ -1441,6 +1303,12 @@ ul#tab li.tab-content .edit-faves i {
 	margin-left: 10px;
 	padding: 3px 8px;
 	margin-top: 5px;
+}
+.ms-srch-sbLarge.ms-srch-sb-border {
+	margin-left: 0;
+}
+.ms-srch-sbLarge-navWidth {
+	width: 390px;
 }
 .mobile-header-search-box .ms-srch-sb-border, 
 .mobile-header-search-box .ms-srch-sb-borderFocused {
@@ -1472,6 +1340,10 @@ ul#tab li.tab-content .edit-faves i {
 	height: 22px;
 	width: 23px;
 }
+.ms-ref-refinername:link, 
+.ms-ref-refinername:visited {
+    width: 140px;
+}
 
 
 /* ==========================================================================
@@ -1501,6 +1373,20 @@ ul#tab li.tab-content .edit-faves i {
 }
 
 @media screen and (max-width: 480px) {
+
+	.ms-srch-sbLarge-navWidth {
+		width: 180px;
+	}
+	.ms-srch-upscope-bottom,
+	.ms-srch-upscope-top {
+		width: 90%!important;
+	}
+	.ms-srch-upscope-bottom > div,
+	.ms-srch-upscope-top > div {
+		display: block!important;
+	}
+	.ms-srch-item { width: 90%; }
+	.ms-srch-item-path { width: 100%; }
 
 	.ms-core-pageTitle {
 	    font-size: 2.1em;
