@@ -44,7 +44,7 @@
 
 	</Configuration>
 
-	<Configuration Name="Masterpage" ID="1" Description="Provisions the full set of assets for the Buzz365 Responsive Masterpages">
+	<Configuration Name="Masterpage" ID="1" Description="Provisions the **FULL** set of assets for the Buzz365 Responsive Masterpages">
 
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->

@@ -8,10 +8,10 @@ $connector = Init-CSOMConnector
 # set connection url, set credentials using Windows Credential Manager
 #$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
 #$connector.csomCredentialLabel = "CAM SPO"
-#$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
-#$connector.csomCredentialLabel = "RB.COM SPO"
-$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-$connector.csomCredentialLabel = "SPO"
+$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
+$connector.csomCredentialLabel = "RB.COM SPO"
+#$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+#$connector.csomCredentialLabel = "SPO"
 #$connector.csomUrl = "http://pub.pdogs.local/"
 #$connector.csomCredentialLabel = "OnPrem"
 
@@ -21,7 +21,7 @@ if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
 $configurationName = "Masterpage"
-$configurationId = "0" # use 1 for the full provisioning and 0 for minimal provisioning
+$configurationId = "1" # use 1 for the full provisioning and 0 for minimal provisioning
 $configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\buzz365"
 $configurationFiles = @("buzz365")
 

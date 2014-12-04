@@ -784,8 +784,15 @@ section#main-menu {
 .ms-srch-item h3 a.ms-srch-item-link:visited {
   color: #e93591;
 }
+.ms-qSuggest-container,
+.ms-qSuggest-list {
+  text-align: left;
+}
 
-/* full-screen mode button */
+
+/* ==========================================================================
+ Full-screen mode button
+ ========================================================================== */
 #exitfullscreenmode > a > span,
 #fullscreenmode > a > span { width: 24px!important; height: 24px!important; }
 #exitfullscreenmode > a > span .s4-clust,
