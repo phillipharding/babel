@@ -8,10 +8,10 @@ $connector = Init-CSOMConnector
 # set connection url, set credentials using Windows Credential Manager
 #$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
 #$connector.csomCredentialLabel = "CAM SPO"
-#$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
-#$connector.csomCredentialLabel = "RB.COM SPO"
-$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-$connector.csomCredentialLabel = "SPO"
+$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
+$connector.csomCredentialLabel = "RB.COM SPO"
+#$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+#$connector.csomCredentialLabel = "SPO"
 #$connector.csomUrl = "http://pub.pdogs.local/"
 #$connector.csomCredentialLabel = "OnPrem"
 
@@ -22,7 +22,9 @@ Write-Host "Connected.`n"
 
 $configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news2"
 $configurationName = "News"
-$configurationId = "0" # use 0 for provisioning to SPO w/Buzz365 Masterpage, and 1 for On-Prem wo/Masterpage
+$configurationId = "0" # for provisioning to SPO w/Buzz365 Masterpage
+#$configurationId = "1" # for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
+#$configurationId = "2" # for Debug testing
 $configurationFiles = @("corpnews")
 
 $configurationFiles | ? { $_ -match ".*" } | % {
