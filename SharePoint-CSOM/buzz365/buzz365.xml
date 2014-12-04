@@ -26,6 +26,7 @@
 						</Folder>
 						<Folder Url="js">
 							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
 							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
 						</Folder>
 					</Folder>
@@ -83,6 +84,7 @@
 							<File Path="js\jquery.sidr.min.js" Url="jquery.sidr.min.js" ReplaceContent="True" />
 							<File Path="js\jquery.slimmenu.min.js" Url="jquery.slimmenu.min.js" ReplaceContent="True" />
 							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
 							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">

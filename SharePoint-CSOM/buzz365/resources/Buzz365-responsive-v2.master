@@ -1122,7 +1122,7 @@
 
 <div class='pure-g' id="contentRow">
 
-    <div class='pure-u-1 pure-u-md-5-24 pure-u-lg-4-24 pure-u-xl-3-24' id="sideNavBox-x" role="Navigation" class="ms-dialogHidden ms-forceWrap ms-noList">
+    <div class='pure-u-1 pure-u-md-5-24 pure-u-lg-5-24 pure-u-xl-5-24' id="sideNavBox-x" role="Navigation" class="ms-dialogHidden ms-forceWrap ms-noList">
         <div class='sidenavbox-inner'>
             <SharePoint:AjaxDelta id="DeltaPlaceHolderLeftNavBar" BlockElement="true" CssClass="ms-core-navigation" role="navigation" runat="server">
                 <asp:ContentPlaceHolder id="PlaceHolderLeftNavBar" runat="server">
@@ -1204,7 +1204,7 @@
     </div>
     <!-- end #sideNavBox -->
 
-    <div class='pure-u-1 pure-u-md-19-24 pure-u-lg-20-24  pure-u-xl-21-24' id="contentBox-x" aria-live="polite" aria-relevant="all"  role="main">
+    <div class='pure-u-1 pure-u-md-19-24 pure-u-lg-19-24 pure-u-xl-19-24' id="contentBox-x" aria-live="polite" aria-relevant="all"  role="main">
         <div class='contentbox-inner'>
             <div id="notificationArea" class="ms-notif-box"></div>
             <SharePoint:AjaxDelta id="DeltaPageStatusBar" BlockElement="true" runat="server">

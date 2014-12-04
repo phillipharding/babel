@@ -730,8 +730,9 @@ section#main-menu {
   margin-top: 5px;
 }
 
-.ms-srch-sbLarge.ms-srch-sb-border {
-  margin-left: 0;
+.ms-srch-sbLarge.ms-srch-sb-border,
+.ms-srch-sbLarge.ms-srch-sb-borderFocused {
+  margin-left: -1px;
 }
 
 .ms-srch-sbLarge-navWidth {
@@ -784,6 +785,12 @@ section#main-menu {
   color: #e93591;
 }
 
+/* full-screen mode button */
+#exitfullscreenmode > a > span,
+#fullscreenmode > a > span { width: 24px!important; height: 24px!important; }
+#exitfullscreenmode > a > span .s4-clust,
+#fullscreenmode > a > span .s4-clust { width: 24px!important; height: 24px!important; }
+
 
 /* ==========================================================================
  Media Queries
@@ -817,12 +824,17 @@ section#main-menu {
 
 @media screen and (max-width: 480px) {
 
+  /* hide search hover panel */
+  .ms-srch-hover-outerContainer {
+    display: none !important;
+  }
+
   #corbcom-siteusage_callout .js-callout-content {
       width: 370px!important;
   }
 
   .ms-srch-sbLarge-navWidth {
-    width: 180px;
+    width: 212px;
   }
 
   .ms-srch-upscope-bottom,
@@ -1003,10 +1015,11 @@ section#main-menu {
 @media screen and  (max-width: 360px) {
 
   .ms-srch-item {
-    width: 300px;
+    width: 320px;
   }
   .ms-srch-item-path {
-    width: 296px;
+    width: 300px;
+    word-break: break-all;
   }
 
   #corbcom-siteusage_callout .js-callout-content {
@@ -1019,6 +1032,7 @@ section#main-menu {
 
   .mobile-header-search-box .ms-srch-sb > input {
     font-size: 1em;
+    margin-top: 3px;
     width: 130px;
   }
 
@@ -1032,6 +1046,7 @@ section#main-menu {
   header .corporate ul li {
     margin-right: 5px;
   }
+
 }
 
 @media screen and  (max-width: 320px) {
