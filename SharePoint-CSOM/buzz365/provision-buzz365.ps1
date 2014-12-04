@@ -1,19 +1,28 @@
-﻿cls
+﻿param (
+    [parameter(Mandatory=$false)][string]$URL = $null,
+    [parameter(Mandatory=$false)][string]$CredentialLabel = $null
+)
+cls
 # load and init the CSOM modules
 ."..\modules\load-spo-modules.ps1"
 
 # init an empty connector
 $connector = Init-CSOMConnector
 
-# set connection url, set credentials using Windows Credential Manager
-#$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
-#$connector.csomCredentialLabel = "CAM SPO"
-$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
-$connector.csomCredentialLabel = "RB.COM SPO"
-#$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-#$connector.csomCredentialLabel = "SPO"
-#$connector.csomUrl = "http://pub.pdogs.local/"
-#$connector.csomCredentialLabel = "OnPrem"
+if (($URL -ne $null -and $URL -ne "") -and ($CredentialLabel -ne $null -and $CredentialLabel -ne "")) {
+    $connector.csomUrl = $URL
+    $connector.csomCredentialLabel = $CredentialLabel
+} else {
+    # set connection url, set credentials using Windows Credential Manager
+    #$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
+    #$connector.csomCredentialLabel = "CAM SPO"
+    $connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
+    $connector.csomCredentialLabel = "RB.COM SPO"
+    #$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+    #$connector.csomCredentialLabel = "SPO"
+    #$connector.csomUrl = "http://pub.pdogs.local/"
+    #$connector.csomCredentialLabel = "OnPrem"
+}
 
 # connect...
 $connection = Get-CSOMConnection $connector
