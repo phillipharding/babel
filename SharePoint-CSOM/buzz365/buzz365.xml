@@ -1,5 +1,5 @@
 <Configurations ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\buzz365\resources">
-	<Configuration Name="Masterpage" ID="0" Description="Provisions the minimal set of assets for the Buzz365 Responsive Masterpages">
+	<Configuration Name="Masterpage" ID="0" Description="Provisions the **MINIMAL** set of assets for the Buzz365 Responsive Masterpages">
 
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
@@ -21,12 +21,13 @@
 							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
 						</File>
-
 						<Folder Url="css">
 							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="js">
 							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
+							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
 						</Folder>
 					</Folder>
 				</Folder>
@@ -43,7 +44,7 @@
 
 	</Configuration>
 
-	<Configuration Name="Masterpage" ID="1" Description="Provisions the full set of assets for the Buzz365 Responsive Masterpages">
+	<Configuration Name="Masterpage" ID="1" Description="Provisions the **FULL** set of assets for the Buzz365 Responsive Masterpages">
 
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
@@ -70,11 +71,12 @@
 							<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
 							<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
 							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
-							<File Path="css\fonts.css" Url="fonts.css" ReplaceContent="True" />
 							<File Path="css\jquery.bxslider.css" Url="jquery.bxslider.css" ReplaceContent="True" />
 							<File Path="css\jquery.sidr.dark.css" Url="jquery.sidr.dark.css" ReplaceContent="True" />
 							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
+							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
+							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="js">
 							<File Path="js\jquery-2.1.1.min.js" Url="jquery-2.1.1.min.js" ReplaceContent="True" />
@@ -82,12 +84,15 @@
 							<File Path="js\jquery.sidr.min.js" Url="jquery.sidr.min.js" ReplaceContent="True" />
 							<File Path="js\jquery.slimmenu.min.js" Url="jquery.slimmenu.min.js" ReplaceContent="True" />
 							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
+							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">
-							<File Path="fonts\flaticon.eot" Url="flaticon.eot" ReplaceContent="True" />
-							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
-							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
-							<File Path="fonts\flaticon.woff" Url="flaticon.woff" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\FontAwesome.otf" Url="FontAwesome.otf" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="images">
 							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />

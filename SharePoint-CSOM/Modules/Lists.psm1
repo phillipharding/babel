@@ -170,8 +170,15 @@ param (
             $view = $views | Where { $_.ServerRelativeUrl -match "$ServerRelativeUrl$" }
         }
         if($view -ne $null) {
-            $ClientContext.Load($view)
-            $ClientContext.ExecuteQuery()
+            if ($view.GetType().BaseType.Name -match "Array") {
+                for ($v=0; $v -lt $view.length; $v++) {
+                    $ClientContext.Load($view[$v])
+                    $ClientContext.ExecuteQuery()
+                }
+            } else {
+                $ClientContext.Load($view)
+                $ClientContext.ExecuteQuery()
+            }
         }
         $view
     }
@@ -616,57 +623,30 @@ param(
 
         Write-Host "`tViews" -ForegroundColor Green
         foreach ($view in $listxml.Views.View) {
-            $spView = $null
+            $spViews = $null
             if ($view.DisplayName) {
-                $spView = Get-ListView -List $SPList -ViewName $view.DisplayName -ClientContext $ClientContext
+                $spViews = Get-ListView -List $SPList -ViewName $view.DisplayName -ClientContext $ClientContext
             }
-            if ($spView -eq $null -and $view.ServerRelativeUrl -ne "") {
-                $spView = Get-ListViewByServerRelativeUrl -List $SPList -ServerRelativeUrl $view.ServerRelativeUrl -BaseViewId $view.BaseViewID -ClientContext $ClientContext
+            if ($spViews -eq $null -and $view.ServerRelativeUrl -ne "") {
+                $spViews = Get-ListViewByServerRelativeUrl -List $SPList -ServerRelativeUrl $view.ServerRelativeUrl -BaseViewId $view.BaseViewID -ClientContext $ClientContext
             }
-            if($spView -ne $null) {
-                $viewid = $spView.Id
-                if ($view.DisplayName) {
-                    Write-Host "`t`tUpdating List View: $($view.DisplayName)" -ForegroundColor Green
-                } else {
-                    Write-Host "`t`tUpdating List View: $($view.ServerRelativeUrl) BaseViewID ($($view.BaseViewID))" -ForegroundColor Green
-                }
 
-                $DefaultView = $(if ($view.DefaultView) { [bool]::Parse($view.DefaultView) } else {$spView.DefaultView})
-                $ViewJslink = $(if ($view.JSLink) {$view.JSLink} else { $spView.JSLink })
-                $Paged = $(if ($view.RowLimit.Paged) { [bool]::Parse($view.RowLimit.Paged) } else { $spView.Paged })
-                $RowLimit = $(if ($view.RowLimit) { $view.RowLimit.InnerText } else { "$($spView.RowLimit)" })
-                $RowLimit = $(if ($RowLimit -eq $null -or $RowLimit -eq "") { "30" } else { $RowLimit })
-                $Query = $(if ($view.Query) { $view.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "") } else { $spView.ViewQuery })
-                $Query = $(if ($Query -eq $null -or $Query -eq "") { "<OrderBy><FieldRef Name=`"Modified`" Ascending=`"FALSE`" /></OrderBy>" } else { $Query })
-                if ($view.ViewFields.FieldRef) { 
-                    $ViewFields = $view.ViewFields.FieldRef | Select -ExpandProperty Name 
-                } else {
-                    if ($view.ViewFields) {
-                        if ($SPList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::DocumentLibrary) {
-                            $ViewFields = @("DocIcon","LinkFilename","Modified")
-                        } elseif ($SPList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::GenericList) {
-                            $ViewFields = @("Title","Modified","ModifiedBy")
-                        }
+            foreach($spView in $spViews) {
+                if($spView -ne $null) {
+                    $viewid = $spView.Id
+                    if ($view.DisplayName) {
+                        Write-Host "`t`tUpdating List View ($($spView.Id)): $($view.DisplayName)" -ForegroundColor Green
                     } else {
-                        $ViewFields = @()
+                        Write-Host "`t`tUpdating List View ($($spView.Id)): $($view.ServerRelativeUrl) BaseViewID ($($view.BaseViewID))" -ForegroundColor Green
                     }
-                }
 
-                $spView = Update-ListView -List $SPList -ViewNameOrId $viewid -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
-                if ($view.DisplayName) {
-                    Write-Host "`t`tUpdated List View: $($view.DisplayName)" -ForegroundColor Green
-                } else {
-                    Write-Host "`t`tUpdated List View: $($view.ServerRelativeUrl) BaseViewID ($($view.BaseViewID))" -ForegroundColor Green
-                }
-            } else {
-                ## ensure that a view can only be created if the xml config has a displayname
-                if ($view.DisplayName -and $view.DisplayName -ne "") {
-                    Write-Host "`t`tCreating List View: $($view.DisplayName)" -ForegroundColor Green
-                    $Paged = [bool]::Parse($view.RowLimit.Paged)
-                    $PersonalView = [bool]::Parse($view.PersonalView)
-                    $DefaultView = [bool]::Parse($view.DefaultView)
-                    $RowLimit = $view.RowLimit.InnerText
-                    $Query = $view.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
+                    $DefaultView = $(if ($view.DefaultView) { [bool]::Parse($view.DefaultView) } else {$spView.DefaultView})
+                    $ViewJslink = $(if ($view.JSLink) {$view.JSLink} else { $spView.JSLink })
+                    $Paged = $(if ($view.RowLimit.Paged) { [bool]::Parse($view.RowLimit.Paged) } else { $spView.Paged })
+                    $RowLimit = $(if ($view.RowLimit) { $view.RowLimit.InnerText } else { "$($spView.RowLimit)" })
+                    $RowLimit = $(if ($RowLimit -eq $null -or $RowLimit -eq "") { "30" } else { $RowLimit })
+                    $Query = $(if ($view.Query) { $view.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "") } else { $spView.ViewQuery })
+                    $Query = $(if ($Query -eq $null -or $Query -eq "") { "<OrderBy><FieldRef Name=`"Modified`" Ascending=`"FALSE`" /></OrderBy>" } else { $Query })
                     if ($view.ViewFields.FieldRef) { 
                         $ViewFields = $view.ViewFields.FieldRef | Select -ExpandProperty Name 
                     } else {
@@ -680,16 +660,47 @@ param(
                             $ViewFields = @()
                         }
                     }
-                    $ViewType = $view.Type
-                    $ViewJslink = $(if ($view.JSLink) {$view.JSLink} else {""})
-                    $spView = New-ListView -List $SPList -ViewName $view.DisplayName -Paged $Paged -PersonalView $PersonalView -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewType $ViewType -ViewJslink $ViewJslink -ClientContext $ClientContext
-                    Write-Host "`t`tCreated List View: $($view.DisplayName)" -ForegroundColor Green
-                    if ($ViewJslink -ne "") {
-                        $spView = Update-ListView -List $splist -ViewNameOrId $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
-                        Write-Host "`t`t..Updated List View for JSLink: $($view.DisplayName)" -ForegroundColor Green
+
+                    $spView = Update-ListView -List $SPList -ViewNameOrId $viewid -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
+                    if ($view.DisplayName) {
+                        Write-Host "`t`tUpdated List View: $($view.DisplayName)" -ForegroundColor Green
+                    } else {
+                        Write-Host "`t`tUpdated List View: $($view.ServerRelativeUrl) BaseViewID ($($view.BaseViewID))" -ForegroundColor Green
+                    }
+                } else {
+                    ## ensure that a view can only be created if the xml config has a displayname
+                    if ($view.DisplayName -and $view.DisplayName -ne "") {
+                        Write-Host "`t`tCreating List View: $($view.DisplayName)" -ForegroundColor Green
+                        $Paged = [bool]::Parse($view.RowLimit.Paged)
+                        $PersonalView = [bool]::Parse($view.PersonalView)
+                        $DefaultView = [bool]::Parse($view.DefaultView)
+                        $RowLimit = $view.RowLimit.InnerText
+                        $Query = $view.Query.InnerXml.Replace(" xmlns=`"http://schemas.microsoft.com/sharepoint/`"", "")
+                        if ($view.ViewFields.FieldRef) { 
+                            $ViewFields = $view.ViewFields.FieldRef | Select -ExpandProperty Name 
+                        } else {
+                            if ($view.ViewFields) {
+                                if ($SPList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::DocumentLibrary) {
+                                    $ViewFields = @("DocIcon","LinkFilename","Modified")
+                                } elseif ($SPList.BaseType -eq [Microsoft.SharePoint.Client.BaseType]::GenericList) {
+                                    $ViewFields = @("Title","Modified","ModifiedBy")
+                                }
+                            } else {
+                                $ViewFields = @()
+                            }
+                        }
+                        $ViewType = $view.Type
+                        $ViewJslink = $(if ($view.JSLink) {$view.JSLink} else {""})
+                        $spView = New-ListView -List $SPList -ViewName $view.DisplayName -Paged $Paged -PersonalView $PersonalView -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewType $ViewType -ViewJslink $ViewJslink -ClientContext $ClientContext
+                        Write-Host "`t`tCreated List View: $($view.DisplayName)" -ForegroundColor Green
+                        if ($ViewJslink -ne "") {
+                            $spView = Update-ListView -List $splist -ViewNameOrId $view.DisplayName -Paged $Paged -Query $Query -RowLimit $RowLimit -DefaultView $DefaultView -ViewFields $ViewFields -ViewJslink $ViewJslink -ClientContext $ClientContext
+                            Write-Host "`t`t..Updated List View for JSLink: $($view.DisplayName)" -ForegroundColor Green
+                        }
                     }
                 }
             }
+            # end of view update code
         }
 
         Write-Host "`tItems" -ForegroundColor Green

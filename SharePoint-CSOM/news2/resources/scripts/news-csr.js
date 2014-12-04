@@ -1,3 +1,42 @@
+(function(window) {
+   "use strict";
+   window.SPUtils = window.SPUtils || { ClientHelpers: {} };
+   SPUtils.ClientHelpers = function() {
+      return {
+         LoadSodScript: LoadSodScript
+      };
+
+      function LoadSodScript(scriptToLoad, callback, typ) {
+         SP.SOD.executeOrDelayUntilScriptLoaded(function() {
+         	if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: CORE.JS SOD-loaded'); }
+            SP.SOD.executeOrDelayUntilScriptLoaded(function() {
+            	if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: SP.JS SOD-loaded'); }
+            	if (!scriptToLoad || !scriptToLoad.length) {
+            		if (callback) callback();
+            		return;
+            	}
+
+               var loaded = false;
+               if (typeof(_v_dictSod) !== 'undefined' && _v_dictSod[scriptToLoad] == null) {
+                  SP.SOD.registerSod(scriptToLoad, SP.Utilities.Utility.getLayoutsPageUrl(scriptToLoad));
+                  if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: SP.SOD.registerSod('+scriptToLoad+')'); }
+               } else {
+                  loaded = _v_dictSod[scriptToLoad].state === Sods.loaded;
+               }
+               if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: isLoaded('+scriptToLoad+') = '+loaded); }
+               if (loaded) {
+                  if (callback) callback();
+               } else {
+                  var r = SP.SOD.executeFunc(scriptToLoad, typeof(typ) === 'undefined' ? false : typ, callback);
+                  if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: SP.SOD.executeFunc('+scriptToLoad+') returned: '+r); }
+               }
+            }, 'SP.js');
+         }, 'core.js');
+      }
+   }();
+
+})(window);
+
 (function() {
 
 /*
@@ -530,20 +569,12 @@ RBNews.TemplateOverride = function() {
 }();
 
 function RegisterContext() {
+	SPUtils.ClientHelpers.LoadSodScript();
 	SP.SOD.executeFunc("clienttemplates.js", "SPClientTemplates", function() {
 		RBNews.TemplateOverride.register();
 	});
 
-	ExecuteOrDelayUntilScriptLoaded(function() {
-		if (window.console) window.console.log('SP.INIT.JS loaded');
-
-	}, 'SP.init.js');
-	ExecuteOrDelayUntilScriptLoaded(function() {
-		if (window.console) window.console.log('SP.JS loaded');
-
-		SP.SOD.registerSod('reputation.js', SP.Utilities.Utility.getLayoutsPageUrl('reputation.js'));
-		SP.SOD.executeFunc('reputation.js', false, function() {if (window.console) window.console.log('REPUTATION.JS loaded');});
-	}, 'SP.js');
+	SPUtils.ClientHelpers.LoadSodScript('reputation.js', function() { if (window.console) window.console.log('REPUTATION.JS SOD-loaded'); });
 }
 
 function RegisterInMDS() {

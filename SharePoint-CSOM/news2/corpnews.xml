@@ -1,5 +1,58 @@
-<Configurations ResourcesPath="">
-	<Configuration Name="News" ID="0" Description="This configuration is for use with the Buzz365 Masterpage which supplies resources such as jQuery and PureCSS: creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news2\resources">
+<Configurations ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news2\resources">
+	<Configuration Name="News" ID="2" Description="DEV DEBUG">
+		<Webs>
+			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
+				<Lists>
+					<List Title="Posts" ContentTypesEnabled="True">
+						<Views>
+							
+							<View ServerRelativeUrl="Post.aspx" BaseViewID="7">
+								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage" />
+									<FieldRef Name="NewsPageImage" />
+									<FieldRef Name="NewsPageImageOrientation" />
+								</ViewFields>
+							</View>
+							
+							<View ServerRelativeUrl="Date.aspx" BaseViewID="9">
+								<JSLink>~sitecollection/_layouts/15/sp.init.js|~sitecollection/_catalogs/masterpage/Display Templates/news-csr.js</JSLink>
+								<RowLimit Paged='TRUE'>6</RowLimit>
+								<ViewFields>
+									<FieldRef Name="Title" />
+									<FieldRef Name="Body" />
+									<FieldRef Name="Author" />
+									<FieldRef Name="PostedByWithDate" />
+									<FieldRef Name="CategoryWithLink" />
+									<FieldRef Name="Permalink" />
+									<FieldRef Name="EmailPostLink" />
+									<FieldRef Name="NumCommentsWithLink" />
+									<FieldRef Name="PublishedDate" />
+									<FieldRef Name="PostCategory" />
+									<FieldRef Name="NewsRollupImage" />
+									<FieldRef Name="NewsPageImage" />
+									<FieldRef Name="NewsPageImageOrientation" />
+								</ViewFields>
+							</View>
+
+						</Views>
+					</List>
+				</Lists>
+			</Web>
+		</Webs>
+	</Configuration>
+
+	<Configuration Name="News" ID="0" Description="This configuration is for use with the Buzz365 Masterpage which supplies resources such as jQuery and PureCSS: creates a new Corporate News subsite or configures an existing one if it already exists">
 		<!--
 			remove webtemplates for all languages
 			then add the Blog/Publishing/Ent Search Centre/Ent Wiki/Team/Project webtemplates for english language 
@@ -1387,6 +1440,12 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 						<Sequence>111</Sequence>
 						<ScriptLink>~site/SiteAssets/news/css/grids-responsive-min.css</ScriptLink>
 					</UserCustomAction>
+					<UserCustomAction Scope="Web">
+						<Name>Fontawesome</Name>
+						<Location>ScriptLink</Location>
+						<Sequence>113</Sequence>
+						<ScriptLink>~site/SiteAssets/news/css/font-awesome.min.css</ScriptLink>
+					</UserCustomAction>
 				</RemoveUserCustomActions>
 
 				<UserCustomActions>
@@ -1395,12 +1454,6 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 						<Location>ScriptLink</Location>
 						<Sequence>112</Sequence>
 						<ScriptLink>~site/SiteAssets/news/css/news.css</ScriptLink>
-					</UserCustomAction>
-					<UserCustomAction Scope="Web">
-						<Name>Fontawesome</Name>
-						<Location>ScriptLink</Location>
-						<Sequence>113</Sequence>
-						<ScriptLink>~site/SiteAssets/news/css/font-awesome.min.css</ScriptLink>
 					</UserCustomAction>
 					<UserCustomAction Scope="Web">
 						<Name>News-CSS-Responsive</Name>
@@ -1430,7 +1483,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 		</Webs>
 	</Configuration>
 
-	<Configuration Name="News" ID="1" Description="This configuration is for use with No or a DevTest Masterpage which does not supply resources such as jQuery and PureCSS: creates a new Corporate News subsite or configures an existing one if it already exists" ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news2\resources">
+	<Configuration Name="News" ID="1" Description="This configuration is for use with No or a DevTest Masterpage which does not supply resources such as jQuery and PureCSS: creates a new Corporate News subsite or configures an existing one if it already exists">
 		<!--
 			remove webtemplates for all languages
 			then add the Blog/Publishing/Ent Search Centre/Ent Wiki/Team/Project webtemplates for english language 
