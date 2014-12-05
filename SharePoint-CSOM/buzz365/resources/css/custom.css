@@ -648,9 +648,11 @@ section#main-menu {
   padding-top: 0;
 }
 
+#ctl00_PlaceHolderPageImage_onetidtpweb1,
 #ctl00_PlaceHolderPageImage_ctl00 {
+  margin-left: -50px;
+  margin-right: -35px;
   vertical-align: top;
-  width: 140px;
 }
 
 .ms-core-sideNavBox-removeLeftMargin {
@@ -691,6 +693,24 @@ section#main-menu {
   margin: 0 auto;
   margin-bottom: 35px;
 }
+
+.ms-webpart-menuArrowSpan { display: none; }
+.ms-webpart-menuLink {
+  font: 18px/1 FontAwesome;
+  height: 16px;
+  margin-left: -5px;
+  margin-top: 6px;
+  padding: 0;
+  width: 16px;
+}
+.ms-webpart-menuLink:after {
+    content: "\f013";
+}
+.ms-webpart-menuLink:hover {
+  text-decoration: none;
+  color: #FFCB00;
+}
+
 
 /* ==========================================================================
  Header Search Box / SearchBoxScriptWebPart Search Box

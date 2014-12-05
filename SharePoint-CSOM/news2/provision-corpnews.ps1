@@ -1,26 +1,43 @@
-﻿cls
+﻿<#
+    Example command lines
+
+    .\provision-corpnews.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
+    .\provision-corpnews.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
+    .\provision-corpnews.ps1 -URL "http://pub.pdogs.local/" -CredentialLabel "OnPrem"
+
+#>
+param (
+    [parameter(Mandatory=$false)][string]$URL = $null,
+    [parameter(Mandatory=$false)][string]$CredentialLabel = $null
+)
+cls
 # load and init the CSOM modules
 ."..\modules\load-spo-modules.ps1"
+
+$cwd = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 # init an empty connector
 $connector = Init-CSOMConnector
 
-# set connection url, set credentials using Windows Credential Manager
-#$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
-#$connector.csomCredentialLabel = "CAM SPO"
-$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
-$connector.csomCredentialLabel = "RB.COM SPO"
-#$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-#$connector.csomCredentialLabel = "SPO"
-#$connector.csomUrl = "http://pub.pdogs.local/"
-#$connector.csomCredentialLabel = "OnPrem"
+if (($URL -ne $null -and $URL -ne "") -and ($CredentialLabel -ne $null -and $CredentialLabel -ne "")) {
+    $connector.csomUrl = $URL
+    $connector.csomCredentialLabel = $CredentialLabel
+} else {
+    # set connection url, set credentials using Windows Credential Manager
+    #$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
+    #$connector.csomCredentialLabel = "RB.COM SPO"
+    #$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
+    #$connector.csomCredentialLabel = "SPO"
+    #$connector.csomUrl = "http://pub.pdogs.local/"
+    #$connector.csomCredentialLabel = "OnPrem"
+}
 
 # connect...
 $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configurationPath = "C:\Dev\github\babel\SharePoint-CSOM\news2"
+$configurationPath = $cwd       #"C:\Dev\github\babel\SharePoint-CSOM\news2"
 $configurationName = "News"
 $configurationId = "0" # for provisioning to SPO w/Buzz365 Masterpage
 #$configurationId = "1" # for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
@@ -36,7 +53,7 @@ $configurationFiles | ? { $_ -match ".*" } | % {
         Write-Host "Could not find configuration [$configurationName#$configurationId]`n" -ForegroundColor Red
         return
     }
-    Write-Host "Applying Configuration [$configurationName#$configurationId]`n$($configurationXml.Description)`n" -ForegroundColor Yellow
+    Write-Host "Applying Configuration [$configurationName#$configurationId] from '$configurationPath\$_.xml'`n$($configurationXml.Description) `n" -ForegroundColor Yellow
     Write-Host "Press any key to continue..." -ForegroundColor Yellow
     $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
 
