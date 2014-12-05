@@ -199,6 +199,9 @@
     padding: 5px 0 0 0;
     background-color: #fff;
 }
+.social2 {
+    margin: 0;
+}
 .social > span,
 .social2 > span {
     color: #fff;
@@ -206,6 +209,7 @@
     display: inline-block;
     padding: 5px 4px;
     margin-right: 5px;
+    margin-bottom: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;

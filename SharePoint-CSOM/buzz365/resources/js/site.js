@@ -1,5 +1,8 @@
-(function($) {
+(function(window,$) {
 "use strict";
+
+window.RB = window.RB || {};
+RB.Masterpage = RB.Masterpage || {};
 
 	function mobileSearch(turnOn) {
 		if (typeof(turnOn) === 'undefined') {
@@ -48,6 +51,29 @@
 				/**/
 			});
 
+      SP.SOD.executeOrDelayUntilScriptLoaded(function() {
+      	if (window.console) { window.console.log('site.js() CORE.JS loaded'); }
+			RB.Masterpage.OldSetFullScreenMode = window.SetFullScreenMode;
+			RB.Masterpage.OriginalContentBoxCss = document.getElementById('contentBox-x').getAttribute('class');
+			
+			window.SetFullScreenMode = function RB_Masterpage$SetFullScreenMode(fEnableFullScreenMode) {
+				if (typeof fEnableFullScreenMode !== 'undefined') {
+					RB.Masterpage.OldSetFullScreenMode(fEnableFullScreenMode);
+				}
+				var bIsFullScreenMode = window.HasCssClass(document.body, "ms-fullscreenmode");
+				if (bIsFullScreenMode) {
+					$('#sideNavBox-x').hide();
+					$('#contentBox-x').attr('class', 'pure-u-1');
+				} else {
+					$('#contentBox-x').attr('class', RB.Masterpage.OriginalContentBoxCss);
+					$('#sideNavBox-x').show();
+				}		
+			}
+			window.SetFullScreenMode();
+      }, 'core.js');
+
 	});
 
-})(jQuery);
+})(window,jQuery);
+
+

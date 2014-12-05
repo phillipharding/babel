@@ -1,6 +1,6 @@
 (function(window) {
    "use strict";
-   window.SPUtils = window.SPUtils || { ClientHelpers: {} };
+   window.SPUtils = window.SPUtils || {};
    SPUtils.ClientHelpers = function() {
       return {
          LoadSodScript: LoadSodScript
@@ -8,9 +8,9 @@
 
       function LoadSodScript(scriptToLoad, callback, typ) {
          SP.SOD.executeOrDelayUntilScriptLoaded(function() {
-         	if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: CORE.JS SOD-loaded'); }
+         	if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript() CORE.JS loaded'); }
             SP.SOD.executeOrDelayUntilScriptLoaded(function() {
-            	if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: SP.JS SOD-loaded'); }
+            	if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript() SP.JS loaded'); }
             	if (!scriptToLoad || !scriptToLoad.length) {
             		if (callback) callback();
             		return;
@@ -18,17 +18,23 @@
 
                var loaded = false;
                if (typeof(_v_dictSod) !== 'undefined' && _v_dictSod[scriptToLoad] == null) {
-                  SP.SOD.registerSod(scriptToLoad, SP.Utilities.Utility.getLayoutsPageUrl(scriptToLoad));
-                  if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: SP.SOD.registerSod('+scriptToLoad+')'); }
+               	var sodUrl = '';
+               	if (typeof _spPageContextInfo === 'undefined' || _spPageContextInfo != null) {
+               		if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript() _spPageContextInfo is undefined or null'); }
+               		sodUrl = String.format("{0}{1}", SP.Utilities.VersionUtility.get_layoutsLatestVersionUrl(), scriptToLoad);
+               	} else {
+               		sodUrl = SP.Utilities.Utility.getLayoutsPageUrl(scriptToLoad);
+               	}
+                  SP.SOD.registerSod(scriptToLoad, sodUrl);
+                  if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript() SP.SOD.registerSod('+sodUrl+')'); }
                } else {
-                  loaded = _v_dictSod[scriptToLoad].state === Sods.loaded;
+                  loaded = (_v_dictSod[scriptToLoad].state === Sods.loaded);
                }
-               if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: isLoaded('+scriptToLoad+') = '+loaded); }
+               if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript() IsLoaded('+scriptToLoad+') = '+loaded); }
                if (loaded) {
                   if (callback) callback();
                } else {
-                  var r = SP.SOD.executeFunc(scriptToLoad, typeof(typ) === 'undefined' ? false : typ, callback);
-                  if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript:: SP.SOD.executeFunc('+scriptToLoad+') returned: '+r); }
+                  EnsureScriptFunc(scriptToLoad, typeof(typ) === 'undefined' ? false : typ, callback);
                }
             }, 'SP.js');
          }, 'core.js');
@@ -569,12 +575,11 @@ RBNews.TemplateOverride = function() {
 }();
 
 function RegisterContext() {
-	SPUtils.ClientHelpers.LoadSodScript();
-	SP.SOD.executeFunc("clienttemplates.js", "SPClientTemplates", function() {
+	EnsureScriptFunc("clienttemplates.js", "SPClientTemplates", function() {
 		RBNews.TemplateOverride.register();
 	});
 
-	SPUtils.ClientHelpers.LoadSodScript('reputation.js', function() { if (window.console) window.console.log('REPUTATION.JS SOD-loaded'); });
+	SPUtils.ClientHelpers.LoadSodScript('reputation.js', function() { if (window.console) window.console.log('REPUTATION.JS loaded'); });
 }
 
 function RegisterInMDS() {

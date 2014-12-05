@@ -256,7 +256,7 @@ function Get-CSOMConnection {
         } else {
             # no connection!!
         }
-        return @{ HasConnection=$csomHasConnection; Context=$clientContext; Site=$csomSite; RootWeb=$csomRootweb; Web=$csomWeb; Connections=@() }
+        return @{ HasConnection=$csomHasConnection; Context=$clientContext; Site=$csomSite; RootWeb=$csomRootweb; Web=$csomWeb; WebVersion=$webversion; Connections=@() }
     }
     end {}
 }
