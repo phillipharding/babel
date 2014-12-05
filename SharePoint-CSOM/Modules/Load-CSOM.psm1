@@ -127,14 +127,21 @@ function Add-PreloadedSPTenantdlls {
     [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.Online.SharePoint.Client.Tenant") | Out-Null
 }
 function Add-InternalDlls {
-    param(
-    [parameter(Mandatory=$true, ValueFromPipeline=$true)][string] $assemblyPath
-    )
-    process {
-        $internalDlls = Get-Item "$assemblyPath\*.dll"
-    
-        ForEach ($dll in $internalDlls) {
-            [System.Reflection.Assembly]::LoadFrom($dll.FullName) | Out-Null
-        }
-    }
+param(
+   [parameter(Mandatory=$true, ValueFromPipeline=$true)][string] $assemblyPath,
+   [parameter(Mandatory=$false, ValueFromPipeline=$true)][string] $excludeDlls
+)
+   process {
+      if ($excludeDlls -ne $null -and $excludeDlls -ne "") {
+         $internalDlls = Get-Item "$assemblyPath\*.dll" -exclude $excludeDlls
+      } else {
+         $internalDlls = Get-Item "$assemblyPath\*.dll"
+      }
+      Write-Host "Add-InternalDlls:: -exclude `"$excludeDlls`"" -ForegroundColor White
+
+      ForEach ($dll in $internalDlls) {
+         Write-Host "Add-InternalDlls:: -adding `"$($dll.FullName)`"" -ForegroundColor White
+         [System.Reflection.Assembly]::LoadFrom($dll.FullName) | Out-Null
+      }
+   }
 }

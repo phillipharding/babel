@@ -9,7 +9,12 @@ Remove-Module "Files"
 Remove-Module "Features"
 Remove-Module "Items"
 Remove-Module "Lists"
-Remove-Module "ManagedProperties"
+<#
+   Excluding the ManagedProperties extensions since this is probably 
+   better managed via the Search Schema Import/Export functionality
+#>
+## Remove-Module "ManagedProperties"
+
 Remove-Module "Permissions"
 Remove-Module "PropertyBag"
 Remove-Module "Publishing"
