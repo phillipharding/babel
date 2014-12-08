@@ -7,10 +7,13 @@ RB.Masterpage = RB.Masterpage || {};
 	RB.Masterpage.Siteusage = function() {
 		var
 			_callout = null,
-			_siteusageInformation = '<h1>NO SITEUSAGE INFORMATION FOUND</h1>',
 			_module = {
 				EnsureSetup: ensureSetup,
-				Close: closeCallout
+				Acceptance: doAcceptance,
+				Close: closeCallout,
+				IAgree: IAgree,
+				Information: '<h1>NO SITEUSAGE INFORMATION IS AVAILABLE</h1>',
+				Timestamp: new Date()
 			};
 		return _module;
 
@@ -19,16 +22,11 @@ RB.Masterpage = RB.Masterpage || {};
 			_callout = null;
 		}
 		function getData() {
-			var bod = new Date();
-			bod.setHours(0);
-			bod.setMinutes(0);
-			bod.setSeconds(0);
-
 			var
 				p = new $.Deferred(), 
 				req = {
 					type: 'GET',
-					url: String.format("/_api/web/lists/getbytitle('Site Terms')/items?$select=Expires,Body&$top=1&$orderby=Title desc,Expires asc&$filter=(Title eq 'General-Site-Terms' or Title eq 'General-Site-Terms-{1}') and (Expires eq null or Expires ge datetime'{0}')", bod.toISOString(), _spPageContextInfo.currentUICultureName),
+					url: String.format("/_api/web/lists/getbytitle('Site Terms')/items?$select=Modified,Body&$top=1&$orderby=Title desc,Modified desc&$filter=(Title eq 'General-Site-Terms' or Title eq 'General-Site-Terms-{0}')", _spPageContextInfo.currentUICultureName),
 					headers: { ACCEPT: 'application/json;odata=minimalmetadata' }
 				};
 			$.ajax(req)
@@ -49,9 +47,10 @@ RB.Masterpage = RB.Masterpage || {};
 		}
 		function setupUI(data) {
 			if (data && data.length && data[0].Body && data[0].Body.length) {
-				_siteusageInformation = data[0].Body;
+				_module.Information = data[0].Body;
+				_module.Timestamp = new Date(data[0].Modified);
 
-				/* setup custom callout */
+				/* setup callout */
 				var $btn = $('#rb-siteusage');
 				$btn
 					.removeClass('disabled')
@@ -68,17 +67,58 @@ RB.Masterpage = RB.Masterpage || {};
 					calloutOptions.title = 'Site Usage Terms and Conditions';
 					calloutOptions.beakOrientation = 'topBottom';
 					calloutOptions.openOptions = { event: "click", closeCalloutOnBlur: true };
-					calloutOptions.content = String.format("{0}", data[0].Body);
+					calloutOptions.content = String.format("{0}", _module.Information);
 					_callout = CalloutManager.createNewIfNecessary(calloutOptions);
 	    		});
 			}
 		}
+		function IAgree() {
+
+			SP.UI.ModalDialog.commonModalDialogClose(SP.UI.DialogResult.OK, 'User Accepted');
+		}
+		function doAcceptance() {
+			/* check that the Userprofile type has been initialised */
+			if (!RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) return;
+			var sudProperty = RB.Masterpage.Userprofile.Properties["Buzz-SiteUsageDisclaimer"];
+			if (typeof(sudProperty) === 'undefined') return;
+			/* has user 'signed' disclaimer, if so bail */
+			if (sudProperty && sudProperty.length) {
+				var
+					sudPropBits = sudProperty.split('|'),
+					sudTimestamp = new Date(sudPropBits && sudPropBits.length > 0 ? sudPropBits[0] : '1900-01-01T00:00:00.000Z');
+				if (_module.Timestamp.getTime() <= sudTimestamp.getTime()) return;
+			}
+
+			/* show the disclaimer dialog */
+			var html = ["<div class='siteusage-dialog'>"];
+				html.push(_module.Information);
+				html.push("<div class='footer'>");
+					html.push("<span><i class='fa fa-info-circle fa-lg'></i>&nbsp;Unless you agree to the terms described on this page and click the 'I Agree' button, you will not be able to continue using this site.</span>");
+					html.push("<button onclick='RB.Masterpage.Siteusage.IAgree();return false;'><i class='fa fa-check fa-lg'></i>&nbsp;I Agree</button>");
+				html.push("</div>");
+			html.push('</div>');
+
+			var $sud = $(html.join('')).get(0);
+			var options = {
+				html: $sud,
+				title: "Site Usage Terms and Conditions",
+				allowMaximize: false,
+				showClose: false,
+				autoSize: true,
+				dialogReturnValueCallback: function(dialogResult, returnValue) {
+				}
+			};
+			if (window.console) window.console.log('>>about to show SUD dialog...');
+			SP.SOD.execute('SP.UI.Dialog.js', 'SP.UI.ModalDialog.showModalDialog', options);
+		}
 
 		function ensureSetup() {
-			getData().then(setupUI)
-				.fail(function(e) {
-					if (window.console) window.console.log(e.error);
-				});
+			var p = getData()
+						.then(setupUI)
+						.fail(function(e) {
+							if (window.console) window.console.log(e.error);
+						});
+			return p;
 		}
 	}();
 

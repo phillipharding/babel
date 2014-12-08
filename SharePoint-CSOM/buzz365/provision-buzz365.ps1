@@ -39,7 +39,7 @@ if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
 $configurationName = "Masterpage"
-$configurationId = "1" # use 1 for the full provisioning and 0 for minimal provisioning
+$configurationId = "0" # use 1 for the full provisioning and 0 for minimal provisioning
 $configurationPath = $cwd       # "C:\Dev\github\babel\SharePoint-CSOM\buzz365"
 $configurationFiles = @("buzz365")
 

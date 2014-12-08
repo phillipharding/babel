@@ -711,6 +711,20 @@ section#main-menu {
   color: #FFCB00;
 }
 
+/* ==========================================================================
+ Office365/SharePoint Override CSS - Dialogs
+ ========================================================================== */
+.ms-dlgContent {
+  z-index: 999999!important;
+}
+.ms-dlgTitleBtns {
+  margin-right: -1px;
+  margin-top: -5px;
+}
+.ms-dialog #s4-bodyContainer {
+    box-shadow: none;
+}
+
 
 /* ==========================================================================
  Header Search Box / SearchBoxScriptWebPart Search Box
@@ -817,6 +831,37 @@ section#main-menu {
 #fullscreenmode > a > span { width: 24px!important; height: 24px!important; }
 #exitfullscreenmode > a > span .s4-clust,
 #fullscreenmode > a > span .s4-clust { width: 24px!important; height: 24px!important; }
+
+
+/* ==========================================================================
+ Site Usage/Site Use Terms and Conditions Dialog
+ ========================================================================== */
+.siteusage-dialog { 
+  margin: 0;
+}
+.siteusage-dialog div[class^='External'] {
+  max-height: 550px;
+  overflow-y: scroll;
+}
+.siteusage-dialog .footer {
+  margin: 0 auto 0 auto;
+  padding: 15px 0 15px 0;
+  text-align: center;
+}
+.siteusage-dialog .footer span {
+  display: inline-block;
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.siteusage-dialog .footer span .fa {
+  color: #002596;
+}
+.siteusage-dialog .footer button {
+}
+.siteusage-dialog .footer button .fa {
+  color: #008444;
+}
 
 
 /* ==========================================================================
@@ -1040,6 +1085,10 @@ section#main-menu {
 }
 
 @media screen and  (max-width: 360px) {
+
+  .siteusage-dialog div[class^='External'] {
+    max-height: 270px;
+  }
 
   .ms-srch-item {
     width: 320px;

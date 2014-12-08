@@ -9,6 +9,7 @@
 			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
 				<Folder Url="">
 					<Folder Url="Buzz365">
+						<!--
 						<File Path="Buzz365-responsive-v1.master" Url="Buzz365-responsive-v1.master" ReplaceContent="True">
 							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
 							<Property Name="Title" Value="Buzz365-responsive-v1" />
@@ -21,11 +22,13 @@
 							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
 						</File>
+						-->
 						<Folder Url="css">
 							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="js">
 							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+							<File Path="js\userprofile.js" Url="userprofile.js" ReplaceContent="True" />
 							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
 							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
 						</Folder>
@@ -84,6 +87,7 @@
 							<File Path="js\jquery.sidr.min.js" Url="jquery.sidr.min.js" ReplaceContent="True" />
 							<File Path="js\jquery.slimmenu.min.js" Url="jquery.slimmenu.min.js" ReplaceContent="True" />
 							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+							<File Path="js\userprofile.js" Url="userprofile.js" ReplaceContent="True" />
 							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
 							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
 						</Folder>

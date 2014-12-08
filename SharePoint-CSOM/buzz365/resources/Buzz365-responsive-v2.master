@@ -469,7 +469,7 @@
 <!-- START BUZZ -->
 
 <!-- START BUZZ HEADER -->
-<header>
+<header class='ms-dialogHidden'>
   <a id="mobile-nav" href="#mobile-nav" class='mobile-button'>
     <i class="fa fa-bars fa-2x"></i>
   </a>
@@ -551,7 +551,7 @@
   </div>
 </header>
 
-<div style='display:none!important;'>
+<div style='display:none!important;' class='ms-dialogHidden'>
   <SharePoint:AjaxDelta id="DeltaPlaceHolderSearchArea" BlockElement="true" CssClass="ms-mpSearchBox ms-floatRight" runat="server">
       <asp:ContentPlaceHolder id="PlaceHolderSearchArea" runat="server">
           <div id="searchInputBox">
@@ -563,7 +563,7 @@
 <!-- END BUZZ HEADER -->
 
 <!-- START MEGA MENU/MEGA-MENU -->
-<section id="main-menu">
+<section id="main-menu" class='ms-dialogHidden'>
   <nav>
       <ul class="nav">
           <li>
@@ -1122,7 +1122,7 @@
 
 <div class='pure-g' id="contentRow">
 
-    <div class='pure-u-1 pure-u-md-5-24 pure-u-lg-5-24 pure-u-xl-5-24' id="sideNavBox-x" role="Navigation" class="ms-dialogHidden ms-forceWrap ms-noList">
+    <div class='pure-u-1 pure-u-md-5-24 pure-u-lg-5-24 pure-u-xl-5-24 ms-dialogHidden ms-forceWrap ms-noList' id="sideNavBox-x" role="Navigation">
         <div class='sidenavbox-inner'>
             <SharePoint:AjaxDelta id="DeltaPlaceHolderLeftNavBar" BlockElement="true" CssClass="ms-core-navigation" role="navigation" runat="server">
                 <asp:ContentPlaceHolder id="PlaceHolderLeftNavBar" runat="server">
@@ -1204,7 +1204,7 @@
     </div>
     <!-- end #sideNavBox -->
 
-    <div class='pure-u-1 pure-u-md-19-24 pure-u-lg-19-24 pure-u-xl-19-24' id="contentBox-x" aria-live="polite" aria-relevant="all"  role="main">
+    <div class='pure-u-1 pure-u-md-19-24 pure-u-lg-19-24 pure-u-xl-19-24' id="contentBox-x" aria-live="polite" aria-relevant="all" role="main">
         <div class='contentbox-inner'>
             <div id="notificationArea" class="ms-notif-box"></div>
             <SharePoint:AjaxDelta id="DeltaPageStatusBar" BlockElement="true" runat="server">
@@ -1225,7 +1225,7 @@
 <!-- end #s4-bodyContainer -->
 
 <!-- start RB footer -->
-<footer class='maxw-container'>
+<footer class='maxw-container ms-dialogHidden'>
   <div class='pure-g'>
     <div class='pure-u-1 pure-u-sm-19-24'>
       <ul>
