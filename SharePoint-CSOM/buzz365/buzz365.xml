@@ -37,14 +37,6 @@
 			</Catalog>
 		</Catalogs>
 
-		<!-- set the masterpage on the corp news site -->
-		<Webs>
-			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
-				<CustomMasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</CustomMasterUrl>
-				<MasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</MasterUrl>
-			</Web>
-		</Webs>
-
 	</Configuration>
 
 	<Configuration Name="Masterpage" ID="1" Description="Provisions the **FULL** set of assets for the Buzz365 Responsive Masterpages">
@@ -90,6 +82,8 @@
 							<File Path="js\userprofile.js" Url="userprofile.js" ReplaceContent="True" />
 							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
 							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
+							<File Path="js\jquery.SPServices-2014.01.js" Url="jquery.SPServices-2014.01.js" ReplaceContent="True" />
+							<File Path="js\jquery.SPServices-2014.01.min.js" Url="jquery.SPServices-2014.01.min.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">
 							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
@@ -134,14 +128,6 @@
 				</Folder>
 			</Catalog>
 		</Catalogs>
-
-		<!-- set the masterpage on the corp news site -->
-		<Webs>
-			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
-				<CustomMasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</CustomMasterUrl>
-				<MasterUrl>_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</MasterUrl>
-			</Web>
-		</Webs>
 
 	</Configuration>
 </Configurations>

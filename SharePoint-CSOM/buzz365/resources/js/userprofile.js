@@ -6,13 +6,15 @@ RB.Masterpage = RB.Masterpage || {};
 
 	RB.Masterpage.Userprofile = function() {
 		var
+			_sps = null,
 			_module = {
 				EnsureSetup: ensureSetup,
+				SetProperty: setProfileProperty,
 				Properties: []
 			};
 		return _module;
 
-		function getData() {
+		function getMyPropertyData() {
 			var 
 				p = new $.Deferred(),
 				req = {
@@ -51,8 +53,54 @@ RB.Masterpage = RB.Masterpage || {};
 			return p.promise();
 		}
 
+		/**
+			As at 09/12/2014 setting User Profile Property values with JSOM or REST is not supported, it is only supported via CSOM (C#), 
+			alternatively we can use the SPServices user profile web service, which is deprecated.
+			
+			userId: 	The format is "domain\userId" for on-prem and "i:0#.f|membership|<federated ID>"" for SharePoint Online.
+						SPO format e.g. i:0#.f|membership|phil.harding@platinumdogsconsulting.onmicrosoft.com
+		**/
+		function setProfileProperty(propertyName, propertyValue, userId) {
+			if (!_sps) {
+				_sps = RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/jquery.SPServices-2014.01.min.js");
+			}
+			if (typeof(userId) === 'undefined' || !userId || !userId.length) userId = _module.Properties['AccountName']; /* default to [Me] */
+
+			var p = new $.Deferred();
+			_sps.done(function(r) {
+				/* SPServices is loaded */
+				if (window.console) window.console.log('>>> LOADED: '+r);
+
+				var propertyData = "<PropertyData>" +
+											"<IsPrivacyChanged>false</IsPrivacyChanged>" +
+											"<IsValueChanged>true</IsValueChanged>" +
+											"<Name>" + propertyName + "</Name>" +
+											"<Privacy>NotSet</Privacy>" +
+											"<Values><ValueData><Value xsi:type=\"xsd:string\">" + propertyValue + "</Value></ValueData></Values>" +
+										"</PropertyData>";
+				$().SPServices({
+					operation: "ModifyUserPropertyByAccountName",
+					async: true,
+					webURL: "/",
+					accountName: userId,
+					newData: propertyData,
+					completefunc: function (xData, Status) {
+						var 
+							response = $(xData.responseXML),
+							fc = response.find('faultcode').text();
+						if (fc && fc.length) {
+							p.reject('Error: ' + response.find('faultstring').text());
+						} else {
+							p.resolve(true);
+						}
+					}
+				});
+			});
+			return p.promise();
+		}
+
 		function ensureSetup() {
-			var p = getData()
+			var p = getMyPropertyData()
 						.fail(function(e) {
 							if (window.console) window.console.log(e.error);
 						});

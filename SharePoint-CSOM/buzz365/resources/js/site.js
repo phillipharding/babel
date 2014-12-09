@@ -13,6 +13,16 @@ RB.Masterpage.IsValidType = function (typeName) {
 	return typeof r !== 'undefined';
 }
 
+RB.Masterpage.LoadResourceFromTenantRoot = function(url, afterUi) {
+	var
+		tenantUrl = _spPageContextInfo.siteAbsoluteUrl.match(/(http[s]?:\/\/[^\/]*)/gi),
+		absoluteUrl = String.format("{0}/{1}", tenantUrl.replace(/\/$/,''), url.replace(/^\//,''));
+	return RB.Masterpage.LoadResource(absoluteUrl, afterUi);
+}
+RB.Masterpage.LoadResourceFromSiteCollection = function(url, afterUi) {
+	var relativeUrl = String.format("{0}/{1}", _spPageContextInfo.siteServerRelativeUrl.replace(/\/$/,''), url.replace(/^\//,''));
+	return RB.Masterpage.LoadResource(relativeUrl, afterUi);
+}
 RB.Masterpage.LoadResource = function(url, afterUi) {
    var
    	p = new $.Deferred(),
@@ -26,13 +36,13 @@ RB.Masterpage.LoadResource = function(url, afterUi) {
          resource.onreadystatechange = function() {
             if (resource.readyState == "loaded" || resource.readyState == "complete") {
                resource.onreadystatechange = null;
-               p.resolve();
+               p.resolve(url);
             }
          };
       } else { // Others
          resource.onload = function() {
             resource.onload = null;
-            p.resolve();
+            p.resolve(url);
          };
       }
       resource.src = url;
@@ -41,7 +51,7 @@ RB.Masterpage.LoadResource = function(url, afterUi) {
       resource.rel = 'stylesheet';
       resource.type = "text/css";
       resource.href = url;
-      p.resolve();
+      p.resolve(url);
    }
    if (resource) {
       headOrBody.appendChild(resource);
@@ -74,7 +84,7 @@ RB.Masterpage.LoadResource = function(url, afterUi) {
 		/**/
 
 		/* load the megamenu module */
-		RB.Masterpage.LoadResource(String.format("{0}/_catalogs/masterpage/Buzz365/js/megamenu.js", _spPageContextInfo.siteServerRelativeUrl.replace(/\/$/,'')))
+		RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/megamenu.js")
 			.done(function() {
 				if (window.console) window.console.log(">>MEGAMENU.JS loaded");
 				
@@ -90,23 +100,23 @@ RB.Masterpage.LoadResource = function(url, afterUi) {
 		var
 			upsuModulesInitialised = new $.Deferred(), 
 			upsuModulesLoaded = [
-				RB.Masterpage.LoadResource(String.format("{0}/_catalogs/masterpage/Buzz365/js/siteusage.js", _spPageContextInfo.siteServerRelativeUrl.replace(/\/$/,''))),
-				RB.Masterpage.LoadResource(String.format("{0}/_catalogs/masterpage/Buzz365/js/userprofile.js", _spPageContextInfo.siteServerRelativeUrl.replace(/\/$/,'')))
+				RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/siteusage.js"),
+				RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/userprofile.js")
 			];
 		$.when.apply($, upsuModulesLoaded)
 			.done(function() {
 				if (window.console) window.console.log(">>USERPROFILE.JS and SITEUSAGE.JS loaded");
-				var count = 0;
+				var waitCount = 0;
 				function deferAndWaitForModuleExecution() {
 					/* while the scripts have been loaded they '**may**' not have executed yet, so we 
 						may have to wait for this to happen before we can call the module init functions.
 					*/
 					if (!RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup') || !RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
-						count++;
-						if (count > 10) 
+						waitCount++;
+						if (waitCount > 10) 
 							upsuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
 						else {
-							if (window.console) window.console.log(">>DeferAndWait("+count+") for USERPROFILE.JS and SITEUSAGE.JS initialisation");
+							if (window.console) window.console.log(">>deferAndWaitForModuleExecution("+waitCount+") for USERPROFILE.JS and SITEUSAGE.JS initialisation");
 							setTimeout(deferAndWaitForModuleExecution, 200);
 						}
 						return;

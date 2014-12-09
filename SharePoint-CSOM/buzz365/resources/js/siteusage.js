@@ -21,6 +21,7 @@ RB.Masterpage = RB.Masterpage || {};
 			if (_callout) _callout.close(true);
 			_callout = null;
 		}
+
 		function getData() {
 			var
 				p = new $.Deferred(), 
@@ -45,6 +46,7 @@ RB.Masterpage = RB.Masterpage || {};
 				});
 			return p.promise();
 		}
+
 		function setupUI(data) {
 			if (data && data.length && data[0].Body && data[0].Body.length) {
 				_module.Information = data[0].Body;
@@ -71,11 +73,31 @@ RB.Masterpage = RB.Masterpage || {};
 					_callout = CalloutManager.createNewIfNecessary(calloutOptions);
 	    		});
 			}
+			return { Information: _module.Information, Timestamp: _module.Timestamp };
 		}
-		function IAgree() {
 
-			SP.UI.ModalDialog.commonModalDialogClose(SP.UI.DialogResult.OK, 'User Accepted');
+		function IAgree(e) {
+			var
+				$btn = $(e),
+				doSetProperty = $btn.attr('data-setpropertysuccess'),
+				propertyName = 'Buzz-SiteUsageDisclaimer', 
+				propertyValue = String.format("{0}|{1}", _module.Timestamp.toISOString(), (new Date()).toISOString());
+			if (doSetProperty && doSetProperty.length) {
+				SP.UI.ModalDialog.commonModalDialogClose(SP.UI.DialogResult.OK, 'Unable to SetProperty');
+				return;
+			}
+
+			$btn.html("&nbsp;&nbsp;<i class='fa fa-refresh fa-spin fa-lg'></i>&nbsp;&nbsp;");
+			RB.Masterpage.Userprofile.SetProperty(propertyName, propertyValue)
+				.done(function(success) {
+					SP.UI.ModalDialog.commonModalDialogClose(SP.UI.DialogResult.OK, 'User Accepted');
+				})
+				.fail(function(error) {
+					$btn.prev('span').html("<i class='fa fa-exclamation-triangle fa-lg'></i>&nbsp;" + error);
+					$btn.attr('data-setpropertysuccess','false').html("Cancel");
+				});
 		}
+
 		function doAcceptance() {
 			/* check that the Userprofile type has been initialised */
 			if (!RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) return;
@@ -94,7 +116,7 @@ RB.Masterpage = RB.Masterpage || {};
 				html.push(_module.Information);
 				html.push("<div class='footer'>");
 					html.push("<span><i class='fa fa-info-circle fa-lg'></i>&nbsp;Unless you agree to the terms described on this page and click the 'I Agree' button, you will not be able to continue using this site.</span>");
-					html.push("<button onclick='RB.Masterpage.Siteusage.IAgree();return false;'><i class='fa fa-check fa-lg'></i>&nbsp;I Agree</button>");
+					html.push("<button onclick='RB.Masterpage.Siteusage.IAgree(this);return false;'><i class='fa fa-check fa-lg'></i>&nbsp;I Agree</button>");
 				html.push("</div>");
 			html.push('</div>');
 
