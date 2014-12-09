@@ -1,0 +1,10 @@
+<Configurations>
+
+	<Configuration Name="SetMasterpage" ID="0" Description="Sets the Buzz365 Masterpage as the masterpage for the connected Web">
+
+		<CustomMasterUrl>/_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</CustomMasterUrl>
+		<MasterUrl>/_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</MasterUrl>
+
+	</Configuration>
+
+</Configurations>

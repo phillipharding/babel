@@ -154,18 +154,28 @@ function Set-MasterPage {
 
         $performUpdate = $false
         if($CustomMasterUrl) {
-            $CustomMasterUrl = $CustomMasterUrl -replace "^/",""
-            $NewCustomMasterUrl = "$serverRelativeUrl/$CustomMasterUrl"
+            if ($CustomMasterUrl -match "^http[s]?://") {
+                $NewCustomMasterUrl = "$CustomMasterUrl"
+            } else {
+                $CustomMasterUrl = $CustomMasterUrl -replace "^/",""
+                $NewCustomMasterUrl = "$serverRelativeUrl/$CustomMasterUrl"
+            }
             if($oldCustomMasterUrl -ne $NewCustomMasterUrl) {
+                Write-Host "`t....Updating CustomMasterUrl to $NewCustomMasterUrl" -ForegroundColor Green
                 $Web.CustomMasterUrl = $NewCustomMasterUrl
                 $performUpdate = $true
             }
         }
 
         if($MasterUrl) {
-            $MasterUrl = $MasterUrl -replace "^/",""
-            $NewMasterUrl = "$serverRelativeUrl/$MasterUrl"
+            if ($MasterUrl -match "^http[s]?://") {
+                $NewMasterUrl = "$MasterUrl"
+            } else {
+                $MasterUrl = $MasterUrl -replace "^/",""
+                $NewMasterUrl = "$serverRelativeUrl/$MasterUrl"
+            }
             if($oldMasterUrl -ne $NewMasterUrl) {
+                Write-Host "`t....Updating MasterUrl to $NewMasterUrl" -ForegroundColor Green
                 $Web.MasterUrl = $NewMasterUrl
                 $performUpdate = $true
             }

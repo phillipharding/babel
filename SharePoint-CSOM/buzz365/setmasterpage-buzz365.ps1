@@ -1,11 +1,13 @@
 ﻿<#
     Example command lines
 
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah/news" -CredentialLabel "RB.COM SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO"
 
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing/news" -CredentialLabel "SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO"
 
 #>
 param (
@@ -33,10 +35,10 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configurationName = "Masterpage"
-$configurationId = "0" # use 1 for the full provisioning and 0 for minimal provisioning
+$configurationName = "SetMasterpage"
+$configurationId = "0" 
 $configurationPath = $cwd
-$configurationFiles = @("buzz365")
+$configurationFiles = @("setmasterpage-buzz365")
 
 $configurationFiles | ? { $_ -match ".*" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
