@@ -477,7 +477,7 @@
     <i class="fa fa-search fa-2x"></i>
   </a>
   <div class="pure-g" height="76">
-      <div class="pure-u-2-3 social">
+      <div class="pure-u-2-3 socialbar">
           <SharePoint:SPSimpleSiteLink CssClass="SPSimpleSiteLink" runat="server" id="onetidProjectPropertyTitleGraphic">
             <img class="pure-img logo" src='<asp:Literal Text="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/images/rb-the-buzz.png%>" runat="server" />' alt="RB - The Buzz" />
           </SharePoint:SPSimpleSiteLink>

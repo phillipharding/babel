@@ -75,7 +75,8 @@ RB Header
 
 header {
   margin: 0 10px 15px 10px;
-  padding: 10px 0 0;
+  /*padding: 10px 0 0;*/
+  padding: 0;
 }
 
 header ul,
@@ -91,6 +92,13 @@ header ul li {
   float: left;
   transition: all 250ms;
 }
+header ul li a,
+header ul li a:link,
+header ul li a:visited,
+header ul li a:hover,
+header ul li a:active {
+  font-size: 0.9em;
+}
 
 header ul li.badge:hover a {
   opacity: 0.5;
@@ -105,7 +113,11 @@ header ul li a:hover {
   text-decoration: none;
 }
 
-header .social ul {
+header .socialbar {
+  margin: 5px 0 0 0;
+  padding: 5px 0 0 0;
+}
+header .socialbar ul {
   float: left;
   display: inline-block;
   clear: none;
@@ -122,13 +134,20 @@ header .corporate ul {
   padding-left: 0px;
   margin-top: 5px;
 }
+header .corporate ul li a,
+header .corporate ul li a:link,
+header .corporate ul li a:visited,
+header .corporate ul li a:hover,
+header .corporate ul li a:active {
+  font-size: 1em;
+}
 
 header .corporate ul li {
   float: none;
   clear: both;
 }
 
-header .social img {
+header .socialbar img {
   float: left;
   display: block;
 }
@@ -941,7 +960,7 @@ section#main-menu {
     font-size: 2.1em;
   }
 
-  header .social ul {
+  header .socialbar ul {
     margin-top: 5px;
     margin-left: 0;
     float: none;
@@ -1175,6 +1194,13 @@ section#main-menu {
  /*re-enable border-box for framework spans*/
   box-sizing: border-box;
  /*re-enable border-box for framework spans*/;
+}
+
+nav, 
+nav *, 
+nav *:before, 
+nav *:after {
+  box-sizing: border-box;
 }
 
 img {

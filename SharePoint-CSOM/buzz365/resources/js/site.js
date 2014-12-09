@@ -108,7 +108,8 @@ RB.Masterpage.LoadResource = function(url, afterUi) {
 				if (window.console) window.console.log(">>USERPROFILE.JS and SITEUSAGE.JS loaded");
 				var waitCount = 0;
 				function deferAndWaitForModuleExecution() {
-					/* while the scripts have been loaded they '**may**' not have executed yet, so we 
+					/* this is an edge case:
+						while the scripts have been loaded they '**may**' not have executed yet, so we 
 						may have to wait for this to happen before we can call the module init functions.
 					*/
 					if (!RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup') || !RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
