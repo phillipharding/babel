@@ -1,4 +1,4 @@
-<Configurations ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\buzz365\resources">
+<Configurations ResourcesPath=".\resources">
 	<Configuration Name="Masterpage" ID="0" Description="Provisions the **MINIMAL** set of assets for the Buzz365 Responsive Masterpages">
 
 		<Catalogs>
@@ -119,7 +119,6 @@
 							<File Path="images\white-arrow.png" Url="white-arrow.png" ReplaceContent="True" />
 							<File Path="images\widget-dummy.png" Url="widget-dummy.png" ReplaceContent="True" />
 							<File Path="images\yammer.png" Url="yammer.png" ReplaceContent="True" />
-							<File Path="images\carousel-1.jpg" Url="carousel-1.jpg" ReplaceContent="True" />
 							<File Path="images\780x295.gif" Url="780x295.gif" ReplaceContent="True" />
 						</Folder>
 					</Folder>

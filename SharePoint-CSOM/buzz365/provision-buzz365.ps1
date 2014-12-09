@@ -1,16 +1,18 @@
 ﻿<#
     Example command lines
 
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO" -Configuration "1"
 
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO"
+    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "1"
 
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
-    [parameter(Mandatory=$false)][string]$CredentialLabel = $null
+    [parameter(Mandatory=$false)][string]$CredentialLabel = $null,
+    [parameter(Mandatory=$false)][string]$Configuration = "1"
 )
 cls
 # load and init the CSOM modules
@@ -34,7 +36,7 @@ if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
 $configurationName = "Masterpage"
-$configurationId = "0" # use 1 for the full provisioning and 0 for minimal provisioning
+$configurationId = $Configuration # use 1 for the full provisioning and 0 for minimal provisioning
 $configurationPath = $cwd
 $configurationFiles = @("buzz365")
 

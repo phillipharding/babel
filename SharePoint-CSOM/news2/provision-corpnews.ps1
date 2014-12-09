@@ -1,14 +1,15 @@
 ﻿<#
     Example command lines
 
-    .\provision-corpnews.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
-    .\provision-corpnews.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
-    .\provision-corpnews.ps1 -URL "http://pub.pdogs.local/" -CredentialLabel "OnPrem"
+    .\provision-corpnews.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "0"
+    .\provision-corpnews.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "0"
+    .\provision-corpnews.ps1 -URL "http://pub.pdogs.local/" -CredentialLabel "OnPrem" -Configuration "1"
 
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
-    [parameter(Mandatory=$false)][string]$CredentialLabel = $null
+    [parameter(Mandatory=$false)][string]$CredentialLabel = $null,
+    [parameter(Mandatory=$false)][string]$Configuration = "0"
 )
 cls
 # load and init the CSOM modules
@@ -24,12 +25,6 @@ if (($URL -ne $null -and $URL -ne "") -and ($CredentialLabel -ne $null -and $Cre
     $connector.csomCredentialLabel = $CredentialLabel
 } else {
     # set connection url, set credentials using Windows Credential Manager
-    #$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
-    #$connector.csomCredentialLabel = "RB.COM SPO"
-    #$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-    #$connector.csomCredentialLabel = "SPO"
-    #$connector.csomUrl = "http://pub.pdogs.local/"
-    #$connector.csomCredentialLabel = "OnPrem"
 }
 
 # connect...
@@ -39,9 +34,9 @@ Write-Host "Connected.`n"
 
 $configurationPath = $cwd       #"C:\Dev\github\babel\SharePoint-CSOM\news2"
 $configurationName = "News"
-$configurationId = "0" # for provisioning to SPO w/Buzz365 Masterpage
-#$configurationId = "1" # for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
-#$configurationId = "2" # for Debug testing
+$configurationId = $Configuration # 0 for provisioning to SPO w/Buzz365 Masterpage
+#$configurationId = "1" # 1 for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
+#$configurationId = "2" # 2 for Debug testing
 $configurationFiles = @("corpnews")
 
 $configurationFiles | ? { $_ -match ".*" } | % {

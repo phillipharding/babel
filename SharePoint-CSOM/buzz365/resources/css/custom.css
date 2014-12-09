@@ -606,18 +606,10 @@ section#main-menu {
   z-index: 520;
 }
 .js-callout-closeButton {
-    height: 24px;
-    width: 24px;
+  height: 13px;
+  margin-right: 20px;
+  width: 13px;
 }
-#corbcom-siteusage_callout .js-callout-body {
-    overflow-y: scroll;
-    margin-bottom: 20px;
-}
-#corbcom-siteusage_callout .js-callout-content {
-    width: 640px!important;
-    max-width: 640px;
-}
-
 .ms-core-pageTitle {
   font-size: 2.7em;
 }
@@ -828,7 +820,8 @@ section#main-menu {
  Full-screen mode button
  ========================================================================== */
 #exitfullscreenmode > a > span,
-#fullscreenmode > a > span { width: 24px!important; height: 24px!important; }
+#fullscreenmode > a > span { width: 10px!important; height: 10px!important; }
+
 #exitfullscreenmode > a > span .s4-clust,
 #fullscreenmode > a > span .s4-clust { width: 24px!important; height: 24px!important; }
 
@@ -840,7 +833,7 @@ section#main-menu {
   margin: 0;
 }
 .siteusage-dialog div[class^='External'] {
-  max-height: 550px;
+  max-height: 390px;
   overflow-y: scroll;
 }
 .siteusage-dialog .footer {
@@ -862,6 +855,20 @@ section#main-menu {
 .siteusage-dialog .footer button .fa {
   color: #008444;
 }
+
+/* Site Usage/SiteUsage CALLOUT */
+#corbcom-siteusage_callout .js-callout-body {
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+#corbcom-siteusage_callout-body div[class^='External'] {
+  max-height: 365px;
+}
+#corbcom-siteusage_callout .js-callout-content {
+  width: 640px!important;
+  max-width: 640px;
+}
+
 
 
 /* ==========================================================================
@@ -1182,7 +1189,6 @@ img {
 
 img.ms-webpart-menuArrowImg, 
 #applist img {
-
 	/* within a span may still need to have width of image not 100% for SP2013 OOTB features/imges */
   width: auto;
   max-width: none;

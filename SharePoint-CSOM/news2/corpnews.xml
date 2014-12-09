@@ -1,4 +1,4 @@
-<Configurations ResourcesPath="C:\Dev\github\babel\SharePoint-CSOM\news2\resources">
+<Configurations ResourcesPath=".\resources">
 	<Configuration Name="News" ID="2" Description="DEV DEBUG">
 		<Webs>
 			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
