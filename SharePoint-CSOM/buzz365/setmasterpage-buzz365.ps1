@@ -1,6 +1,7 @@
 ﻿<#
     Example command lines
 
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "1"
     .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah/news" -CredentialLabel "RB.COM SPO"
     .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
     .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO"

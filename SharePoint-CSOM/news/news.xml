@@ -88,8 +88,8 @@
 					<PropertyBagValue Key="" Value="" Indexable="true|false" />
 
 				<WelcomePage/>
-				<CustomMasterUrl/>
-				<MasterUrl/>
+				<CustomMasterUrl Inherit="False" Force="true"/>
+				<MasterUrl Inherit="False" Force="true"/>
 				<NoCrawl/>
 
 				<ColorPaletteUrl/>
@@ -137,8 +137,8 @@
 		<Webs>
 			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
 
-				<CustomMasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</CustomMasterUrl>
-				<MasterUrl>_catalogs/masterpage/rbcom/rbcom-responsive.master</MasterUrl>
+				<CustomMasterUrl Inherit="False" Force="true">_catalogs/masterpage/rbcom/rbcom-responsive.master</CustomMasterUrl>
+				<MasterUrl Inherit="False" Force="true">_catalogs/masterpage/rbcom/rbcom-responsive.master</MasterUrl>
 				
 				<Features>
 					<SiteFeatures>

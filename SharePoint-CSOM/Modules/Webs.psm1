@@ -137,8 +137,8 @@ function Set-WelcomePage {
 
 function Set-MasterPage {
     param (
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][string]$CustomMasterUrl,
-        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][string]$MasterUrl,
+        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][System.Xml.XmlElement]$CustomMasterUrl,
+        [parameter(Mandatory=$false, ValueFromPipelineByPropertyName = $true)][System.Xml.XmlElement]$MasterUrl,
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
         [parameter(Mandatory=$true, ValueFromPipelineByPropertyName = $true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
@@ -154,29 +154,31 @@ function Set-MasterPage {
 
         $performUpdate = $false
         if($CustomMasterUrl) {
-            if ($CustomMasterUrl -match "^http[s]?://") {
-                $NewCustomMasterUrl = "$CustomMasterUrl"
+            if ($CustomMasterUrl.innerText -match "^http[s]?://") {
+                $NewCustomMasterUrl = "$($CustomMasterUrl.innerText)"
             } else {
-                $CustomMasterUrl = $CustomMasterUrl -replace "^/",""
-                $NewCustomMasterUrl = "$serverRelativeUrl/$CustomMasterUrl"
+                $cm = $CustomMasterUrl.innerText -replace "^/",""
+                $NewCustomMasterUrl = "$serverRelativeUrl/$cm"
             }
-            if($oldCustomMasterUrl -ne $NewCustomMasterUrl) {
+            if (($oldCustomMasterUrl -ne $NewCustomMasterUrl) -or ($CustomMasterUrl.Force -and $CustomMasterUrl.Force -match "true")) {
                 Write-Host "`t....Updating CustomMasterUrl to $NewCustomMasterUrl" -ForegroundColor Green
                 $Web.CustomMasterUrl = $NewCustomMasterUrl
+                $Web.AllProperties["__InheritsCustomMasterUrl"] = $CustomMasterUrl.Inherit
                 $performUpdate = $true
             }
         }
 
         if($MasterUrl) {
-            if ($MasterUrl -match "^http[s]?://") {
-                $NewMasterUrl = "$MasterUrl"
+            if ($MasterUrl.innerText -match "^http[s]?://") {
+                $NewMasterUrl = "$($MasterUrl.innerText)"
             } else {
-                $MasterUrl = $MasterUrl -replace "^/",""
-                $NewMasterUrl = "$serverRelativeUrl/$MasterUrl"
+                $mu = $MasterUrl.innerText -replace "^/",""
+                $NewMasterUrl = "$serverRelativeUrl/$mu"
             }
-            if($oldMasterUrl -ne $NewMasterUrl) {
+            if (($oldMasterUrl -ne $NewMasterUrl) -or ($MasterUrl.Force -and $MasterUrl.Force -match "true")) {
                 Write-Host "`t....Updating MasterUrl to $NewMasterUrl" -ForegroundColor Green
                 $Web.MasterUrl = $NewMasterUrl
+                $Web.AllProperties["__InheritsMasterUrl"] = $MasterUrl.Inherit
                 $performUpdate = $true
             }
         }
