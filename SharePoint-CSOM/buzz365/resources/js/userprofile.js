@@ -6,7 +6,6 @@ RB.Masterpage = RB.Masterpage || {};
 
 	RB.Masterpage.Userprofile = function() {
 		var
-			_sps = null,
 			_module = {
 				EnsureSetup: ensureSetup,
 				SetProperty: setProfileProperty,
@@ -61,13 +60,11 @@ RB.Masterpage = RB.Masterpage || {};
 						SPO format e.g. i:0#.f|membership|phil.harding@platinumdogsconsulting.onmicrosoft.com
 		**/
 		function setProfileProperty(propertyName, propertyValue, userId) {
-			if (!_sps) {
-				_sps = RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/jquery.SPServices-2014.01.min.js");
-			}
 			if (typeof(userId) === 'undefined' || !userId || !userId.length) userId = _module.Properties['AccountName']; /* default to [Me] */
 
 			var p = new $.Deferred();
-			_sps.done(function(r) {
+			RB.Masterpage.LoadSPServices()
+				.done(function(r) {
 				/* SPServices is loaded */
 				if (window.console) window.console.log('>>> LOADED: '+r);
 

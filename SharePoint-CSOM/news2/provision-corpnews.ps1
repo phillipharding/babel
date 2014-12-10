@@ -5,6 +5,11 @@
     .\provision-corpnews.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "0"
     .\provision-corpnews.ps1 -URL "http://pub.pdogs.local/" -CredentialLabel "OnPrem" -Configuration "1"
 
+
+    -Configuration;
+        "0" for provisioning to SPO w/Buzz365 Masterpage
+        "1" for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
+        "2" for Debug testing purposes - do not use
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
@@ -34,9 +39,7 @@ Write-Host "Connected.`n"
 
 $configurationPath = $cwd       #"C:\Dev\github\babel\SharePoint-CSOM\news2"
 $configurationName = "News"
-$configurationId = $Configuration # 0 for provisioning to SPO w/Buzz365 Masterpage
-#$configurationId = "1" # 1 for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
-#$configurationId = "2" # 2 for Debug testing
+$configurationId = $Configuration
 $configurationFiles = @("corpnews")
 
 $configurationFiles | ? { $_ -match ".*" } | % {

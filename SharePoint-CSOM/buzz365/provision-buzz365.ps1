@@ -8,6 +8,11 @@
     .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "1"
     .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "1"
 
+    -Configuration;
+        "0" for minimal provisioning
+        "1" for full provisioning
+        "2" for Masterpages only
+        "3" for Masterpage Resources only
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
@@ -36,7 +41,7 @@ if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
 $configurationName = "Masterpage"
-$configurationId = $Configuration # use 1 for the full provisioning and 0 for minimal provisioning
+$configurationId = $Configuration 
 $configurationPath = $cwd
 $configurationFiles = @("buzz365")
 

@@ -1,6 +1,5 @@
 <Configurations ResourcesPath=".\resources">
 	<Configuration Name="Masterpage" ID="0" Description="Provisions the **MINIMAL** set of assets for the Buzz365 Responsive Masterpages">
-
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
@@ -34,11 +33,9 @@
 				</Folder>
 			</Catalog>
 		</Catalogs>
-
 	</Configuration>
 
 	<Configuration Name="Masterpage" ID="1" Description="Provisions the **FULL** set of assets for the Buzz365 Responsive Masterpages">
-
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
@@ -59,7 +56,6 @@
 							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
 						</File>
-
 						<Folder Url="css">
 							<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
 							<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
@@ -70,6 +66,44 @@
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
+							<Folder Url="flick">
+									<File Path="css\flick\jquery-ui-1.11.2.css" Url="jquery-ui-1.11.2.css" ReplaceContent="True" />
+									<File Path="css\flick\jquery-ui-1.11.2.min.css" Url="jquery-ui-1.11.2.min.css" ReplaceContent="True" />
+									<Folder Url="images">
+										<File Path="css\flick\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_flat_0_eeeeee_40x100.png" Url="ui-bg_flat_0_eeeeee_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_flat_55_ffffff_40x100.png" Url="ui-bg_flat_55_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" Url="ui-bg_highlight-soft_100_f6f6f6_1x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_highlight-soft_25_0073ea_1x100.png" Url="ui-bg_highlight-soft_25_0073ea_1x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_highlight-soft_50_dddddd_1x100.png" Url="ui-bg_highlight-soft_50_dddddd_1x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_0073ea_256x240.png" Url="ui-icons_0073ea_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_666666_256x240.png" Url="ui-icons_666666_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_ff0084_256x240.png" Url="ui-icons_ff0084_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_ffffff_256x240.png" Url="ui-icons_ffffff_256x240.png" ReplaceContent="True" />
+									</Folder>
+							</Folder>
+							<Folder Url="smoothness">
+									<File Path="css\smoothness\jquery-ui-1.11.2.css" Url="jquery-ui-1.11.2.css" ReplaceContent="True" />
+									<File Path="css\smoothness\jquery-ui-1.11.2.min.css" Url="jquery-ui-1.11.2.min.css" ReplaceContent="True" />
+									<Folder Url="images">
+										<File Path="css\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" Url="ui-bg_glass_55_fbf9ee_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_75_dadada_1x400.png" Url="ui-bg_glass_75_dadada_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" Url="ui-bg_glass_75_e6e6e6_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" Url="ui-bg_glass_95_fef1ec_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" Url="ui-bg_highlight-soft_75_cccccc_1x100.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_222222_256x240.png" Url="ui-icons_222222_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_2e83ff_256x240.png" Url="ui-icons_2e83ff_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_888888_256x240.png" Url="ui-icons_888888_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_cd0a0a_256x240.png" Url="ui-icons_cd0a0a_256x240.png" ReplaceContent="True" />
+									</Folder>
+							</Folder>
 						</Folder>
 						<Folder Url="js">
 							<File Path="js\jquery-2.1.1.min.js" Url="jquery-2.1.1.min.js" ReplaceContent="True" />
@@ -82,6 +116,10 @@
 							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
 							<File Path="js\jquery.SPServices-2014.01.js" Url="jquery.SPServices-2014.01.js" ReplaceContent="True" />
 							<File Path="js\jquery.SPServices-2014.01.min.js" Url="jquery.SPServices-2014.01.min.js" ReplaceContent="True" />
+							<File Path="js\knockout-3.2.0.js" Url="knockout-3.2.0.js" ReplaceContent="True" />
+							<File Path="js\knockout-3.2.0.debug.js" Url="knockout-3.2.0.debug.js" ReplaceContent="True" />
+							<File Path="js\jquery-ui-1.11.2.js" Url="jquery-ui-1.11.2.js" ReplaceContent="True" />
+							<File Path="js\jquery-ui-1.11.2.min.js" Url="jquery-ui-1.11.2.min.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">
 							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
@@ -125,6 +163,159 @@
 				</Folder>
 			</Catalog>
 		</Catalogs>
-
 	</Configuration>
+
+	<Configuration Name="Masterpage" ID="2" Description="Provisions the set of Buzz365 Masterpages">
+		<Catalogs>
+			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
+			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+			<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+
+			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+				<Folder Url="">
+					<Folder Url="Buzz365">
+						<File Path="Buzz365-responsive-v1.master" Url="Buzz365-responsive-v1.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365-responsive-v1" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v1 Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+						<File Path="Buzz365-responsive-v2.master" Url="Buzz365-responsive-v2.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365-responsive-v2" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+					</Folder>
+				</Folder>
+			</Catalog>
+		</Catalogs>
+	</Configuration>
+
+	<Configuration Name="Masterpage" ID="3" Description="Provisions the **FULL** set of Buzz365 Masterpage Resources">
+		<Catalogs>
+			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+				<Folder Url="">
+					<Folder Url="Buzz365">
+						<File Path="Buzz365-responsive-v1.master" Url="Buzz365-responsive-v1.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365-responsive-v1" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v1 Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+						<File Path="Buzz365-responsive-v2.master" Url="Buzz365-responsive-v2.master" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
+							<Property Name="Title" Value="Buzz365-responsive-v2" />
+							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
+							<Property Name="UIVersion" Value="15" />
+						</File>
+						<Folder Url="css">
+							<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
+							<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
+							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
+							<File Path="css\jquery.bxslider.css" Url="jquery.bxslider.css" ReplaceContent="True" />
+							<File Path="css\jquery.sidr.dark.css" Url="jquery.sidr.dark.css" ReplaceContent="True" />
+							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
+							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
+							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
+							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
+							<Folder Url="flick">
+									<File Path="css\flick\jquery-ui-1.11.2.css" Url="jquery-ui-1.11.2.css" ReplaceContent="True" />
+									<File Path="css\flick\jquery-ui-1.11.2.min.css" Url="jquery-ui-1.11.2.min.css" ReplaceContent="True" />
+									<Folder Url="images">
+										<File Path="css\flick\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_flat_0_eeeeee_40x100.png" Url="ui-bg_flat_0_eeeeee_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_flat_55_ffffff_40x100.png" Url="ui-bg_flat_55_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" Url="ui-bg_highlight-soft_100_f6f6f6_1x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_highlight-soft_25_0073ea_1x100.png" Url="ui-bg_highlight-soft_25_0073ea_1x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-bg_highlight-soft_50_dddddd_1x100.png" Url="ui-bg_highlight-soft_50_dddddd_1x100.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_0073ea_256x240.png" Url="ui-icons_0073ea_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_666666_256x240.png" Url="ui-icons_666666_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_ff0084_256x240.png" Url="ui-icons_ff0084_256x240.png" ReplaceContent="True" />
+										<File Path="css\flick\images\ui-icons_ffffff_256x240.png" Url="ui-icons_ffffff_256x240.png" ReplaceContent="True" />
+									</Folder>
+							</Folder>
+							<Folder Url="smoothness">
+									<File Path="css\smoothness\jquery-ui-1.11.2.css" Url="jquery-ui-1.11.2.css" ReplaceContent="True" />
+									<File Path="css\smoothness\jquery-ui-1.11.2.min.css" Url="jquery-ui-1.11.2.min.css" ReplaceContent="True" />
+									<Folder Url="images">
+										<File Path="css\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" Url="ui-bg_glass_55_fbf9ee_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_75_dadada_1x400.png" Url="ui-bg_glass_75_dadada_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" Url="ui-bg_glass_75_e6e6e6_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" Url="ui-bg_glass_95_fef1ec_1x400.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" Url="ui-bg_highlight-soft_75_cccccc_1x100.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_222222_256x240.png" Url="ui-icons_222222_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_2e83ff_256x240.png" Url="ui-icons_2e83ff_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_888888_256x240.png" Url="ui-icons_888888_256x240.png" ReplaceContent="True" />
+										<File Path="css\smoothness\images\ui-icons_cd0a0a_256x240.png" Url="ui-icons_cd0a0a_256x240.png" ReplaceContent="True" />
+									</Folder>
+							</Folder>
+						</Folder>
+						<Folder Url="js">
+							<File Path="js\jquery-2.1.1.min.js" Url="jquery-2.1.1.min.js" ReplaceContent="True" />
+							<File Path="js\jquery.bxslider.min.js" Url="jquery.bxslider.min.js" ReplaceContent="True" />
+							<File Path="js\jquery.sidr.min.js" Url="jquery.sidr.min.js" ReplaceContent="True" />
+							<File Path="js\jquery.slimmenu.min.js" Url="jquery.slimmenu.min.js" ReplaceContent="True" />
+							<File Path="js\site.js" Url="site.js" ReplaceContent="True" />
+							<File Path="js\userprofile.js" Url="userprofile.js" ReplaceContent="True" />
+							<File Path="js\siteusage.js" Url="siteusage.js" ReplaceContent="True" />
+							<File Path="js\megamenu.js" Url="megamenu.js" ReplaceContent="True" />
+							<File Path="js\jquery.SPServices-2014.01.js" Url="jquery.SPServices-2014.01.js" ReplaceContent="True" />
+							<File Path="js\jquery.SPServices-2014.01.min.js" Url="jquery.SPServices-2014.01.min.js" ReplaceContent="True" />
+							<File Path="js\knockout-3.2.0.js" Url="knockout-3.2.0.js" ReplaceContent="True" />
+							<File Path="js\knockout-3.2.0.debug.js" Url="knockout-3.2.0.debug.js" ReplaceContent="True" />
+							<File Path="js\jquery-ui-1.11.2.js" Url="jquery-ui-1.11.2.js" ReplaceContent="True" />
+							<File Path="js\jquery-ui-1.11.2.min.js" Url="jquery-ui-1.11.2.min.js" ReplaceContent="True" />
+						</Folder>
+						<Folder Url="fonts">
+							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\FontAwesome.otf" Url="FontAwesome.otf" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
+						</Folder>
+						<Folder Url="images">
+							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />
+							<File Path="images\announcements.png" Url="announcements.png" ReplaceContent="True" />
+							<File Path="images\better-business.png" Url="better-business.png" ReplaceContent="True" />
+							<File Path="images\blue-news.png" Url="blue-news.png" ReplaceContent="True" />
+							<File Path="images\bx_loader.gif" Url="bx_loader.gif" ReplaceContent="True" />
+							<File Path="images\carousel-1.jpg" Url="carousel-1.jpg" ReplaceContent="True" />
+							<File Path="images\controls.png" Url="controls.png" ReplaceContent="True" />
+							<File Path="images\dummy-feed.jpg" Url="dummy-feed.jpg" ReplaceContent="True" />
+							<File Path="images\fb.png" Url="fb.png" ReplaceContent="True" />
+							<File Path="images\ff-arrow.png" Url="ff-arrow.png" ReplaceContent="True" />
+							<File Path="images\ff-top-corner.png" Url="ff-top-corner.png" ReplaceContent="True" />
+							<File Path="images\grey-news.png" Url="grey-news.png" ReplaceContent="True" />
+							<File Path="images\house-rules.png" Url="house-rules.png" ReplaceContent="True" />
+							<File Path="images\icons.png" Url="icons.png" ReplaceContent="True" />
+							<File Path="images\management-appointments.png" Url="management-appointments.png" ReplaceContent="True" />
+							<File Path="images\mob-nav.png" Url="mob-nav.png" ReplaceContent="True" />
+							<File Path="images\next-arrow.png" Url="next-arrow.png" ReplaceContent="True" />
+							<File Path="images\pink-arrow-corner.png" Url="pink-arrow-corner.png" ReplaceContent="True" />
+							<File Path="images\prev-arrow.png" Url="prev-arrow.png" ReplaceContent="True" />
+							<File Path="images\rb-the-buzz.png" Url="rb-the-buzz.png" ReplaceContent="True" />
+							<File Path="images\rb.png" Url="rb.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow.png" Url="share-price-arrow.png" ReplaceContent="True" />
+							<File Path="images\share-price.png" Url="share-price.png" ReplaceContent="True" />
+							<File Path="images\twitter.png" Url="twitter.png" ReplaceContent="True" />
+							<File Path="images\user.png" Url="user.png" ReplaceContent="True" />
+							<File Path="images\white-arrow.png" Url="white-arrow.png" ReplaceContent="True" />
+							<File Path="images\widget-dummy.png" Url="widget-dummy.png" ReplaceContent="True" />
+							<File Path="images\yammer.png" Url="yammer.png" ReplaceContent="True" />
+							<File Path="images\780x295.gif" Url="780x295.gif" ReplaceContent="True" />
+						</Folder>
+					</Folder>
+				</Folder>
+			</Catalog>
+		</Catalogs>
+	</Configuration>
+
 </Configurations>
