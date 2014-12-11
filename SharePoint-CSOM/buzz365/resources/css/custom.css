@@ -1,4 +1,5 @@
-body, html {
+body, 
+html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
@@ -6,7 +7,9 @@ body, html {
   font-size: 13px;
 }
 
-*, *:before, *:after {
+*, 
+*:before, 
+*:after {
   box-sizing: inherit;
 }
 
@@ -26,8 +29,7 @@ body#no-bg {
   background: none;
 }
 
-.PlaceHolderPageImage {
-}
+.PlaceHolderPageImage {}
 
 .maxw-container {
   max-width: 1200px;
@@ -43,8 +45,17 @@ body#no-bg {
   box-sizing: border-box;
 }
 
-article,aside,details,figcaption,figure,
-footer,header,hgroup,nav,section,summary {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+summary {
   display: block;
 }
 
@@ -54,12 +65,21 @@ footer,header,hgroup,nav,section,summary {
 
 a {
   text-decoration: none;
-  color: inherit;
   outline: 0px !important;
   border: 0px;
 }
+a, a:visited, .ms-link, .ms-link:visited {
+  /* KiteBlue Links */
+  color: #415A6C;
+}
+.ms-calloutLink:link, a.ms-calloutLink:visited, .ms-calloutLinkDisabled, .ms-commandLink, .ms-commandLink:visited, .ms-secondaryCommandLink, .ms-secondaryCommandLink:visited {
+  color: #415a6c;
+}
+.ms-calloutLink:hover, .ms-commandLink:hover, .ms-secondaryCommandLink:hover {
+  color: #5B186A;
+}
 
-h1, h2, h3, p {
+h1, h2, h3, h4, p {
   margin: 0px;
 }
 
@@ -69,19 +89,24 @@ ul li {
   padding: 0px;
 }
 
+dl, menu, ol, ul {
+    margin: 0;
+    padding: 0;
+}
+
 /* ==========================================================================
 RB Header
 ========================================================================== */
 
 header {
   margin: 0 10px 15px 10px;
-  padding: 10px 0 0;
+  padding: 0;
 }
 
 header ul,
 header .icons {
   float: right;
-  margin: 0px 0px 0px 0px;
+  margin: 0;
   max-height: 25px;
   width: auto;
 }
@@ -90,6 +115,14 @@ header ul li {
   display: inline-block;
   float: left;
   transition: all 250ms;
+}
+
+header ul li a,
+header ul li a:link,
+header ul li a:visited,
+header ul li a:hover,
+header ul li a:active {
+  font-size: 0.9em;
 }
 
 header ul li.badge:hover a {
@@ -105,7 +138,12 @@ header ul li a:hover {
   text-decoration: none;
 }
 
-header .social ul {
+header .socialbar {
+  margin: 5px 0 0 0;
+  padding: 5px 0 0 0;
+}
+
+header .socialbar ul {
   float: left;
   display: inline-block;
   clear: none;
@@ -123,12 +161,20 @@ header .corporate ul {
   margin-top: 5px;
 }
 
+header .corporate ul li a,
+header .corporate ul li a:link,
+header .corporate ul li a:visited,
+header .corporate ul li a:hover,
+header .corporate ul li a:active {
+  font-size: 1em;
+}
+
 header .corporate ul li {
   float: none;
   clear: both;
 }
 
-header .social img {
+header .socialbar img {
   float: left;
   display: block;
 }
@@ -172,14 +218,14 @@ footer {
   background-color: #415A6C;
   background-color: rgba(65, 90, 108, 0.95);
   margin: 0 auto;
-  margin-bottom: 35px;
-  padding: 10px 12px;
+  margin-bottom: 25px;
+  padding: 12px 0 8px 0;
   font-size: 12px;
 }
 
 footer ul {
   margin: 0 20px 0 0;
-  padding: 0;
+  padding: 0 0 0 10px;
 }
 
 footer ul li {
@@ -192,10 +238,10 @@ footer ul li {
 }
 
 footer ul li a,
-			footer ul li a:link,
-			footer ul li a:visited,
-			footer ul li a:hover,
-			footer ul li a:active {
+footer ul li a:link,
+footer ul li a:visited,
+footer ul li a:hover,
+footer ul li a:active {
   color: #fff;
   text-decoration: none;
 }
@@ -206,7 +252,7 @@ footer ul li a:hover {
 
 footer .bottom-strap {
   margin: 0;
-  padding: 0;
+  padding: 0 10px 0 0;
   text-align: right;
   color: #fff;
 }
@@ -217,10 +263,10 @@ footer .bottom-strap span {
 }
 
 footer .bottom-strap a,
-		footer .bottom-strap a:link,
-		footer .bottom-strap a:visited,
-		footer .bottom-strap a:hover,
-		footer .bottom-strap a:active {
+footer .bottom-strap a:link,
+footer .bottom-strap a:visited,
+footer .bottom-strap a:hover,
+footer .bottom-strap a:active {
   color: #fff;
   text-decoration: none;
 }
@@ -606,18 +652,10 @@ section#main-menu {
   z-index: 520;
 }
 .js-callout-closeButton {
-    height: 24px;
-    width: 24px;
+  height: 13px;
+  margin-right: 20px;
+  width: 13px;
 }
-#corbcom-siteusage_callout .js-callout-body {
-    overflow-y: scroll;
-    margin-bottom: 20px;
-}
-#corbcom-siteusage_callout .js-callout-content {
-    width: 640px!important;
-    max-width: 640px;
-}
-
 .ms-core-pageTitle {
   font-size: 2.7em;
 }
@@ -676,6 +714,28 @@ section#main-menu {
   margin: 15px 0 0 9px;
 }
 
+.ms-core-listMenu-verticalBox li.static > ul.static > li.static > .ms-core-listMenu-item {
+  padding-left: 25px;
+}
+
+.ms-core-listMenu-selected:link, 
+.ms-core-listMenu-selected:visited, 
+.ms-core-listMenu-selected {
+  background-color: rgba(213, 216, 222, 0.78);
+}
+li > a.ms-core-listMenu-item.ms-core-listMenu-selected:hover, 
+li > a.ms-core-listMenu-item:hover, 
+li > a.ms-core-listMenu-item:active {
+  background-color: rgba(0, 180, 240, 0.2);
+}
+.ms-itmHoverEnabled:hover > * {
+  background-color: rgba(0, 180, 240, 0.2);
+}
+.ms-vh-selectAllIcon:hover,
+.ms-headerCellStyleHover {
+  background-color: rgba(0, 180, 240, 0.2);
+}
+
 .ms-core-overlay {
   background-color: rgba(255, 255, 255, 0.45);
 }
@@ -709,6 +769,21 @@ section#main-menu {
 .ms-webpart-menuLink:hover {
   text-decoration: none;
   color: #FFCB00;
+}
+
+
+/* ==========================================================================
+ Office365/SharePoint Override CSS - Dialogs
+ ========================================================================== */
+.ms-dlgContent {
+  z-index: 999999!important;
+}
+.ms-dlgTitleBtns {
+  margin-right: -1px;
+  margin-top: -5px;
+}
+.ms-dialog #s4-bodyContainer {
+    box-shadow: none;
 }
 
 
@@ -814,9 +889,55 @@ section#main-menu {
  Full-screen mode button
  ========================================================================== */
 #exitfullscreenmode > a > span,
-#fullscreenmode > a > span { width: 24px!important; height: 24px!important; }
+#fullscreenmode > a > span { width: 10px!important; height: 10px!important; }
+
 #exitfullscreenmode > a > span .s4-clust,
 #fullscreenmode > a > span .s4-clust { width: 24px!important; height: 24px!important; }
+
+
+/* ==========================================================================
+ Site Usage/Site Use Terms and Conditions Dialog
+ ========================================================================== */
+.siteusage-dialog { 
+  margin: 0;
+}
+.siteusage-dialog div[class^='External'] {
+  max-height: 390px;
+  overflow-y: scroll;
+}
+.siteusage-dialog .footer {
+  margin: 0 auto 0 auto;
+  padding: 15px 0 15px 0;
+  text-align: center;
+}
+.siteusage-dialog .footer span {
+  display: inline-block;
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.siteusage-dialog .footer span .fa {
+  color: #002596;
+}
+.siteusage-dialog .footer button {
+}
+.siteusage-dialog .footer button .fa {
+  color: #008444;
+}
+
+/* Site Usage/SiteUsage CALLOUT */
+#corbcom-siteusage_callout .js-callout-body {
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+#corbcom-siteusage_callout-body div[class^='External'] {
+  max-height: 365px;
+}
+#corbcom-siteusage_callout .js-callout-content {
+  width: 640px!important;
+  max-width: 640px;
+}
+
 
 
 /* ==========================================================================
@@ -840,7 +961,7 @@ section#main-menu {
 
   .ms-srch-sb > input {
     font-size: 1.25em;
-    width: 165px;
+    width: 160px;
   }
 
   .mobile-header-search-box .ms-srch-sb > input {
@@ -889,7 +1010,7 @@ section#main-menu {
     font-size: 2.1em;
   }
 
-  header .social ul {
+  header .socialbar ul {
     margin-top: 5px;
     margin-left: 0;
     float: none;
@@ -1041,6 +1162,10 @@ section#main-menu {
 
 @media screen and  (max-width: 360px) {
 
+  .siteusage-dialog div[class^='External'] {
+    max-height: 270px;
+  }
+
   .ms-srch-item {
     width: 320px;
   }
@@ -1102,23 +1227,26 @@ section#main-menu {
 *, 
 *:before, 
 *:after {
+  /* border-box causes many issues with SP */
   -webkit-box-sizing: content-box;
- /*border-box causes many issues with SP*/
   -moz-box-sizing: content-box;
- /*border-box causes many issues with SP*/
   box-sizing: content-box;
- /*border-box causes many issues with SP*/;
 }
 
 * [class^="span"], 
 * [class^="span"]:before, 
 * [class^="span"]:after {
+  /* re-enable border-box for framework spans */
   -webkit-box-sizing: border-box;
- /*re-enable border-box for framework spans*/
   -moz-box-sizing: border-box;
- /*re-enable border-box for framework spans*/
   box-sizing: border-box;
- /*re-enable border-box for framework spans*/;
+}
+
+nav, 
+nav *, 
+nav *:before, 
+nav *:after {
+  box-sizing: border-box;
 }
 
 img {
@@ -1128,13 +1256,12 @@ img {
 
 * [class^="span"] img {
   max-width: 100%;
- /*for images inside span grid*/;
+  /* for images inside span grid */
 }
 
 img.ms-webpart-menuArrowImg, 
 #applist img {
-
-	/* within a span may still need to have width of image not 100% for SP2013 OOTB features/imges */
+  /* within a span may still need to have width of image not 100% for SP2013 OOTB features/imges */
   width: auto;
   max-width: none;
 }
@@ -1155,6 +1282,7 @@ input.ms-cui-cb-input {
   height: 14px;
   padding: 3px 7px 2px;
 }
+
 /* Top Bar, Edit Bar, Add Item Fix */
 .ms-cui-topBar2 img, 
 .ms-cui-tabContainer img, 
@@ -1162,3 +1290,10 @@ input.ms-cui-cb-input {
   max-width: none;
 }
 
+/* Site Settings */
+.ms-linksection-level1 h3 { 
+  font-size: 1.27em; 
+}
+.ms-linksection-title {
+  color: #EA3692;
+}

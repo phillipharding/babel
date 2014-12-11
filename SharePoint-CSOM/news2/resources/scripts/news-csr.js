@@ -19,7 +19,7 @@
                var loaded = false;
                if (typeof(_v_dictSod) !== 'undefined' && _v_dictSod[scriptToLoad] == null) {
                	var sodUrl = '';
-               	if (typeof _spPageContextInfo === 'undefined' || _spPageContextInfo != null) {
+               	if (typeof _spPageContextInfo === 'undefined' || _spPageContextInfo == null) {
                		if (window.console) { window.console.log('SPUtils.ClientHelpers.LoadSodScript() _spPageContextInfo is undefined or null'); }
                		sodUrl = String.format("{0}{1}", SP.Utilities.VersionUtility.get_layoutsLatestVersionUrl(), scriptToLoad);
                	} else {
