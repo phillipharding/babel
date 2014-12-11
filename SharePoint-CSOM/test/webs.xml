@@ -22,8 +22,8 @@
 						<PropertyBagValue/>
 
 					<WelcomePage/>
-					<CustomMasterUrl/>
-					<MasterUrl/>
+					<CustomMasterUrl Inherit="False" Force="true"/>
+					<MasterUrl Inherit="False" Force="true"/>
 					<NoCrawl/>
 
 					<ColorPaletteUrl/>

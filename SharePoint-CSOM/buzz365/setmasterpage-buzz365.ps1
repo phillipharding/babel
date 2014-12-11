@@ -1,20 +1,19 @@
 ﻿<#
     Example command lines
 
-    .\provision-corpnews.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "0"
-    .\provision-corpnews.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "0"
-    .\provision-corpnews.ps1 -URL "http://pub.pdogs.local/" -CredentialLabel "OnPrem" -Configuration "1"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "1"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah/news" -CredentialLabel "RB.COM SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO"
 
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing/news" -CredentialLabel "SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO"
 
-    -Configuration;
-        "0" for provisioning to SPO w/Buzz365 Masterpage
-        "1" for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
-        "2" for Debug testing purposes - do not use
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
-    [parameter(Mandatory=$false)][string]$CredentialLabel = $null,
-    [parameter(Mandatory=$false)][string]$Configuration = "0"
+    [parameter(Mandatory=$false)][string]$CredentialLabel = $null
 )
 cls
 # load and init the CSOM modules
@@ -37,10 +36,10 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configurationPath = $cwd       #"C:\Dev\github\babel\SharePoint-CSOM\news2"
-$configurationName = "News"
-$configurationId = $Configuration
-$configurationFiles = @("corpnews")
+$configurationName = "SetMasterpage"
+$configurationId = "0" 
+$configurationPath = $cwd
+$configurationFiles = @("setmasterpage-buzz365")
 
 $configurationFiles | ? { $_ -match ".*" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 

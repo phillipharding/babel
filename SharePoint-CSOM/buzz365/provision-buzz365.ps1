@@ -1,13 +1,23 @@
 ﻿<#
     Example command lines
 
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO" -Configuration "1"
 
+    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "1"
+
+    -Configuration;
+        "0" for minimal provisioning
+        "1" for full provisioning
+        "2" for Masterpages only
+        "3" for Masterpage Resource files only
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
-    [parameter(Mandatory=$false)][string]$CredentialLabel = $null
+    [parameter(Mandatory=$false)][string]$CredentialLabel = $null,
+    [parameter(Mandatory=$false)][string]$Configuration = "1"
 )
 cls
 # load and init the CSOM modules
@@ -23,14 +33,6 @@ if (($URL -ne $null -and $URL -ne "") -and ($CredentialLabel -ne $null -and $Cre
     $connector.csomCredentialLabel = $CredentialLabel
 } else {
     # set connection url, set credentials using Windows Credential Manager
-    #$connector.csomUrl = "https://camconsultancyltd.sharepoint.com"
-    #$connector.csomCredentialLabel = "CAM SPO"
-    #$connector.csomUrl = "https://rbcom.sharepoint.com/sites/dev-pah"
-    #$connector.csomCredentialLabel = "RB.COM SPO"
-    #$connector.csomUrl = "https://platinumdogsconsulting.sharepoint.com/sites/publishing"
-    #$connector.csomCredentialLabel = "SPO"
-    #$connector.csomUrl = "http://pub.pdogs.local/"
-    #$connector.csomCredentialLabel = "OnPrem"
 }
 
 # connect...
@@ -39,8 +41,8 @@ if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
 $configurationName = "Masterpage"
-$configurationId = "1" # use 1 for the full provisioning and 0 for minimal provisioning
-$configurationPath = $cwd       # "C:\Dev\github\babel\SharePoint-CSOM\buzz365"
+$configurationId = $Configuration 
+$configurationPath = $cwd
 $configurationFiles = @("buzz365")
 
 $configurationFiles | ? { $_ -match ".*" } | % {
