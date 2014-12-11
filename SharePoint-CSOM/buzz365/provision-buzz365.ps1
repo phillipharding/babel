@@ -12,7 +12,7 @@
         "0" for minimal provisioning
         "1" for full provisioning
         "2" for Masterpages only
-        "3" for Masterpage Resources only
+        "3" for Masterpage Resource files only
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,

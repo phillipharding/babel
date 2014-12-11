@@ -19,6 +19,7 @@ RB.Masterpage = function() {
 			IsValidType: RB$Masterpage$IsValidType,
 			LoadResourceFromTenantRoot: RB$Masterpage$LoadResourceFromTenantRoot,
 			LoadResourceFromSiteCollection: RB$Masterpage$LoadResourceFromSiteCollection,
+			LoadAllResources: RB$Masterpage$LoadAllResources,
 			LoadResource: RB$Masterpage$LoadResource,
 			LoadWebproperties: RB$Masterpage$Webproperties,
 			Initialise: RB$Masterpage$Initialise
@@ -78,8 +79,8 @@ RB.Masterpage = function() {
 	function RB$Masterpage$LoadJQueryUI() {
 		if (!_jqui) {
 			var deps = [
-				RB$Masterpage$LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/jquery-ui-1.11.2.min.js"),
-				RB$Masterpage$LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/css/flick/jquery-ui-1.11.2.min.css")
+				RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/jquery-ui-1.11.2.min.js"),
+				RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/css/flick/jquery-ui-1.11.2.min.css")
 			];
 			_jqui = $.when.apply($, deps)
 						.done(function(jquijs, jquicss) {
@@ -100,7 +101,7 @@ RB.Masterpage = function() {
 
 	function RB$Masterpage$LoadKnockout() {
 		if (!_kom) {
-			_kom = RB$Masterpage$LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/knockout-3.2.0.js");
+			_kom = RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/knockout-3.2.0.js");
 		}
 		/** E.g
 				RB.Masterpage.LoadKnockout()
@@ -113,7 +114,7 @@ RB.Masterpage = function() {
 
 	function RB$Masterpage$LoadSPServices() {
 		if (!_sps) {
-			_sps = RB$Masterpage$LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/jquery.SPServices-2014.01.min.js");
+			_sps = RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/jquery.SPServices-2014.01.min.js");
 		}
 		return _sps;
 	}
@@ -130,7 +131,8 @@ RB.Masterpage = function() {
 
 	function RB$Masterpage$LoadResourceFromTenantRoot(url, afterUi) {
 		var
-			tenantUrl = _spPageContextInfo.siteAbsoluteUrl.match(/(http[s]?:\/\/[^\/]*)/gi),
+			m = _spPageContextInfo.siteAbsoluteUrl.match(/(http[s]?:\/\/[^\/]*)/gi),
+			tenantUrl = m && m.length ? m[0] : '',
 			absoluteUrl = String.format("{0}/{1}", tenantUrl.replace(/\/$/,''), url.replace(/^\//,''));
 		return RB$Masterpage$LoadResource(absoluteUrl, afterUi);
 	}
@@ -138,6 +140,30 @@ RB.Masterpage = function() {
 	function RB$Masterpage$LoadResourceFromSiteCollection(url, afterUi) {
 		var relativeUrl = String.format("{0}/{1}", _spPageContextInfo.siteServerRelativeUrl.replace(/\/$/,''), url.replace(/^\//,''));
 		return RB$Masterpage$LoadResource(relativeUrl, afterUi);
+	}
+
+	function RB$Masterpage$LoadAllResources(urls, afterUi) {
+		var deps = [];
+		for(var $i=0; $i < urls.length; $i++) {
+			deps.push(RB$Masterpage$LoadResource(urls[$i], afterUi));
+		}
+		if (!deps.length) return new $.Deferred().reject('no resource urls supplied!').promise();
+
+		var p = $.when.apply($, deps)
+					.done(function() {
+						if (window.console) {
+							for(var $i=0; $i < arguments.length; $i++){
+								window.console.log('>> RB$Masterpage$LoadAllResources ['+arguments[$i]+']');
+							}
+						}
+					});
+		/** E.g
+				RB.Masterpage.LoadAllResources('','')
+					.done(function(arguments) {
+						console.log('loaded resources');
+					});
+		**/
+		return p.promise();
 	}
 
 	function RB$Masterpage$LoadResource(url, afterUi) {
@@ -156,7 +182,7 @@ RB.Masterpage = function() {
 	               p.resolve(url);
 	            }
 	         };
-	      } else { // Others
+	      } else { // good browsers
 	         resource.onload = function() {
 	            resource.onload = null;
 	            p.resolve(url);
@@ -172,6 +198,8 @@ RB.Masterpage = function() {
 	   }
 	   if (resource) {
 	      headOrBody.appendChild(resource);
+	   } else {
+	   	p.reject('unsupported resource type, only *.js or *.css are allowed!');
 	   }
 	   return p.promise();
 	}
@@ -204,7 +232,7 @@ RB.Masterpage = function() {
 		/**/
 
 		/* load the megamenu module */
-		RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/megamenu.js")
+		RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/megamenu.js")
 			.done(function() {
 				if (window.console) window.console.log(">>MEGAMENU.JS loaded");
 				
@@ -220,8 +248,8 @@ RB.Masterpage = function() {
 		var
 			upsuModulesInitialised = new $.Deferred(), 
 			upsuModulesLoaded = [
-				RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/siteusage.js"),
-				RB.Masterpage.LoadResourceFromSiteCollection("_catalogs/masterpage/Buzz365/js/userprofile.js")
+				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/siteusage.js"),
+				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/userprofile.js")
 			];
 		$.when.apply($, upsuModulesLoaded)
 			.done(function() {

@@ -36,20 +36,16 @@
     </SharePoint:AjaxDelta>
     <SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
-    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/pure-min.css%>" After="corev15.css" runat="server" />
-    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/jquery.sidr.dark.css%>" After="corev15.css" runat="server" />
-    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/grids-responsive-min.css%>" After="corev15.css" runat="server" />
-    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/custom.css%>" After="corev15.css" runat="server" />
-    <SharePoint:CssRegistration name="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/css/font-awesome.min.css%>" After="corev15.css" runat="server" />
+    <link rel="stylesheet" type="text/css" href="/_catalogs/masterpage/Buzz365/css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="/_catalogs/masterpage/Buzz365/css/jquery.sidr.dark.css" />
+    <link rel="stylesheet" type="text/css" href="/_catalogs/masterpage/Buzz365/css/grids-responsive-min.css" />
+    <link rel="stylesheet" type="text/css" href="/_catalogs/masterpage/Buzz365/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/_catalogs/masterpage/Buzz365/css/font-awesome.min.css" />
 
-    <SharePoint:ScriptLink runat="server" language="javascript" LoadAfterUI="false" Defer="false" 
-                           Name="~sitecollection/_catalogs/masterpage/Buzz365/js/jquery-2.1.1.min.js" />
-    <SharePoint:ScriptLink runat="server" language="javascript" LoadAfterUI="false" Defer="false" 
-                           Name="~sitecollection/_catalogs/masterpage/Buzz365/js/jquery.sidr.min.js" />
-    <SharePoint:ScriptLink runat="server" language="javascript" LoadAfterUI="true" Defer="false" 
-                           Name="~sitecollection/_catalogs/masterpage/Buzz365/js/megamenu.js" />
-    <SharePoint:ScriptLink runat="server" language="javascript" LoadAfterUI="true" Defer="false" 
-                           Name="~sitecollection/_catalogs/masterpage/Buzz365/js/site.js" />
+    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/jquery-2.1.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/jquery.sidr.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/megamenu.js"></script>
+    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/site.js"></script>
 </head>
 <body class='buzz365-responsive-v1'>
   <SharePoint:ImageLink runat="server"/>
@@ -479,11 +475,11 @@
   <div class="pure-g" height="76">
       <div class="pure-u-2-3 socialbar">
           <SharePoint:SPSimpleSiteLink CssClass="SPSimpleSiteLink" runat="server" id="onetidProjectPropertyTitleGraphic">
-            <img class="pure-img logo" src='<asp:Literal Text="<% $SPUrl:~siteCollection/_catalogs/masterpage/Buzz365/images/rb-the-buzz.png%>" runat="server" />' alt="RB - The Buzz" />
+            <img class="pure-img logo" src='<asp:Literal Text="/_catalogs/masterpage/Buzz365/images/rb-the-buzz.png" runat="server" />' alt="RB - The Buzz" />
           </SharePoint:SPSimpleSiteLink>
           <ul>
               <li class='badge'>
-                  <a href="http://www.facebook.com/discoverRB">
+                  <a href="http://www.facebook.com/discoverRB" target="_blank">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -491,7 +487,7 @@
                   </a>
               </li>
               <li class='badge'>
-                  <a href="http://twitter.com/discoverRB">
+                  <a href="http://twitter.com/discoverRB" target="_blank">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -499,7 +495,7 @@
                   </a>
               </li>
               <li class='badge'>
-                  <a href="http://www.linkedin.com/company/discoverRB">
+                  <a href="http://www.linkedin.com/company/discoverRB" target="_blank">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -507,7 +503,7 @@
                   </a>
               </li>
               <li class='badge'>
-                  <a href="http://www.youtube.com/user/RBworldwide">
+                  <a href="http://www.youtube.com/user/RBworldwide" target="_blank">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
@@ -515,7 +511,7 @@
                   </a>
               </li>
               <li class='badge'>
-                  <a href="http://weibo.com/">
+                  <a href="http://weibo.com/" target="_blank">
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -978,8 +974,7 @@
               </div>
           </li>
           <li>
-              <a class="orange" href="http://myrb/">My RB
-              </a>
+              <a class="orange" href="http://myrb/" target="_blank">My RB</a>
           </li>
       </ul>
   </nav>

@@ -35,7 +35,7 @@
 		</Catalogs>
 	</Configuration>
 
-	<Configuration Name="Masterpage" ID="1" Description="Provisions the **FULL** set of assets for the Buzz365 Responsive Masterpages">
+	<Configuration Name="Masterpage" ID="1" Description="Provisions the **FULL** set of assets for the Buzz365 Responsive Masterpages and resource files.">
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
@@ -165,7 +165,7 @@
 		</Catalogs>
 	</Configuration>
 
-	<Configuration Name="Masterpage" ID="2" Description="Provisions the set of Buzz365 Masterpages">
+	<Configuration Name="Masterpage" ID="2" Description="Provisions **ONLY** the Buzz365 Masterpage files.">
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
@@ -192,23 +192,11 @@
 		</Catalogs>
 	</Configuration>
 
-	<Configuration Name="Masterpage" ID="3" Description="Provisions the **FULL** set of Buzz365 Masterpage Resources">
+	<Configuration Name="Masterpage" ID="3" Description="Provisions **ONLY** the **FULL** set of Buzz365 Masterpage Resource files (CSS/JS etc).">
 		<Catalogs>
 			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
 				<Folder Url="">
 					<Folder Url="Buzz365">
-						<File Path="Buzz365-responsive-v1.master" Url="Buzz365-responsive-v1.master" ReplaceContent="True">
-							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
-							<Property Name="Title" Value="Buzz365-responsive-v1" />
-							<Property Name="MasterPageDescription" Value="The RBCOM v1 Buzz365 Responsive Masterpage" />
-							<Property Name="UIVersion" Value="15" />
-						</File>
-						<File Path="Buzz365-responsive-v2.master" Url="Buzz365-responsive-v2.master" ReplaceContent="True">
-							<Property Name="ContentTypeId" Value="0x01010500B45822D4B60B7B40A2BFCC0995839404" />
-							<Property Name="Title" Value="Buzz365-responsive-v2" />
-							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
-							<Property Name="UIVersion" Value="15" />
-						</File>
 						<Folder Url="css">
 							<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
 							<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
