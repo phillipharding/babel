@@ -4,6 +4,7 @@
 window.RB = window.RB || {};
 RB.Masterpage = function() {
 	var
+		_bxs = null,
 		_jqui = null,
 		_wap = null,
 		_kom = null,
@@ -13,6 +14,7 @@ RB.Masterpage = function() {
 			Lcid: 1033,
 			ViewportHeight: 0,
 			ViewportWidth: 0,
+			LoadBxSlider: RB$Masterpage$LoadBxSlider,
 			LoadJQueryUI: RB$Masterpage$LoadJQueryUI,
 			LoadKnockout: RB$Masterpage$LoadKnockout,
 			LoadSPServices: RB$Masterpage$LoadSPServices,
@@ -97,6 +99,29 @@ RB.Masterpage = function() {
 					});
 		**/
 		return _jqui;
+	}
+
+	function RB$Masterpage$LoadBxSlider() {
+		if (!_bxs) {
+			var deps = [
+				RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/jquery.bxslider.min.js"),
+				RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/css/jquery.bxslider.css")
+			];
+			_bxs = $.when.apply($, deps)
+						.done(function(js, css) {
+							if (window.console) {
+								window.console.log('>> RB$Masterpage$LoadBxSlider ['+js+']');
+								window.console.log('>> RB$Masterpage$LoadBxSlider ['+css+']');
+							}
+						});
+		}
+		/** E.g
+				RB.Masterpage.LoadBxSlider()
+					.done(function(js, css) {
+						console.log('loaded bxSlider');
+					});
+		**/
+		return _bxs;
 	}
 
 	function RB$Masterpage$LoadKnockout() {

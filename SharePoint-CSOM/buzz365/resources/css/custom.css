@@ -737,7 +737,7 @@ li > a.ms-core-listMenu-item:active {
 }
 
 .ms-core-overlay {
-  background-color: rgba(255, 255, 255, 0.45);
+	background-color: rgba(255, 255, 255, 0.3);
 }
 
 #s4-workspace {
@@ -746,9 +746,10 @@ li > a.ms-core-listMenu-item:active {
 }
 
 #s4-bodyContainer {
-  -webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+/*  -webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
   -moz-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
-  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);*/
+
   background-color: rgba(255, 255, 255, 0.95);
   margin: 0 auto;
   margin-bottom: 35px;
@@ -843,14 +844,14 @@ li > a.ms-core-listMenu-item:active {
   background-color: transparent;
   border-style: none;
   display: inline-block;
-  font-size: 1.4em;
+  font-size: 1.2em;
   height: auto;
   margin: 0 0 0 5px;
   outline-style: none;
-  padding: 0 1px 0 0;
+  padding: 2px 1px 0 0;
   right: 0;
   width: 180px;
-  color: #415A6C;
+  color: #ccc;
 }
 
 .mobile-header-search-box .ms-srch-sb > input {
@@ -960,13 +961,14 @@ li > a.ms-core-listMenu-item:active {
 @media screen and (max-width: 980px) {
 
   .ms-srch-sb > input {
-    font-size: 1.25em;
+    font-size: 1.20em;
     width: 160px;
   }
 
   .mobile-header-search-box .ms-srch-sb > input {
-    font-size: 1.3em;
+    font-size: 1.2em;
     width: 170px;
+    padding: 3px 1px 0 0;
   }
 }
 
@@ -1184,8 +1186,8 @@ li > a.ms-core-listMenu-item:active {
 
   .mobile-header-search-box .ms-srch-sb > input {
     font-size: 1em;
-    margin-top: 3px;
-    width: 130px;
+    margin-top: 0;
+    width: 125px;
   }
 
 	/* align the corporate buttons leftward to make way for the mobile search button */
