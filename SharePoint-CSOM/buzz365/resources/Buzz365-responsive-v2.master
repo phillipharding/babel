@@ -29,11 +29,6 @@
     <SharePoint:ScriptLink language="javascript" name="suitelinks.js" OnDemand="true" runat="server" Localizable="false" />
     <SharePoint:CustomJSUrl runat="server" />
     <SharePoint:SoapDiscoveryLink runat="server" />
-    <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">
-        <asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server" />
-        <SharePoint:DelegateControl runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true" />
-        <asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" Visible="true" runat="server" />
-    </SharePoint:AjaxDelta>
     <SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
     <link rel="stylesheet" type="text/css" href="/_catalogs/masterpage/Buzz365/css/pure-min.css" />
@@ -46,6 +41,12 @@
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/jquery.sidr.min.js"></script>
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/megamenu.js"></script>
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/site.js"></script>
+
+    <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">
+        <asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server" />
+        <SharePoint:DelegateControl runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true" />
+        <asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" Visible="true" runat="server" />
+    </SharePoint:AjaxDelta>
 </head>
 <body class='buzz365-responsive-v2'>
   <SharePoint:ImageLink runat="server"/>

@@ -694,8 +694,8 @@ section#main-menu {
 }
 
 .ms-core-sideNavBox-removeLeftMargin {
-  margin-left: -10px;
-  padding-right: 20px;
+  margin-left: 0;
+  padding-right: 10px;
 }
 
 .ms-core-listMenu-root {
