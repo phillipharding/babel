@@ -315,7 +315,7 @@ RB.Masterpage = function() {
 
 		/* initialise the Focus on Content feature overload */
 		SP.SOD.executeOrDelayUntilScriptLoaded(function() {
-			if (window.console) { window.console.log('site.js() CORE.JS loaded'); }
+			if (window.console) { window.console.log('site.js(initialise FOC feature) >> CORE.JS loaded'); }
 			RB.Masterpage.OldSetFullScreenMode = window.SetFullScreenMode;
 			RB.Masterpage.OriginalContentBoxCss = document.getElementById('contentBox-x').getAttribute('class');
 

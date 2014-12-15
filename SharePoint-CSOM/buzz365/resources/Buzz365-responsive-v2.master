@@ -39,7 +39,6 @@
 
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/jquery-2.1.1.min.js"></script>
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/jquery.sidr.min.js"></script>
-    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/megamenu.js"></script>
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/site.js"></script>
 
     <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">

@@ -215,7 +215,7 @@ header img.user {
 footer {
   -webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
   -moz-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
-  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+/*  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36); */
   background-color: #415A6C;
   background-color: rgba(65, 90, 108, 0.95);
   margin: 0 auto;
