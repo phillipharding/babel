@@ -44,7 +44,7 @@
 				<Catalogs>
 					<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 					<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
-					<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+					<!-- Javascript Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
 
 					<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
 						<Folder Url="">
@@ -130,41 +130,8 @@
 								<Folder Url="css">
 									<File Path="css\news.css" Url="news.css" ReplaceContent="True" />
 									<File Path="css\news-responsive.css" Url="news-responsive.css" ReplaceContent="True" />
-									<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
-									<File Path="css\grids-responsive-min.css" Url="grids-responsive-min.css" ReplaceContent="True" />
-									<File Path="css\jquery-ui-1.10.4.custom.css" Url="jquery-ui-1.10.4.custom.css" ReplaceContent="True" />
-									<File Path="css\jquery-ui-1.10.4.custom.min.css" Url="jquery-ui-1.10.4.custom.min.css" ReplaceContent="True" />
-									<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
-									<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
-									<Folder Url="images">
-										<File Path="css\images\animated-overlay.gif" Url="animated-overlay.gif" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_flat_0_aaaaaa_40x100.png" Url="ui-bg_flat_0_aaaaaa_40x100.png" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_flat_0_eeeeee_40x100.png" Url="ui-bg_flat_0_eeeeee_40x100.png" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_flat_55_ffffff_40x100.png" Url="ui-bg_flat_55_ffffff_40x100.png" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_flat_75_ffffff_40x100.png" Url="ui-bg_flat_75_ffffff_40x100.png" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_glass_65_ffffff_1x400.png" Url="ui-bg_glass_65_ffffff_1x400.png" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" Url="ui-bg_highlight-soft_100_f6f6f6_1x100.png" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_highlight-soft_25_0073ea_1x100.png" Url="ui-bg_highlight-soft_25_0073ea_1x100.png" ReplaceContent="True" />
-										<File Path="css\images\ui-bg_highlight-soft_50_dddddd_1x100.png" Url="ui-bg_highlight-soft_50_dddddd_1x100.png" ReplaceContent="True" />
-										<File Path="css\images\ui-icons_0073ea_256x240.png" Url="ui-icons_0073ea_256x240.png" ReplaceContent="True" />
-										<File Path="css\images\ui-icons_454545_256x240.png" Url="ui-icons_454545_256x240.png" ReplaceContent="True" />
-										<File Path="css\images\ui-icons_666666_256x240.png" Url="ui-icons_666666_256x240.png" ReplaceContent="True" />
-										<File Path="css\images\ui-icons_ff0084_256x240.png" Url="ui-icons_ff0084_256x240.png" ReplaceContent="True" />
-										<File Path="css\images\ui-icons_ffffff_256x240.png" Url="ui-icons_ffffff_256x240.png" ReplaceContent="True" />
-									</Folder>
-								</Folder>
-								<Folder Url="fonts">
-									<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
-									<File Path="fonts\FontAwesome.otf" Url="FontAwesome.otf" ReplaceContent="True" />
-									<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
-									<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
-									<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
 								</Folder>
 								<Folder Url="scripts">
-									<File Path="scripts\jquery-1.11.0.js" Url="jquery-1.11.0.js" ReplaceContent="True" />
-									<File Path="scripts\jquery-1.11.0.min.js" Url="jquery-1.11.0.min.js" ReplaceContent="True" />
-									<File Path="scripts\jquery-ui-1.10.4.custom.js" Url="jquery-ui-1.10.4.custom.js" ReplaceContent="True" />
-									<File Path="scripts\jquery-ui-1.10.4.custom.min.js" Url="jquery-ui-1.10.4.custom.min.js" ReplaceContent="True" />
 								</Folder>
 								<Folder Url="apps">
 									<File Path="apps\news-post-popular.html" Url="news-post-popular.html" ReplaceContent="True" ReplaceContentTokens="True" />
@@ -1472,7 +1439,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 				<Catalogs>
 					<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 					<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
-					<!-- Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+					<!-- Javascript Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
 
 					<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
 						<Folder Url="">
@@ -2858,7 +2825,105 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 
 	</Configuration>
 
-	<Configuration Name="News" ID="2" Description="DEV DEBUG">
+	<Configuration Name="News" ID="2" Description="This configuration adds/updates the resources for the 'Global Corporate News' webpart.">
+		<Catalogs>
+			<!-- Master Page content type id = 0x010105 -->
+			<!-- Master Page Preview = 0x010106 -->
+			<!-- Page Layout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
+			<!-- ASP NET Master Page = 0x0101000F1C8B9E0EB4BE489F09807B2C53288F0054AD6EF48B9F7B45A142F8173F171BD1 -->
+			<!-- HTML Master Page = 0x0101000F1C8B9E0EB4BE489F09807B2C53288F0054AD6EF48B9F7B45A142F8173F171BD10003D357F861E29844953D5CAA1D4D8A3A -->
+			<!-- HTML Page Layout = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE8110003D357F861E29844953D5CAA1D4D8A3B -->
+
+			<!-- Javascript Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F3851068 -->
+			<!-- Control Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F385106601 -->
+			<!-- Group Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F385106602 -->
+			<!-- Item Display Template content type id = 0x0101002039C03B61C64EC4A04F5361F385106603 -->
+			<!-- Filter Display Template = 0x0101002039C03B61C64EC4A04F5361F385106604 -->
+			<!-- Device Chanel Mappings = 0x010100FDA260FD09A244B183A666F2AE2475A6 -->
+			<!-- Design File content type id = 0x010100C5033D6CFB8447359FB795C8A73A2B19 -->
+			<!-- Display Template Code = 0x0101002039C03B61C64EC4A04F5361F385106605 -->
+
+			<Catalog Type="MasterPageCatalog" Title="Master Page Gallery">
+				<Folder Url="">
+					<Folder Url="Display Templates">
+						<Folder Url="Search">
+							<Folder Url="Buzz365">
+								<File Path="search\Control_NewsCarousel.js" Url="Control_NewsCarousel.js" ReplaceContent="True">
+									<Property Name="Title" Value="News Carousel Results" />
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F385106605" />
+									<Property Name="MasterPageDescription" Value="Displays the Corporate News Carousel Results control." />
+									<Property Name="ManagedPropertyMapping" Value="" />
+									<Property Name="UIVersion" Value="15" />
+									<Property Name="TemplateHidden" Value="0" />
+									<Property Name="TargetControlType" Value=";#SearchResults;#" />
+									<Property Name="DisplayTemplateLevel" Value="Control" />
+									<Property Name="HtmlDesignAssociated" Value="0" />
+								</File>
+								<File Path="search\Group_NewsCarousel.js" Url="Group_NewsCarousel.js" ReplaceContent="True">
+									<Property Name="Title" Value="News Carousel Group" />
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F385106605" />
+									<Property Name="MasterPageDescription" Value="Displays the Corporate News Carousel group template." />
+									<Property Name="ManagedPropertyMapping" Value="" />
+									<Property Name="UIVersion" Value="15" />
+									<Property Name="TemplateHidden" Value="0" />
+									<Property Name="TargetControlType" Value=";#SearchResults;#" />
+									<Property Name="DisplayTemplateLevel" Value="Group" />
+									<Property Name="HtmlDesignAssociated" Value="0" />
+								</File>
+								<File Path="search\Item_NewsCarousel.js" Url="Item_NewsCarousel.js" ReplaceContent="True">
+									<Property Name="Title" Value="News Carousel Item" />
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F385106605" />
+									<Property Name="MasterPageDescription" Value="Displays a result tailored for the Corporate News Carousel." />
+									<Property Name="ManagedPropertyMapping" Value="'Title':'Title','AuthorOWSUSER':'AuthorOWSUSER','EditorOWSUSER':'EditorOWSUSER','Path':'Path','LastModifiedTime':'LastModifiedTime','Created':'Created','HitHighlightedSummary':'HitHighlightedSummary','HitHighlightedProperties':'HitHighlightedProperties','ParentLink':'ParentLink','AttachmentDescription':'AttachmentDescription','AttachmentType':'AttachmentType','AttachmentURI':'AttachmentURI','RootPostID':'RootPostID','LikesCount':'LikesCount','NewsPostPublishedDate':'NewsPostPublishedDate','NewsPostCategory':'NewsPostCategory','NewsRollupImageOWSIMGE':'NewsRollupImageOWSIMGE','NewsPageImageOWSIMGE':'NewsPageImageOWSIMGE','BodyOWSMTXT':'BodyOWSMTXT'" />
+									<Property Name="UIVersion" Value="15" />
+									<Property Name="TemplateHidden" Value="0" />
+									<Property Name="TargetControlType" Value=";#SearchResults;#" />
+									<Property Name="DisplayTemplateLevel" Value="Item" />
+									<Property Name="HtmlDesignAssociated" Value="0" />
+								</File>
+								<File Path="search\Item_NewsByCategory.js" Url="Item_NewsByCategory.js" ReplaceContent="True">
+									<Property Name="Title" Value="News By Category Item" />
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F385106605" />
+									<Property Name="MasterPageDescription" Value="Displays a result tailored for the Corporate News items by Category." />
+									<Property Name="ManagedPropertyMapping" Value="'Title':'Title','AuthorOWSUSER':'AuthorOWSUSER','EditorOWSUSER':'EditorOWSUSER','Path':'Path','LastModifiedTime':'LastModifiedTime','Created':'Created','HitHighlightedSummary':'HitHighlightedSummary','HitHighlightedProperties':'HitHighlightedProperties','ParentLink':'ParentLink','AttachmentDescription':'AttachmentDescription','AttachmentType':'AttachmentType','AttachmentURI':'AttachmentURI','RootPostID':'RootPostID','LikesCount':'LikesCount','NewsPostPublishedDate':'NewsPostPublishedDate','NewsPostCategory':'NewsPostCategory','NewsRollupImageOWSIMGE':'NewsRollupImageOWSIMGE','NewsPageImageOWSIMGE':'NewsPageImageOWSIMGE','BodyOWSMTXT':'BodyOWSMTXT'" />
+									<Property Name="UIVersion" Value="15" />
+									<Property Name="TemplateHidden" Value="0" />
+									<Property Name="TargetControlType" Value=";#SearchResults;#" />
+									<Property Name="DisplayTemplateLevel" Value="Item" />
+									<Property Name="HtmlDesignAssociated" Value="0" />
+								</File>
+
+								<File Path="search\bx_loader.gif" Url="bx_loader.gif" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x010100C5033D6CFB8447359FB795C8A73A2B19" />
+								</File>
+								<File Path="search\jquery.bxslider.css" Url="jquery.bxslider.css" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x010100C5033D6CFB8447359FB795C8A73A2B19" />
+								</File>
+								<File Path="search\jquery.bxslider.min.js" Url="jquery.bxslider.min.js" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x010100C5033D6CFB8447359FB795C8A73A2B19" />
+								</File>
+								<File Path="search\news-carousel.css" Url="news-carousel.css" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x010100C5033D6CFB8447359FB795C8A73A2B19" />
+								</File>
+							</Folder>
+						</Folder>
+					</Folder>
+				</Folder>
+			</Catalog>
+
+			<Catalog Type="WebPartCatalog" Title="WebPart Gallery">
+				<Folder Url="">
+					<File Path="search\Global Corporate News - Search.webpart" Url="Global-Corporate-News-Search.webpart" ReplaceContent="True">
+						<Property Name="Title" Value="Global Corporate News" />
+						<Property Name="WebPartDescription" Value="Displays Global Corporate News on the page." />
+						<Property Name="Group" Value="Corporate News" />
+					</File>
+				</Folder>
+			</Catalog>
+		</Catalogs>
+	</Configuration>
+
+	<Configuration Name="News" ID="99" Description="DEV DEBUG">
 		<Webs>
 			<Web Url="news" Title="Corporate News Site" Description="Welcome to the Corporate News Site" WebTemplate="STS#0" AlwaysDeleteWeb="False">
 				<Lists>

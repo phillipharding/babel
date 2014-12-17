@@ -9,7 +9,8 @@
     -Configuration;
         "0" for provisioning to SPO w/Buzz365 Masterpage
         "1" for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
-        "2" for Debug testing purposes - do not use
+        "2" for Global Corporate News webpart
+        "99" for Dev Debugging
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
