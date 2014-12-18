@@ -114,6 +114,18 @@
 								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
 								<Property Name="Title" Value="lightbulbs.jpg" />
 							</File>
+							<File Path="images\management-appointments.png" Url="management-appointments.png" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="management-appointments.png" />
+							</File>
+							<File Path="images\better-business.png" Url="better-business.png" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="better-business.png" />
+							</File>
+							<File Path="images\announcements.png" Url="announcements.png" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="announcements.png" />
+							</File>
 						</Folder>
 					</List>
 
@@ -301,7 +313,7 @@
 &lt;p&gt;Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules.&lt;/p&gt;
 &lt;p&gt;Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues.&lt;/p&gt;&lt;/div&gt;" />
 								<Property Name="PublishedDate" Value="2014-11-02T17:00:00Z" />
-								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Right" />
 								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
@@ -422,7 +434,7 @@ Sales dashboard   A sales dashboard application helps sales associates in an org
 								<Property Name="Body" Value="In Business Connectivity Services server-side solutions, users interact only with external data in a browser on a SharePoint site. This can be on any type of SharePoint site that supports external lists, external data columns, external Web Parts, or apps for SharePoint. SharePoint Enterprise Search of external data is supported in the browser as well.
 For Business Connectivity Services to connect to an external data source and interact with the data there, that external system must be defined in a way that Business Connectivity Services understands in an external content type. An external content type contains the name of the external system and what kind of data source it is, what type of authentication to use for connections, where it can connect to, which operations can be performed, and, optionally, any filters and sorting instructions to be used so that only the desired data is returned and that the data is in the correct order." />
 								<Property Name="PublishedDate" Value="2014-11-22T20:00:00Z" />
-								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
 								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
@@ -437,7 +449,7 @@ If the solution uses Access, the external content type must be exported as a BDC
 If the solution uses Word, InfoPath, or Excel, the application will install Microsoft SQL Server Compact 4.0 and Microsoft .NET Framework 4, and then connect to the external data the first time that the application is used.
 If the solution uses Visio, you will use the Link Data To Shapes feature in Visio to browse to an external list and connect to it." />
 								<Property Name="PublishedDate" Value="2014-11-25T09:00:00Z" />
-								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
 								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
@@ -1509,6 +1521,18 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
 								<Property Name="Title" Value="lightbulbs.jpg" />
 							</File>
+							<File Path="images\management-appointments.png" Url="management-appointments.png" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="management-appointments.png" />
+							</File>
+							<File Path="images\better-business.png" Url="better-business.png" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="better-business.png" />
+							</File>
+							<File Path="images\announcements.png" Url="announcements.png" ReplaceContent="True">
+								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
+								<Property Name="Title" Value="announcements.png" />
+							</File>
 						</Folder>
 					</List>
 
@@ -1729,7 +1753,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 &lt;p&gt;Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules.&lt;/p&gt;
 &lt;p&gt;Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es. Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues.&lt;/p&gt;&lt;/div&gt;" />
 								<Property Name="PublishedDate" Value="2014-11-02T17:00:00Z" />
-								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Right" />
 								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
@@ -1850,7 +1874,7 @@ Sales dashboard   A sales dashboard application helps sales associates in an org
 								<Property Name="Body" Value="In Business Connectivity Services server-side solutions, users interact only with external data in a browser on a SharePoint site. This can be on any type of SharePoint site that supports external lists, external data columns, external Web Parts, or apps for SharePoint. SharePoint Enterprise Search of external data is supported in the browser as well.
 For Business Connectivity Services to connect to an external data source and interact with the data there, that external system must be defined in a way that Business Connectivity Services understands in an external content type. An external content type contains the name of the external system and what kind of data source it is, what type of authentication to use for connections, where it can connect to, which operations can be performed, and, optionally, any filters and sorting instructions to be used so that only the desired data is returned and that the data is in the correct order." />
 								<Property Name="PublishedDate" Value="2014-11-22T20:00:00Z" />
-								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
 								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
@@ -1865,7 +1889,7 @@ If the solution uses Access, the external content type must be exported as a BDC
 If the solution uses Word, InfoPath, or Excel, the application will install Microsoft SQL Server Compact 4.0 and Microsoft .NET Framework 4, and then connect to the external data the first time that the application is used.
 If the solution uses Visio, you will use the Link Data To Shapes feature in Visio to browse to an external list and connect to it." />
 								<Property Name="PublishedDate" Value="2014-11-25T09:00:00Z" />
-								<Property Name="NewsPageImage" Value="" Type="Image" />
+								<Property Name="NewsPageImage" Value="~site/Lists/Photos/corn-hand-focus.jpg" Type="Image" />
 								<Property Name="NewsPageImageOrientation" Value="Left" />
 								<Property Name="NewsRollupImage" Value="" Type="Image" />
 							</Item>
@@ -2857,7 +2881,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 									<Property Name="TemplateHidden" Value="0" />
 									<Property Name="TargetControlType" Value=";#SearchResults;#" />
 									<Property Name="DisplayTemplateLevel" Value="Control" />
-									<Property Name="HtmlDesignAssociated" Value="0" />
+									<Property Name="HtmlDesignAssociated" Value="0" Optional="true" />
 								</File>
 								<File Path="search\Group_NewsCarousel.js" Url="Group_NewsCarousel.js" ReplaceContent="True">
 									<Property Name="Title" Value="News Carousel Group" />
@@ -2868,7 +2892,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 									<Property Name="TemplateHidden" Value="0" />
 									<Property Name="TargetControlType" Value=";#SearchResults;#" />
 									<Property Name="DisplayTemplateLevel" Value="Group" />
-									<Property Name="HtmlDesignAssociated" Value="0" />
+									<Property Name="HtmlDesignAssociated" Value="0" Optional="true" />
 								</File>
 								<File Path="search\Item_NewsCarousel.js" Url="Item_NewsCarousel.js" ReplaceContent="True">
 									<Property Name="Title" Value="News Carousel Item" />
@@ -2879,7 +2903,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 									<Property Name="TemplateHidden" Value="0" />
 									<Property Name="TargetControlType" Value=";#SearchResults;#" />
 									<Property Name="DisplayTemplateLevel" Value="Item" />
-									<Property Name="HtmlDesignAssociated" Value="0" />
+									<Property Name="HtmlDesignAssociated" Value="0" Optional="true" />
 								</File>
 								<File Path="search\Item_NewsByCategory.js" Url="Item_NewsByCategory.js" ReplaceContent="True">
 									<Property Name="Title" Value="News By Category Item" />
@@ -2890,7 +2914,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 									<Property Name="TemplateHidden" Value="0" />
 									<Property Name="TargetControlType" Value=";#SearchResults;#" />
 									<Property Name="DisplayTemplateLevel" Value="Item" />
-									<Property Name="HtmlDesignAssociated" Value="0" />
+									<Property Name="HtmlDesignAssociated" Value="0" Optional="true" />
 								</File>
 
 								<File Path="search\bx_loader.gif" Url="bx_loader.gif" ReplaceContent="True">

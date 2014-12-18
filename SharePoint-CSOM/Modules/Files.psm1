@@ -169,9 +169,18 @@ function Upload-File {
                 $propertyXml.Value = $propertyXml.Value -replace "~sitecollection", $ClientContext.Site.ServerRelativeUrl
                 $propertyXml.Value = $propertyXml.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
                 
+                if($propertyXml.Optional -and $propertyXml.Optional -match "true") {
+                    $field = $list.Fields | Where {$_.InternalName -eq $propertyXml.Name}
+                    if ($field -eq $null) {
+                        Write-Host "`t..Skipping optional property $($propertyXml.Name)" -ForegroundColor Green
+                        continue
+                    }
+                    Write-Host "`t..Not Skipping optional property $($field.Id)" -ForegroundColor Green
+                }
+
                 if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
                     Write-Host "`t..Setting TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
-                    $field = $list.Fields.GetByInternalNameOrTitle($propertyXml.Name)
+                    $field = $list.Fields | Where {$_.InternalName -eq $propertyXml.Name}
                     $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
                     if ($propertyXml.Mult -and $propertyXml.Mult -match "true") {
                         $p = ($propertyXml.Value -split ";") -split "\|"

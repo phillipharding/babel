@@ -23,11 +23,6 @@
 	      var maxBodyLengthInChars = 150;
 	      var maxMetadataValue = Srch.U.maximumSocialMetadataValue;
 
-	      if (ctx.CurrentItem.Title.toLowerCase() === "dispform.aspx")
-	      {
-	          ctx.CurrentItem.Title = Srch.Res.item_DefaultTitle;
-	      }
-
 	      var id = ctx.ClientControl.get_nextUniqueId();
          var titleLinkId = id + "_titleLink";
 	      var itemId = id + Srch.U.Ids.item;
