@@ -20,7 +20,7 @@
 <!--#_
 		if (!$isNull(ctx.CurrentItem) && !$isNull(ctx.ClientControl))
 		{
-	      var maxBodyLengthInChars = 150;
+	      var maxBodyLengthInChars = 275;
 	      var maxMetadataValue = Srch.U.maximumSocialMetadataValue;
 
 	      var id = ctx.ClientControl.get_nextUniqueId();
@@ -30,19 +30,24 @@
 
          var path = ctx.CurrentItem.Path;
 	      var newsitemTitle = ctx.CurrentItem.Title;
+	      var newsitemPostCategory = '';
 	      var newsitemTruncatedBody = '';
 	      var newsitemRollupImage = '';
 	      var newsitemPublishedDate = '';
-         if(!$isNull(ctx.CurrentItem.BodyOWSMTXT))
-         {
+	      if (!$isNull(ctx.CurrentItem.NewsPostCategory)) {
+				var cats = ctx.CurrentItem.NewsPostCategory.split(';');
+				newsitemPostCategory = cats && cats.length ? cats[0] : 'Unknown Category';
+	      }
+         if(!$isNull(ctx.CurrentItem.BodyOWSMTXT)) {
              newsitemTruncatedBody = SP.ScriptHelpers.removeHtmlAndTrimStringWithEllipsis(ctx.CurrentItem.BodyOWSMTXT, maxBodyLengthInChars);
          }
-         if(!$isNull(ctx.CurrentItem.NewsRollupImageOWSIMGE)) 
-         {
-             newsitemRollupImage = ctx.CurrentItem.NewsRollupImageOWSIMGE;
+         if(!$isNull(ctx.CurrentItem.NewsRollupImageOWSIMGE)) {
+				newsitemRollupImage = ctx.CurrentItem.NewsRollupImageOWSIMGE;
          }
-         if (!$isNull(ctx.CurrentItem.NewsPostPublishedDate)) 
-         {
+         if($isEmptyString(newsitemRollupImage) && !$isNull(ctx.CurrentItem.NewsPageImageOWSIMGE)) {
+             newsitemRollupImage = ctx.CurrentItem.NewsPageImageOWSIMGE;
+         }
+         if (!$isNull(ctx.CurrentItem.NewsPostPublishedDate)) {
 				var d = new Date(ctx.CurrentItem.NewsPostPublishedDate);
 				newsitemPublishedDate = String.format("<div class='news-item-newsbycategory-date'><span class='date'>{0}</span><span class='month'>{1}</span></div>",
 												d.getDate(), d.format('MMM'));
@@ -52,25 +57,23 @@
 	      var hideHoverPanelCallback = null; /*Srch.U.getHideHoverPanelCallback();*/
 
          var newsitemAuthor = "";
-         if(!$isNull(ctx.CurrentItem.AuthorOWSUSER))
-         {
+         if(!$isNull(ctx.CurrentItem.AuthorOWSUSER)) {
              newsitemAuthor = ctx.CurrentItem.AuthorOWSUSER;
          }
 _#-->
-			<li id="_#= $htmlEncode(itemId) =#_" name="Item" data-displaytemplate="NewsByCategoryItem" class="news-item-newsbycategory" style='display:none;'>
+			<li id="_#= $htmlEncode(itemId) =#_" name="Item" data-displaytemplate="NewsByCategoryItem" class="news-item-newsbycategory" style='display:none;' title="_#= $htmlEncode(newsitemTitle) =#_">
+				<span class='news-item-newsbycategory-image'>
+					_#= newsitemRollupImage =#_
+				</span>
 				<div>
-					<span class='news-item-newsbycategory-image'>
-						<span>_#= newsitemRollupImage =#_</span>
-					</span>
 					<span class='news-item-newsbycategory-caption'>
-						<h3>_#= newsitemTitle =#_</h3>
+						<h3>_#= newsitemPostCategory =#_</h3>
 						<p>_#= newsitemTruncatedBody =#_</p>
 					</span>
 					<a id="_#= $htmlEncode(titleLinkId) =#_" href="_#= $urlHtmlEncodeString(path) =#_" class="news-item-newsbycategory-link" title="_#= $htmlEncode(newsitemTitle) =#_">
 						READ FULL ARTICLE&nbsp;<i class="fa fa-arrow-circle-right"></i>
 					</a>
 				</div>
-
 			</li>
 <!--#_
 		}

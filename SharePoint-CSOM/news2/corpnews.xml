@@ -2849,7 +2849,7 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 
 	</Configuration>
 
-	<Configuration Name="News" ID="2" Description="This configuration adds/updates the resources for the 'Global Corporate News' webpart.">
+	<Configuration Name="News" ID="2" Description="This configuration adds or updates the resources for the 'Global Corporate News' webparts.">
 		<Catalogs>
 			<!-- Master Page content type id = 0x010105 -->
 			<!-- Master Page Preview = 0x010106 -->
@@ -2876,6 +2876,17 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 									<Property Name="Title" Value="News Carousel Results" />
 									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F385106605" />
 									<Property Name="MasterPageDescription" Value="Displays the Corporate News Carousel Results control." />
+									<Property Name="ManagedPropertyMapping" Value="" />
+									<Property Name="UIVersion" Value="15" />
+									<Property Name="TemplateHidden" Value="0" />
+									<Property Name="TargetControlType" Value=";#SearchResults;#" />
+									<Property Name="DisplayTemplateLevel" Value="Control" />
+									<Property Name="HtmlDesignAssociated" Value="0" Optional="true" />
+								</File>
+								<File Path="search\Control_NewsByCategory.js" Url="Control_NewsByCategory.js" ReplaceContent="True">
+									<Property Name="Title" Value="News By Category Results" />
+									<Property Name="ContentTypeId" Value="0x0101002039C03B61C64EC4A04F5361F385106605" />
+									<Property Name="MasterPageDescription" Value="Displays the Corporate News by Category Results control." />
 									<Property Name="ManagedPropertyMapping" Value="" />
 									<Property Name="UIVersion" Value="15" />
 									<Property Name="TemplateHidden" Value="0" />
@@ -2929,6 +2940,9 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 								<File Path="search\news-carousel.css" Url="news-carousel.css" ReplaceContent="True">
 									<Property Name="ContentTypeId" Value="0x010100C5033D6CFB8447359FB795C8A73A2B19" />
 								</File>
+								<File Path="search\news-bycategory.css" Url="news-bycategory.css" ReplaceContent="True">
+									<Property Name="ContentTypeId" Value="0x010100C5033D6CFB8447359FB795C8A73A2B19" />
+								</File>
 							</Folder>
 						</Folder>
 					</Folder>
@@ -2940,6 +2954,11 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 					<File Path="search\Global Corporate News - Search.webpart" Url="Global-Corporate-News-Search.webpart" ReplaceContent="True">
 						<Property Name="Title" Value="Global Corporate News" />
 						<Property Name="WebPartDescription" Value="Displays Global Corporate News on the page." />
+						<Property Name="Group" Value="Corporate News" />
+					</File>
+					<File Path="search\Global Corporate News by Category - Search.webpart" Url="Global-Corporate-News-by-Category-Search.webpart" ReplaceContent="True">
+						<Property Name="Title" Value="Global Corporate News by Category" />
+						<Property Name="WebPartDescription" Value="Displays Global Corporate News by Category on the page." />
 						<Property Name="Group" Value="Corporate News" />
 					</File>
 				</Folder>
