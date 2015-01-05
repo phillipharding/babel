@@ -324,7 +324,7 @@ RB.Masterpage = function() {
 					RB.Masterpage.OldSetFullScreenMode(fEnableFullScreenMode);
 				}
 				var bIsFullScreenMode = window.HasCssClass(document.body, "ms-fullscreenmode");
-				if (bIsFullScreenMode) {
+				if (bIsFullScreenMode || (typeof(g_Buzz365NoLeftNav) !== 'undefined')) {
 					$('#sideNavBox-x').hide();
 					$('#contentBox-x').attr('class', 'pure-u-1');
 				} else {
