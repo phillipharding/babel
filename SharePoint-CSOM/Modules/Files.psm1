@@ -353,12 +353,12 @@ function Add-Files {
                 Write-Host "`tSOURCE FILE [$($fileXml.Path)]"
                 $file = Upload-File -List $List -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath -ClientContext $clientContext -RemoteContext $RemoteContext
 
-                Update-WebParts -PageXml $fileXml -List $List -Web $List.ParentWeb -ClientContext $ClientContext
+                Update-WebParts -PageXml $fileXml -List $List -Folder $Folder -Web $List.ParentWeb -ClientContext $ClientContext
             } elseif ($fileXml.Url -and $fileXml.Url -ne "") {
                 Write-Host "`tSOURCE FILE [$($fileXml.Url)]"
                 $file = Get-File "$($Folder.ServerRelativeUrl)/$($fileXml.Url)" $List.ParentWeb $ClientContext
                 if ($file -ne $null -and $file.Exists) {
-                    Update-WebParts -PageXml $fileXml -List $List -Web $List.ParentWeb -ClientContext $ClientContext
+                    Update-WebParts -PageXml $fileXml -List $List -Folder $Folder -Web $List.ParentWeb -ClientContext $ClientContext
                 }
             }
         }

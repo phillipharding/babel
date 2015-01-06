@@ -154,6 +154,8 @@
 							<File Path="images\rb-the-buzz.png" Url="rb-the-buzz.png" ReplaceContent="True" />
 							<File Path="images\rb.png" Url="rb.png" ReplaceContent="True" />
 							<File Path="images\share-price-arrow.png" Url="share-price-arrow.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-down.png" Url="share-price-arrow-down.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-hold.png" Url="share-price-arrow-hold.png" ReplaceContent="True" />
 							<File Path="images\share-price.png" Url="share-price.png" ReplaceContent="True" />
 							<File Path="images\twitter.png" Url="twitter.png" ReplaceContent="True" />
 							<File Path="images\user.png" Url="user.png" ReplaceContent="True" />
@@ -295,6 +297,8 @@
 							<File Path="images\rb-the-buzz.png" Url="rb-the-buzz.png" ReplaceContent="True" />
 							<File Path="images\rb.png" Url="rb.png" ReplaceContent="True" />
 							<File Path="images\share-price-arrow.png" Url="share-price-arrow.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-down.png" Url="share-price-arrow-down.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-hold.png" Url="share-price-arrow-hold.png" ReplaceContent="True" />
 							<File Path="images\share-price.png" Url="share-price.png" ReplaceContent="True" />
 							<File Path="images\twitter.png" Url="twitter.png" ReplaceContent="True" />
 							<File Path="images\user.png" Url="user.png" ReplaceContent="True" />

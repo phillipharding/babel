@@ -43,6 +43,7 @@ function Update-WebParts {
     param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][System.Xml.XmlElement]$PageXml,
         [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.List]$List,
+        [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Folder]$Folder,
         [parameter(Mandatory=$false, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Site] $Site, 
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Web]$Web,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
@@ -53,6 +54,12 @@ function Update-WebParts {
             return
         }
         Write-Host "`t`tUpdate WebParts on $($PageXml.Url)" -ForegroundColor Green
+
+        if (-not $PageXml.AllUsersWebPart) {
+            Write-Host "`t`t..$($PageXml.Url) has no (AllUsersWebPart) webpart definitions" -ForegroundColor Green
+            return
+        }
+
         $pageAlreadyExists = $false
         $siteUrl = ""
         if ($Site -eq $null) {
@@ -67,10 +74,12 @@ function Update-WebParts {
 
         # get list information
         $pagesList = $(if ($List -ne $null) { $List } else { $Web.Lists.GetByTitle("Pages") })
-        
+
         $ClientContext.Load($pagesList)
         $ClientContext.Load($pagesList.RootFolder)
         $ClientContext.ExecuteQuery()
+
+        $pagesFolder = $(if ($Folder -ne $null) { $Folder } else { $pagesList.RootFolder })
 
         $pageXmlFlags = $(if ($PageXml.Flags) {$PageXml.Flags} else {""})
         $MajorVersionsEnabled = $pagesList.EnableVersioning
@@ -79,9 +88,9 @@ function Update-WebParts {
         $CheckOutRequired = $pagesList.ForceCheckout
 
         # get page
-        $pageFile = Get-File -FileServerRelativeUrl "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
+        $pageFile = Get-File -FileServerRelativeUrl "$($pagesFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
         if ($pageFile -eq $null) {
-            Write-Host "`t..Page '$($PageXml.Url)' was not found" -ForegroundColor Red
+            Write-Host "`t..Page '$($pagesFolder.ServerRelativeUrl)/$($PageXml.Url)' was not found" -ForegroundColor Red
             return
         }
 
@@ -97,7 +106,7 @@ function Update-WebParts {
                 $pageFile.CheckOut()
             }
         }
-        #$pageFile = Get-File "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" $web $ClientContext
+        #$pageFile = Get-File "$($pagesFolder.ServerRelativeUrl)/$($PageXml.Url)" $web $ClientContext
         Write-Host "`t`t..2) Checkout Status [$($pageFile.CheckOutType)]"
 
         # add web parts
@@ -225,8 +234,8 @@ function Update-WebParts {
         }
 
         #
-        Write-Host "`t`t..Request file again: $($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)"
-        $pageFile = Get-File -FileServerRelativeUrl "$($pagesList.RootFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
+        Write-Host "`t`t..Request file again: $($pagesFolder.ServerRelativeUrl)/$($PageXml.Url)"
+        $pageFile = Get-File -FileServerRelativeUrl "$($pagesFolder.ServerRelativeUrl)/$($PageXml.Url)" -web $web -ClientContext $ClientContext
         #
 
         # now save/checkin/publish/approve
@@ -398,7 +407,7 @@ function New-PublishingPage {
         $rootWeb = $ClientContext.Site.RootWeb
         $masterPageCatalog = $rootWeb.GetCatalog([Microsoft.SharePoint.Client.ListTemplateType]::MasterPageCatalog)
         $pageLayoutCamlQuery = New-Object Microsoft.SharePoint.Client.CamlQuery
-        $pageLayoutCamlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($PageXml.PageLayout)</Value></Eq></Where></Query></View>"
+        $pageLayoutCamlQuery.ViewXml = "<View Scope='RecursiveAll'><Query><Where><Eq><FieldRef Name='FileLeafRef' /><Value Type='Text'>$($PageXml.PageLayout)</Value></Eq></Where></Query></View>"
         $pageLayoutItems = $masterPageCatalog.GetItems($pageLayoutCamlQuery)
         $ClientContext.Load($pageLayoutItems)
         $clientContext.ExecuteQuery()
@@ -428,7 +437,7 @@ function New-PublishingPage {
         
         # Load Page Layout Item if avilable
         if ($pageLayoutItems.Count -lt 1) {
-			Write-Host "`t`tMissing Page Layout $($PageXml.PageLayout), Can not create $($PageXml.Url)" -ForegroundColor Red
+			Write-Host "`t`tMissing Page Layout '$($PageXml.PageLayout)', Can not create $($PageXml.Url)" -ForegroundColor Red
             return
 		} else {
             $pageLayout = $pageLayoutItems[0]

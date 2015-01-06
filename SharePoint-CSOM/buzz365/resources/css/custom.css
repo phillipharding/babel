@@ -1074,6 +1074,16 @@ li > a.ms-core-listMenu-item:active {
   }
 }
 
+@media screen and  (max-width: 768px) {
+  .marg-r {
+    margin-right: 0px;
+  }
+
+  .marg-l {
+    margin-left: 0px;
+  }
+}
+
 @media screen and  (max-width: 767px) {
 
   #corbcom-siteusage_callout .js-callout-content {
@@ -1299,4 +1309,15 @@ input.ms-cui-cb-input {
 }
 .ms-linksection-title {
   color: #EA3692;
+}
+
+/* webpart containers */
+.ms-webpart-cell-vertical {
+  display: block;
+}
+.ms-webpart-chrome-vertical {
+  display: block;
+}
+.ms-webpartzone-cell {
+    margin-bottom: 20px;
 }
