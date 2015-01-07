@@ -13,18 +13,6 @@
 		#contentBox-x[class^='pure-u-'] {
 			width: 100%!important;
 		}
-		
-		/* HIDE PAGE TITLE IN TITLE AREA and RESIZE BREADCRUMB DIV */
-		#pageTitle { display: none; }
-		.ms-breadcrumb-box { height: 34px; }
-
-		/* NEWS WEBPARTS FIXES */
-		.news-control-newscarousel-wrapper .bx-wrapper {
-			margin: 0 auto!important;
-		}
-		.news-control-newsbycategory-wrapper {
-		  margin-right: 0!important;
-		}
 	</SharePointWebControls:StyleBlock>
 	
 	<SharePointWebControls:CssRegistration name="<% $SPUrl:~sitecollection/Style Library/~language/Themable/Core Styles/pagelayouts15.css %>" runat="server"/>
@@ -42,6 +30,14 @@
 	<SharePointWebControls:FieldValue FieldName="Title" runat="server"/>
 </asp:Content>
 
+<asp:ContentPlaceHolder id="PlaceHolderPageImage" runat="server">
+   <SharePoint:SPSimpleSiteLink runat="server" id="PageTitleInTitleAreaSiteLink">
+       <span class='PlaceHolderPageImage'>
+           <i class="fa fa-file-text-o"></i>
+       </span>
+   </SharePoint:SPSimpleSiteLink>
+</asp:ContentPlaceHolder>
+
 <asp:Content ContentPlaceholderID="PlaceHolderMain" runat="server">
 	<div class='cc-wrapper'>
 		<PublishingWebControls:EditModePanel runat="server" CssClass="edit-mode-panel title-edit">
@@ -49,65 +45,22 @@
 				<SharePointWebControls:TextField runat="server" FieldName="Title"/>
 			</section>
 		</PublishingWebControls:EditModePanel>
+
 		<section class='cc-container cc-first-row'>
 			<div class='pure-g'>
-				<div class='pure-u-1 pure-u-md-2-3'>
-					<div class='marg-r web-part'>
-						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="HeaderLeft" FrameType="TitleBarOnly" Title="Header Left" Orientation="Vertical" />
-					</div>
-				</div>
-				<div class='pure-u-1 pure-u-md-1-3'>
+				<div class='pure-u-1'>
 					<div class='web-part'>
-						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="HeaderRight" FrameType="TitleBarOnly" Title="Header Right" Orientation="Vertical" />
+						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="Header" FrameType="TitleBarOnly" Title="Header" Orientation="Vertical" />
 					</div>
 				</div>
-			</div>
-		</section>
-		<section class='cc-container cc-second-row'>
-			<div class='pure-g'>
-				<div class='pure-u-1 pure-u-md-1-3'>
-					<div class='marg-r web-part'>
-						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="MiddleLeft" FrameType="TitleBarOnly" Title="Middle Left" Orientation="Vertical" />
+				<div class='pure-u-1'>
+					<div class='page-content'>
+						<PublishingWebControls:RichHtmlField FieldName="PublishingPageContent" HasInitialFocus="True" MinimumEditHeight="400px" runat="server" />
 					</div>
 				</div>
-				<div class='pure-u-1 pure-u-md-1-3'>
-					<div class='marg-r web-part'>
-						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="MiddleCenter" FrameType="TitleBarOnly" Title="Middle Center" Orientation="Vertical" />
-					</div>
-				</div>
-				<div class='pure-u-1 pure-u-md-1-3'>
+				<div class='pure-u-1'>
 					<div class='web-part'>
-						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="MiddleRight" FrameType="TitleBarOnly" Title="Middle Right" Orientation="Vertical" />
-					</div>
-				</div>
-			</div>
-		</section>
-		<section class='cc-container cc-third-row'>
-			<div class='pure-g'>
-				<div class='pure-u-1 pure-u-md-1-2'>
-					<div class='marg-r web-part'>
-						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="BottomLeft" FrameType="TitleBarOnly" Title="Bottom Left" Orientation="Vertical" />
-					</div>
-				</div>
-				<div class='pure-u-1 pure-u-md-1-2'>
-					<div class='pure-g'>
-						<div class='pure-u-1 pure-u-md-1-2'>
-							<div class='marg-r web-part'>
-								<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="BottomCenter" FrameType="TitleBarOnly" Title="Bottom Center" Orientation="Vertical" />
-							</div>
-						</div>
-						<div class='pure-u-1 pure-u-md-1-2'>
-							<div class='web-part'>
-								<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="BottomRight" FrameType="TitleBarOnly" Title="Bottom Right" Orientation="Vertical" />
-							</div>
-						</div>
-					</div>
-					<div class='pure-g'>
-						<div class='pure-u-1'>
-							<div class='web-part'>
-								<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="Bottom" FrameType="TitleBarOnly" Title="Bottom" Orientation="Vertical" />
-							</div>
-						</div>
+						<WebPartPages:WebPartZone runat="server" AllowPersonalization="false" ID="Footer" FrameType="TitleBarOnly" Title="Footer" Orientation="Vertical" />
 					</div>
 				</div>
 			</div>

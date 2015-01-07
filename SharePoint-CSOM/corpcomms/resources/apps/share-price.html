@@ -1,8 +1,18 @@
 <style type='text/css'>
+#share-price-loading {
+	max-height: 204px;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	font-size: 3em;
+	color: #D5D8DE;
+}
 .share-price {
+	display: none;
 	background: #CDD2DA url('/_catalogs/masterpage/buzz365/images/share-price.png') no-repeat left top;
 	padding-left: 130px;
 	padding-top: 4px;
+	padding-bottom: 4px;
 	max-height: 256px;
 }
 .share-price h3 {
@@ -13,7 +23,8 @@
 }
 .share-price span { font-size: 10px; }
 .share-price h4 {
-	margin: 0 0px 5px 0px;
+	line-height: 1;
+	margin: 5px 0;
 	color: #009933;
 	font-size: 30px;
 	background: url('/_catalogs/masterpage/buzz365/images/share-price-arrow.png') no-repeat right center;
@@ -22,28 +33,49 @@
 	margin: 0 0px 5px 0px;
 	font-size: 18px;
 }
+.share-price h5 span {
+	color: #009933;
+	font-size: 20px;
+	float: right;
+}
 .share-price h5.last {
 	border-bottom: 1px solid #B6BDC9;
 	padding-bottom: 12px;
 }
 .share-price p {
 	font-size: 16px;
-	line-height: 1.4em;
+	line-height: 1.2em;
 	margin: 0px;
 }
 .share-price p span {
 	font-size: 16px;
 	float: right;
 }
+.share-price.down h4 {
+	background: url('/_catalogs/masterpage/buzz365/images/share-price-arrow-down.png') no-repeat right center;
+	color: #FF4C4C;
+}
+.share-price.nochange h4 {
+	background: url('/_catalogs/masterpage/buzz365/images/share-price-arrow-hold.png') no-repeat right center;
+	color: #FF9226;
+}
+.share-price.down h5 span {
+	color: #FF4C4C;
+}
+.share-price.nochange h5 span {
+	color: #FF9226;
+}
 </style>
-<div class="share-price bg-grey">
+<script type='text/javascript' src='//www.hemscott.com/servlet/HsPublic?context=ir.access&ir_client_id=6365&ir_option=PRICES_DELAYED&transform=lse_prices_js'></script>
+<div id='share-price-loading'><i class="fa fa-refresh fa-spin"></i></div>
+<div id='share-price' class="share-price bg-grey">
 	<h3>Share Price</h3>
-	<span>LON RB - 18 Sep 10:33 GMT</span>
-	<h4>5,140.00</h4>
-	<h5>Inc/Dec <span>+0.44</span></h5>
-	<h5 class="last">%+/- <span>0.58%</span></h5>
-	<p>High <span>5,244.70</span></p>
-	<p>Low <span>5,110.00</span></p>
-	<p>Volume <span>137,040</span></p>
+	<span id='sp-date'>LSE RB - ?? ??? ??:?? GMT</span>
+	<h4 id='sp-price'>0,000.00</h4>
+	<h5>Inc/Dec <span id='sp-incdecpc'>+0.00</span></h5>
+	<h5 class='last'>% +/- <span id='sp-perc'>0.00%</span></h5>
+	<p>High <span id='sp-high'>0,000.00</span></p>
+	<p>Low <span id='sp-low'>0,000.00</span></p>
+	<p>Volume <span id='sp-volume'>000,000</span></p>
 </div>
 <script type='text/javascript' src='{{~site}}/SiteAssets/apps/share-price.js'></script>

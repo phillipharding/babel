@@ -65,7 +65,8 @@
 				<PropertyBag>
 					<PropertyBagValue Key="SaveSiteAsTemplateEnabled" Value="true" Indexable="true" />
 					<PropertyBagValue Key="ms-blogs-skinid" Value="1" Indexable="false" />
-					<PropertyBagValue Key="RB-WebTemplate-NewsCorp" Value="v1-0-0-0" />
+					<PropertyBagValue Key="RB-WebTemplate" Value="CORPNEWS" />
+					<PropertyBagValue Key="RB-WebTemplateVersion" Value="1-0-0-0" />
 				</PropertyBag>
 
 				<Fields>
@@ -1472,7 +1473,8 @@ If the solution uses Visio, you will use the Link Data To Shapes feature in Visi
 				<PropertyBag>
 					<PropertyBagValue Key="SaveSiteAsTemplateEnabled" Value="true" Indexable="true" />
 					<PropertyBagValue Key="ms-blogs-skinid" Value="1" Indexable="false" />
-					<PropertyBagValue Key="RB-WebTemplate-NewsCorp" Value="v1-0-0-0" />
+					<PropertyBagValue Key="RB-WebTemplate" Value="CORPNEWS" />
+					<PropertyBagValue Key="RB-WebTemplateVersion" Value="1-0-0-0" />
 				</PropertyBag>
 
 				<Fields>

@@ -2,6 +2,19 @@
 	<Configuration Name="CorpComms" ID="0" Description="This configuration creates or updates the resources for the Corporate Comms Site and creates or updates a Corporate Comms subsite.">
 		<!-- SITE COLLECTION ROOT WEB -->
 
+		<Features>
+			<SiteFeatures>
+				<ActivateFeatures>
+					<Feature FeatureID="F6924D36-2FA8-4F0B-B16D-06B7250180FA" Name="SharePoint Server Publishing Infrastructure" />
+				</ActivateFeatures>
+			</SiteFeatures>
+			<WebFeatures>
+				<ActivateFeatures>
+					<Feature FeatureID="94C94CA6-B32F-4DA9-A9E3-1F3D343D7ECB" Name="SharePoint Server Publishing" />
+				</ActivateFeatures>
+			</WebFeatures>
+		</Features>
+
 		<!-- pagelayouts -->
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
@@ -19,6 +32,16 @@
 							<Property Name="UIVersion" Value="15" />
 							<Property Name="HtmlDesignAssociated" Value="FALSE" />
 						</File>
+						<File Path="pagelayouts\CorpCommsContentpageLayout.aspx" Url="CorpCommsContentpageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811" />
+							<Property Name="Title" Value="Corporate Comms Contentpage Layout" />
+							<Property Name="MasterPageDescription" Value="Corporate Comms Contentpage Layout" />
+							<Property Name="PublishingPreviewImage" Value="~sitecollection/_catalogs/masterpage/en-us/Preview Images/ArticleBodyOnly.png, ~sitecollection/_catalogs/masterpage/en-us/Preview Images/ArticleBodyOnly.png" />
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#" />
+							<Property Name="PublishingHidden" Value="False" />
+							<Property Name="UIVersion" Value="15" />
+							<Property Name="HtmlDesignAssociated" Value="FALSE" />
+						</File>
 						<Folder Url="css">
 						</Folder>
 						<Folder Url="js">
@@ -28,7 +51,7 @@
 			</Catalog>
 		</Catalogs>
 
-		<!-- style library/corpcomms resources -->
+		<!-- corpcomms resources -->
 
 		<Webs>
 			<Web Url="corpcomms" Title="Corporate Communications" Description="Welcome to the Corporate Communications Site" WebTemplate="CMSPUBLISHING#0" AlwaysDeleteWeb="False">
@@ -36,12 +59,6 @@
 				<MasterUrl Inherit="False" Force="true">_catalogs/masterpage/Buzz365/Buzz365-responsive-v1.master</MasterUrl>
 
 				<Features>
-					<SiteFeatures>
-						<ActivateFeatures>
-						</ActivateFeatures>
-						<DeactivateFeatures>
-						</DeactivateFeatures>
-					</SiteFeatures>
 					<WebFeatures>
 						<DeactivateFeatures>
 							<Feature FeatureID="87294C72-F260-42f3-A41B-981A2FFCE37A" Name="Minimal Download Strategy" />
@@ -51,13 +68,18 @@
 				</Features>
 
 				<PropertyBag>
-					<PropertyBagValue Key="RB-WebTemplate-CorpComms" Value="v1-0-0-0" />
+					<PropertyBagValue Key="RB-WebTemplate" Value="CORPCOMMS" />
+					<PropertyBagValue Key="RB-WebTemplateVersion" Value="1-0-0-0" />
 				</PropertyBag>
 
 				<Lists>
+					<List Title="Documents" OnQuickLaunchBar="False" Hidden="True" Url="Documents">
+							<!-- hide the OOTB Documents library -->
+					</List>
 					<List Title="Photos" Description="A library created to store images that are used on pages in this site." OnQuickLaunchBar="True" TemplateFeatureId="4bcccd62-dcaf-46dc-a7d4-e38277ef33f4" Type="851" Url="Lists/Photos">
 						<Folder Url="">
 							<!-- ContentTypeId for Image is 0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214 -->
+							<!--
 							<File Path="images\cogs.jpg" Url="cogs.jpg" ReplaceContent="True">
 								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
 								<Property Name="Title" Value="cogs.jpg" />
@@ -78,11 +100,14 @@
 								<Property Name="ContentTypeId" Value="0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214" />
 								<Property Name="Title" Value="lightbulbs.jpg" />
 							</File>
+							-->
 						</Folder>
 					</List>
 					<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="False" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
 						<Folder Url="">
 							<Folder Url="apps">
+								<File Path="apps\pink-blocks.html" Url="pink-blocks.html" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="apps\fast-forward.html" Url="fast-forward.html" ReplaceContent="True" ReplaceContentTokens="True" />
 								<File Path="apps\share-price.html" Url="share-price.html" ReplaceContent="True" ReplaceContentTokens="True" />
 								<File Path="apps\share-price.js" Url="share-price.js" ReplaceContent="True" />
 							</Folder>
@@ -95,49 +120,39 @@
 						<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4" />
 						<Property Name="Title" Value="Home" Type="" />
 						
+						<AllUsersWebPart WebPartZoneID="BottomCenter" WebPartOrder="0">  <!-- pink blocks -->
+							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Pink-Blocks</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/apps/pink-blocks.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+						</AllUsersWebPart>
 						<AllUsersWebPart WebPartZoneID="HeaderRight" WebPartOrder="0">  <!-- fast forward -->
-							<WebPart><![CDATA[<webParts>
-	<webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
-		<metaData>
-			<type name=
-"Microsoft.SharePoint.WebPartPages.ScriptEditorWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
-			<importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
-		</metaData>
-		<data>
-			<properties>
-				<property name="Title" type="string">$Resources:core,ScriptEditorWebPartTitle;</property>
-				<property name="Description" type="string">$Resources:core,ScriptEditorWebPartDescription;</property>
-				<property name="ChromeType" type="chrometype">None</property>
-				<property name="Content" type="string">&lt;style type='text/css'&gt;
-.fast-forward {
-	background: #59176B url('/_catalogs/masterpage/Buzz365/images/ff-arrow.png') no-repeat 15px center;
-	color: #FFF;
-	padding: 15px;
-	position: relative;
-}
-.fast-forward h3, 
-.fast-forward p { margin-left: 45px; }
-.fast-forward h3 { margin-bottom: 5px; color: #FFF; font-size: 1.4em; text-transform: uppercase; font-weight: bold; }
-.fast-forward p { line-height: 1.4em; }
-.fast-forward span {
-	background: #59176B url('/_catalogs/masterpage/Buzz365/images/ff-top-corner.png');
-	height: 41px;
-	width: 41px;
-	display: block;
-	position: absolute;
-	top: 0px;
-	right: 0px;
-}
-&lt;/style&gt;
-&lt;div class="fast-forward"&gt;
-	&lt;h3&gt;Fast Forward&lt;/h3&gt;
-	&lt;p&gt;Lorem ipsum dolor sit amet some dummy copy&lt;/p&gt;
-	&lt;span&gt;&lt;/span&gt;
-&lt;/div&gt;</property>
-			</properties>
-		</data>
-	</webPart>
-</webParts>]]></WebPart>
+							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Fast-Forward</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/apps/fast-forward.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
 						</AllUsersWebPart>
 						<AllUsersWebPart WebPartZoneID="HeaderRight" WebPartOrder="1">  <!-- share price -->
 							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
@@ -145,8 +160,6 @@
   <FrameType>None</FrameType>
   <Description></Description>
   <IsIncluded>true</IsIncluded>
-  <ZoneID>Right</ZoneID>
-  <PartOrder>0</PartOrder>
   <FrameState>Normal</FrameState>
   <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
   <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>

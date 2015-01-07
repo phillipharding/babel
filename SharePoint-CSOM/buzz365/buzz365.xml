@@ -67,6 +67,7 @@
 							<File Path="css\jquery.sidr.dark.css" Url="jquery.sidr.dark.css" ReplaceContent="True" />
 							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
+							<File Path="css\fonts.css" Url="fonts.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 							<Folder Url="flick">
@@ -130,6 +131,10 @@
 							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\flaticon.eot" Url="flaticon.eot" ReplaceContent="True" />
+							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
+							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
+							<File Path="fonts\flaticon.woff" Url="flaticon.woff" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="images">
 							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />
@@ -210,6 +215,7 @@
 							<File Path="css\jquery.sidr.dark.css" Url="jquery.sidr.dark.css" ReplaceContent="True" />
 							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
+							<File Path="css\fonts.css" Url="fonts.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 							<Folder Url="flick">
@@ -273,6 +279,10 @@
 							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\flaticon.eot" Url="flaticon.eot" ReplaceContent="True" />
+							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
+							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
+							<File Path="fonts\flaticon.woff" Url="flaticon.woff" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="images">
 							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />
