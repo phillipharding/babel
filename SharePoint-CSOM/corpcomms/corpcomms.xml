@@ -105,21 +105,92 @@
 					</List>
 					<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="False" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
 						<Folder Url="">
+							<Folder Url="images">
+								<File Path="images\middle.jpg" Url="middle.jpg" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="images\roof.png" Url="roof.png" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="images\keyline.png" Url="keyline.png" ReplaceContent="True" ReplaceContentTokens="True" />
+							</Folder>
 							<Folder Url="apps">
 								<File Path="apps\pink-blocks.html" Url="pink-blocks.html" ReplaceContent="True" ReplaceContentTokens="True" />
 								<File Path="apps\fast-forward.html" Url="fast-forward.html" ReplaceContent="True" ReplaceContentTokens="True" />
 								<File Path="apps\share-price.html" Url="share-price.html" ReplaceContent="True" ReplaceContentTokens="True" />
 								<File Path="apps\share-price.js" Url="share-price.js" ReplaceContent="True" />
+
+								<File Path="apps\house-rules-cddrmr.html" Url="house-rules-cddrmr.html" ReplaceContent="True" />
+								<File Path="apps\house-rules-hspsewui.html" Url="house-rules-hspsewui.html" ReplaceContent="True" />
+								<File Path="apps\house-rules.html" Url="house-rules.html" ReplaceContent="True" />
+								<File Path="apps\house-rules.css" Url="house-rules.css" ReplaceContent="True" />
 							</Folder>
 						</Folder>
 					</List>
 				</Lists>
 
 				<Pages>
+					<Page Url="House-rules-cddrmr.aspx" ReplaceContent="True" PageLayout="CorpCommsContentpageLayout.aspx">
+						<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4" />
+						<Property Name="Title" Value="House Rules Info" />
+
+						<AllUsersWebPart WebPartZoneID="Header" WebPartOrder="0">  <!-- info -->
+							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>House-Rules-Info</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/apps/house-rules-cddrmr.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+						</AllUsersWebPart>
+					</Page>
+					<Page Url="House-rules-hspsewui.aspx" ReplaceContent="True" PageLayout="CorpCommsContentpageLayout.aspx">
+						<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4" />
+						<Property Name="Title" Value="House Rules Info" />
+
+						<AllUsersWebPart WebPartZoneID="Header" WebPartOrder="0">  <!-- info -->
+							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>House-Rules-Info</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/apps/house-rules-hspsewui.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+						</AllUsersWebPart>
+					</Page>
 					<Page Url="Home.aspx" ReplaceContent="True" PageLayout="CorpCommsHomepageLayout.aspx" WelcomePage="True">
 						<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4" />
 						<Property Name="Title" Value="Home" Type="" />
 						
+						<AllUsersWebPart WebPartZoneID="BottomRight" WebPartOrder="0">  <!-- house-rules -->
+							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>House-Rules</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/apps/house-rules.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+						</AllUsersWebPart>
 						<AllUsersWebPart WebPartZoneID="BottomCenter" WebPartOrder="0">  <!-- pink blocks -->
 							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
   <Title>Pink-Blocks</Title>

@@ -68,6 +68,7 @@
 							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
 							<File Path="css\fonts.css" Url="fonts.css" ReplaceContent="True" />
+							<File Path="css\kitedisplay.css" Url="kitedisplay.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 							<Folder Url="flick">
@@ -135,6 +136,14 @@
 							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
 							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
 							<File Path="fonts\flaticon.woff" Url="flaticon.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.eot" Url="kitedisplay-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.svg" Url="kitedisplay-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.ttf" Url="kitedisplay-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.woff" Url="kitedisplay-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.eot" Url="kitedisplaylight-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.svg" Url="kitedisplaylight-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.ttf" Url="kitedisplaylight-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.woff" Url="kitedisplaylight-webfont.woff" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="images">
 							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />
@@ -216,6 +225,7 @@
 							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
 							<File Path="css\fonts.css" Url="fonts.css" ReplaceContent="True" />
+							<File Path="css\kitedisplay.css" Url="kitedisplay.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 							<Folder Url="flick">
@@ -283,6 +293,14 @@
 							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
 							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
 							<File Path="fonts\flaticon.woff" Url="flaticon.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.eot" Url="kitedisplay-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.svg" Url="kitedisplay-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.ttf" Url="kitedisplay-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.woff" Url="kitedisplay-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.eot" Url="kitedisplaylight-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.svg" Url="kitedisplaylight-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.ttf" Url="kitedisplaylight-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.woff" Url="kitedisplaylight-webfont.woff" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="images">
 							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />

@@ -30,13 +30,13 @@
 	<SharePointWebControls:FieldValue FieldName="Title" runat="server"/>
 </asp:Content>
 
-<asp:ContentPlaceHolder id="PlaceHolderPageImage" runat="server">
+<asp:Content ContentPlaceholderID="PlaceHolderPageImage" runat="server">
    <SharePoint:SPSimpleSiteLink runat="server" id="PageTitleInTitleAreaSiteLink">
        <span class='PlaceHolderPageImage'>
            <i class="fa fa-file-text-o"></i>
        </span>
    </SharePoint:SPSimpleSiteLink>
-</asp:ContentPlaceHolder>
+</asp:Content>
 
 <asp:Content ContentPlaceholderID="PlaceHolderMain" runat="server">
 	<div class='cc-wrapper'>
