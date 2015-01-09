@@ -4,36 +4,27 @@
 <style type='text/css'>
 .world-clocks {
 	background-color: #0099A5;
-	padding: 10px;
+	padding: 10px 10px 0;
 	color: #FFF;
-	min-height: 138px;
+	min-height: 145px;
 }
 .world-clocks .clock {
-	float: left;
-	margin-right: 22px;
-}
-.world-clocks div:last-child {
-	margin-right: 0;
-}
-.world-clocks::after {
-	float: none;
-	clear: both;
+	margin: 0 auto 40px;
+	width: 120px;
 }
 .outer_face {
 	position: relative;
 	width: 110px;
 	height: 110px;
-	
 	-moz-border-radius: 110px;
 	-webkit-border-radius: 110px;
 	border-radius: 110px;
-
 	box-shadow: inset 0 0 10px gray;
 	border: 5px solid white;
 }
 .outer_face::before,
 .outer_face::after {
-	/* 12-6 and 9-3 hour markers */
+/* 12-6 and 9-3 hour markers */
 	content: "";
 	position: absolute;
 	width: 10px;
@@ -45,7 +36,7 @@
 	top: 0;
 }
 .outer_face::after {
-	/* 9-3 time marker specifically */
+/* 9-3 time marker specifically */
 	-moz-transform: rotate(90deg);
 	-ms-transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);
@@ -54,7 +45,7 @@
 .outer_face::before,
 .outer_face::after,
 .outer_face .marker {
-	/* All hour markers */
+/* All hour markers */
 	content: "";
 	position: absolute;
 	width: 4px;
@@ -108,7 +99,7 @@
 	top: 6%; /* center DIV vertically (100%-88% / 2) */
 }
 .inner_face::before {
-	/* clock center dot small */
+/* clock center dot small */
 	content: "";
 	width: 8px;
 	height: 8px;
@@ -116,22 +107,21 @@
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
 
-	margin-left: -4px;
-	margin-top: -4px;
+	margin-left: -3px;
+	margin-top: -3px;
 	background: white;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	box-shadow: 0 0 30px gray;
 }
 .inner_face::after {
 	content: "";
 	position: absolute;
 	width: 100%;
-	font: normal 0.8em Arial;
+	font: bold 1.2em "kite_display",Calibri,Arial;
 	color: white;
 	text-align: center;
-	top: 80%;
+	top: 120%;
 	text-transform: uppercase;
 }
 .london .inner_face::after { content: "london"; }
@@ -142,7 +132,7 @@
 .hand,
 .hand.hour {
 	position: absolute;
-	width: 4px; /* default width of hands/ hour hand */
+	width: 6px; /* default width of hands/ hour hand */
 	height: 30%; /* default height of hands/ hour hand */
 	top: 20%; /* offset hand vertically by 20% so its bottom is at center of clock */
 	left: 50%; /* offset hand horiz by 50% so its left is at center of clock */
@@ -169,69 +159,101 @@
 	/* minute hand (2nd longest) */
 	height: 45%;
 	top: 5%;
-	width: 6px;
-	margin-left: -3px;
+	width: 3px;
+	margin-left: -1px;
 }
 .hand.second {
 	/* second hand (longest) */
 	height: 50%;
 	width: 2px;
-	margin-left: -1px;
+	margin-left: 0;
 	top: 0;
 	background: red;
 }
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 768px) {	
+}
+
+@media screen and (max-width: 767px) {
+}
+
+@media screen and (max-width: 480px) {
+	.world-clocks {
+		min-height: 290px;
+	}
+}
+
+@media screen and (max-width: 360px) {
+}
+
+@media screen and (max-width: 320px) {
+}
+
+
 </style>
 
 <div class="world-clocks">
-	<div class="clock london" data-timezone="Europe/London">
-		<div class="outer_face">
-			<div class="marker oneseven"></div>
-			<div class="marker twoeight"></div>
-			<div class="marker fourten"></div>
-			<div class="marker fiveeleven"></div>
-			<div class="inner_face">
-				<div class="hand hour"></div>
-				<div class="hand minute"></div>
-				<div class="hand second"></div>
+	<div class="pure-g">
+		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-md-1-4">
+			<div class="clock london" data-timezone="Europe/London">
+				<div class="outer_face">
+					<div class="marker oneseven"></div>
+					<div class="marker twoeight"></div>
+					<div class="marker fourten"></div>
+					<div class="marker fiveeleven"></div>
+					<div class="inner_face">
+						<div class="hand hour"></div>
+						<div class="hand minute"></div>
+						<div class="hand second"></div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="clock newyork" data-timezone="America/New_York">
-		<div class="outer_face">
-			<div class="marker oneseven"></div>
-			<div class="marker twoeight"></div>
-			<div class="marker fourten"></div>
-			<div class="marker fiveeleven"></div>
-			<div class="inner_face">
-				<div class="hand hour"></div>
-				<div class="hand minute"></div>
-				<div class="hand second"></div>
+		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-md-1-4">
+			<div class="clock newyork" data-timezone="America/New_York">
+				<div class="outer_face">
+					<div class="marker oneseven"></div>
+					<div class="marker twoeight"></div>
+					<div class="marker fourten"></div>
+					<div class="marker fiveeleven"></div>
+					<div class="inner_face">
+						<div class="hand hour"></div>
+						<div class="hand minute"></div>
+						<div class="hand second"></div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="clock shanghai" data-timezone="Asia/Shanghai">
-		<div class="outer_face">
-			<div class="marker oneseven"></div>
-			<div class="marker twoeight"></div>
-			<div class="marker fourten"></div>
-			<div class="marker fiveeleven"></div>
-			<div class="inner_face">
-				<div class="hand hour"></div>
-				<div class="hand minute"></div>
-				<div class="hand second"></div>
+		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-md-1-4">
+			<div class="clock shanghai" data-timezone="Asia/Shanghai">
+				<div class="outer_face">
+					<div class="marker oneseven"></div>
+					<div class="marker twoeight"></div>
+					<div class="marker fourten"></div>
+					<div class="marker fiveeleven"></div>
+					<div class="inner_face">
+						<div class="hand hour"></div>
+						<div class="hand minute"></div>
+						<div class="hand second"></div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="clock tokoyo" data-timezone="Japan">
-		<div class="outer_face">
-			<div class="marker oneseven"></div>
-			<div class="marker twoeight"></div>
-			<div class="marker fourten"></div>
-			<div class="marker fiveeleven"></div>
-			<div class="inner_face">
-				<div class="hand hour"></div>
-				<div class="hand minute"></div>
-				<div class="hand second"></div>
+		<div class="pure-u-1-2 pure-u-sm-1-4 pure-u-md-1-4">
+			<div class="clock tokoyo" data-timezone="Japan">
+				<div class="outer_face">
+					<div class="marker oneseven"></div>
+					<div class="marker twoeight"></div>
+					<div class="marker fourten"></div>
+					<div class="marker fiveeleven"></div>
+					<div class="inner_face">
+						<div class="hand hour"></div>
+						<div class="hand minute"></div>
+						<div class="hand second"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -241,42 +263,38 @@
 
 (function(window, $) {
 "use strict";
-var refreshFn = function(f) { setTimeout(f, 1000); };
+var clockRefreshFn = function(f) { setTimeout(f, 1000); };
 /* yeah, so the requestAnimationFrame technique causes FireFox to consume CPU resources, quite alot!!!!
-window.requestAnimationFrame
-                               || window.mozRequestAnimationFrame
-                               || window.webkitRequestAnimationFrame
-                               || window.msRequestAnimationFrame
-                               || function(f) { setTimeout(f, 1000/60); };*/
+var clockRefreshFn =  = window.requestAnimationFrame
+                         || window.mozRequestAnimationFrame
+                         || window.webkitRequestAnimationFrame
+                         || window.msRequestAnimationFrame
+                         || function(f) { setTimeout(f, 1000/60); };*/
 
 function updateClock($clock) {
 	var
 		timezone = $clock.data('timezone') || 'Europe/London',
-		$hands = $clock.find('.hand'),
+		$clockHands = $clock.find('.hand'),
 		clockdate = moment().tz(timezone);
-console.log(timezone);
-console.log(clockdate.format());
-console.log(clockdate.hour());
-console.log(clockdate.minute());
-console.log(clockdate.second());
-console.log(clockdate.millisecond());
 	var
-		hour_as_degree = ( clockdate.hour() + clockdate.minute()/60 ) / 12 * 360,
-		minute_as_degree = clockdate.minute() / 60 * 360,
-		second_as_degree = ( clockdate.second() + clockdate.millisecond()/1000 ) /60 * 360;
-	$hands.filter('.hour').css({transform: 'rotate(' + hour_as_degree + 'deg)' });
-	$hands.filter('.minute').css({transform: 'rotate(' + minute_as_degree + 'deg)' });
-	$hands.filter('.second').css({transform: 'rotate(' + second_as_degree + 'deg)' });
+		hourAsDegree = ((clockdate.hour() + (clockdate.minute() / 60)) / 12) * 360,
+		minuteAsDegree = (clockdate.minute() / 60) * 360,
+		secondAsDegree = ((clockdate.second() + (clockdate.millisecond() / 1000)) / 60) * 360;
+	$clockHands.filter('.hour').css({transform: 'rotate(' + hourAsDegree + 'deg)' });
+	$clockHands.filter('.minute').css({transform: 'rotate(' + minuteAsDegree + 'deg)' });
+	$clockHands.filter('.second').css({transform: 'rotate(' + secondAsDegree + 'deg)' });
 }
 function updateAllClocks() {
 	$('.clock').each(function() {
 		updateClock($(this));
 	});
-	refreshFn(updateAllClocks);
+	/* schedule another clock refresh in 1 second */
+	clockRefreshFn(updateAllClocks);
 }
 
 $(function() {
-	refreshFn(updateAllClocks);
+	/* schedule the first clock refresh in 1 second */
+	clockRefreshFn(updateAllClocks);
 });
 
 })(window,jQuery);

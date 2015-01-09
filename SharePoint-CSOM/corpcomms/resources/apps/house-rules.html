@@ -6,7 +6,6 @@
 	overflow: hidden;
 	min-height: 320px;
 }
-
 #house .container {
 	min-width: 273px;
 	padding: 0;
@@ -14,7 +13,6 @@
 	position: absolute;
 	z-index: 555;
 }
-
 #roof {
 	background: url('../SiteAssets/images/roof.png') no-repeat center top;
 	background-size: cover;
@@ -23,7 +21,6 @@
 	z-index: 999;
 	position: relative;
 }
-
 #roof span {
 	position: absolute;
 	left: 90px;
@@ -32,12 +29,10 @@
 	color: #FFF;
 	text-transform: uppercase;
 }
-
 .rule-row {
 	width: 33.33%;
 	float: left;
 }
-
 .rule-row .middle {
 	padding: 0px;
 	background-color: #FFF;
@@ -48,138 +43,108 @@
 	box-shadow: none;
 	height: 81px;
 }
-
 .rule-row a,
 .rule-row a:visited {
 	display: block;
 	text-decoration: none;
 	-moz-box-shadow:    inset 0 0 20px #1983AD;
-   	-webkit-box-shadow: inset 0 0 20px #1983AD;
-   	box-shadow:         inset 0 0 20px #1983AD;
+	-webkit-box-shadow: inset 0 0 20px #1983AD;
+	box-shadow:         inset 0 0 20px #1983AD;
 	background-color: #25B1E6;
 	position: relative;
 	border: 1px solid #FFF;
 	padding-top: 20px;
 	color: #FFF;
 	text-align: center;
+	vertical-align: middle;
 	font-size: 12px;
 	width: 100%;
 	cursor: pointer;
 }
-
 .rule-row a:hover {
 	opacity: 0.8;
 	text-decoration: none;
 }
+.rule-row span {
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.rule-row .sixtyfive { height: 65px; }
+.rule-row .sixtyfour { height: 64px; }
+.rule-row .eightynine { height: 89px; }
+.rule-row .eightyfour { height: 84px; }
+.rule-row .ninetyone { height: 91px; }
 
 @media screen and (max-width: 768px) {	
 }
-
 @media screen and  (max-width: 767px) {
-
+	/* below 768px device widths we go full width */
 	#house {
-		min-height: 836px;
-	}
-	
+		min-height: 536px;
+	}	
 	.rule-row {
 		width: 100%;
 		clear: both;
 		display: block;
 		float: left;
 	}
-
+	.rule-row .middle { display:none; }
+	.rule-row .sixtyfive { height: 50px; }
+	.rule-row .sixtyfour { height: 50px; }
+	.rule-row .eightynine { height: 60px; }
+	.rule-row .eightyfour { height: 50px; }
+	.rule-row .ninetyone { height: 50px; }
 }
-
 @media screen and (max-width: 480px) {
 }
 
-
 </style>
-
 <div id="house">
-
 	<div id="roof">
-
 		<span>House Rules</span>
-
 	</div>
-
 	<div class="container">
-
 		<div class="rule-row">
-
-			<a style="height: 65px;" href="house-rules-hspsewui.aspx">
-
-				<span>Health &amp;<br /> Safety</span>
-
+			<a class="sixtyfive" href="house-rules-hspsewui.aspx">
+				<span>&nbsp;&nbsp;&nbsp;Health &amp; Safety</span>
 			</a>
-
-			<a style="height: 65px;" href="house-rules-hspsewui.aspx">
-
+			<a class="sixtyfive" href="house-rules-hspsewui.aspx">
 				<span>Environment</span>
-
 			</a>
-
-			<a style="height: 65px;" href="house-rules-hspsewui.aspx">
-
+			<a class="sixtyfive" href="house-rules-hspsewui.aspx">
 				<span>Use of Information</span>
-
 			</a>
-
-			<a style="height: 64px;" href="house-rules-cddrmr.aspx">
-
+			<a class="sixtyfour" href="house-rules-cddrmr.aspx">
 				<span>Competition</span>
-
 			</a>
-
 		</div>
-
 		<div class="rule-row">
-
-			<a style="height: 89px;" href="house-rules-cddrmr.aspx">
-
+			<a class="eightynine" href="house-rules-cddrmr.aspx">
 				<span>CODE OF CONDUCT</span>
-
 			</a>
-
 			<a class="middle" href="javascript:">
-
 				<img src="../SiteAssets/images/middle.jpg" alt="" title="" />
-
 			</a>
-
-			<a style="height: 89px;" href="house-rules-cddrmr.aspx">
-
-				<span>Document Retention &amp;
-				Maintenance</span>
-
+			<a class="eightynine" href="house-rules-cddrmr.aspx">
+				<span>Document Retention &amp; Maintenance</span>
 			</a>
-
 		</div>
-
 		<div class="rule-row">
-
-			<a style="height: 84px;" href="house-rules-hspsewui.aspx">
-
-				<span>Product<br /> Safety</span>
-
+			<a class="eightyfour" href="house-rules-hspsewui.aspx">
+				<span>Product Safety</span>
 			</a>
-
-			<a style="height: 91px;" href="house-rules-hspsewui.aspx">
-
+			<a class="ninetyone" href="house-rules-hspsewui.aspx">
 				<span>Workplace</span>
-
 			</a>
-
-			<a style="height: 84px;" href="house-rules-cddrmr.aspx">
-
+			<a class="eightyfour" href="house-rules-cddrmr.aspx">
 				<span>Regulation</span>
-
 			</a>
-
 		</div>
-
 	</div>
-
 </div>
-
