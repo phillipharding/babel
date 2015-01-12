@@ -178,7 +178,7 @@
 							<File Path="images\white-arrow.png" Url="white-arrow.png" ReplaceContent="True" />
 							<File Path="images\widget-dummy.png" Url="widget-dummy.png" ReplaceContent="True" />
 							<File Path="images\yammer.png" Url="yammer.png" ReplaceContent="True" />
-							<File Path="images\780x295.gif" Url="780x295.gif" ReplaceContent="True" />
+							<File Path="images\yammer-logo-white.png" Url="yammer-logo-white.png" ReplaceContent="True" />
 						</Folder>
 					</Folder>
 				</Folder>
@@ -337,7 +337,7 @@
 							<File Path="images\white-arrow.png" Url="white-arrow.png" ReplaceContent="True" />
 							<File Path="images\widget-dummy.png" Url="widget-dummy.png" ReplaceContent="True" />
 							<File Path="images\yammer.png" Url="yammer.png" ReplaceContent="True" />
-							<File Path="images\780x295.gif" Url="780x295.gif" ReplaceContent="True" />
+							<File Path="images\yammer-logo-white.png" Url="yammer-logo-white.png" ReplaceContent="True" />
 						</Folder>
 					</Folder>
 				</Folder>

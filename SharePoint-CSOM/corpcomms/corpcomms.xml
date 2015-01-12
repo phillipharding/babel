@@ -174,6 +174,36 @@
 						<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4" />
 						<Property Name="Title" Value="Home" Type="" />
 						
+						<AllUsersWebPart WebPartZoneID="Bottom" WebPartOrder="0">  <!-- yammer -->
+							<WebPart><![CDATA[<webParts>
+   <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+      <metaData>
+         <type name="Microsoft.SharePoint.WebPartPages.ScriptEditorWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"/>
+         <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+      </metaData>
+      <data>
+         <properties>
+            <property name="Title" type="string">Yammer</property>
+            <property name="Description" type="string">Display the All Company Yammer Feed</property>
+            <property name="ChromeType" type="chrometype">None</property>
+            <property name="Content" type="string">&lt;div id='yammer-embedded-feed-header' style='background-color:#0072C6;width:100%;'&gt;
+	&lt;img src='/_catalogs/masterpage/Buzz365/images/yammer-logo-white.png' style='height:24px;padding:10px 15px 8px 15px;' /&gt;
+&lt;/div&gt;
+&lt;div id='embedded-feed' style='height:500px;width:100%;'&gt;&lt;/div&gt;
+&lt;script src='https://c64.assets-yammer.com/assets/platform_embed.js' type='text/javascript'&gt;&lt;/script&gt;
+&lt;script&gt;
+   yam.connect.embedFeed({
+      container: '#embedded-feed',
+      network: 'rb.com',
+      config: { header: false, footer: false }
+   });
+&lt;/script&gt;
+</property>
+         </properties>
+      </data>
+   </webPart>
+</webParts>]]></WebPart>
+						</AllUsersWebPart>
 						<AllUsersWebPart WebPartZoneID="BottomLeft" WebPartOrder="1">  <!-- world clocks -->
 							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
   <Title>World-Clocks</Title>
