@@ -24,9 +24,25 @@ RB.Masterpage = function() {
 			LoadAllResources: RB$Masterpage$LoadAllResources,
 			LoadResource: RB$Masterpage$LoadResource,
 			LoadWebproperties: RB$Masterpage$Webproperties,
-			Initialise: RB$Masterpage$Initialise
+			Initialise: RB$Masterpage$Initialise,
+			PageInEditMode: RB$Masterpage$PageInEditMode
 		};
 	return _module;
+
+	function RB$Masterpage$PageInEditMode() {
+		var inEditMode = null;
+		if (document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode) {
+			inEditMode = document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode.value;
+		}
+		var wikiInEditMode = null;
+		if (document.forms[MSOWebPartPageFormName]._wikiPageMode) {
+			wikiInEditMode = document.forms[MSOWebPartPageFormName]._wikiPageMode.value;
+		}
+		if (!inEditMode && !wikiInEditMode)
+			return false;
+
+		return inEditMode == "1" || wikiInEditMode == "Edit";
+	}
 
 	function RB$Masterpage$Initialise() {
 		var at = $('body').attr('class');

@@ -644,6 +644,12 @@ section#main-menu {
   color: #41596B;
 }
 
+.bg-lightgrey {
+  padding: 15px;
+  background-color: #E5E7ED;
+  color: #41596B;
+}
+
 
 /* ==========================================================================
  Office365/SharePoint Override CSS

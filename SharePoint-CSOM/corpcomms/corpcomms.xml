@@ -76,6 +76,12 @@
 					<List Title="Documents" OnQuickLaunchBar="False" Hidden="True" Url="Documents">
 							<!-- hide the OOTB Documents library -->
 					</List>
+					<List Title="Events" Description="A library created to store corporate communications events." OnQuickLaunchBar="False" TemplateFeatureId="00BFEA71-EC85-4903-972D-EBE475780106" Type="106" Url="Lists/Events" EnableFolderCreation="False">
+					</List>
+					<List Title="My Favourites" Description="A library created to store your favourite links." OnQuickLaunchBar="False" TemplateFeatureId="00BFEA71-2062-426C-90BF-714C59600103" Type="103" Url="Lists/MyFavourites" EnableFolderCreation="False">
+					</List>
+					<List Title="RB Favourites" Description="A library created to store RB Corporate Communications favourite links." OnQuickLaunchBar="False" TemplateFeatureId="00BFEA71-2062-426C-90BF-714C59600103" Type="103" Url="Lists/RbFavourites" EnableFolderCreation="False">
+					</List>
 					<List Title="Photos" Description="A library created to store images that are used on pages in this site." OnQuickLaunchBar="True" TemplateFeatureId="4bcccd62-dcaf-46dc-a7d4-e38277ef33f4" Type="851" Url="Lists/Photos">
 						<Folder Url="">
 							<!-- ContentTypeId for Image is 0x0101009148F5A04DDD49CBA7127AADA5FB792B00AADE34325A8B49CDA8BB4DB53328F214 -->
@@ -120,6 +126,8 @@
 								<File Path="apps\house-rules-hspsewui.html" Url="house-rules-hspsewui.html" ReplaceContent="True" />
 								<File Path="apps\house-rules.html" Url="house-rules.html" ReplaceContent="True" />
 								<File Path="apps\house-rules.css" Url="house-rules.css" ReplaceContent="True" />
+								<File Path="apps\favourites.html" Url="favourites.html" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="apps\favourites.js" Url="favourites.js" ReplaceContent="True" />
 							</Folder>
 						</Folder>
 					</List>
@@ -173,7 +181,31 @@
 					<Page Url="Home.aspx" ReplaceContent="True" PageLayout="CorpCommsHomepageLayout.aspx" WelcomePage="True">
 						<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4" />
 						<Property Name="Title" Value="Home" Type="" />
+						<Property Name="PublishingPageContent" Value="" Type="HTML"><h1>​Key Information Heading 1</h1>
+<h2>Key Information Heading 2</h2>
+<h3>Key Information Heading 3</h3>
+<p>This is a rich HTML page-content field and is used to present Key Information, sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
+<ul><li><span class="ms-rteThemeForeColor-5-3">Unordered List Item</span></li><li><a href="http://google.com/"><span class="ms-rteThemeForeColor-5-3">Unorderd List Link Item</span></a><br/></li></ul>
+<ol><li><a href="http://google.com/"><span class="ms-rteThemeForeColor-5-4">Ordered List Item Key Information Link 1</span></a></li><li><a href="http://google.com/"><span class="ms-rteThemeForeColor-5-4">Ordered List Link Item 2</span></a></li></ol>
+<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem?</p></Property>
 						
+						<AllUsersWebPart WebPartZoneID="TabLeft" WebPartOrder="0">  <!-- favourites -->
+							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Favourites</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/apps/favourites.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+						</AllUsersWebPart>
 						<AllUsersWebPart WebPartZoneID="Bottom" WebPartOrder="0">  <!-- yammer -->
 							<WebPart><![CDATA[<webParts>
    <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
