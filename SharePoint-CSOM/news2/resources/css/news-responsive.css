@@ -21,10 +21,11 @@
 	max-width: 1440px;
 }
 
-article,aside,details,figcaption,figure,
+/*article,aside,details,figcaption,figure,
 footer,header,hgroup,nav,section,summary {
 	display: block;
 }
+*/
 
 /* ==========================================================================
  Media Queries

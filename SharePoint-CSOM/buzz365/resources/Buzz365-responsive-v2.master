@@ -529,12 +529,17 @@
         <ul>
             <li id='rb-siteusage' class='badge disabled'>
                 <a href="javascript:">
-                  <i class="fa fa-institution fa-lg"></i>
+                  <i class="fa fa-gavel fa-lg"></i>
                 </a>
             </li>
             <li id='rb-reportabuse' class='badge disabled'>
-                <a href="javascript:">
+                <a href="javascript:" title='report this page for inappropriate content'>
                   &nbsp;<i class="fa fa-exclamation-triangle fa-lg"></i>
+                </a>
+            </li>
+            <li id='rb-buzzbee' class='badge'>
+                <a href="javascript:;" title="go to the 'Buzz'">
+                  &nbsp;<i class="fa fa-cloud fa-lg"></i>
                 </a>
             </li>
         </ul>

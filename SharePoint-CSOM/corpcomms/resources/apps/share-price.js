@@ -10,7 +10,7 @@ corpcomms.shareprice = function() {
             var p = parseInt(prices), lc = parseInt(lastclose),
                 updown = (p > lc) ? '+' : (p < lc) ? '-' : '';
             document.getElementById('sp-date').innerHTML = String.format("{0} RB - {1} {2}:{3} {4}", code, dateddmmmyyyy, hour, min, timezone);
-            document.getElementById('sp-incdecpc').innerHTML = String.format("{0}{1}", updown, parseInt(change));
+            document.getElementById('sp-incdecpc').innerHTML = String.format("{0}{1}", (updown === '-' ? '' : updown), parseInt(change));
             document.getElementById('sp-perc').innerHTML = String.format("{0}%", perc);
             document.getElementById('sp-high').innerHTML = dayhigh;
             document.getElementById('sp-low').innerHTML = daylow;

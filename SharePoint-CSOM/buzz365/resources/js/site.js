@@ -10,6 +10,7 @@ RB.Masterpage = function() {
 		_kom = null,
 		_sps = null,
 		_module = {
+			Tenant: '',
 			Version: '',
 			Lcid: 1033,
 			ViewportHeight: 0,
@@ -53,6 +54,11 @@ RB.Masterpage = function() {
 		if (RB$Masterpage$IsValidType("g_wsaLCID")) _module.Lcid = g_wsaLCID;
 		if (RB$Masterpage$IsValidType("g_viewportHeight")) _module.ViewportHeight = g_viewportHeight;
 		if (RB$Masterpage$IsValidType("g_viewportWidth")) _module.ViewportWidth = g_viewportWidth;
+
+		var tenant = window.location.href.match(/^http[s]?:\/\/[^\/]*/gi);
+		if (tenant && tenant.length) {
+			_module.Tenant = tenant[0].replace(/^http[s]?:\/\//gi,'');
+		}
 	}
 
 	function RB$Masterpage$Webproperties(clearCache) {

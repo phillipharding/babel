@@ -1,13 +1,19 @@
 <style type='text/css'>
 .tab-content.favourites .ms-webpartzone-cell { margin-bottom: 0; }
-#favourites-wrapper { position: relative; padding: 0; }
-#favourites-loading {
-	max-height: 204px;
-	width: 100%;
+#favourites-wrapper {
 	box-sizing: border-box;
+	min-height: 163px;
+	padding: 0;
+	position: relative;
+}
+#favourites-loading {
+	width: 100%;
 	text-align: center;
 	font-size: 3em;
-	color: #D5D8DE;
+	color: #FFF;
+	z-index: 1;
+	position: absolute;
+	padding-top: 10px;
 }
 .favourites-inner {
 	display: none;
@@ -42,6 +48,21 @@
 .favourites-inner .favourites .container {
   padding: 5px 10px 0px 10px;
 }
+.favourites-inner .favourites a, 
+.favourites-inner .favourites a:visited {
+	margin-top: 5px;
+	padding: 5px 20px 5px 0;
+	display: inline-block;
+	position: relative;
+}
+.favourites-inner .favourites a[target='blank']:after {
+	content: "\f08e";
+	font-family: "FontAwesome";
+	font-size: 0.7em;
+	position: absolute;
+	top: 0;
+	color: #E24912;
+}
 </style>
 
 <div id='favourites-wrapper' class="bg-grey">
@@ -55,8 +76,6 @@
 		</div>
 		<div class="pure-u-1 myfavourites favourites">
 			<div class='container'>
-				<div>Sample: Collaboration CC</div>
-				<div>Sample: RB.com</div>
 			</div>
 		</div>
 
@@ -68,10 +87,9 @@
 		</div>
 		<div class="pure-u-1 rbfavourites favourites">
 			<div class='container'>
-				<div>Sample: Collaboration CC</div>
-				<div>Sample: RB.com</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script type='text/javascript' src='{{~site}}/SiteAssets/apps/favourites.js'></script>
+

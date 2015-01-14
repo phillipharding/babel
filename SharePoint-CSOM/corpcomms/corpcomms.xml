@@ -649,4 +649,39 @@
 		</Webs>
 	</Configuration>
 
+	<Configuration Name="CorpComms" ID="1" Description="This configuration creates or updates the 'Apps' resources for the Corporate Comms Site.">
+		<Webs>
+			<Web Url="corpcomms" Title="Corporate Communications" Description="Welcome to the Corporate Communications Site" WebTemplate="CMSPUBLISHING#0" AlwaysDeleteWeb="False">
+				<Lists>
+					<List Title="Site Assets" Description="Site Assets Library." OnQuickLaunchBar="False" TemplateFeatureId="00BFEA71-E717-4E80-AA17-D0C71B360101" Type="101" Url="SiteAssets">
+						<Folder Url="">
+							<Folder Url="images">
+								<File Path="images\middle.jpg" Url="middle.jpg" ReplaceContent="True" />
+								<File Path="images\roof.png" Url="roof.png" ReplaceContent="True" />
+								<File Path="images\keyline.png" Url="keyline.png" ReplaceContent="True" />
+							</Folder>
+							<Folder Url="apps">
+								<File Path="apps\pink-blocks.html" Url="pink-blocks.html" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="apps\fast-forward.html" Url="fast-forward.html" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="apps\share-price.html" Url="share-price.html" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="apps\share-price.js" Url="share-price.js" ReplaceContent="True" />
+								<File Path="apps\world-clocks.html" Url="world-clocks.html" ReplaceContent="True" />
+								<File Path="apps\house-rules-cddrmr.html" Url="house-rules-cddrmr.html" ReplaceContent="True" />
+								<File Path="apps\house-rules-hspsewui.html" Url="house-rules-hspsewui.html" ReplaceContent="True" />
+								<File Path="apps\house-rules.html" Url="house-rules.html" ReplaceContent="True" />
+								<File Path="apps\house-rules.css" Url="house-rules.css" ReplaceContent="True" />
+								<File Path="apps\favourites.html" Url="favourites.html" ReplaceContent="True" ReplaceContentTokens="True" />
+								<File Path="apps\favourites.js" Url="favourites.js" ReplaceContent="True" />
+							</Folder>
+						</Folder>
+					</List>
+				</Lists>
+
+				<Comments>
+					<Comment>Congratulations, you just provisioned a 'Corporate Communications Site'</Comment>
+				</Comments>
+			</Web>
+		</Webs>
+	</Configuration>
+
 </Configurations>
