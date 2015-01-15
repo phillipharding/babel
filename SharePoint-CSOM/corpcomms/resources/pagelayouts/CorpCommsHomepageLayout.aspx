@@ -26,7 +26,9 @@
 		  margin-right: 0!important;
 		}
 
-		/* TAB BLOCK */
+		/* ==========================================================================
+		 TAB BLOCK
+		 ========================================================================== */
 		.tab-block {
 		}
 		.keyinformation .ms-rtestate-field ul,
@@ -40,115 +42,155 @@
 			padding: 2px 2px 2px 10px;
 		}
 		.keyinformation .ms-rtestate-field h3 { font-size: 1.4em; color: #EA3692; }
-/* ==========================================================================
- Tabs
- ========================================================================== */
-ul#tabs {
-	list-style-type: none;
-	padding: 0;
-	font-size: 0px;
-}
 
-ul#tabs > li {
-	text-transform: uppercase;
-	width: 33.33%;
-	font-size: 14px;
-	height: 60px;
-	display: inline-block;
-	float: left;
-	background-color: #B5BDC9;
-	color: #fff;
-	cursor: pointer;
-	position: relative;
-}
-ul#tabs > li > div {
-	height: 44px;
-	padding: 10px;
-	position: relative;
-}
-ul#tabs > li .fa { color: #41596B; }
-ul#tabs > li h4 {
-	color: #41596B;
-	font-size: 1.2em;
-	left: 55px;
-	position: absolute;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
-}
+		/* ==========================================================================
+		 TABS
+		 ========================================================================== */
+		ul#tabs {
+			list-style-type: none;
+			padding: 0;
+			font-size: 0px;
+		}
 
-ul#tabs > li:hover {
-	background-color: #41596B;
-}
+		ul#tabs > li {
+			text-transform: uppercase;
+			width: 33.33%;
+			font-size: 14px;
+			height: 60px;
+			display: inline-block;
+			float: left;
+			background-color: #B5BDC9;
+			color: #fff;
+			cursor: pointer;
+			position: relative;
+		}
+		ul#tabs > li > div {
+			height: 44px;
+			padding: 10px;
+			position: relative;
+		}
+		ul#tabs > li .fa { color: #41596B; }
+		ul#tabs > li h4 {
+			color: #41596B;
+			font-size: 1.2em;
+			left: 55px;
+			position: absolute;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
 
-ul#tabs > li:hover .fa,
-ul#tabs > li:hover h4 {
-	color: #FFF;
-}
+		ul#tabs > li:hover {
+			background-color: #41596B;
+		}
 
-ul#tabs > li.active {
-	background-color: #CDD1D9;
-}
+		ul#tabs > li:hover .fa,
+		ul#tabs > li:hover h4 {
+			color: #FFF;
+		}
 
-ul#tabs > li.active:hover .fa,
-ul#tabs > li.active:hover h4 {
-	color: #41596B;
-}
+		ul#tabs > li.active {
+			background-color: #CDD1D9;
+		}
 
-/* TAB CONTENT */
-ul#tab {
-	list-style-type: none;
-	margin: 0px 0px 0px 0px;
-	padding: 0;
-}
+		ul#tabs > li.active:hover .fa,
+		ul#tabs > li.active:hover h4 {
+			color: #41596B;
+		}
 
-ul#tab > li {
-	display: none;
-}
+		/* ==========================================================================
+		 TAB CONTENT
+		 ========================================================================== */
+		ul#tab {
+			list-style-type: none;
+			margin: 0px 0px 0px 0px;
+			padding: 0;
+		}
 
-ul#tab > li.active {
-	display: block;
-	clear: both;
-	margin-bottom: 20px;
-}
+		ul#tab > li {
+			display: none;
+		}
 
-ul#tab > li.tab-content {
-	padding: 0 0 10px 0;
-	background-color: #CDD1D9;
-	float: left;
-	width: 100%;
-	color: #41596B;
-}
-ul#tab > li.tab-content .pure-g { padding-top: 10px; }
-ul#tab > li.tab-content .pure-g.marg-r { margin-right: 10px; }
-ul#tab > li.tab-content .pure-g.marg-l { margin-left: 10px; }
+		ul#tab > li.active {
+			display: block;
+			clear: both;
+			margin-bottom: 20px;
+		}
 
-@media screen and (max-width: 480px) {
-	ul#tabs > li h4 {
-	  font-size: 1em;
-	}
-}
+		ul#tab > li.tab-content {
+			padding: 0 0 10px 0;
+			background-color: #CDD1D9;
+			float: left;
+			width: 100%;
+			color: #41596B;
+		}
+		ul#tab > li.tab-content .pure-g { padding-top: 10px; }
+		ul#tab > li.tab-content .pure-g.marg-r { margin-right: 10px; }
+		ul#tab > li.tab-content .pure-g.marg-l { margin-left: 10px; }
 
-@media screen and (max-width: 360px) {
-	ul#tabs > li h4 {
-	  display: none;
-	}
-	ul#tabs > li .fa {
-	  position: absolute;
-	  left: 50%;
-	  top: 50%;
-	  -webkit-transform: translate(-50%, -50%);
-	  -moz-transform: translate(-50%, -50%);
-	  -ms-transform: translate(-50%, -50%);
-	  transform: translate(-50%, -50%);
-	}
-}
 
-@media screen and (max-width: 320px) {
-}
+		/* ==========================================================================
+		 SMALL CALENDAR
+		 ========================================================================== */
+		.ms-acal-rootdiv {
+  			margin-left: 0;
+		}
+		.ms-acal-header {
+			margin: 10px 10px 10px 0;
+		}
+		.ms-acal-month {
+			width: 99%!important;
+		}
+		.ms-acal-summary-itemrow td div {
+		  height: 2em!important;
+		}
 
+		/*
+		.ms-acal-item {
+			height: 10px!important;
+		}
+		.ms-acal-sdiv, 
+		.ms-acal-mdiv, 
+		.ms-acal-ctrlitem, 
+		.ms-acal-month-weeksel, 
+		.ms-acal-title, 
+		.ms-acal-month-top span {
+			display: none;
+		}
+		.ms-acal-summary-itemrow TD DIV {
+			height: 15px !important;
+		}
+		*/
+
+
+		/* ==========================================================================
+		 MEDIA QUERIES
+		 ========================================================================== */
+		@media screen and (max-width: 480px) {
+			ul#tabs > li h4 {
+			  font-size: 1em;
+			}
+		}
+
+		@media screen and (max-width: 360px) {
+			ul#tabs > li h4 {
+			  display: none;
+			}
+			ul#tabs > li .fa {
+			  position: absolute;
+			  left: 50%;
+			  top: 50%;
+			  -webkit-transform: translate(-50%, -50%);
+			  -moz-transform: translate(-50%, -50%);
+			  -ms-transform: translate(-50%, -50%);
+			  transform: translate(-50%, -50%);
+			}
+		}
+
+		@media screen and (max-width: 320px) {
+		}
 	</SharePointWebControls:StyleBlock>
 	
 	<SharePointWebControls:CssRegistration name="<% $SPUrl:~sitecollection/Style Library/~language/Themable/Core Styles/pagelayouts15.css %>" runat="server"/>
@@ -303,7 +345,14 @@ ul#tab > li.tab-content .pure-g.marg-l { margin-left: 10px; }
 "use strict";
 
 $(function() {
-	console.log(">>Init TABBLOCK");
+	if (window.console) { window.console.log(">>Init TABBLOCK"); }
+
+	if (window.console) { window.console.log('>> Init TABBLOCK >> Calendar Headers'); }
+	$('.ms-acal-month-top span').each(function() {
+		var $this = $(this);
+		$this.html($this.html().substring(0, 3));
+	});
+	
 	$("ul#tabs > li").click(function(e) {
 		if (!$(this).hasClass("active")) {
 			var tabNum = $(this).index();
@@ -311,7 +360,19 @@ $(function() {
 			$("ul#tabs > li.active").removeClass("active");
 			$(this).addClass("active");
 			$("ul#tab > li.active").removeClass("active");
-			$("ul#tab > li:nth-child("+nthChild+")").addClass("active");
+			
+			var $newtabcontent = $("ul#tab > li:nth-child("+nthChild+")");
+			$newtabcontent.addClass("active");
+			
+			if (!RB.Masterpage.PageInEditMode() && $newtabcontent.hasClass('calendarofevents') && !$newtabcontent.data('cal-initialised')) {
+				/* this is the calendar tab  - fixup the issue caused by calendar WP initialisation in a hidden DIV */
+				var calInitFnName = ($newtabcontent.find('.ms-acal-rootdiv').parents('*[webpartid]').attr('id') || '').replace(/WebPart/gi, '_spAjaxOnLoadWait');
+				if (calInitFnName && calInitFnName.length && (typeof(window[calInitFnName]) === 'function')) {
+					window[calInitFnName]();
+					$newtabcontent.data('cal-initialised', true);
+					if (window.console) { window.console.log('>> TABBLOCK : Calendar Initialisation successful.'); }
+				}
+			}
 		}
 	});
 });

@@ -52,20 +52,19 @@
                   Accept: 'application/json;odata=verbose'
                }
             };
-         EnsureScriptFunc('SP.js', null, function() {
-            if (window.console) console.log('(favourites.js)>> SP.js loaded');
-            $.ajax(r)
-               .done(function(data) {
-                  if (data && data.d && data.d.EffectiveBasePermissions) {
-                     var permissions = new SP.BasePermissions();
-                     permissions.fromJson(data.d.EffectiveBasePermissions);
-                     _canEditRb = permissions.has(SP.PermissionKind.addAndCustomizePages);
-                     p.resolve(_canEditRb);
-                  }
-               }).fail(function(xhrObj, textStatus, err) {
-                  p.resolve(false);
-               });
-         });
+
+         if (window.console) console.log('(favourites.js)>> SP.js loaded');
+         $.ajax(r)
+            .done(function(data) {
+               if (data && data.d && data.d.EffectiveBasePermissions) {
+                  var permissions = new SP.BasePermissions();
+                  permissions.fromJson(data.d.EffectiveBasePermissions);
+                  _canEditRb = permissions.has(SP.PermissionKind.addAndCustomizePages);
+                  p.resolve(_canEditRb);
+               }
+            }).fail(function(xhrObj, textStatus, err) {
+               p.resolve(false);
+            });
          return p.promise();
       }
 
@@ -119,6 +118,10 @@
       }
    }();
 
-   $(corpcomms.favourites.start);
+   $(function() {
+      SP.SOD.executeOrDelayUntilScriptLoaded(function() {
+         corpcomms.favourites.start();
+      }, 'sp.js');
+   });
 
 })(jQuery);

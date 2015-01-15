@@ -178,6 +178,7 @@
 </WebPart>]]></WebPart>
 						</AllUsersWebPart>
 					</Page>
+
 					<Page Url="Home.aspx" ReplaceContent="True" PageLayout="CorpCommsHomepageLayout.aspx" WelcomePage="True">
 						<Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4" />
 						<Property Name="Title" Value="Home" Type="" />
@@ -188,6 +189,41 @@
 <ul><li><span class="ms-rteThemeForeColor-5-3">Unordered List Item</span></li><li><a href="http://google.com/"><span class="ms-rteThemeForeColor-5-3">Unorderd List Link Item</span></a><br/></li></ul>
 <ol><li><a href="http://google.com/"><span class="ms-rteThemeForeColor-5-4">Ordered List Item Key Information Link 1</span></a></li><li><a href="http://google.com/"><span class="ms-rteThemeForeColor-5-4">Ordered List Link Item 2</span></a></li></ol>
 <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem?</p></Property>
+						
+						<AllUsersWebPart WebPartZoneID="TabRight" WebPartOrder="0" ListTitle="Events">
+							<WebPart><![CDATA[<webParts>
+    <webPart
+        xmlns="http://schemas.microsoft.com/WebPart/v3">
+        <metaData>
+            <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c"/>
+            <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+        </metaData>
+        <data>
+            <properties>
+                <property name="ListUrl" type="string">Lists/Events</property>
+                <property name="TitleUrl" type="string">#</property>
+                <property name="ListDisplayName" type="string">Events</property>
+                <property name="ChromeType" type="chrometype">None</property>
+                <property name="XmlDefinition" type="string">&lt;View BaseViewID="2" DisplayName="" Hidden="TRUE" Level="1" Name="{FB1BC56D-C0B6-4122-B441-A3F862B1907E}" Type="CALENDAR" TabularView="FALSE" RecurrenceRowset="TRUE"&gt;&lt;Query&gt;&lt;Where&gt;&lt;DateRangesOverlap&gt;&lt;FieldRef Name="EventDate" /&gt;&lt;FieldRef Name="EndDate" /&gt;&lt;FieldRef Name="RecurrenceID" /&gt;&lt;Value Type="DateTime" &gt;&lt;Month/&gt;&lt;/Value&gt;&lt;/DateRangesOverlap&gt;&lt;/Where&gt;&lt;/Query&gt;&lt;ViewFields&gt;&lt;FieldRef Name="EventDate" /&gt;&lt;FieldRef Name="EndDate" /&gt;&lt;FieldRef Name="fRecurrence" /&gt;&lt;FieldRef Name="EventType" /&gt;&lt;FieldRef Name="WorkspaceLink" /&gt;&lt;FieldRef Name="Title" /&gt;&lt;FieldRef Name="Location" /&gt;&lt;FieldRef Name="Description" /&gt;&lt;FieldRef Name="Workspace" /&gt;&lt;FieldRef Name="MasterSeriesItemID" /&gt;&lt;FieldRef Name="fAllDayEvent" /&gt;&lt;/ViewFields&gt;&lt;Toolbar Type="Standard" /&gt;&lt;/View&gt;</property>
+                <property name="Title" type="string">Events</property>
+                <property name="Description" type="string"></property>
+                <property name="ParameterBindings" type="string">&lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;
+&lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
+&lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;
+&lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;
+&lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;
+&lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt; &lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noXinviewofY_LIST)" /&gt;
+&lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(core,noXinviewofY_DEFAULT)" /&gt;
+&lt;ParameterBinding Name="AddNewAnnouncement" Location="Resource(wss,addnewitem)" /&gt;
+&lt;ParameterBinding Name="MoreAnnouncements" Location="Resource(wss,moreItemsParen)" /&gt;</property>
+                <property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
+            </properties>
+        </data>
+    </webPart>
+</webParts>]]></WebPart>
+						</AllUsersWebPart>
 						
 						<AllUsersWebPart WebPartZoneID="TabLeft" WebPartOrder="0">  <!-- favourites -->
 							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
