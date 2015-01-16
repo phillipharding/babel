@@ -1,12 +1,13 @@
 ﻿<#
     Example command lines
 
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "1"
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "1"
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/O365" -CredentialLabel "RB.COM SPO" -Configuration "2"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "2"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "2"
+    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO" -Configuration "3"
 
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "1"
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "1"
+    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "2"
+    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "3"
 
     -Configuration;
         "0" for minimal provisioning

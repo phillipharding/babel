@@ -184,7 +184,7 @@
 		</Catalogs>
 	</Configuration>
 
-	<Configuration Name="Masterpage" ID="2" Description="Provisions **ONLY** the Buzz365 Masterpage files.">
+	<Configuration Name="Masterpage" ID="2" Description="Provisions **ONLY** the Buzz365 Masterpage (.master) files.">
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->

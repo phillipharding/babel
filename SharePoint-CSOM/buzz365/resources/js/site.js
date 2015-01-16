@@ -10,6 +10,7 @@ RB.Masterpage = function() {
 		_kom = null,
 		_sps = null,
 		_module = {
+			UpSuModulesInitialised: new $.Deferred(),
 			Tenant: '',
 			Version: '',
 			Lcid: 1033,
@@ -293,7 +294,6 @@ RB.Masterpage = function() {
 
 		/* synchronised loading/initialisation of the siteusage and userprofile modules */
 		var
-			upsuModulesInitialised = new $.Deferred(), 
 			upsuModulesLoaded = [
 				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/siteusage.js"),
 				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/userprofile.js")
@@ -310,7 +310,7 @@ RB.Masterpage = function() {
 					if (!RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup') || !RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
 						waitCount++;
 						if (waitCount > 10) 
-							upsuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
+							RB.Masterpage.UpSuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
 						else {
 							if (window.console) window.console.log(">>deferAndWaitForModuleExecution("+waitCount+") for USERPROFILE.JS and SITEUSAGE.JS initialisation");
 							setTimeout(deferAndWaitForModuleExecution, 200);
@@ -323,12 +323,12 @@ RB.Masterpage = function() {
 					];
 					$.when.apply($, moduleInits)
 						.done(function() {
-							upsuModulesInitialised.resolve();
+							RB.Masterpage.UpSuModulesInitialised.resolve();
 						});
 				}
 				deferAndWaitForModuleExecution();
 			});
-		upsuModulesInitialised
+		RB.Masterpage.UpSuModulesInitialised
 			.done(function() {
 				if (window.console) window.console.log(">>USERPROFILE.JS and SITEUSAGE.JS initialised");
 				RB.Masterpage.Siteusage.Acceptance();

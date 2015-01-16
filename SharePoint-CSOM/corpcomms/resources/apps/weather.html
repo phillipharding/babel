@@ -1,0 +1,182 @@
+<style type='text/css'>
+	#weather-loading {
+		width: 100%;
+		text-align: center;
+		font-size: 3em;
+		color: #FFF;
+		z-index: 1;
+		position: absolute;
+		padding-top: 10px;
+	}
+	#weather-wrapper {
+		color: #FFF;
+		position: relative;
+		min-height: 200px;
+		min-width: 320px;
+		background-color: #00B4F0;
+		margin: 0 auto;
+	}
+	#weather-wrapper .weather-inner {
+		text-align: center;
+		display: none;
+	}
+	#weather-wrapper h2 {
+		color: #FFF;
+		font-size: 2em;
+	}
+	#weather-wrapper ul {
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
+	#weather-wrapper li {
+		list-style: none;
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+		background-color: #002596;
+		color: #FFF;
+		cursor: pointer;
+		width: 20%;
+		text-align: center;
+		transition: all 250ms;
+	}
+	#weather-wrapper li:hover {
+		transition: all 250ms;
+		opacity: 0.8;
+	}
+	#weather-wrapper li.active {
+		transition: all 250ms;
+		background-color: #00B4F0;
+	}
+	#weather-wrapper li span {
+		display: inline-block;
+		padding: 10px;
+		margin: 0 1px 0 0;
+	}
+	#weather-wrapper .location {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 10px 10px 10px 30px;
+		z-index: 1;
+	}
+	#weather-wrapper .location:before {
+		content: "\f041";
+		font-family: "FontAwesome";
+		font-size: 0.7em;
+		position: absolute;
+		top: 14px;
+		left: 15px;
+	}
+	#weather-wrapper .temperature {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 10px;
+		z-index: 1;
+	}
+	#weather-wrapper img {
+		position: absolute;
+		display: block;
+		left: 50%;
+		top: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -60%);
+	}
+</style>
+
+<div id='weather-wrapper'>
+	<div id='weather-loading'><i class="fa fa-refresh fa-spin fa-3x"></i></div>
+	<div class='weather-inner'>
+		<h2 class='location'></h2>
+		<h2 class='temperature'></h2>
+		<img src='' title='' />
+		<ul>
+		</ul>
+	</div>
+</div>
+
+<script type='text/javascript'>
+(function($) {
+"use strict";
+
+$(function() {
+
+	var apiKey = '9c01a46bc798ef79c777a55ea0e84';
+	function getWeather(location) {
+		var p = $.Deferred(),
+		   r = {
+		       url: '//api.worldweatheronline.com/free/v2/weather.ashx?q='+location+'&format=json&num_of_days=7&cc=no&tp=24&key=' + apiKey,
+		       type: 'GET',
+		       headers: {Accept:'application/json'}
+		   };
+		$.ajax(r).done(function(response) {
+			var ag = $.map(response.data.weather, function(e, i) {
+				return {
+					weatherDesc: e.hourly[0].weatherDesc[0].value,
+					weatherIcon: e.hourly[0].weatherIconUrl[0].value,
+					date: e.date,
+					tempC: e.hourly[0].tempC
+				};
+			});
+			p.resolve(ag);
+		}).fail(function(xhrObj, textStatus, err) {
+		   var e = JSON.parse(xhrObj.responseText),
+		       err = e.error || e["odata.error"],
+		       m = 'Error>> ' + ((err && err.message && err.message.value) ? err.message.value : (xhrObj.status + ' ' + xhrObj.statusText));
+		   p.resolve(m);
+		});
+		return p.promise();
+	}
+   
+   function renderWeather() {
+		var theLocation = RB.Masterpage.Userprofile.Properties["Office"];
+		getWeather(theLocation).done(function(data) {
+			var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+			   $e = $('#weather-wrapper'),
+			   $days = $e.find('ul');
+			$e.data('weather', data);
+			if (typeof(data) === 'string') {
+			   $e.html(data);
+			   return;
+			}
+
+			$.each(data, function(i, e) {
+			   var wday = new Date(e.date);
+			   $('<li title="'+wday.toDateString()+'"><span>'+days[wday.getDay()]+'</span></li>').appendTo($days);
+			});
+			$e.find('li').click(function(e) {
+			   e.preventDefault();
+			   var $this = $(this),
+			       idx = $this.index(),
+			       allData = $e.data('weather'),
+			       data = allData[idx];
+			   $this.parent().find('.active').removeClass('active');
+			   $e.find('.location').html(theLocation);
+			   $e.find('.temperature').html(data.tempC + ' &deg;');
+			   $e.find('img').attr('src', data.weatherIcon.replace(/^http[s]?:/gi,'')).attr('title', data.weatherDesc);
+			   $this.addClass('active');
+			}).first().click();
+
+			$('.weather-inner').fadeIn(500, function() {
+				$('#weather-loading').fadeOut(500);
+			});
+		});
+   }
+
+	RB.Masterpage.UpSuModulesInitialised.done(function() {
+		if (window.console) window.console.log("weather.html>> userprofile.js initialised");
+		renderWeather();
+	});
+
+});
+
+})(jQuery);
+
+</script>
+

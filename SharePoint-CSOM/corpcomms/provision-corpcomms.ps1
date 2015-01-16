@@ -8,7 +8,7 @@
 
     -Configuration;
         "0" for provisioning to SPO and sets the Buzz365 v1 Masterpage
-        "1" for provisioning 'Apps resources to SPO
+        "1" for provisioning 'Apps' resources to SPO
 
 #>
 param (

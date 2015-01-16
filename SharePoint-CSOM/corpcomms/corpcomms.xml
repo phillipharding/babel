@@ -1,6 +1,6 @@
 <Configurations ResourcesPath=".\resources">
 	<Configuration Name="CorpComms" ID="0" Description="This configuration creates or updates the resources for the Corporate Comms Site and creates or updates a Corporate Comms subsite.">
-		<!-- SITE COLLECTION ROOT WEB -->
+		<!-- corpcomms site-collection assets -->
 
 		<Features>
 			<SiteFeatures>
@@ -51,7 +51,7 @@
 			</Catalog>
 		</Catalogs>
 
-		<!-- corpcomms resources -->
+		<!-- corpcomms site assets -->
 
 		<Webs>
 			<Web Url="corpcomms" Title="Corporate Communications" Description="Welcome to the Corporate Communications Site" WebTemplate="CMSPUBLISHING#0" AlwaysDeleteWeb="False">
@@ -128,6 +128,7 @@
 								<File Path="apps\house-rules.css" Url="house-rules.css" ReplaceContent="True" />
 								<File Path="apps\favourites.html" Url="favourites.html" ReplaceContent="True" ReplaceContentTokens="True" />
 								<File Path="apps\favourites.js" Url="favourites.js" ReplaceContent="True" />
+								<File Path="apps\weather.html" Url="weather.html" ReplaceContent="True" />
 							</Folder>
 						</Folder>
 					</List>
@@ -272,7 +273,24 @@
    </webPart>
 </webParts>]]></WebPart>
 						</AllUsersWebPart>
-						<AllUsersWebPart WebPartZoneID="BottomLeft" WebPartOrder="1">  <!-- world clocks -->
+						<AllUsersWebPart WebPartZoneID="BottomLeft" WebPartOrder="1">  <!-- weather -->
+							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
+  <Title>Weather</Title>
+  <FrameType>None</FrameType>
+  <Description></Description>
+  <IsIncluded>true</IsIncluded>
+  <FrameState>Normal</FrameState>
+  <MissingAssembly>Cannot import this Web Part.</MissingAssembly>
+  <PartImageLarge>/_layouts/15/images/mscontl.gif</PartImageLarge>
+  <IsIncludedFilter />
+  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+  <ContentLink xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">~site/SiteAssets/apps/weather.html</ContentLink>
+  <Content xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+  <PartStorage xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor" />
+</WebPart>]]></WebPart>
+						</AllUsersWebPart>
+						<AllUsersWebPart WebPartZoneID="BottomLeft" WebPartOrder="0">  <!-- world clocks -->
 							<WebPart><![CDATA[<WebPart xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/WebPart/v2">
   <Title>World-Clocks</Title>
   <FrameType>None</FrameType>
@@ -708,6 +726,7 @@
 								<File Path="apps\house-rules.css" Url="house-rules.css" ReplaceContent="True" />
 								<File Path="apps\favourites.html" Url="favourites.html" ReplaceContent="True" ReplaceContentTokens="True" />
 								<File Path="apps\favourites.js" Url="favourites.js" ReplaceContent="True" />
+								<File Path="apps\weather.html" Url="weather.html" ReplaceContent="True" />
 							</Folder>
 						</Folder>
 					</List>
