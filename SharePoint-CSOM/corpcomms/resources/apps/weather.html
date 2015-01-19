@@ -6,7 +6,7 @@
 		color: #FFF;
 		z-index: 1;
 		position: absolute;
-		padding-top: 10px;
+		padding-top: 40px;
 	}
 	#weather-wrapper {
 		color: #FFF;
@@ -112,6 +112,7 @@ $(function() {
 		var p = $.Deferred(),
 		   r = {
 		       url: '//api.worldweatheronline.com/free/v2/weather.ashx?q='+location+'&format=json&num_of_days=7&cc=no&tp=24&key=' + apiKey,
+		       dataType: 'jsonp',
 		       type: 'GET',
 		       headers: {Accept:'application/json'}
 		   };
