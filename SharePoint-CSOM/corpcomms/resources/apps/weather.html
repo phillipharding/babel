@@ -116,19 +116,24 @@ $(function() {
 		       headers: {Accept:'application/json'}
 		   };
 		$.ajax(r).done(function(response) {
-			var ag = $.map(response.data.weather, function(e, i) {
-				return {
-					weatherDesc: e.hourly[0].weatherDesc[0].value,
-					weatherIcon: e.hourly[0].weatherIconUrl[0].value,
-					date: e.date,
-					tempC: e.hourly[0].tempC
-				};
-			});
-			p.resolve(ag);
+			if (response.data && response.data.error && response.data.error.length) {
+				var msg = response.data.error[0].msg+'<br/>Your location (from your profile) is "'+location+'"';
+				p.resolve(msg);
+			} else {
+				var ag = $.map(response.data.weather, function(e, i) {
+					return {
+						weatherDesc: e.hourly[0].weatherDesc[0].value,
+						weatherIcon: e.hourly[0].weatherIconUrl[0].value,
+						date: e.date,
+						tempC: e.hourly[0].tempC
+					};
+				});
+				p.resolve(ag);
+			}
 		}).fail(function(xhrObj, textStatus, err) {
-		   var e = JSON.parse(xhrObj.responseText),
-		       err = e.error || e["odata.error"],
-		       m = 'Error>> ' + ((err && err.message && err.message.value) ? err.message.value : (xhrObj.status + ' ' + xhrObj.statusText));
+		   var e = JSON.parse(xhrObj.responseText || '{}'),
+		       err = e.results || null,
+		       m = 'Error: ' + ((err && err.error && err.error.message) ? '('+err.error.type+') '+err.error.message : (xhrObj.status + ' ' + xhrObj.statusText));
 		   p.resolve(m);
 		});
 		return p.promise();
@@ -142,7 +147,7 @@ $(function() {
 			   $days = $e.find('ul');
 			$e.data('weather', data);
 			if (typeof(data) === 'string') {
-			   $e.html(data);
+			   $e.html('<h3 style="color:#E24912;text-align: center;font-weight: bold;font-size: 1.5em;">'+data+'</h3>');
 			   return;
 			}
 
