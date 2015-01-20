@@ -29,11 +29,6 @@
     <SharePoint:ScriptLink language="javascript" name="suitelinks.js" OnDemand="true" runat="server" Localizable="false" />
     <SharePoint:CustomJSUrl runat="server" />
     <SharePoint:SoapDiscoveryLink runat="server" />
-    <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">
-        <asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server" />
-        <SharePoint:DelegateControl runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true" />
-        <asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" Visible="true" runat="server" />
-    </SharePoint:AjaxDelta>
     <SharePoint:CssRegistration Name="Themable/corev15.css" runat="server" />
 
     <link rel="stylesheet" type="text/css" href="/_catalogs/masterpage/Buzz365/css/pure-min.css" />
@@ -44,8 +39,13 @@
 
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/jquery-2.1.1.min.js"></script>
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/jquery.sidr.min.js"></script>
-    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/megamenu.js"></script>
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/site.js"></script>
+
+    <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">
+        <asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server" />
+        <SharePoint:DelegateControl runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true" />
+        <asp:ContentPlaceHolder id="PlaceHolderBodyAreaClass" Visible="true" runat="server" />
+    </SharePoint:AjaxDelta>
 </head>
 <body class='buzz365-responsive-v2'>
   <SharePoint:ImageLink runat="server"/>
@@ -529,12 +529,17 @@
         <ul>
             <li id='rb-siteusage' class='badge disabled'>
                 <a href="javascript:">
-                  <i class="fa fa-institution fa-lg"></i>
+                  <i class="fa fa-gavel fa-lg"></i>
                 </a>
             </li>
             <li id='rb-reportabuse' class='badge disabled'>
-                <a href="javascript:">
+                <a href="javascript:" title='report this page for inappropriate content'>
                   &nbsp;<i class="fa fa-exclamation-triangle fa-lg"></i>
+                </a>
+            </li>
+            <li id='rb-buzzbee' class='badge'>
+                <a href="javascript:;" title="go to the 'Buzz'">
+                  &nbsp;<i class="fa fa-cloud fa-lg"></i>
                 </a>
             </li>
         </ul>

@@ -830,16 +830,14 @@ param(
                 $listNeedsUpdate = $true
             }
         }
-        <#
         if($listxml.OnQuickLaunchBar) {
             $onQuickLaunchBar = [bool]::Parse($listxml.OnQuickLaunchBar)
             if($SPList.OnQuickLaunch -ne $onQuickLaunchBar) {
                 $SPList.OnQuickLaunch = $onQuickLaunchBar
-                Write-Host "`t`tUpdating OnQuickLaunchBar"
+                Write-Host "`t`tUpdating OnQuickLaunch"
                 $listNeedsUpdate = $true
             }
         }
-        #>
         if($listxml.NoCrawl -and $listxml.NoCrawl -ne "") {
             $noCrawl = [bool]::Parse($listxml.NoCrawl)
             if($SPList.NoCrawl -ne $noCrawl) {

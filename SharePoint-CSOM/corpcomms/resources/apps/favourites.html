@@ -1,0 +1,95 @@
+<style type='text/css'>
+.tab-content.favourites .ms-webpartzone-cell { margin-bottom: 0; }
+#favourites-wrapper {
+	box-sizing: border-box;
+	min-height: 163px;
+	padding: 0;
+	position: relative;
+}
+#favourites-loading {
+	width: 100%;
+	text-align: center;
+	font-size: 3em;
+	color: #FFF;
+	z-index: 1;
+	position: absolute;
+	padding-top: 10px;
+}
+.favourites-inner {
+	display: none;
+}
+.favourites-inner .bg-lightgrey { padding: 0; }
+.favourites-inner .banner { 
+	padding: 6px 10px;
+	position: relative;
+	vertical-align: top;
+}
+.favourites-inner .banner span {
+  font-size: 1.3em;
+}
+.favourites-inner .banner .edit {
+  float: right;
+  height: 28px;
+  position: absolute;
+  right: 4px;
+  text-align: center;
+  top: 2px;
+  width: 40px;
+}
+.favourites-inner .banner .edit:hover {
+  -webkit-opacity: 0.5;
+  -moz-opacity: 0.5;
+  -ms-opacity: 0.5;
+  opacity: 0.5;
+}
+.favourites-inner .myfavourites {
+  padding-bottom: 15px;
+}
+.favourites-inner .favourites .container {
+  padding: 5px 10px 0px 10px;
+}
+.favourites-inner .favourites a, 
+.favourites-inner .favourites a:visited {
+	margin-top: 5px;
+	padding: 5px 20px 5px 0;
+	display: inline-block;
+	position: relative;
+}
+.favourites-inner .favourites a[target='blank']:after {
+	content: "\f08e";
+	font-family: "FontAwesome";
+	font-size: 0.7em;
+	position: absolute;
+	top: 0;
+	color: #E24912;
+}
+</style>
+
+<div id='favourites-wrapper' class="bg-grey">
+	<div id='favourites-loading'><i class="fa fa-refresh fa-spin fa-3x"></i></div>
+	<div class="pure-g favourites-inner">
+		<div class="pure-u-1 bg-lightgrey">
+			<div class="banner">
+				<span>My Favourites</span>
+				<a id='myfavourites-edit' href="javascript:;" class="edit" title="edit your favourites"><i class="fa fa-pencil fa-2x"></i></a>
+			</div>
+		</div>
+		<div class="pure-u-1 myfavourites favourites">
+			<div class='container'>
+			</div>
+		</div>
+
+		<div class="pure-u-1 bg-lightgrey">
+			<div class="banner">
+				<span>RB Favourites</span>
+				<a id='rbfavourites-edit' href="javascript:;" class="edit" title="edit the RB favourites"><i class="fa fa-pencil fa-2x"></i></a>
+			</div>
+		</div>
+		<div class="pure-u-1 rbfavourites favourites">
+			<div class='container'>
+			</div>
+		</div>
+	</div>
+</div>
+<script type='text/javascript' src='{{~site}}/SiteAssets/apps/favourites.js'></script>
+

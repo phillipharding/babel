@@ -1,19 +1,26 @@
 ﻿<#
     Example command lines
 
-    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "1"
-    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah/news" -CredentialLabel "RB.COM SPO"
-    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO"
-    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/O365" -CredentialLabel "RB.COM SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah/news" -CredentialLabel "RB.COM SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah/corpcomms" -CredentialLabel "RB.COM SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO" -Configuration "0"
 
-    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing/news" -CredentialLabel "SPO"
-    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO"
-    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing/corpcomms" -CredentialLabel "SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing/news" -CredentialLabel "SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "0"
+    .\setmasterpage-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "0"
 
+    -Configuration;
+        "0" for V1 masterpage
+        "1" for V2 masterpage
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
-    [parameter(Mandatory=$false)][string]$CredentialLabel = $null
+    [parameter(Mandatory=$false)][string]$CredentialLabel = $null,
+    [parameter(Mandatory=$false)][string]$Configuration = "0"
 )
 cls
 # load and init the CSOM modules
@@ -37,7 +44,7 @@ if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
 $configurationName = "SetMasterpage"
-$configurationId = "0" 
+$configurationId = $Configuration
 $configurationPath = $cwd
 $configurationFiles = @("setmasterpage-buzz365")
 

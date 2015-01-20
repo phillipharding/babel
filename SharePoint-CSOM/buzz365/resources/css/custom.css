@@ -13,8 +13,10 @@ html {
   box-sizing: inherit;
 }
 
-body {
-  background: #ffffff;
+body,
+.ms-backgroundImage {
+  background: #ffffff!important;
+/*
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkNmRhZGUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
   background: -moz-linear-gradient(top, #ffffff 0%, #d6dade 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#d6dade));
@@ -23,6 +25,7 @@ body {
   background: -ms-linear-gradient(top, #ffffff 0%,#d6dade 100%);
   background: linear-gradient(to bottom, #ffffff 0%,#d6dade 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d6dade',GradientType=0 );
+*/
 }
 
 body#no-bg {
@@ -212,9 +215,10 @@ header img.user {
  RB Footer
  ========================================================================== */
 footer {
+  display: none!important;
   -webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
   -moz-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
-  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+/*  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36); */
   background-color: #415A6C;
   background-color: rgba(65, 90, 108, 0.95);
   margin: 0 auto;
@@ -643,6 +647,12 @@ section#main-menu {
   color: #41596B;
 }
 
+.bg-lightgrey {
+  padding: 15px;
+  background-color: #E5E7ED;
+  color: #41596B;
+}
+
 
 /* ==========================================================================
  Office365/SharePoint Override CSS
@@ -694,8 +704,8 @@ section#main-menu {
 }
 
 .ms-core-sideNavBox-removeLeftMargin {
-  margin-left: -10px;
-  padding-right: 20px;
+  margin-left: 0;
+  padding-right: 10px;
 }
 
 .ms-core-listMenu-root {
@@ -737,7 +747,7 @@ li > a.ms-core-listMenu-item:active {
 }
 
 .ms-core-overlay {
-  background-color: rgba(255, 255, 255, 0.45);
+	background-color: rgba(255, 255, 255, 0.3);
 }
 
 #s4-workspace {
@@ -746,9 +756,10 @@ li > a.ms-core-listMenu-item:active {
 }
 
 #s4-bodyContainer {
-  -webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+/*  -webkit-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
   -moz-box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
-  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);
+  box-shadow: -6px 4px 22px 0px rgba(50, 50, 50, 0.36);*/
+
   background-color: rgba(255, 255, 255, 0.95);
   margin: 0 auto;
   margin-bottom: 35px;
@@ -843,14 +854,14 @@ li > a.ms-core-listMenu-item:active {
   background-color: transparent;
   border-style: none;
   display: inline-block;
-  font-size: 1.4em;
+  font-size: 1.2em;
   height: auto;
   margin: 0 0 0 5px;
   outline-style: none;
-  padding: 0 1px 0 0;
+  padding: 2px 1px 0 0;
   right: 0;
   width: 180px;
-  color: #415A6C;
+  color: #ccc;
 }
 
 .mobile-header-search-box .ms-srch-sb > input {
@@ -960,13 +971,14 @@ li > a.ms-core-listMenu-item:active {
 @media screen and (max-width: 980px) {
 
   .ms-srch-sb > input {
-    font-size: 1.25em;
+    font-size: 1.20em;
     width: 160px;
   }
 
   .mobile-header-search-box .ms-srch-sb > input {
-    font-size: 1.3em;
+    font-size: 1.2em;
     width: 170px;
+    padding: 3px 1px 0 0;
   }
 }
 
@@ -1062,6 +1074,16 @@ li > a.ms-core-listMenu-item:active {
     border-right: 0px;
   }
 
+  .marg-r {
+    margin-right: 0px;
+  }
+
+  .marg-l {
+    margin-left: 0px;
+  }
+}
+
+@media screen and  (max-width: 768px) {
   .marg-r {
     margin-right: 0px;
   }
@@ -1184,8 +1206,8 @@ li > a.ms-core-listMenu-item:active {
 
   .mobile-header-search-box .ms-srch-sb > input {
     font-size: 1em;
-    margin-top: 3px;
-    width: 130px;
+    margin-top: 0;
+    width: 125px;
   }
 
 	/* align the corporate buttons leftward to make way for the mobile search button */
@@ -1296,4 +1318,15 @@ input.ms-cui-cb-input {
 }
 .ms-linksection-title {
   color: #EA3692;
+}
+
+/* webpart containers */
+.ms-webpart-cell-vertical {
+  display: block;
+}
+.ms-webpart-chrome-vertical {
+  display: block;
+}
+.ms-webpartzone-cell {
+    margin-bottom: 20px;
 }

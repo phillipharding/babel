@@ -4,15 +4,19 @@
 window.RB = window.RB || {};
 RB.Masterpage = function() {
 	var
+		_bxs = null,
 		_jqui = null,
 		_wap = null,
 		_kom = null,
 		_sps = null,
 		_module = {
+			UpSuModulesInitialised: new $.Deferred(),
+			Tenant: '',
 			Version: '',
 			Lcid: 1033,
 			ViewportHeight: 0,
 			ViewportWidth: 0,
+			LoadBxSlider: RB$Masterpage$LoadBxSlider,
 			LoadJQueryUI: RB$Masterpage$LoadJQueryUI,
 			LoadKnockout: RB$Masterpage$LoadKnockout,
 			LoadSPServices: RB$Masterpage$LoadSPServices,
@@ -22,9 +26,25 @@ RB.Masterpage = function() {
 			LoadAllResources: RB$Masterpage$LoadAllResources,
 			LoadResource: RB$Masterpage$LoadResource,
 			LoadWebproperties: RB$Masterpage$Webproperties,
-			Initialise: RB$Masterpage$Initialise
+			Initialise: RB$Masterpage$Initialise,
+			PageInEditMode: RB$Masterpage$PageInEditMode
 		};
 	return _module;
+
+	function RB$Masterpage$PageInEditMode() {
+		var inEditMode = null;
+		if (document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode) {
+			inEditMode = document.forms[MSOWebPartPageFormName].MSOLayout_InDesignMode.value;
+		}
+		var wikiInEditMode = null;
+		if (document.forms[MSOWebPartPageFormName]._wikiPageMode) {
+			wikiInEditMode = document.forms[MSOWebPartPageFormName]._wikiPageMode.value;
+		}
+		if (!inEditMode && !wikiInEditMode)
+			return false;
+
+		return inEditMode == "1" || wikiInEditMode == "Edit";
+	}
 
 	function RB$Masterpage$Initialise() {
 		var at = $('body').attr('class');
@@ -35,6 +55,11 @@ RB.Masterpage = function() {
 		if (RB$Masterpage$IsValidType("g_wsaLCID")) _module.Lcid = g_wsaLCID;
 		if (RB$Masterpage$IsValidType("g_viewportHeight")) _module.ViewportHeight = g_viewportHeight;
 		if (RB$Masterpage$IsValidType("g_viewportWidth")) _module.ViewportWidth = g_viewportWidth;
+
+		var tenant = window.location.href.match(/^http[s]?:\/\/[^\/]*/gi);
+		if (tenant && tenant.length) {
+			_module.Tenant = tenant[0].replace(/^http[s]?:\/\//gi,'');
+		}
 	}
 
 	function RB$Masterpage$Webproperties(clearCache) {
@@ -97,6 +122,29 @@ RB.Masterpage = function() {
 					});
 		**/
 		return _jqui;
+	}
+
+	function RB$Masterpage$LoadBxSlider() {
+		if (!_bxs) {
+			var deps = [
+				RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/jquery.bxslider.min.js"),
+				RB$Masterpage$LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/css/jquery.bxslider.css")
+			];
+			_bxs = $.when.apply($, deps)
+						.done(function(js, css) {
+							if (window.console) {
+								window.console.log('>> RB$Masterpage$LoadBxSlider ['+js+']');
+								window.console.log('>> RB$Masterpage$LoadBxSlider ['+css+']');
+							}
+						});
+		}
+		/** E.g
+				RB.Masterpage.LoadBxSlider()
+					.done(function(js, css) {
+						console.log('loaded bxSlider');
+					});
+		**/
+		return _bxs;
 	}
 
 	function RB$Masterpage$LoadKnockout() {
@@ -246,7 +294,6 @@ RB.Masterpage = function() {
 
 		/* synchronised loading/initialisation of the siteusage and userprofile modules */
 		var
-			upsuModulesInitialised = new $.Deferred(), 
 			upsuModulesLoaded = [
 				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/siteusage.js"),
 				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/userprofile.js")
@@ -263,7 +310,7 @@ RB.Masterpage = function() {
 					if (!RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup') || !RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
 						waitCount++;
 						if (waitCount > 10) 
-							upsuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
+							RB.Masterpage.UpSuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
 						else {
 							if (window.console) window.console.log(">>deferAndWaitForModuleExecution("+waitCount+") for USERPROFILE.JS and SITEUSAGE.JS initialisation");
 							setTimeout(deferAndWaitForModuleExecution, 200);
@@ -276,12 +323,12 @@ RB.Masterpage = function() {
 					];
 					$.when.apply($, moduleInits)
 						.done(function() {
-							upsuModulesInitialised.resolve();
+							RB.Masterpage.UpSuModulesInitialised.resolve();
 						});
 				}
 				deferAndWaitForModuleExecution();
 			});
-		upsuModulesInitialised
+		RB.Masterpage.UpSuModulesInitialised
 			.done(function() {
 				if (window.console) window.console.log(">>USERPROFILE.JS and SITEUSAGE.JS initialised");
 				RB.Masterpage.Siteusage.Acceptance();
@@ -290,7 +337,7 @@ RB.Masterpage = function() {
 
 		/* initialise the Focus on Content feature overload */
 		SP.SOD.executeOrDelayUntilScriptLoaded(function() {
-			if (window.console) { window.console.log('site.js() CORE.JS loaded'); }
+			if (window.console) { window.console.log('site.js(initialise FOC feature) >> CORE.JS loaded'); }
 			RB.Masterpage.OldSetFullScreenMode = window.SetFullScreenMode;
 			RB.Masterpage.OriginalContentBoxCss = document.getElementById('contentBox-x').getAttribute('class');
 
@@ -299,7 +346,7 @@ RB.Masterpage = function() {
 					RB.Masterpage.OldSetFullScreenMode(fEnableFullScreenMode);
 				}
 				var bIsFullScreenMode = window.HasCssClass(document.body, "ms-fullscreenmode");
-				if (bIsFullScreenMode) {
+				if (bIsFullScreenMode || (typeof(g_Buzz365NoLeftNav) !== 'undefined')) {
 					$('#sideNavBox-x').hide();
 					$('#contentBox-x').attr('class', 'pure-u-1');
 				} else {
