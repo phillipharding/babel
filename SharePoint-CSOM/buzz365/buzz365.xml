@@ -1,5 +1,5 @@
 <Configurations ResourcesPath=".\resources">
-	<Configuration Name="Masterpage" ID="0" Description="Provisions the **MINIMAL** set of assets for the Buzz365 Responsive Masterpages">
+	<Configuration Name="Masterpage" ID="0" Description="Provisions the **MINIMAL** set of assets (JS and CSS) for the Buzz365 Responsive Masterpages">
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
@@ -20,6 +20,7 @@
 							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
 						</File>
+
 						<Folder Url="css">
 							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
 						</Folder>
@@ -64,6 +65,8 @@
 							<File Path="css\jquery.sidr.dark.css" Url="jquery.sidr.dark.css" ReplaceContent="True" />
 							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
+							<File Path="css\fonts.css" Url="fonts.css" ReplaceContent="True" />
+							<File Path="css\kitedisplay.css" Url="kitedisplay.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 							<Folder Url="flick">
@@ -120,6 +123,8 @@
 							<File Path="js\knockout-3.2.0.debug.js" Url="knockout-3.2.0.debug.js" ReplaceContent="True" />
 							<File Path="js\jquery-ui-1.11.2.js" Url="jquery-ui-1.11.2.js" ReplaceContent="True" />
 							<File Path="js\jquery-ui-1.11.2.min.js" Url="jquery-ui-1.11.2.min.js" ReplaceContent="True" />
+							<File Path="js\moment-timezone-with-data-2010-2020.min.js" Url="moment-timezone-with-data-2010-2020.min.js" ReplaceContent="True" />
+							<File Path="js\moment-2.9.0.min.js" Url="moment-2.9.0.min.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">
 							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
@@ -127,6 +132,18 @@
 							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\flaticon.eot" Url="flaticon.eot" ReplaceContent="True" />
+							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
+							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
+							<File Path="fonts\flaticon.woff" Url="flaticon.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.eot" Url="kitedisplay-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.svg" Url="kitedisplay-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.ttf" Url="kitedisplay-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.woff" Url="kitedisplay-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.eot" Url="kitedisplaylight-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.svg" Url="kitedisplaylight-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.ttf" Url="kitedisplaylight-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.woff" Url="kitedisplaylight-webfont.woff" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="images">
 							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />
@@ -151,13 +168,15 @@
 							<File Path="images\rb-the-buzz.png" Url="rb-the-buzz.png" ReplaceContent="True" />
 							<File Path="images\rb.png" Url="rb.png" ReplaceContent="True" />
 							<File Path="images\share-price-arrow.png" Url="share-price-arrow.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-down.png" Url="share-price-arrow-down.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-hold.png" Url="share-price-arrow-hold.png" ReplaceContent="True" />
 							<File Path="images\share-price.png" Url="share-price.png" ReplaceContent="True" />
 							<File Path="images\twitter.png" Url="twitter.png" ReplaceContent="True" />
 							<File Path="images\user.png" Url="user.png" ReplaceContent="True" />
 							<File Path="images\white-arrow.png" Url="white-arrow.png" ReplaceContent="True" />
 							<File Path="images\widget-dummy.png" Url="widget-dummy.png" ReplaceContent="True" />
 							<File Path="images\yammer.png" Url="yammer.png" ReplaceContent="True" />
-							<File Path="images\780x295.gif" Url="780x295.gif" ReplaceContent="True" />
+							<File Path="images\yammer-logo-white.png" Url="yammer-logo-white.png" ReplaceContent="True" />
 						</Folder>
 					</Folder>
 				</Folder>
@@ -165,7 +184,7 @@
 		</Catalogs>
 	</Configuration>
 
-	<Configuration Name="Masterpage" ID="2" Description="Provisions **ONLY** the Buzz365 Masterpage files.">
+	<Configuration Name="Masterpage" ID="2" Description="Provisions **ONLY** the Buzz365 Masterpage (.master) files.">
 		<Catalogs>
 			<!-- Masterpage content type id = 0x01010500B45822D4B60B7B40A2BFCC0995839404 -->
 			<!-- Pagelayout content type id = 0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811 -->
@@ -205,6 +224,8 @@
 							<File Path="css\jquery.sidr.dark.css" Url="jquery.sidr.dark.css" ReplaceContent="True" />
 							<File Path="css\jquery.sidr.light.css" Url="jquery.sidr.light.css" ReplaceContent="True" />
 							<File Path="css\slimmenu.css" Url="slimmenu.css" ReplaceContent="True" />
+							<File Path="css\fonts.css" Url="fonts.css" ReplaceContent="True" />
+							<File Path="css\kitedisplay.css" Url="kitedisplay.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.css" Url="font-awesome.css" ReplaceContent="True" />
 							<File Path="css\font-awesome.min.css" Url="font-awesome.min.css" ReplaceContent="True" />
 							<Folder Url="flick">
@@ -261,6 +282,8 @@
 							<File Path="js\knockout-3.2.0.debug.js" Url="knockout-3.2.0.debug.js" ReplaceContent="True" />
 							<File Path="js\jquery-ui-1.11.2.js" Url="jquery-ui-1.11.2.js" ReplaceContent="True" />
 							<File Path="js\jquery-ui-1.11.2.min.js" Url="jquery-ui-1.11.2.min.js" ReplaceContent="True" />
+							<File Path="js\moment-timezone-with-data-2010-2020.min.js" Url="moment-timezone-with-data-2010-2020.min.js" ReplaceContent="True" />
+							<File Path="js\moment-2.9.0.min.js" Url="moment-2.9.0.min.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">
 							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
@@ -268,6 +291,18 @@
 							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\flaticon.eot" Url="flaticon.eot" ReplaceContent="True" />
+							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
+							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
+							<File Path="fonts\flaticon.woff" Url="flaticon.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.eot" Url="kitedisplay-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.svg" Url="kitedisplay-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.ttf" Url="kitedisplay-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplay-webfont.woff" Url="kitedisplay-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.eot" Url="kitedisplaylight-webfont.eot" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.svg" Url="kitedisplaylight-webfont.svg" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.ttf" Url="kitedisplaylight-webfont.ttf" ReplaceContent="True" />
+							<File Path="fonts\kitedisplaylight-webfont.woff" Url="kitedisplaylight-webfont.woff" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="images">
 							<File Path="images\365.png" Url="365.png" ReplaceContent="True" />
@@ -292,13 +327,15 @@
 							<File Path="images\rb-the-buzz.png" Url="rb-the-buzz.png" ReplaceContent="True" />
 							<File Path="images\rb.png" Url="rb.png" ReplaceContent="True" />
 							<File Path="images\share-price-arrow.png" Url="share-price-arrow.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-down.png" Url="share-price-arrow-down.png" ReplaceContent="True" />
+							<File Path="images\share-price-arrow-hold.png" Url="share-price-arrow-hold.png" ReplaceContent="True" />
 							<File Path="images\share-price.png" Url="share-price.png" ReplaceContent="True" />
 							<File Path="images\twitter.png" Url="twitter.png" ReplaceContent="True" />
 							<File Path="images\user.png" Url="user.png" ReplaceContent="True" />
 							<File Path="images\white-arrow.png" Url="white-arrow.png" ReplaceContent="True" />
 							<File Path="images\widget-dummy.png" Url="widget-dummy.png" ReplaceContent="True" />
 							<File Path="images\yammer.png" Url="yammer.png" ReplaceContent="True" />
-							<File Path="images\780x295.gif" Url="780x295.gif" ReplaceContent="True" />
+							<File Path="images\yammer-logo-white.png" Url="yammer-logo-white.png" ReplaceContent="True" />
 						</Folder>
 					</Folder>
 				</Folder>

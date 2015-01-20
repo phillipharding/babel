@@ -382,7 +382,7 @@ function Update-Web {
              Remove-CustomActions -CustomActionsXml $xml.RemoveUserCustomActions -Site $site -Web $web -ClientContext $ClientContext
         }
         if ($xml.Pages) {
-            Remove-PublishingPages -PageXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
+            Remove-PublishingPages -PagesXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
         }
 
         if ($xml.Lists) {
@@ -445,7 +445,7 @@ function Update-Web {
         }
 
         if ($xml.Pages) {
-            Update-PublishingPages -PageXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
+            Update-PublishingPages -PagesXml $xml.Pages -Site $site -Web $web -ClientContext $ClientContext
         }
 
         if ($xml.UserCustomActions) {

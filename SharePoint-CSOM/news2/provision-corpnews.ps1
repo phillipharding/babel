@@ -1,6 +1,7 @@
 ﻿<#
     Example command lines
 
+    .\provision-corpnews.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "2"
     .\provision-corpnews.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "0"
     .\provision-corpnews.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "0"
     .\provision-corpnews.ps1 -URL "http://pub.pdogs.local/" -CredentialLabel "OnPrem" -Configuration "1"
@@ -9,7 +10,8 @@
     -Configuration;
         "0" for provisioning to SPO w/Buzz365 Masterpage
         "1" for provisioning to On-Prem wo/Masterpage or with Dev Masterpage
-        "2" for Debug testing purposes - do not use
+        "2" for Global Corporate News webpart
+        "99" for Dev Debugging
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,

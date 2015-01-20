@@ -169,9 +169,18 @@ function Upload-File {
                 $propertyXml.Value = $propertyXml.Value -replace "~sitecollection", $ClientContext.Site.ServerRelativeUrl
                 $propertyXml.Value = $propertyXml.Value -replace "~site", $ClientContext.Web.ServerRelativeUrl
                 
+                if($propertyXml.Optional -and $propertyXml.Optional -match "true") {
+                    $field = $list.Fields | Where {$_.InternalName -eq $propertyXml.Name}
+                    if ($field -eq $null) {
+                        Write-Host "`t..Skipping optional property $($propertyXml.Name)" -ForegroundColor Green
+                        continue
+                    }
+                    Write-Host "`t..Not Skipping optional property $($field.Id)" -ForegroundColor Green
+                }
+
                 if($propertyXml.Type -and $propertyXml.Type -eq "TaxonomyField") {
                     Write-Host "`t..Setting TaxonomyField property $($propertyXml.Name) to $($propertyXml.Value)" -ForegroundColor Green
-                    $field = $list.Fields.GetByInternalNameOrTitle($propertyXml.Name)
+                    $field = $list.Fields | Where {$_.InternalName -eq $propertyXml.Name}
                     $taxField  = [SharePointClient.PSClientContext]::CastToTaxonomyField($clientContext, $field)
                     if ($propertyXml.Mult -and $propertyXml.Mult -match "true") {
                         $p = ($propertyXml.Value -split ";") -split "\|"
@@ -344,12 +353,12 @@ function Add-Files {
                 Write-Host "`tSOURCE FILE [$($fileXml.Path)]"
                 $file = Upload-File -List $List -Folder $Folder -FileXml $fileXml -ResourcesPath $ResourcesPath -ClientContext $clientContext -RemoteContext $RemoteContext
 
-                Update-WebParts -PageXml $fileXml -List $List -Web $List.ParentWeb -ClientContext $ClientContext
+                Update-WebParts -PageXml $fileXml -List $List -Folder $Folder -Web $List.ParentWeb -ClientContext $ClientContext
             } elseif ($fileXml.Url -and $fileXml.Url -ne "") {
                 Write-Host "`tSOURCE FILE [$($fileXml.Url)]"
                 $file = Get-File "$($Folder.ServerRelativeUrl)/$($fileXml.Url)" $List.ParentWeb $ClientContext
                 if ($file -ne $null -and $file.Exists) {
-                    Update-WebParts -PageXml $fileXml -List $List -Web $List.ParentWeb -ClientContext $ClientContext
+                    Update-WebParts -PageXml $fileXml -List $List -Folder $Folder -Web $List.ParentWeb -ClientContext $ClientContext
                 }
             }
         }
