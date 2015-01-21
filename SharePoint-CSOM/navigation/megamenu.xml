@@ -2,19 +2,20 @@
 
 	<Configuration Name="MegaMenu" ID="0" Description="This configuration creates or updates the MegaMenu Taxonomy Termset.">
 		<TermStore Languages="">
-			<!-- use existing term group -->
 			<TermGroup Name="Custom Navigation" ID="{5e3257a2-3960-42dd-9f1f-8528b0484c25}">
-
 				<TermSet Name="Megamenu-0" ID="{966c85b8-5344-4350-a22b-79335e3906c7}" Language="1033" Navigation="True" Tagging="False" Open="False">
 					
-					<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB" NavigateUrl="" Tagging="False">
-						<Property Name="_Sys_Nav_HoverText" Value="about rb" Type="Local" />
+					<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB megamenu rootnode" NavigateUrl="" Tagging="False">
+						<Property Name="_Sys_Nav_HoverText" Value="about rb hovertext" Type="Local" />
+						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
+						<Property Name="_Rb_Nav_CssClass" Value="pink" Type="Local" />
 						
 						<Term Name="{ParentTermName}-Column1" ID="" Tagging="False">
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
-							<Term Name="About Us" ID="" Language="1033" Description="About Us" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+							<Term Name="About Us" ID="" Language="1033" Description="About Us" NavigateUrl="http://google.com?q=aboutus" Tagging="False">
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Term Name="Who We Are" ID="" Language="1033" Description="who are we?" NavigateUrl="http://google.com?q=whoarewe" Tagging="False" />
 								<Term Name="Global Company Factsheet" ID="" Language="1033" Description="factsheet" NavigateUrl="http://google.com?q=factsheet" Tagging="False" />
 								<Term Name="Latest Corporate Presentation" ID="" Language="1033" Description="the presso?" NavigateUrl="http://google.com?q=presso" Tagging="False" />
@@ -22,15 +23,16 @@
 						</Term>
 						<Term Name="{ParentTermName}-Column2" ID="" Tagging="False">
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
-							<Term Name="Better Business" ID="" Language="1033" Description="Better Business" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+							<Term Name="Better Business" ID="" Language="1033" Description="Better Business" NavigateUrl="http://google.com?q=betterbusiness" Tagging="False">
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Term Name="Save the Children" ID="" Language="1033" Description="save the children?" NavigateUrl="http://google.com?q=savethechildren" Tagging="False" />
 								<Term Name="Healthier Kids, Healthier Homes" ID="" Language="1033" Description="healthier kids" NavigateUrl="http://google.com?q=healthier" Tagging="False" />
 								<Term Name="Healthier Communities" ID="" Language="1033" Description="communities?" NavigateUrl="http://google.com?q=Communities" Tagging="False" />
 							</Term>
-							<Term Name="Leadership Team" ID="" Language="1033" Description="leadership team" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+							<Term Name="Leadership Team" ID="" Language="1033" Description="leadership team" NavigateUrl="http://google.com?q=leadershipteam" Tagging="False">
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Term Name="Board of Directors" ID="" Language="1033" Description="directors?" NavigateUrl="http://google.com?q=directors" Tagging="False" />
 								<Term Name="Executive Commiteee" ID="" Language="1033" Description="executive committee" NavigateUrl="http://google.com?q=committee" Tagging="False" />
 								<Term Name="Top 40 Biographies and Assistants" ID="" Language="1033" Description="top40?" NavigateUrl="http://google.com?q=top40" Tagging="False" />
@@ -38,56 +40,65 @@
 						</Term>
 						<Term Name="{ParentTermName}-Column3" ID="" Tagging="False">
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
 							<Term Name="Speedy Guide" ID="" Language="1033" Description="speedy guide" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 							</Term>
 							<Term Name="RB Addresses" ID="" Language="1033" Description="rb addresses" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 							</Term>
 						</Term>
 					</Term>
 
-					<Term Name="NEWS_" ID="" Language="1033" Description="News" NavigateUrl="" Tagging="False">
-						<Property Name="_Sys_Nav_HoverText" Value="here is the news" Type="Local" />
+					<Term Name="NEWS_" ID="" Language="1033" Description="News megamenu rootnode" NavigateUrl="" Tagging="False">
+						<Property Name="_Sys_Nav_HoverText" Value="here is the news hovertext" Type="Local" />
+						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
+						<Property Name="_Rb_Nav_CssClass" Value="blue" Type="Local" />
 
 						<Term Name="{ParentTermName}-Column1" ID="" Tagging="False">
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
 							<Term Name="News" ID="" Language="1033" Description="news" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column2" ID="" Tagging="False">
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
 							<Term Name="Investors and Media" ID="" Language="1033" Description="investors and media" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 							</Term>
 						</Term>
 					</Term>
 
-					<Term Name="FUNCTIONS" ID="" Language="1033" Description="Global Functions" NavigateUrl="" Tagging="False">
-						<Property Name="_Sys_Nav_HoverText" Value="get your functions here" Type="Local" />
+					<Term Name="FUNCTIONS" ID="" Language="1033" Description="Global Functions megamenu rootnode" NavigateUrl="" Tagging="False">
+						<Property Name="_Sys_Nav_HoverText" Value="get your functions here hovertext" Type="Local" />
+						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
+						<Property Name="_Rb_Nav_CssClass" Value="yellow" Type="Local" />
 					</Term>
 
-					<Term Name="IMEx" ID="" Language="1033" Description="IMEx" NavigateUrl="" Tagging="False">
-						<Property Name="_Sys_Nav_HoverText" Value="whatever is this IMEx" Type="Local" />
+					<Term Name="IMEx" ID="" Language="1033" Description="IMEx megamenu rootnode" NavigateUrl="" Tagging="False">
+						<Property Name="_Sys_Nav_HoverText" Value="whatever is this IMEx hovertext" Type="Local" />
+						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
+						<Property Name="_Rb_Nav_CssClass" Value="green" Type="Local" />
 					</Term>
 
-					<Term Name="MY RB" ID="" Language="1033" Description="My RB" NavigateUrl="https://myRB" Tagging="False">
-						<Property Name="_Sys_Nav_HoverText" Value="yourRB" Type="Local" />
+					<Term Name="MY RB" ID="" Language="1033" Description="My RB megamenu rootnode" NavigateUrl="https://myRB" Tagging="False">
+						<Property Name="_Sys_Nav_HoverText" Value="yourRB hovertext" Type="Local" />
+						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
+						<Property Name="_Rb_Nav_CssClass" Value="orange" Type="Local" />
 					</Term>
 				</TermSet>
 			</TermGroup>
 		</TermStore>
 	</Configuration>
 
-	<Configuration Name="MegaMenu" ID="1" Description="TEST.">
+	<Configuration Name="MegaMenu" ID="1" Description="TEST">
 		<TermStore Languages="">
-			<!-- use existing term group -->
 			<TermGroup Name="Custom Navigation" ID="{5e3257a2-3960-42dd-9f1f-8528b0484c25}">
-
 				<TermSet Name="Megamenu-0" ID="{966c85b8-5344-4350-a22b-79335e3906c7}" Language="1033" Navigation="True" Tagging="False" Open="False">
 					
 					<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB" NavigateUrl="http://google.com" Tagging="False">
@@ -97,18 +108,18 @@
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
 
 							<Term Name="About Us" ID="" Language="1033" Description="about us" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 
 								<Term Name="Who We Are" ID="" Language="1033" Description="who are we?" NavigateUrl="http://google.com?q=whoarewe" Tagging="False" />
 								<Term Name="Global Company Factsheet" ID="" Language="1033" Description="factsheet" NavigateUrl="http://google.com?q=factsheet" Tagging="False" />
 								<Term Name="Latest Corporate Presentation" ID="" Language="1033" Description="the presso?" NavigateUrl="http://google.com?q=presso" Tagging="False" />
 							</Term>
 							<Term Name="Better Business" ID="" Language="1033" Description="better business" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 
 							</Term>
 							<Term Name="Leadership Team" ID="" Language="1033" Description="leadership team" NavigateUrl="" Tagging="False">
-								<Property Name="_Rb_Nav_Type" Value="Heading" Type="Local" />
+								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="hover leadership team" Type="Local" />
 
 								<Term Name="Null Link" ID="" Language="1033" Description="null link?" NavigateUrl="" Tagging="False" />
