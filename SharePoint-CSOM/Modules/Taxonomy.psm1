@@ -96,6 +96,7 @@ function Add-TermSet {
         [parameter(ValueFromPipelineByPropertyName = $true)][bool]$Tagging = $true,
         [parameter(ValueFromPipelineByPropertyName = $true)][bool]$Navigation = $false,
         [parameter(ValueFromPipelineByPropertyName = $true)][bool]$Open = $false,
+        [parameter(ValueFromPipelineByPropertyName = $true)][string]$Desc = "",
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.Taxonomy.TermGroup]$TermGroup,
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
@@ -109,7 +110,8 @@ function Add-TermSet {
             $termSet.IsAvailableForTagging = $Tagging
             $termSet.IsOpenForTermCreation = $Open
         }
-
+        $termSet.Description = $Desc
+        
         $TermGroup.TermStore.CommitAll()
         $ClientContext.Load($termSet)
         $ClientContext.ExecuteQuery()
@@ -348,6 +350,10 @@ function Update-Taxonomy {
                 $termGroup = Add-TermGroup $termGroupXml.Name $tgid $defaultSiteCollectionTermStore $ClientContext
                 Write-Host "Created TermGroup: $($termGroup.Name)..." -ForegroundColor Green
             }
+            if ($termGroupXml.Description) {
+                $termGroup.Description = $termGroupXml.Description
+                $defaultSiteCollectionTermStore.CommitAll()
+            }
             Write-Host "Updating TermGroup: $($termGroup.Name)..." -ForegroundColor Green
 
             foreach($termSetXml in $termGroupXml.TermSet) {
@@ -359,7 +365,8 @@ function Update-Taxonomy {
                     $tagging = $(if ($termSetXml.Tagging -eq $null -or $termSetXml.Tagging -eq "") { $true } else { [bool]::Parse($termSetXml.Tagging) })
                     $navigation = $(if ($termSetXml.Navigation -eq $null -or $termSetXml.Navigation -eq "") { $false } else { [bool]::Parse($termSetXml.Navigation) })
                     $open = $(if ($termSetXml.Open -eq $null -or $termSetXml.Open -eq "") { $false } else { [bool]::Parse($termSetXml.Open) })
-                    $termSet = Add-TermSet $termSetXml.Name $tslcid $tsid $tagging $navigation $open $termGroup $ClientContext
+                    $desc = $(if ($termSetXml.Description -eq $null -or $termSetXml.Description -eq "") { "" } else { $termSetXml.Description })
+                    $termSet = Add-TermSet $termSetXml.Name $tslcid $tsid $tagging $navigation $open $desc $termGroup $ClientContext
                     Write-Host "Created TermSet: $($termSet.Name)... Language: $tslcid, ID: $tsid" -ForegroundColor Green
                     $termSet = Get-TermSet $termSetXml.Name $termGroup $ClientContext
                 }

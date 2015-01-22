@@ -341,6 +341,9 @@ footer .bottom-strap a:active {
   cursor: default;
   z-index: 500;
 }
+.nav.building {
+  
+}
 
 .nav > li {
   display: block;
@@ -408,8 +411,11 @@ footer .bottom-strap a:active {
   width: 10%;
 }
 
-.nav .nav-column h3 {
-  margin: 0px 0px 5px 0px;
+.nav .nav-column h3,
+.nav .nav-column h3 a,
+.nav .nav-column h3 a:link,
+.nav .nav-column h3 a:visited {
+  margin: 10px 0px 5px 0px;
   line-height: 18px;
   color: #FFF;
   font-weight: bold;
@@ -419,6 +425,15 @@ footer .bottom-strap a:active {
   display: block;
   width: 100%;
   text-transform: uppercase;
+}
+.nav .nav-column h3 a,
+.nav .nav-column h3 a:link,
+.nav .nav-column h3 a:visited {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.nav .nav-column h3:first-child {
+  margin-top: 0;
 }
 
 .nav .nav-column li {

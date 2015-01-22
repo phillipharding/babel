@@ -107,34 +107,42 @@ RB.Masterpage.LocalStorage.IsSupported = function() {
 	}
 }
 
-RB.Masterpage.TaxonomyMegamenu = function(termSetId, cacheDurationHours) {
+RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheDurationHours) {
+	if (typeof(cacheDurationHours) === 'undefined') cacheDurationHours = 24*60*60;
+	else if (typeof(cacheDurationHours) === 'number' && cacheDurationHours >= 0) cacheDurationHours = cacheDurationHours*60*60;
+	else cacheDurationHours = -1;
+
 	var self = this;
 	self.Id = termSetId.replace(/-/gi,'');
-	self.cache = new RB.Masterpage.LocalStorage('RB$Masterpage$Megamenu-'+self.Id, (cacheDurationHours || 24)*60*60, ['Markup']);
+	self.cache = cacheDurationHours >= 0 
+						? new RB.Masterpage.LocalStorage('RB$Masterpage$Megamenu-'+self.Id, cacheDurationHours, ['Markup']) 
+						: null;
 	self.module = {
-			Tag: self.Id,
-			getContext: function() { return self; },
-			initialise: initialise.bind(self),
-			render: renderTerms.bind(self),
-			isInitialised: new $.Deferred(),
-			navigationNodes: []
-		};
+		Tag: self.Id,
+		getContext: function() { return self; },
+		initialise: initialise.bind(self),
+		render: renderTerms.bind(self),
+		isInitialised: new $.Deferred(),
+		nodes: []
+	};
+	RB.Masterpage.TaxonomyDatastore.Instances = RB.Masterpage.TaxonomyDatastore.Instances || [];
+	RB.Masterpage.TaxonomyDatastore.Instances.push(this);
 	return self.module;
 
 	function initialise() {
-		if (!this.cache.isExpired()) {
-			if (window.console) { console.log('Megamenu>> ['+this.Id+'] datasource being served from cache'); }
+		if (this.cache && !this.cache.isExpired()) {
+			if (window.console) { console.log('TaxonomyDatastore>> ['+this.Id+'] datasource being served from cache'); }
 			var cached = JSON.parse(this.cache.getValue());
 			this.module.Tag = cached.module.Tag;
-			this.module.navigationNodes = cached.module.navigationNodes;
-			this.module.isInitialised.resolve(this.module, this);
+			this.module.nodes = cached.module.nodes;
+			this.module.isInitialised.resolve(this);
 			return;
 		}
 		SP.SOD.loadMultiple(['sp.js'], function () {
-      	if (window.console) { console.log('Megamenu>> SP.js loaded'); }
+      	if (window.console) { console.log('TaxonomyDatastore>> SP.js loaded'); }
          SP.SOD.registerSod('sp.taxonomy.js', SP.Utilities.Utility.getLayoutsPageUrl('sp.taxonomy.js'));
          SP.SOD.loadMultiple(['sp.taxonomy.js'], function () {
-         	if (window.console) { console.log('Megamenu>> sp.taxonomy.js loaded'); }
+         	if (window.console) { console.log('TaxonomyDatastore>> sp.taxonomy.js loaded'); }
 				var 
 					ctx = SP.ClientContext.get_current(),
 					taxonomySession = SP.Taxonomy.TaxonomySession.getTaxonomySession(ctx),
@@ -148,6 +156,8 @@ RB.Masterpage.TaxonomyMegamenu = function(termSetId, cacheDurationHours) {
 					buildTermNodeTreeFromFlatList.call(self, terms, termSet);
 				}, function (sender, args) {
 					/* handle error */
+					var m = args.get_message();
+					throw new Error(String.format("TaxonomyDatastore>> [{1}] error: {0}", m, self.Id));
 				});
          });
       });
@@ -194,16 +204,16 @@ RB.Masterpage.TaxonomyMegamenu = function(termSetId, cacheDurationHours) {
 					if (!currentTermNodeType.match(/column/gi)) {
 						if (currentTermNodeType === 'Section') {
 							if (currentTermProperties["_Sys_Nav_SimpleLinkUrl"]) {
-								term.navigateUrl = currentTermProperties["_Sys_Nav_SimpleLinkUrl"] || '#';
+								term.navigateUrl = currentTermProperties["_Sys_Nav_SimpleLinkUrl"] || '';
 								term.hoverText = currentTermProperties["_Sys_Nav_HoverText"] || '';
 							}
 						} else if (currentTermNodeType === 'Root') {
-							term.navigateUrl = currentTermProperties["_Sys_Nav_SimpleLinkUrl"] || '#';
+							term.navigateUrl = currentTermProperties["_Sys_Nav_SimpleLinkUrl"] || '';
 							term.hoverText = currentTermProperties["_Sys_Nav_HoverText"] || '';
 						} else {
 							/*term.term = currentTerm;*/
 							term.description = currentTerm.get_description() || '';
-							term.navigateUrl = currentTermProperties["_Sys_Nav_SimpleLinkUrl"] || '#';
+							term.navigateUrl = currentTermProperties["_Sys_Nav_SimpleLinkUrl"] || '';
 							term.hoverText = currentTermProperties["_Sys_Nav_HoverText"] || '';
 						}
 					}
@@ -225,11 +235,13 @@ RB.Masterpage.TaxonomyMegamenu = function(termSetId, cacheDurationHours) {
 	   }
 
 		var n = applySortOrdering(node);
-	   this.module.navigationNodes = n && n.childNodes ? n.childNodes : [];
+	   this.module.nodes = n && n.childNodes ? n.childNodes : [];
 	   /* cache the built data tree */
-	   this.cache.setValue(JSON.stringify(this));
+	   if (this.cache) {
+	   	this.cache.setValue(JSON.stringify(this));
+		}
 	   /* signal the datasource is initialised */
-	   this.module.isInitialised.resolve(this.module, this);
+	   this.module.isInitialised.resolve(this);
 	}
 
 	function applySortOrdering(nodeTree) {
@@ -271,46 +283,156 @@ RB.Masterpage.TaxonomyMegamenu = function(termSetId, cacheDurationHours) {
 		return nodeTree;
 	}
 
-	function renderTerms(domContainer) {
-		var isCached = this.cache.hasValue('Markup');
+	function renderTerms(domContainer, renderer) {
+		if (typeof(domContainer) === 'undefined' || !domContainer) {
+			throw new Error('TaxonomyDatastore>> ['+this.Id+'] no domContainer parameter supplied!');
+		}
+		var isCached = this.cache && this.cache.hasValue('Markup');
 		if (window.console) {
 			if (isCached) {
-				window.console.log('Megamenu>> ['+this.Id+'] Markup being served from cache');
+				window.console.log('TaxonomyDatastore>> ['+this.Id+'] Markup being served from cache');
 			}
-			window.console.log('Megamenu>> ['+this.Id+'] Render ['+this.module.Tag+'] @ #'+domContainer);
+			window.console.log('TaxonomyDatastore>> render ['+this.Id+']['+this.module.Tag+'] at '+domContainer);
+		}
+
+		var $domContainer = null;
+		if (typeof(domContainer) === 'string') {
+			$domContainer = $(domContainer);
+		} else if (typeof(domContainer) === 'object' && domContainer && domContainer.html) {
+			/* assume domContainer is a jQuery object */
+			$domContainer = domContainer;
 		}
 
 		var markup = isCached ? [this.cache.getValue('Markup')] : [];
 		if (!isCached || !markup.length) {
+			/* invalid or no cached markup - build it using the supplied renderer */
 			isCached = false;
-			markup = ['<h1>THIS MARKUP WILL BE CACHED</h1><ul>'];
-			for(var i = 0; i < this.module.navigationNodes.length; i++) {
-				if (window.console) { window.console.log('Megamenu>> '+this.module.navigationNodes[i].title+' <<'); }
-				markup.push('<li><h2>'+this.module.navigationNodes[i].title+'</h2></li>');
+			markup = [];
+
+			if (renderer && (typeof(renderer) === 'object') && renderer.renderAsString && typeof(renderer.renderAsString) === 'function') {
+				var m = renderer.renderAsString(this.module.nodes, $domContainer);
+				if (m && m.length)
+					markup.push(m);
+			} else {
+				throw new Error("TaxonomyDatastore>> No Renderer supplied, or Renderer supplied does not have a 'renderAsString(...)' method!");
 			}
-			markup.push('</ul>');
 		}
 
 		markup = markup.join('');
-		$('#'+domContainer).html(markup);
+		if ($domContainer && markup) {
+			$domContainer.html(markup);
+		}
 
-		if (!isCached) {
+		if (!isCached && this.cache && markup && markup.length) {
 			this.cache.setValue(markup, 'Markup');
 		}
 	}
+}
 
-};
+function SimpleMenuRender(taxonomyDs) {
+	this.taxonomyDs = taxonomyDs && typeof(taxonomyDs) === 'object' ? taxonomyDs : null;
+	return { renderAsString: renderMenuAsString.bind(this) }
 
+	function renderMenuAsString(datasourceNodes, $domContainer) {
+		var markup = ["<h1 id='"+this.taxonomyDs.module.Tag+"'>SAMPLE MENU MARKUP FOR MENU ["+this.taxonomyDs.module.Tag+"]</h1></ul>"];
+		for(var i = 0; i < datasourceNodes.length; i++) {
+			if (window.console) { window.console.log('SimpleMenuRender>> '+datasourceNodes[i].title+' <<'); }
+			markup.push('<li><h2>'+datasourceNodes[i].title+'</h2></li>');
+		}
+		markup.push('</ul>');
+
+		return markup.join('');
+	}
+}
+
+function MegaMenuRender(taxonomyDs) {
+	this.taxonomyDs = taxonomyDs && typeof(taxonomyDs) === 'object' ? taxonomyDs : null;
+	return { renderAsString: renderMenuAsString.bind(this) }
+
+	function renderMenuAsString(datasourceNodes, $domContainer) {
+		var markup = ["<nav id='"+this.taxonomyDs.module.Tag+"'><ul class='nav'>"];
+		for(var i = 0; i < datasourceNodes.length; i++) {
+			markup.push(renderNode(datasourceNodes[i]));
+		}
+		markup.push('</ul></nav>');
+		return markup.join('');
+	}
+
+	function renderNode(node) {
+		var markup = [];
+		node.title = node.title.replace(/[_]*$/gi, '').replace(/ and /gi, ' & ');
+		if (window.console) { window.console.log('MegaMenuRender>> render node: '+node.title+' <<'); }
+		switch (node.nodeType) {
+			case 'Root': {
+				markup.push("<li>");
+				markup.push(String.format("<a class='{3}' href='{2}' id='{0}' title='{4}'>{1}</a>", node.termId, node.title, node.navigateUrl || 'javascript:;', node.cssClass, node.hoverText));
+				if (node.childNodes && node.childNodes.length) {
+					/* has child Columns, iterate and render each column */
+					markup.push("<div>");
+					for(var cx = 0; cx < node.childNodes.length; cx++) {
+						markup.push(renderNode(node.childNodes[cx]));
+					}
+					markup.push("</div>");
+				}
+				markup.push("</li>");
+				break;
+			}
+			case 'Column': {
+				markup.push(String.format("<div class='{1}' id='{0}'>", node.termId, node.cssClass));
+				if (node.childNodes && node.childNodes.length) {
+					/* has child Sections, iterate and render each section */
+					for(var sx = 0; sx < node.childNodes.length; sx++) {
+						markup.push(renderNode(node.childNodes[sx]));
+					}
+				}
+				markup.push("</div>");
+				break;
+			}
+			case 'Section': {
+				markup.push("<h3>");
+				if (node.navigateUrl && node.navigateUrl.length) {
+					markup.push(String.format("<a class='{3}' href='{2}' id='{0}' title='{4}'>{1}</a>", node.termId, node.title, node.navigateUrl, node.cssClass, node.hoverText));
+				} else {
+					markup.push(String.format("{0}", node.title));
+				}
+				markup.push("</h3><ul>");
+				if (node.childNodes && node.childNodes.length) {
+					/* has child Links, iterate and render each link */
+					for(var lx = 0; lx < node.childNodes.length; lx++) {
+						markup.push(renderNode(node.childNodes[lx]));
+					}
+				}
+				markup.push("</ul>");
+				break;
+			}
+			default: {
+				markup.push(String.format("<li><a class='{3}' href='{2}' id='{0}' title='{4}'>{1}</a></li>", node.termId, node.title, node.navigateUrl || 'javascript:;', node.cssClass, node.hoverText));
+				break;
+			}
+		}
+		return markup.join('');
+	}
+}
 
 $(function() {
-	var mm = new RB.Masterpage.TaxonomyMegamenu('966c85b8-5344-4350-a22b-79335e3906c7');
-	RB.Masterpage.TaxonomyMegamenu.Instances = RB.Masterpage.TaxonomyMegamenu.Instances || [];
-	RB.Masterpage.TaxonomyMegamenu.Instances.push(mm);
-	mm.initialise();
-	mm.isInitialised.done(function(m, ctx) {
-		if (window.console) { console.log('Megamenu ['+ctx.Id+'] is ready to render!!'); }
-		m.render('mega-container');
-	});
+	var DurStartTime = new Date();
+
+	function OnMenuRendered(taxonomyDs) {
+		if (window.console) { console.log('TaxonomyDatastore ['+taxonomyDs.Id+'] is ready to render!!'); }
+		taxonomyDs.module.render($container, new MegaMenuRender(taxonomyDs));
+		$container.css({opacity:'1'});
+
+		var DurEndTime = new Date(), elapse = (DurEndTime.getTime()) - (DurStartTime.getTime());
+		if (window.console) { console.log('TaxonomyDatastore ['+taxonomyDs.Id+'] initialisation and render time: ' + (elapse)+'ms'); }
+	}
+
+	var
+		$container = $('#main-menu').css({opacity:'.2'}),
+		sideTermsetId = '18278814-4c62-4a77-8478-723d27f4369f', megaTermsetId = '966c85b8-5344-4350-a22b-79335e3906c7', 
+		cacheDurationHours = 24,
+		taxDs = new RB.Masterpage.TaxonomyDatastore(megaTermsetId, cacheDurationHours);
+	taxDs.initialise();
+	taxDs.isInitialised.done(OnMenuRendered);
 });
 
 })(window,jQuery);
