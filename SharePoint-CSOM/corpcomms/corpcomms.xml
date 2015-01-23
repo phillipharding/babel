@@ -68,8 +68,8 @@
 				</Features>
 
 				<PropertyBag>
-					<PropertyBagValue Key="RB-WebTemplate" Value="CORPCOMMS" />
-					<PropertyBagValue Key="RB-WebTemplateVersion" Value="1-0-0-0" />
+					<PropertyBagValue Key="RbWebTemplate" Value="CORPCOMMS" />
+					<PropertyBagValue Key="RbWebTemplateVersion" Value="1-0-0-0" />
 				</PropertyBag>
 
 				<Lists>

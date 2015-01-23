@@ -21,6 +21,7 @@ RB.Masterpage = function() {
 			LoadKnockout: RB$Masterpage$LoadKnockout,
 			LoadSPServices: RB$Masterpage$LoadSPServices,
 			IsValidType: RB$Masterpage$IsValidType,
+			Log: RB$Masterpage$Log,
 			LoadResourceFromTenantRoot: RB$Masterpage$LoadResourceFromTenantRoot,
 			LoadResourceFromSiteCollection: RB$Masterpage$LoadResourceFromSiteCollection,
 			LoadAllResources: RB$Masterpage$LoadAllResources,
@@ -75,7 +76,8 @@ RB.Masterpage = function() {
 				var newData = {};
 				for(var k in response) {
 					if (k.match(/^odata./g)) continue;
-					newData[k] = response[k];
+					var k1 = k.replace(/_x005f_/gi, '_').replace(/_x0020_/gi, ' ').replace(/_x002d_/gi, '-');
+					newData[k1] = response[k];
 				}
 				_wap.resolve(newData);
 			})
@@ -110,8 +112,8 @@ RB.Masterpage = function() {
 			_jqui = $.when.apply($, deps)
 						.done(function(jquijs, jquicss) {
 							if (window.console) {
-								window.console.log('>> RB$Masterpage$LoadJQueryUI ['+jquijs+']');
-								window.console.log('>> RB$Masterpage$LoadJQueryUI ['+jquicss+']');
+								window.console.log('Masterpage>> RB$Masterpage$LoadJQueryUI ['+jquijs+']');
+								window.console.log('Masterpage>> RB$Masterpage$LoadJQueryUI ['+jquicss+']');
 							}
 						});
 		}
@@ -133,8 +135,8 @@ RB.Masterpage = function() {
 			_bxs = $.when.apply($, deps)
 						.done(function(js, css) {
 							if (window.console) {
-								window.console.log('>> RB$Masterpage$LoadBxSlider ['+js+']');
-								window.console.log('>> RB$Masterpage$LoadBxSlider ['+css+']');
+								window.console.log('Masterpage>> RB$Masterpage$LoadBxSlider ['+js+']');
+								window.console.log('Masterpage>> RB$Masterpage$LoadBxSlider ['+css+']');
 							}
 						});
 		}
@@ -177,6 +179,13 @@ RB.Masterpage = function() {
 		return typeof r !== 'undefined';
 	}
 
+	function RB$Masterpage$Log(message) {
+		if (message && message.length && window.console && window.console.log) {
+			window.console.log(message);
+		}
+		return;
+	}
+
 	function RB$Masterpage$LoadResourceFromTenantRoot(url, afterUi) {
 		var
 			m = _spPageContextInfo.siteAbsoluteUrl.match(/(http[s]?:\/\/[^\/]*)/gi),
@@ -201,7 +210,7 @@ RB.Masterpage = function() {
 					.done(function() {
 						if (window.console) {
 							for(var $i=0; $i < arguments.length; $i++){
-								window.console.log('>> RB$Masterpage$LoadAllResources ['+arguments[$i]+']');
+								window.console.log('Masterpage>> RB$Masterpage$LoadAllResources ['+arguments[$i]+']');
 							}
 						}
 					});
@@ -254,110 +263,115 @@ RB.Masterpage = function() {
 }();
 
 
-	function mobileSearch(turnOn) {
-		if (typeof(turnOn) === 'undefined') {
-			turnOn = !($('#mobile-search').hasClass('active'));
-		}
-
-		if (turnOn) {
-			$('#mobile-search').addClass('active');
-			$('#mobile-header-search-box').addClass('active');
-		} else {
-			$('#mobile-search').removeClass('active');
-			$('#mobile-header-search-box').removeClass('active');
-		}
+function mobileSearch(turnOn) {
+	if (typeof(turnOn) === 'undefined') {
+		turnOn = !($('#mobile-search').hasClass('active'));
 	}
 
-	$(function() {
-		JSRequest.EnsureSetup();
-		RB.Masterpage.Initialise();
+	if (turnOn) {
+		$('#mobile-search').addClass('active');
+		$('#mobile-header-search-box').addClass('active');
+	} else {
+		$('#mobile-search').removeClass('active');
+		$('#mobile-header-search-box').removeClass('active');
+	}
+}
 
-		/* setup mobile search button */
-		$('#mobile-search').click(function(e) {
-			e.preventDefault();
-			mobileSearch();
-		});
-		/**/
+$(function() {
+	JSRequest.EnsureSetup();
+	RB.Masterpage.Initialise();
 
-		/* load the megamenu module */
-		RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/megamenu.js")
-			.done(function() {
-				if (window.console) window.console.log(">>MEGAMENU.JS loaded");
-				
-				$(window).resize(function() {
-					RB.Masterpage.Megamenu.Close();
-					if (typeof(CalloutManager)!=='undefined') CalloutManager.closeAll();
-				});
-
-				RB.Masterpage.Megamenu.EnsureSetup();
-			});
-
-		/* synchronised loading/initialisation of the siteusage and userprofile modules */
-		var
-			upsuModulesLoaded = [
-				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/siteusage.js"),
-				RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/userprofile.js")
-			];
-		$.when.apply($, upsuModulesLoaded)
-			.done(function() {
-				if (window.console) window.console.log(">>USERPROFILE.JS and SITEUSAGE.JS loaded");
-				var waitCount = 0;
-				function deferAndWaitForModuleExecution() {
-					/* this is an edge case:
-						while the scripts have been loaded they '**may**' not have executed yet, so we 
-						may have to wait for this to happen before we can call the module init functions.
-					*/
-					if (!RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup') || !RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
-						waitCount++;
-						if (waitCount > 10) 
-							RB.Masterpage.UpSuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
-						else {
-							if (window.console) window.console.log(">>deferAndWaitForModuleExecution("+waitCount+") for USERPROFILE.JS and SITEUSAGE.JS initialisation");
-							setTimeout(deferAndWaitForModuleExecution, 200);
-						}
-						return;
-					}
-					var moduleInits = [
-						RB.Masterpage.Siteusage.EnsureSetup(),
-						RB.Masterpage.Userprofile.EnsureSetup()
-					];
-					$.when.apply($, moduleInits)
-						.done(function() {
-							RB.Masterpage.UpSuModulesInitialised.resolve();
-						});
-				}
-				deferAndWaitForModuleExecution();
-			});
-		RB.Masterpage.UpSuModulesInitialised
-			.done(function() {
-				if (window.console) window.console.log(">>USERPROFILE.JS and SITEUSAGE.JS initialised");
-				RB.Masterpage.Siteusage.Acceptance();
-			});
-		/**/
-
-		/* initialise the Focus on Content feature overload */
-		SP.SOD.executeOrDelayUntilScriptLoaded(function() {
-			if (window.console) { window.console.log('site.js(initialise FOC feature) >> CORE.JS loaded'); }
-			RB.Masterpage.OldSetFullScreenMode = window.SetFullScreenMode;
-			RB.Masterpage.OriginalContentBoxCss = document.getElementById('contentBox-x').getAttribute('class');
-
-			window.SetFullScreenMode = function RB_Masterpage$SetFullScreenMode(fEnableFullScreenMode) {
-				if (typeof fEnableFullScreenMode !== 'undefined') {
-					RB.Masterpage.OldSetFullScreenMode(fEnableFullScreenMode);
-				}
-				var bIsFullScreenMode = window.HasCssClass(document.body, "ms-fullscreenmode");
-				if (bIsFullScreenMode || (typeof(g_Buzz365NoLeftNav) !== 'undefined')) {
-					$('#sideNavBox-x').hide();
-					$('#contentBox-x').attr('class', 'pure-u-1');
-				} else {
-					$('#contentBox-x').attr('class', RB.Masterpage.OriginalContentBoxCss);
-					$('#sideNavBox-x').show();
-				}		
-			}
-			window.SetFullScreenMode();
-      }, 'core.js');
-
+	/* start: setup mobile search button */
+	$('#mobile-search').click(function(e) {
+		e.preventDefault();
+		mobileSearch();
 	});
+	/* end: setup mobile search button */
+
+	/* start: initialise the Megamenu */
+	if (RB.Masterpage.IsValidType("RB.Masterpage.Megamenu")) {
+		if (window.console) {
+			RB.Masterpage.Log("Masterpage>>RB.Masterpage.Megamenu (megamenu.js) is loaded");
+			RB.Masterpage.Log("Masterpage>>RB.Masterpage.TaxonomyDatastore (megamenu.js) is loaded");
+			RB.Masterpage.Log("Masterpage>>RB.Masterpage.LocalStorage (megamenu.js) is loaded");
+		}
+		
+		RB.Masterpage.Megamenu.EnsureSetup();
+		$(window).resize(function() {
+			RB.Masterpage.Megamenu.Close();
+			if (typeof(CalloutManager)!=='undefined') CalloutManager.closeAll();
+		});
+	} else {
+		throw new Error("Masterpage>>RB.Masterpage.Megamenu (megamenu.js) is not loaded!!");
+	}
+	/* end: initialise the Megamenu */
+
+	/* synchronised loading/initialisation of the siteusage and userprofile modules */
+	var
+		upsuModulesLoaded = [
+			RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/siteusage.js"),
+			RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/userprofile.js")
+		];
+	$.when.apply($, upsuModulesLoaded)
+		.done(function() {
+			RB.Masterpage.Log("Masterpage>>userprofile.js and siteusage.js have loaded");
+			var waitCount = 0;
+			function deferAndWaitForModuleExecution() {
+				/* this is an edge case:
+					while the scripts have been loaded they '**may**' not have executed yet, so we 
+					may have to wait for this to happen before we can call the module init functions.
+				*/
+				if (!RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup') || !RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
+					waitCount++;
+					if (waitCount > 10) 
+						RB.Masterpage.UpSuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
+					else {
+						RB.Masterpage.Log("Masterpage>>deferAndWaitForModuleExecution("+waitCount+") for USERPROFILE.JS and SITEUSAGE.JS initialisation");
+						setTimeout(deferAndWaitForModuleExecution, 200);
+					}
+					return;
+				}
+				var moduleInits = [
+					RB.Masterpage.Siteusage.EnsureSetup(),
+					RB.Masterpage.Userprofile.EnsureSetup()
+				];
+				$.when.apply($, moduleInits)
+					.done(function() {
+						RB.Masterpage.UpSuModulesInitialised.resolve();
+					});
+			}
+			deferAndWaitForModuleExecution();
+		});
+	RB.Masterpage.UpSuModulesInitialised
+		.done(function() {
+			RB.Masterpage.Log("Masterpage>>userprofile.js and siteusage.js have initialised");
+			RB.Masterpage.Siteusage.Acceptance();
+		});
+	/**/
+
+	/* initialise the Focus on Content feature overload */
+	SP.SOD.executeOrDelayUntilScriptLoaded(function() {
+		RB.Masterpage.Log('Masterpage>>site.js (initialise FOC feature) core.js loaded');
+		RB.Masterpage.OldSetFullScreenMode = window.SetFullScreenMode;
+		RB.Masterpage.OriginalContentBoxCss = document.getElementById('contentBox-x').getAttribute('class');
+
+		window.SetFullScreenMode = function RB_Masterpage$SetFullScreenMode(fEnableFullScreenMode) {
+			if (typeof fEnableFullScreenMode !== 'undefined') {
+				RB.Masterpage.OldSetFullScreenMode(fEnableFullScreenMode);
+			}
+			var bIsFullScreenMode = window.HasCssClass(document.body, "ms-fullscreenmode");
+			if (bIsFullScreenMode || (typeof(g_Buzz365NoLeftNav) !== 'undefined')) {
+				$('#sideNavBox-x').hide();
+				$('#contentBox-x').attr('class', 'pure-u-1');
+			} else {
+				$('#contentBox-x').attr('class', RB.Masterpage.OriginalContentBoxCss);
+				$('#sideNavBox-x').show();
+			}		
+		}
+		window.SetFullScreenMode();
+   }, 'core.js');
+
+});
 
 })(window,jQuery);
 

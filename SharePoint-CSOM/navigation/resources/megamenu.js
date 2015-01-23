@@ -415,7 +415,9 @@ function MegaMenuRender(taxonomyDs) {
 }
 
 $(function() {
-	var durStartTime = new Date();
+	var
+		durStartTime = new Date(),
+		$container = $('#main-menu').css({opacity:'.2'});
 
 	function OnDatastoreReady(taxonomyDs) {
 		if (window.console) { console.log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] is ready'); }
@@ -427,7 +429,6 @@ $(function() {
 	}
 
 	var
-		$container = $('#main-menu').css({opacity:'.2'}),
 		sideTermsetId = '18278814-4c62-4a77-8478-723d27f4369f', megaTermsetId = '966c85b8-5344-4350-a22b-79335e3906c7', 
 		cacheDurationHours = 24,
 		taxDs = new RB.Masterpage.TaxonomyDatastore(megaTermsetId, cacheDurationHours);

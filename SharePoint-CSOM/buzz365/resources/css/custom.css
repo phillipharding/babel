@@ -341,9 +341,6 @@ footer .bottom-strap a:active {
   cursor: default;
   z-index: 500;
 }
-.nav.building {
-  
-}
 
 .nav > li {
   display: block;
@@ -411,6 +408,9 @@ footer .bottom-strap a:active {
   width: 10%;
 }
 
+.nav .nav-column > ul {
+  clear: both;
+}
 .nav .nav-column h3,
 .nav .nav-column h3 a,
 .nav .nav-column h3 a:link,
