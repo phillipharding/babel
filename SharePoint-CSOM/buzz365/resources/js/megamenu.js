@@ -2,11 +2,21 @@
 "use strict";
 
 window.RB = window.RB || {};
+RB.Storage = RB.Storage || { local: 0, session: 1 };
 RB.Masterpage = RB.Masterpage || {};
 
 /* START TAXONOMY */
-RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, cacheSlots) {
+RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cacheSlots) {
 	var self = this;
+	if (typeof(storageType === 'number') && (storageType === RB.Storage.session) ) { 
+		self.storageType = 'RB.Storage.session';
+		self.storage = sessionStorage;
+	}
+	else {
+		self.storageType = 'RB.Storage.local';
+		self.storage = localStorage;
+	}
+
 	self.cacheId = cacheId;
 	self.timestampCacheId = cacheId+'-timestamp';
 	self.durationSecs = typeof(durationSeconds) === 'number' ? durationSeconds : -1;
@@ -14,7 +24,7 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, cacheSlots) {
 	self.cacheSlots = cacheSlots && (Object.prototype.toString.call(cacheSlots) === '[object Array]') ? cacheSlots : [];
 
 	if (RB.Masterpage.LocalStorage.IsSupported()) {
-		var expiryStamp = localStorage.getItem(this.timestampCacheId);
+		var expiryStamp = self.storage.getItem(this.timestampCacheId);
 		self.expiresOn = (expiryStamp && expiryStamp.length) ? new Date(parseInt(expiryStamp)+(this.durationSecs*1000)) : null;
 	}
 
@@ -30,20 +40,20 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, cacheSlots) {
 
 		if (cacheSlot && cacheSlot.length) {
 			if (this.cacheSlots.indexOf(cacheSlot) >= 0) {
-				localStorage.removeItem(this.cacheId+'-'+cacheSlot);
+				this.storage.removeItem(this.cacheId+'-'+cacheSlot);
 			}
 		} else {
-			localStorage.removeItem(this.cacheId);
+			this.storage.removeItem(this.cacheId);
 			for(var i = 0; i < this.cacheSlots.length; i++) {
-				localStorage.removeItem(this.cacheId+'-'+this.cacheSlots[i]);
+				this.storage.removeItem(this.cacheId+'-'+this.cacheSlots[i]);
 			}
-			localStorage.removeItem(this.timestampCacheId);
+			this.storage.removeItem(this.timestampCacheId);
 		}
 	}
 	function isExpired() {
 		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return true; }
 		
-		var expiryStamp = localStorage.getItem(this.timestampCacheId);
+		var expiryStamp = this.storage.getItem(this.timestampCacheId);
 		if (expiryStamp == null || !expiryStamp.length) return true;
 		if (this.durationSecs > 0) {
 			var
@@ -65,51 +75,52 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, cacheSlots) {
 		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return null; }
 
 		var value = !cacheSlot || !cacheSlot.length 
-							? localStorage.getItem(this.cacheId) 
-							: this.cacheSlots.indexOf(cacheSlot) >= 0 ? localStorage.getItem(this.cacheId+'-'+cacheSlot) : null;
+							? this.storage.getItem(this.cacheId) 
+							: this.cacheSlots.indexOf(cacheSlot) >= 0 ? this.storage.getItem(this.cacheId+'-'+cacheSlot) : null;
 		return value;
 	}
 	function hasValue(cacheSlot) {
 		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return null; }
 
 		var value = !cacheSlot || !cacheSlot.length 
-							? localStorage.getItem(this.cacheId) 
-							: this.cacheSlots.indexOf(cacheSlot) >= 0 ? localStorage.getItem(this.cacheId+'-'+cacheSlot) : null
+							? this.storage.getItem(this.cacheId) 
+							: this.cacheSlots.indexOf(cacheSlot) >= 0 ? this.storage.getItem(this.cacheId+'-'+cacheSlot) : null
 		return (value && value.length) ? true : false;
 	}
 	function setValue(newValue, cacheSlot) {
 		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return; }
 
 		if (!cacheSlot || !cacheSlot.length) {
-			localStorage.setItem(this.cacheId, newValue || '');
+			this.storage.setItem(this.cacheId, newValue || '');
 
 			/* setting the value of the primary cache value resets the 'slotted' cache values */
 			for(var i = 0; i < this.cacheSlots.length; i++) {
-				localStorage.removeItem(this.cacheId+'-'+this.cacheSlots[i]);
+				this.storage.removeItem(this.cacheId+'-'+this.cacheSlots[i]);
 			}
 		} else {
 			/* don't update the expiry stamp for setting a 'slotted' cache value */
 			if (this.cacheSlots.indexOf(cacheSlot) >= 0) {
-				localStorage.setItem(this.cacheId+'-'+cacheSlot, newValue || '');
+				this.storage.setItem(this.cacheId+'-'+cacheSlot, newValue || '');
 			}
 			return;
 		}
 		
 		var expires = (new Date().getTime());
 		this.expiresOn = new Date(expires+(this.durationSecs*1000));
-		localStorage.setItem(this.timestampCacheId, expires);
+		this.storage.setItem(this.timestampCacheId, expires);
 	}
 } /* end of RB.Masterpage.LocalStorage */
 
 RB.Masterpage.LocalStorage.IsSupported = function() {
 	try {
-		return 'localStorage' in window && window['localStorage'] !== null;
+		return ('sessionStorage' in window) && (window['sessionStorage'] !== null) && ('localStorage' in window) && (window['localStorage'] !== null);
 	} catch (e) {
 		return false;
 	}
 }
 
-RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheDurationHours) {
+RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheType, cacheDurationHours) {
+	if (typeof(cacheType) === 'undefined') cacheType = RB.Storage.local;
 	if (typeof(cacheDurationHours) === 'undefined') cacheDurationHours = 24*60*60;
 	else if (typeof(cacheDurationHours) === 'number' && cacheDurationHours >= 0) cacheDurationHours = cacheDurationHours*60*60;
 	else cacheDurationHours = -1;
@@ -117,7 +128,7 @@ RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheDurationHours) {
 	var self = this;
 	self.Id = termSetId.replace(/-/gi,'');
 	self.cache = cacheDurationHours >= 0 
-						? new RB.Masterpage.LocalStorage('RB$Masterpage$Megamenu-'+self.Id, cacheDurationHours, ['Markup']) 
+						? new RB.Masterpage.LocalStorage('RB$Datastore-'+self.Id, cacheDurationHours, cacheType, ['Markup']) 
 						: null;
 	self.module = {
 		Tag: self.Id,
@@ -132,6 +143,7 @@ RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheDurationHours) {
 	return self.module;
 
 	function initialise() {
+		if (window.console) { console.log('TaxonomyDatastore>> ['+this.Id+'] cache type is ' + (this.cache ? this.cache.storageType : 'disabled')); }
 		if (this.cache && !this.cache.isExpired()) {
 			if (window.console) { console.log('TaxonomyDatastore>> ['+this.Id+'] datasource being served from cache'); }
 			var cached = JSON.parse(this.cache.getValue());
@@ -480,7 +492,7 @@ RB.Masterpage.Megamenu = function() {
 				megaTermsetId = typeof(perWebTermSetId) === 'string' && perWebTermSetId && perWebTermSetId.length
 										? perWebTermSetId : '966c85b8-5344-4350-a22b-79335e3906c7', 
 				cacheDurationHours = 24,
-				taxDs = new RB.Masterpage.TaxonomyDatastore(megaTermsetId, cacheDurationHours);
+				taxDs = new RB.Masterpage.TaxonomyDatastore(megaTermsetId, RB.Storage.local, cacheDurationHours);
 			taxDs.initialise();
 			taxDs.isInitialised.done(OnDatastoreReady);
 		});
