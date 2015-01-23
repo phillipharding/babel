@@ -236,6 +236,10 @@ function Update-Term {
         [parameter(Mandatory=$true, ValueFromPipeline=$true)][Microsoft.SharePoint.Client.ClientContext]$ClientContext
     )
     process {
+        $cso = $($termXml.SelectSingleNode("ancestor::*[@EnableCustomSortOrder][1]/@EnableCustomSortOrder")).Value
+        if (($cso -ne $null) -and (($cso -match "true") -or ($cso -match "yes"))) { $cso = $true }
+        else { $cso = $false }
+
         $term = $null
         $termName = $termXml.Name
         $termId = $(if ($termXml.ID -eq $null -or $termXml.ID -eq "") { "" } else { [guid]($termXml.ID) })
@@ -311,10 +315,12 @@ function Update-Term {
                 $childTermId = Update-Term $termChildXml $term $TermSet $ClientContext
                 $customSortOrder += $childTermId
             }
-            if ($customSortOrder.length -gt 0) {
+            if ($cso -eq $true -and ($customSortOrder.length -gt 0)) {
                 $customSortOrder = $($customSortOrder -join ":")
-                Write-Host "`t`tCustom Sort Order for Term $($term.Name) : $customSortOrder"
+                Write-Host "`t`tApplying Custom Sort Order for Term $($term.Name) : $customSortOrder"
                 $term.CustomSortOrder = $customSortOrder
+            } else {
+                $term.CustomSortOrder = ""
             }
         }
 
@@ -353,10 +359,15 @@ function Update-Taxonomy {
             if ($termGroupXml.Description) {
                 $termGroup.Description = $termGroupXml.Description
                 $defaultSiteCollectionTermStore.CommitAll()
+                $ClientContext.ExecuteQuery()
             }
             Write-Host "Updating TermGroup: $($termGroup.Name)..." -ForegroundColor Green
 
             foreach($termSetXml in $termGroupXml.TermSet) {
+                $cso = $($termSetXml.SelectSingleNode("ancestor::*[@EnableCustomSortOrder][1]/@EnableCustomSortOrder")).Value
+                if (($cso -ne $null) -and (($cso -match "true") -or ($cso -match "yes"))) { $cso = $true }
+                else { $cso = $false }
+
                 $termSet = Get-TermSet $termSetXml.Name $termGroup $ClientContext
                 if ($termSet -eq $null) {
                     # add termset
@@ -382,15 +393,18 @@ function Update-Taxonomy {
                     $childTermId = Update-Term $termXml $null $termSet $ClientContext
                     $customSortOrder += $childTermId
                 }
-                if ($customSortOrder.length -gt 0) {
+                if ($cso -eq $true -and ($customSortOrder.length -gt 0)) {
                     $customSortOrder = $($customSortOrder -join ":")
-                    Write-Host "`tCustom Sort Order for Termset $($termSet.Name) : $customSortOrder"
+                    Write-Host "`tApplying Custom Sort Order for Termset $($termSet.Name) : $customSortOrder"
                     $termSet.CustomSortOrder = $customSortOrder
+                } else {
+                    $termSet.CustomSortOrder = ""
                 }
+
+                $defaultSiteCollectionTermStore.CommitAll()
+                $ClientContext.ExecuteQuery()
             }
         }
-        $defaultSiteCollectionTermStore.CommitAll()
-        $ClientContext.ExecuteQuery()
         Write-Host "Updated Taxonomy..." -ForegroundColor Green
     }
 }

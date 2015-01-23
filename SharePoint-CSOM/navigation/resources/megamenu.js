@@ -415,15 +415,15 @@ function MegaMenuRender(taxonomyDs) {
 }
 
 $(function() {
-	var DurStartTime = new Date();
+	var durStartTime = new Date();
 
-	function OnMenuRendered(taxonomyDs) {
-		if (window.console) { console.log('TaxonomyDatastore ['+taxonomyDs.Id+'] is ready to render!!'); }
+	function OnDatastoreReady(taxonomyDs) {
+		if (window.console) { console.log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] is ready'); }
 		taxonomyDs.module.render($container, new MegaMenuRender(taxonomyDs));
 		$container.css({opacity:'1'});
 
-		var DurEndTime = new Date(), elapse = (DurEndTime.getTime()) - (DurStartTime.getTime());
-		if (window.console) { console.log('TaxonomyDatastore ['+taxonomyDs.Id+'] initialisation and render time: ' + (elapse)+'ms'); }
+		var ellapsed = ((new Date()).getTime()) - (durStartTime.getTime());
+		if (window.console) { console.log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] ellapsed time: ' + (ellapsed)+'ms'); }
 	}
 
 	var
@@ -432,7 +432,7 @@ $(function() {
 		cacheDurationHours = 24,
 		taxDs = new RB.Masterpage.TaxonomyDatastore(megaTermsetId, cacheDurationHours);
 	taxDs.initialise();
-	taxDs.isInitialised.done(OnMenuRendered);
+	taxDs.isInitialised.done(OnDatastoreReady);
 });
 
 })(window,jQuery);
