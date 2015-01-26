@@ -42,6 +42,9 @@
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/site.js"></script>
     <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/megamenu.js"></script>
 
+    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/userprofile.js"></script>
+    <script language="javascript" type="text/javascript" src="/_catalogs/masterpage/Buzz365/js/siteusage.js"></script>
+
     <SharePoint:AjaxDelta id="DeltaPlaceHolderAdditionalPageHead" Container="false" runat="server">
         <asp:ContentPlaceHolder id="PlaceHolderAdditionalPageHead" runat="server" />
         <SharePoint:DelegateControl runat="server" ControlId="AdditionalPageHead" AllowMultipleControls="true" />

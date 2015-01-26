@@ -6,6 +6,7 @@ RB.Masterpage = RB.Masterpage || {};
 
 	RB.Masterpage.Userprofile = function() {
 		var
+			_p = new $.Deferred(),
 			_module = {
 				EnsureSetup: ensureSetup,
 				SetProperty: setProfileProperty,
@@ -15,7 +16,6 @@ RB.Masterpage = RB.Masterpage || {};
 
 		function getMyPropertyData() {
 			var 
-				p = new $.Deferred(),
 				req = {
 					type: 'GET',
 					url: "/_api/SP.UserProfiles.PeopleManager/GetMyProperties",
@@ -38,7 +38,7 @@ RB.Masterpage = RB.Masterpage || {};
 						if (!d || !d.Key || !d.Key.length) continue;
 						_module.Properties[d.Key] = d.Value || '';
 					};
-					p.resolve(_module.Properties);
+					_p.resolve(_module.Properties);
 				})
 				.fail(function(xhrObj, textStatus, err) {
 					var
@@ -47,9 +47,9 @@ RB.Masterpage = RB.Masterpage || {};
 						m = '<div style="color:red;font-family:Calibri;font-size:1.2em;">Exception<br/>&raquo; ' +
 							((err && err.message && err.message.value) ? err.message.value : (xhrObj.status + ' ' + xhrObj.statusText))
 							+' <br/>&raquo; '+r.url+'</div>';
-					p.reject({ success: false, error: m, uri: endpoint });
+					_p.reject({ success: false, error: m, uri: endpoint });
 				});
-			return p.promise();
+			return _p.promise();
 		}
 
 		/**
@@ -66,7 +66,7 @@ RB.Masterpage = RB.Masterpage || {};
 			RB.Masterpage.LoadSPServices()
 				.done(function(r) {
 				/* SPServices is loaded */
-				if (window.console) window.console.log('>>> LOADED: '+r);
+				RB.Masterpage.Log('RB.Masterpage.Userprofile>> loaded: '+r);
 
 				var propertyData = "<PropertyData>" +
 											"<IsPrivacyChanged>false</IsPrivacyChanged>" +
@@ -99,10 +99,11 @@ RB.Masterpage = RB.Masterpage || {};
 		function ensureSetup() {
 			var p = getMyPropertyData()
 						.fail(function(e) {
-							if (window.console) window.console.log(e.error);
+							RB.Masterpage.Log('RB.Masterpage.Userprofile>> error: '+(e.error));
 						});
 			return p;
 		}
 	}();
 
 })(jQuery);
+

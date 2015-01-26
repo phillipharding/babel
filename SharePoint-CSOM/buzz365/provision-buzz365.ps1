@@ -12,7 +12,7 @@
     -Configuration;
         "0" for minimal provisioning
         "1" for full provisioning
-        "2" for Masterpages only
+        "2" for Masterpage files only
         "3" for Masterpage Resource files only
 #>
 param (

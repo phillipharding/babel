@@ -3,7 +3,7 @@
 	<Configuration Name="MegaMenu" ID="0" Description="This configuration creates or updates the MegaMenu Taxonomy Termset.">
 		<TermStore Languages="">
 			<TermGroup Name="Custom Navigation" ID="{5e3257a2-3960-42dd-9f1f-8528b0484c25}" Description="The Term Group used for custom navigation solutions" EnableCustomSortOrder="True">
-				<TermSet Name="Megamenu-0" ID="{966c85b8-5344-4350-a22b-79335e3906c7}" Language="1033" Navigation="True" Tagging="False" Open="False" Description="The Buzz365 Standard Megamenu TermSet">
+				<TermSet Name="Megamenu-0" ID="{966c85b8-5344-4350-a22b-79335e3906c7}" Language="1033" Navigation="True" Tagging="True" Open="False" Description="The Buzz365 Standard Megamenu TermSet">
 					
 					<Term Name="ABOUT RB" ID="" Language="1033" Description="About RB megamenu rootnode" NavigateUrl="" Tagging="False">
 						<Property Name="_Sys_Nav_HoverText" Value="about rb" Type="Local" />

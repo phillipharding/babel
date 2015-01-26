@@ -181,7 +181,7 @@ RB.Masterpage = function() {
 
 	function RB$Masterpage$Log(message) {
 		if (message && message.length && window.console && window.console.log) {
-			window.console.log(message);
+			window.console.log('[['+(new Date().format('HH:mm:ss.fff'))+']] '+message);
 		}
 		return;
 	}
@@ -291,9 +291,7 @@ $(function() {
 	/* start: initialise the Megamenu */
 	if (RB.Masterpage.IsValidType("RB.Masterpage.Megamenu")) {
 		if (window.console) {
-			RB.Masterpage.Log("Masterpage>>RB.Masterpage.Megamenu (megamenu.js) is loaded");
-			RB.Masterpage.Log("Masterpage>>RB.Masterpage.TaxonomyDatastore (megamenu.js) is loaded");
-			RB.Masterpage.Log("Masterpage>>RB.Masterpage.LocalStorage (megamenu.js) is loaded");
+			RB.Masterpage.Log("Masterpage>> RB.Masterpage.Megamenu,RB.Masterpage.TaxonomyDatastore,RB.Masterpage.LocalStorage (megamenu.js) is loaded");
 		}
 		
 		RB.Masterpage.Megamenu.EnsureSetup();
@@ -302,56 +300,37 @@ $(function() {
 			if (typeof(CalloutManager)!=='undefined') CalloutManager.closeAll();
 		});
 	} else {
-		throw new Error("Masterpage>>RB.Masterpage.Megamenu (megamenu.js) is not loaded!!");
+		throw new Error("Masterpage>> RB.Masterpage.Megamenu (megamenu.js) is not loaded!!");
 	}
 	/* end: initialise the Megamenu */
 
-	/* synchronised loading/initialisation of the siteusage and userprofile modules */
-	var
-		upsuModulesLoaded = [
-			RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/siteusage.js"),
-			RB.Masterpage.LoadResourceFromTenantRoot("_catalogs/masterpage/Buzz365/js/userprofile.js")
-		];
-	$.when.apply($, upsuModulesLoaded)
-		.done(function() {
-			RB.Masterpage.Log("Masterpage>>userprofile.js and siteusage.js have loaded");
-			var waitCount = 0;
-			function deferAndWaitForModuleExecution() {
-				/* this is an edge case:
-					while the scripts have been loaded they '**may**' not have executed yet, so we 
-					may have to wait for this to happen before we can call the module init functions.
-				*/
-				if (!RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup') || !RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
-					waitCount++;
-					if (waitCount > 10) 
-						RB.Masterpage.UpSuModulesInitialised.reject(); /* give up after waiting for execution for 2 seconds */
-					else {
-						RB.Masterpage.Log("Masterpage>>deferAndWaitForModuleExecution("+waitCount+") for USERPROFILE.JS and SITEUSAGE.JS initialisation");
-						setTimeout(deferAndWaitForModuleExecution, 200);
-					}
-					return;
-				}
-				var moduleInits = [
-					RB.Masterpage.Siteusage.EnsureSetup(),
-					RB.Masterpage.Userprofile.EnsureSetup()
-				];
-				$.when.apply($, moduleInits)
-					.done(function() {
-						RB.Masterpage.UpSuModulesInitialised.resolve();
-					});
-			}
-			deferAndWaitForModuleExecution();
+	/* initialise userprofile module */
+	if (RB.Masterpage.IsValidType('RB.Masterpage.Userprofile.EnsureSetup')) {
+		RB.Masterpage.Log("Masterpage>> calling RB.Masterpage.Userprofile.EnsureSetup");
+		RB.Masterpage.Userprofile.EnsureSetup().done(function() {
+			RB.Masterpage.Log("Masterpage>> RB.Masterpage.Userprofile.EnsureSetup has initialised");
+			RB.Masterpage.UpSuModulesInitialised.resolve();
 		});
+	} else {
+		throw new Error("Masterpage>> RB.Masterpage.Userprofile.EnsureSetup is undefined!!!");
+	}
+
+	/* initialise siteusage module when userprofile module is initialised */
 	RB.Masterpage.UpSuModulesInitialised
 		.done(function() {
-			RB.Masterpage.Log("Masterpage>>userprofile.js and siteusage.js have initialised");
-			RB.Masterpage.Siteusage.Acceptance();
+			if (RB.Masterpage.IsValidType('RB.Masterpage.Siteusage.EnsureSetup')) {
+				RB.Masterpage.Log("Masterpage>> calling RB.Masterpage.Siteusage.EnsureSetup");
+				RB.Masterpage.Siteusage.EnsureSetup().done(function() {
+					RB.Masterpage.Log("Masterpage>> RB.Masterpage.Siteusage.EnsureSetup has initialised");
+				});
+			} else {
+				throw new Error("Masterpage>> RB.Masterpage.Siteusage.EnsureSetup is undefined!!!");
+			}
 		});
-	/**/
 
 	/* initialise the Focus on Content feature overload */
 	SP.SOD.executeOrDelayUntilScriptLoaded(function() {
-		RB.Masterpage.Log('Masterpage>>site.js (initialise FOC feature) core.js loaded');
+		RB.Masterpage.Log('Masterpage>> core.js loaded, initialise "Focus on Content" feature');
 		RB.Masterpage.OldSetFullScreenMode = window.SetFullScreenMode;
 		RB.Masterpage.OriginalContentBoxCss = document.getElementById('contentBox-x').getAttribute('class');
 

@@ -102,14 +102,11 @@ function Add-TermSet {
     )
     process {
         $termSet = $TermGroup.CreateTermSet($Name, $Id, $Language)
+        $termSet.IsAvailableForTagging = $Tagging
         if ($Navigation) {
-            $termSet.IsAvailableForTagging = $false
-            $termSet.IsOpenForTermCreation = $Open
             $termSet.SetCustomProperty("_Sys_Nav_IsNavigationTermSet", "True")
-        } else {
-            $termSet.IsAvailableForTagging = $Tagging
-            $termSet.IsOpenForTermCreation = $Open
-        }
+        }        
+        $termSet.IsOpenForTermCreation = $Open
         $termSet.Description = $Desc
         
         $TermGroup.TermStore.CommitAll()
@@ -380,6 +377,22 @@ function Update-Taxonomy {
                     $termSet = Add-TermSet $termSetXml.Name $tslcid $tsid $tagging $navigation $open $desc $termGroup $ClientContext
                     Write-Host "Created TermSet: $($termSet.Name)... Language: $tslcid, ID: $tsid" -ForegroundColor Green
                     $termSet = Get-TermSet $termSetXml.Name $termGroup $ClientContext
+                } else {
+                    $tagging = $(if ($termSetXml.Tagging -eq $null -or $termSetXml.Tagging -eq "") { $true } else { [bool]::Parse($termSetXml.Tagging) })
+                    $navigation = $(if ($termSetXml.Navigation -eq $null -or $termSetXml.Navigation -eq "") { $false } else { [bool]::Parse($termSetXml.Navigation) })
+                    $open = $(if ($termSetXml.Open -eq $null -or $termSetXml.Open -eq "") { $false } else { [bool]::Parse($termSetXml.Open) })
+                    $desc = $(if ($termSetXml.Description -eq $null -or $termSetXml.Description -eq "") { "" } else { $termSetXml.Description })
+
+                    $termSet.IsAvailableForTagging = $tagging
+                    if ($navigation) {
+                        $termSet.SetCustomProperty("_Sys_Nav_IsNavigationTermSet", "True")
+                    } else {
+                        $termSet.SetCustomProperty("_Sys_Nav_IsNavigationTermSet", "False")
+                    }        
+                    $termSet.IsOpenForTermCreation = $open
+                    $termSet.Description = $desc
+                    $defaultSiteCollectionTermStore.CommitAll()
+                    $ClientContext.ExecuteQuery()
                 }
                 Write-Host "Updating TermSet: $($termSet.Name)..." -ForegroundColor Green
 

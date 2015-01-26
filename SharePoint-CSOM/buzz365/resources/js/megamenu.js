@@ -5,6 +5,13 @@ window.RB = window.RB || {};
 RB.Storage = RB.Storage || { local: 0, session: 1 };
 RB.Masterpage = RB.Masterpage || {};
 
+function log(message) {
+	if (window.console) {
+		if (window.RB && window.RB.Masterpage && window.RB.Masterpage.Log) RB.Masterpage.Log(message);
+		else window.console.log(message);
+	}
+}
+
 /* START TAXONOMY */
 RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cacheSlots) {
 	var self = this;
@@ -36,7 +43,7 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 	return this;
 
 	function remove(cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return; }
+		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return; }
 
 		if (cacheSlot && cacheSlot.length) {
 			if (this.cacheSlots.indexOf(cacheSlot) >= 0) {
@@ -51,7 +58,7 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 		}
 	}
 	function isExpired() {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return true; }
+		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return true; }
 		
 		var expiryStamp = this.storage.getItem(this.timestampCacheId);
 		if (expiryStamp == null || !expiryStamp.length) return true;
@@ -72,7 +79,7 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 		}
 	}
 	function getValue(cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return null; }
+		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return null; }
 
 		var value = !cacheSlot || !cacheSlot.length 
 							? this.storage.getItem(this.cacheId) 
@@ -80,7 +87,7 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 		return value;
 	}
 	function hasValue(cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return null; }
+		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return null; }
 
 		var value = !cacheSlot || !cacheSlot.length 
 							? this.storage.getItem(this.cacheId) 
@@ -88,7 +95,7 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 		return (value && value.length) ? true : false;
 	}
 	function setValue(newValue, cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { if (window.console) { window.console.log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); } return; }
+		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return; }
 
 		if (!cacheSlot || !cacheSlot.length) {
 			this.storage.setItem(this.cacheId, newValue || '');
@@ -143,9 +150,9 @@ RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheType, cacheDurationHo
 	return self.module;
 
 	function initialise() {
-		if (window.console) { console.log('TaxonomyDatastore>> ['+this.Id+'] cache type is ' + (this.cache ? this.cache.storageType : 'disabled')); }
+		log('TaxonomyDatastore>> ['+this.Id+'] cache type is ' + (this.cache ? this.cache.storageType : 'disabled'));
 		if (this.cache && !this.cache.isExpired()) {
-			if (window.console) { console.log('TaxonomyDatastore>> ['+this.Id+'] datasource being served from cache'); }
+			log('TaxonomyDatastore>> ['+this.Id+'] datasource being served from cache');
 			var cached = JSON.parse(this.cache.getValue());
 			this.module.Tag = cached.module.Tag;
 			this.module.nodes = cached.module.nodes;
@@ -153,10 +160,10 @@ RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheType, cacheDurationHo
 			return;
 		}
 		SP.SOD.loadMultiple(['sp.js'], function () {
-      	if (window.console) { console.log('TaxonomyDatastore>> SP.js loaded'); }
+      	log('TaxonomyDatastore>> SP.js loaded');
          SP.SOD.registerSod('sp.taxonomy.js', SP.Utilities.Utility.getLayoutsPageUrl('sp.taxonomy.js'));
          SP.SOD.loadMultiple(['sp.taxonomy.js'], function () {
-         	if (window.console) { console.log('TaxonomyDatastore>> sp.taxonomy.js loaded'); }
+         	log('TaxonomyDatastore>> sp.taxonomy.js loaded');
 				var 
 					ctx = SP.ClientContext.get_current(),
 					taxonomySession = SP.Taxonomy.TaxonomySession.getTaxonomySession(ctx),
@@ -307,9 +314,9 @@ RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheType, cacheDurationHo
 		var isCached = this.cache && this.cache.hasValue('Markup');
 		if (window.console) {
 			if (isCached) {
-				window.console.log('TaxonomyDatastore>> ['+this.Id+'] Markup being served from cache');
+				log('TaxonomyDatastore>> ['+this.Id+'] Markup being served from cache');
 			}
-			window.console.log('TaxonomyDatastore>> render ['+this.Id+']['+this.module.Tag+'] at '+domContainer);
+			log('TaxonomyDatastore>> render ['+this.Id+']['+this.module.Tag+'] at '+domContainer);
 		}
 
 		var $domContainer = null;
@@ -353,7 +360,7 @@ function SimpleMenuRender(taxonomyDs) {
 	function renderMenuAsString(datasourceNodes, $domContainer) {
 		var markup = ["<h1 id='"+this.taxonomyDs.module.Tag+"'>SAMPLE MENU MARKUP FOR MENU ["+this.taxonomyDs.module.Tag+"]</h1></ul>"];
 		for(var i = 0; i < datasourceNodes.length; i++) {
-			if (window.console) { window.console.log('SimpleMenuRender>> '+datasourceNodes[i].title+' <<'); }
+			log('SimpleMenuRender>> '+datasourceNodes[i].title+' <<');
 			markup.push('<li><h2>'+datasourceNodes[i].title+'</h2></li>');
 		}
 		markup.push('</ul>');
@@ -387,7 +394,7 @@ RB.Masterpage.Megamenu = function() {
 		function renderNode(node) {
 			var markup = [];
 			node.title = node.title.replace(/[_]*$/gi, '').replace(/ and /gi, ' & ');
-			if (window.console) { window.console.log('MegaMenuRender>> render node: '+node.title+' <<'); }
+			log('MegaMenuRender>> render node: '+node.title+' <<');
 			switch (node.nodeType) {
 				case 'Root': {
 					markup.push("<li>");
@@ -450,12 +457,12 @@ RB.Masterpage.Megamenu = function() {
 			$megaContainer = $('#main-menu').css({opacity:'.2'});
 
 		function OnDatastoreReady(taxonomyDs) {
-			if (window.console) { console.log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] is ready'); }
+			log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] is ready');
 			taxonomyDs.module.render($megaContainer, new MegaMenuRender(taxonomyDs));
 			$megaContainer.css({opacity:'1'});
 
 			var ellapsed = ((new Date()).getTime()) - (durStartTime.getTime());
-			if (window.console) { console.log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] ellapsed time: ' + (ellapsed)+'ms'); }
+			log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] ellapsed time: ' + (ellapsed)+'ms');
 
 			/* init SIDR for the megamenu */
 			$('#mobile-nav').sidr({

@@ -1233,7 +1233,10 @@ li > a.ms-core-listMenu-item:active {
   }
 
   header .corporate ul li {
+    float: left;
+    margin-left: 10px;
     margin-right: 5px;
+    margin-top: 12px;
   }
 
 }
