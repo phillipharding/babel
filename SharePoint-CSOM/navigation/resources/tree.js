@@ -37,27 +37,37 @@ function TreeRender(taxonomyDs) {
 	}
 }
 
+function OnTreeDatastoreReady($container, durStartTime, taxonomyDs) {
+	if (window.console) { window.console.log('OnTreeDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] is ready'); }
+	taxonomyDs.module.render($container, new TreeRender(taxonomyDs));
+	$container.css({opacity:'1'});
+
+	var ellapsed = ((new Date()).getTime()) - (durStartTime.getTime());
+	if (window.console) { window.console.log('OnTreeDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] ellapsed time: ' + (ellapsed)+'ms'); }
+	return taxonomyDs;
+}
+function OnTreeDatastoreReady2($container, timeout, taxonomyDs) {
+	if (window.console) { window.console.log('OnTreeDatastoreReady2>> TaxonomyDatastore ['+taxonomyDs.Id+'] is ready'); }
+	setTimeout(function() {
+		$(String.format("<h2 style='display:none;'>This cache expires at: {0}</h2>", taxonomyDs.cache.expiresOn.format('yyyy-MM-dd HH:mm:ss.fff')))
+			.prependTo($container).slideDown(1000);
+	}, timeout);
+	return taxonomyDs;
+}
+
 $(function() {
 	var
 		durStartTime = new Date(),
-		$container = $('#tree').css({opacity:'.2'});
-
-	function OnDatastoreReady(taxonomyDs) {
-		if (window.console) { console.log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] is ready'); }
-		taxonomyDs.module.render($container, new TreeRender(taxonomyDs));
-		$container.css({opacity:'1'});
-
-		var ellapsed = ((new Date()).getTime()) - (durStartTime.getTime());
-		if (window.console) { console.log('OnDatastoreReady>> TaxonomyDatastore ['+taxonomyDs.Id+'] ellapsed time: ' + (ellapsed)+'ms'); }
-	}
-
-	var
+		$container = $('#tree').css({opacity:'.2'}),
 		termsetId = '1db4f02a-d182-499e-8f3b-dc32bb00e253', 
 		cacheDisabled = -1,
 		cacheDurationHours = 24,
-		taxDs = new RB.Masterpage.TaxonomyDatastore(termsetId, RB.Storage.session, cacheDurationHours);
+		taxDs = new RB.Masterpage.TaxonomyDatastore(termsetId, RB.Storagetype.session, cacheDurationHours);
+	if (window.console) { window.console.log('Tree.js>> TaxonomyDatastore ['+taxDs.Tag+'] '+durStartTime.format('yyyy-MM-dd HH:mm:ss.fff')); }
 	taxDs.initialise();
-	taxDs.isInitialised.done(OnDatastoreReady);
+	taxDs.isInitialised
+		.then(OnTreeDatastoreReady.bind(null, $container, durStartTime))
+		.then(OnTreeDatastoreReady2.bind(null, $container, 2000));
 });
 
 })(window,jQuery);

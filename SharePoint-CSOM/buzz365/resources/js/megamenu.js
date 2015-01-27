@@ -2,7 +2,6 @@
 "use strict";
 
 window.RB = window.RB || {};
-RB.Storage = RB.Storage || { local: 0, session: 1 };
 RB.Masterpage = RB.Masterpage || {};
 
 function log(message) {
@@ -13,38 +12,49 @@ function log(message) {
 }
 
 /* START TAXONOMY */
-RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cacheSlots) {
-	var self = this;
-	if (typeof(storageType === 'number') && (storageType === RB.Storage.session) ) { 
-		self.storageType = 'RB.Storage.session';
-		self.storage = sessionStorage;
+RB.Storagetype = RB.Storagetype || { local: 0, session: 1 };
+RB.Masterpage.IsStorageSupported = function() {
+	try {
+		return ('sessionStorage' in window) && (window['sessionStorage'] !== null) && ('localStorage' in window) && (window['localStorage'] !== null);
+	} catch (e) {
+		return false;
+	}
+}
+RB.Masterpage.Storage = function(cacheId, durationSeconds, storageType, cacheSlots) {
+	if (!RB.Masterpage.IsStorageSupported()) {
+		throw new Error('RB.Masterpage.Storage>> local and/or session storage is not supported by the browser!!');
+	}
+
+	if (typeof(storageType === 'number') && (storageType === RB.Storagetype.session) ) { 
+		this.storageType = 'RB.Storagetype.session';
+		this.storage = sessionStorage;
 	}
 	else {
-		self.storageType = 'RB.Storage.local';
-		self.storage = localStorage;
+		this.storageType = 'RB.Storagetype.local';
+		this.storage = localStorage;
 	}
 
-	self.cacheId = cacheId;
-	self.timestampCacheId = cacheId+'-timestamp';
-	self.durationSecs = typeof(durationSeconds) === 'number' ? durationSeconds : -1;
-	self.expiresOn = null;
-	self.cacheSlots = cacheSlots && (Object.prototype.toString.call(cacheSlots) === '[object Array]') ? cacheSlots : [];
+	this.cacheId = cacheId;
+	this.timestampCacheId = cacheId+'-timestamp';
+	this.durationSecs = typeof(durationSeconds) === 'number' ? Math.max(0,durationSeconds) : 24*60*60;
+	this.cacheSlots = cacheSlots && (Object.prototype.toString.call(cacheSlots) === '[object Array]') ? cacheSlots : [];
 
-	if (RB.Masterpage.LocalStorage.IsSupported()) {
-		var expiryStamp = self.storage.getItem(this.timestampCacheId);
-		self.expiresOn = (expiryStamp && expiryStamp.length) ? new Date(parseInt(expiryStamp)+(this.durationSecs*1000)) : null;
+	var expiryStamp = this.storage.getItem(this.timestampCacheId);
+	if (expiryStamp && expiryStamp.length) {
+		this.expiresOn = new Date(parseInt(expiryStamp)+(this.durationSecs*1000));
+	} else {
+		var expires = (new Date().getTime());
+		this.expiresOn = new Date(expires+(this.durationSecs*1000));
 	}
 
-	self.isExpired = isExpired.bind(self);
-	self.hasValue = hasValue.bind(self);
-	self.getValue = getValue.bind(self);
-	self.setValue = setValue.bind(self);
-	self.remove = remove.bind(self);
+	this.isExpired = isExpired.bind(this);
+	this.hasValue = hasValue.bind(this);
+	this.getValue = getValue.bind(this);
+	this.setValue = setValue.bind(this);
+	this.remove = remove.bind(this);
 	return this;
 
 	function remove(cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return; }
-
 		if (cacheSlot && cacheSlot.length) {
 			if (this.cacheSlots.indexOf(cacheSlot) >= 0) {
 				this.storage.removeItem(this.cacheId+'-'+cacheSlot);
@@ -58,8 +68,6 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 		}
 	}
 	function isExpired() {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return true; }
-		
 		var expiryStamp = this.storage.getItem(this.timestampCacheId);
 		if (expiryStamp == null || !expiryStamp.length) return true;
 		if (this.durationSecs > 0) {
@@ -74,29 +82,21 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 			}
 		}
 		else {
-			if (this.durationSecs === 0) return false;	/* never expires */
-			return true; /* expired */
+			/* this.durationSecs === 0 */
+			return false;	/* wierdly, cache never expires */
 		}
 	}
 	function getValue(cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return null; }
-
 		var value = !cacheSlot || !cacheSlot.length 
 							? this.storage.getItem(this.cacheId) 
 							: this.cacheSlots.indexOf(cacheSlot) >= 0 ? this.storage.getItem(this.cacheId+'-'+cacheSlot) : null;
 		return value;
 	}
 	function hasValue(cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return null; }
-
-		var value = !cacheSlot || !cacheSlot.length 
-							? this.storage.getItem(this.cacheId) 
-							: this.cacheSlots.indexOf(cacheSlot) >= 0 ? this.storage.getItem(this.cacheId+'-'+cacheSlot) : null
+		var value = this.getValue(typeof cacheSlot === 'undefined' ? null : cacheSlot);
 		return (value && value.length) ? true : false;
 	}
 	function setValue(newValue, cacheSlot) {
-		if (!RB.Masterpage.LocalStorage.IsSupported()) { log('!! RB.Masterpage.LocalStorage.IsSupported = FALSE !!'); return; }
-
 		if (!cacheSlot || !cacheSlot.length) {
 			this.storage.setItem(this.cacheId, newValue || '');
 
@@ -111,23 +111,15 @@ RB.Masterpage.LocalStorage = function(cacheId, durationSeconds, storageType, cac
 			}
 			return;
 		}
-		
+		/* update cache expiry */
 		var expires = (new Date().getTime());
 		this.expiresOn = new Date(expires+(this.durationSecs*1000));
 		this.storage.setItem(this.timestampCacheId, expires);
 	}
-} /* end of RB.Masterpage.LocalStorage */
-
-RB.Masterpage.LocalStorage.IsSupported = function() {
-	try {
-		return ('sessionStorage' in window) && (window['sessionStorage'] !== null) && ('localStorage' in window) && (window['localStorage'] !== null);
-	} catch (e) {
-		return false;
-	}
-}
+} /* end of RB.Masterpage.Storage */
 
 RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheType, cacheDurationHours) {
-	if (typeof(cacheType) === 'undefined') cacheType = RB.Storage.local;
+	if (typeof(cacheType) === 'undefined') cacheType = RB.Storagetype.local;
 	if (typeof(cacheDurationHours) === 'undefined') cacheDurationHours = 24*60*60;
 	else if (typeof(cacheDurationHours) === 'number' && cacheDurationHours >= 0) cacheDurationHours = cacheDurationHours*60*60;
 	else cacheDurationHours = -1;
@@ -135,7 +127,7 @@ RB.Masterpage.TaxonomyDatastore = function(termSetId, cacheType, cacheDurationHo
 	var self = this;
 	self.Id = termSetId.replace(/-/gi,'');
 	self.cache = cacheDurationHours >= 0 
-						? new RB.Masterpage.LocalStorage('RB$Datastore-'+self.Id, cacheDurationHours, cacheType, ['Markup']) 
+						? new RB.Masterpage.Storage('RB$Datastore-'+self.Id, cacheDurationHours, cacheType, ['Markup']) 
 						: null;
 	self.module = {
 		Tag: self.Id,
@@ -490,6 +482,7 @@ RB.Masterpage.Megamenu = function() {
 			});
 		}
 
+		log('RB.Masterpage.Megamenu>> about to load web properties');
 		RB.Masterpage.LoadWebproperties().done(function(webProperties) {
 			/* allow the Termset used for the Megamenu to be overidden on a per-web 
 				basis using a Web propertybag value
@@ -499,7 +492,7 @@ RB.Masterpage.Megamenu = function() {
 				megaTermsetId = typeof(perWebTermSetId) === 'string' && perWebTermSetId && perWebTermSetId.length
 										? perWebTermSetId : '966c85b8-5344-4350-a22b-79335e3906c7', 
 				cacheDurationHours = 24,
-				taxDs = new RB.Masterpage.TaxonomyDatastore(megaTermsetId, RB.Storage.local, cacheDurationHours);
+				taxDs = new RB.Masterpage.TaxonomyDatastore(megaTermsetId, RB.Storagetype.local, cacheDurationHours);
 			taxDs.initialise();
 			taxDs.isInitialised.done(OnDatastoreReady);
 		});
