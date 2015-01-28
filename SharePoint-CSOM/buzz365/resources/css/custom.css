@@ -448,8 +448,13 @@ footer .bottom-strap a:active {
   font-size: 13px;
   color: #FFF;
 }
+.nav .nav-column li a .fa,
+.nav .nav-column h3 .fa {
+  margin-right: 8px;
+}
 
-.nav .nav-column li a:hover {
+.nav .nav-column li a:hover,
+.nav .nav-column h3 a:hover {
   opacity: 0.8;
 }
 

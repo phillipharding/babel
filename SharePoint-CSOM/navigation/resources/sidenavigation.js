@@ -71,10 +71,10 @@
 	$( function() {
 		var
 			durStartTime = new Date(),
-			$container = $( '#tree' ).css( {
+			$container = $( '#sidenavigation' ).css( {
 				opacity: '.2'
 			} ),
-			termsetId = '1db4f02a-d182-499e-8f3b-dc32bb00e253',
+			termsetId = '18278814-4c62-4a77-8478-723d27f4369f',
 			cacheDisabled = -1,
 			cacheDurationHours = 24,
 			taxDs = new RB.Masterpage.TaxonomyDatastore( termsetId, RB.Storagetype.session, cacheDurationHours );

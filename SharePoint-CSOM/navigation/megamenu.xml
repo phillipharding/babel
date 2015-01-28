@@ -17,15 +17,19 @@
 							<Term Name="About Us" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="about us" Type="Local" />
+								<Property Name="_Rb_Nav_Icon" Value="" />
 
-								<Term Name="Who We Are" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Global Company Factsheet" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Latest Corporate Presentation" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Corporate Brochure" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Vision and Values" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="RB Brands" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="RB Results" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="RB History" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="Who We Are" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Pages/Who-we-are.aspx" Tagging="False">
+									<Property Name="_Rb_Nav_Icon" Value="" />
+									<Property Name="_Rb_Nav_NewWindow" Value="true" />
+								</Term>
+								<Term Name="Global Company Factsheet" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Global-Corporate-Fact-Sheet.pdf" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
+								<Term Name="Latest Corporate Presentation" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Global-Corporate-Fact-Sheet.pdf" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
+								<Term Name="Corporate Brochure" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Corporate%20Brochure.pdf" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
+								<Term Name="Vision and Values" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/rb-worldwide/vision-values" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
+								<Term Name="RB Brands" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-brands" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
+								<Term Name="RB Results" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/FY-2013.ppt" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
+								<Term Name="RB History" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/rb-worldwide/rb-history" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column2" ID="" Tagging="False">
@@ -36,17 +40,17 @@
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="better business" Type="Local" />
 
-								<Term Name="Save the Children" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Healthier Kids, Happier Homes" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Healthier Communities" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Health and Hygiene Programmes" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Why is it important to us?" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Happier Homes" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Our Targets" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Better Design" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Better Production" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Trees for Change" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Policies and Reports" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="Save the Children" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/community" Tagging="False" />
+								<Term Name="Healthier Kids, Happier Homes" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/healthier-kids-happier-homes" Tagging="False" />
+								<Term Name="Healthier Communities" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/healthier-communities" Tagging="False" />
+								<Term Name="Health and Hygiene Programmes" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/healthier-kids-happier-homes/what-we-do/health-and-hygiene" Tagging="False" />
+								<Term Name="Why is it important to us?" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/why-is-it-important-to-us" Tagging="False" />
+								<Term Name="Happier Homes" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/happier-homes" Tagging="False" />
+								<Term Name="Our Targets" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/our-targets" Tagging="False" />
+								<Term Name="Better Design" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/better-design" Tagging="False" />
+								<Term Name="Better Production" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/better-production" Tagging="False" />
+								<Term Name="Trees for Change" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/trees" Tagging="False" />
+								<Term Name="Policies and Reports" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-responsibility/policies-and-reports" Tagging="False" />
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column3" ID="" Tagging="False">
@@ -57,11 +61,11 @@
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="leadership team" Type="Local" />
 
-								<Term Name="Board of Directors" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Executive Committee" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Top 40 Biographies and Assistants" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Top 40 Organisation" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Key Contacts" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="Board of Directors" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/rb-worldwide/the-board" Tagging="False" />
+								<Term Name="Executive Committee" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/rb-worldwide/executive-committee" Tagging="False" />
+								<Term Name="Top 40 Biographies and Assistants" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Lists/Leadership%20T40/View%20Items.aspx" Tagging="False" />
+								<Term Name="Top 40 Organisation" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Top40.doc" Tagging="False" />
+								<Term Name="Key Contacts" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/loc" Tagging="False" />
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column4" ID="" Tagging="False">
@@ -95,9 +99,9 @@
 								<Property Name="_Sys_Nav_HoverText" Value="news" Type="Local" />
 
 								<Term Name="Announcements" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Fast Forward" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Management Appointments" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Better Business" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="Fast Forward" ID="" Language="1033" Description="" NavigateUrl="http://thebiz-gbchq/globalsites/communications/GFast%20Forward/" Tagging="False" />
+								<Term Name="Management Appointments" ID="" Language="1033" Description="" NavigateUrl="https://rbcom.sharepoint.com/sites/dev-pah/news/SitePages/Categories.aspx?CategoryId=6&amp;CategoryTitle=RB%20Appointments" Tagging="False" />
+								<Term Name="Better Business" ID="" Language="1033" Description="" NavigateUrl="https://rbcom.sharepoint.com/sites/dev-pah/news/SitePages/Categories.aspx?CategoryId=5&amp;CategoryTitle=RB%20Better%20Business" Tagging="False" />
 								<Term Name="RB in the News" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
 							</Term>
 						</Term>
@@ -109,10 +113,10 @@
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="investors and media" Type="Local" />
 
-								<Term Name="Corporate Governance" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Investor Information" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Press Coverage" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Press Releases" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="Corporate Governance" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/investors-media/corporate-governance" Tagging="False" />
+								<Term Name="Investor Information" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/investors-media/investor-information" Tagging="False" />
+								<Term Name="Press Coverage" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/investors-media/the-talk-about-rb" Tagging="False" />
+								<Term Name="Press Releases" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/investors-media/announcements-and-presentations" Tagging="False" />
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column3" ID="" Tagging="False">
@@ -144,40 +148,40 @@
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="category" Type="Local" />
 
-								<Term Name="CMI" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Brandhub" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Health" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Hygiene DSP" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Hygiene GPPC" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Home" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Marketing Excellence" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="GBI Computer News and Intelligence" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Media" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="R and D" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="CMI" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cmi/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Brandhub" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/mrm/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Health" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cat-hlth/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Hygiene DSP" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cat-hygd/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Hygiene GPPC" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cat-hygg/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Home" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cat-hom/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Marketing Excellence" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cat-mx/Pages/Home.aspx" Tagging="False" />
+								<Term Name="GBI Computer News and Intelligence" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/gbi/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Media" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cat-med/Pages/Home.aspx" Tagging="False" />
+								<Term Name="R and D" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/cat-rd/Pages/Home.aspx" Tagging="False" />
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column2" ID="" Tagging="False">
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
 							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
-							<Term Name="Finance" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
+							<Term Name="Finance" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/fn/Pages/default.aspx" Tagging="False">
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="finance" Type="Local" />
 
-								<Term Name="Corporate Control" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="Internal Audit" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="Corporate Control" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/fn/cc/Pages/Home.aspx" Tagging="False" />
+								<Term Name="Internal Audit" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/fn/ia/Pages/Home.aspx" Tagging="False" />
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column3" ID="" Tagging="False">
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
 							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
-							<Term Name="HR" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
+							<Term Name="HR" ID="" Language="1033" Description="" NavigateUrl="http://myrb/" Tagging="False">
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="hr" Type="Local" />
 
 							</Term>
-							<Term Name="Legal" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
+							<Term Name="Legal" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/LG/iLegal/Pages/default.aspx" Tagging="False">
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="legal" Type="Local" />
 
@@ -187,18 +191,19 @@
 							<Property Name="_Rb_Nav_Type" Value="Column" Type="Local" />
 							<Property Name="_Rb_Nav_CssClass" Value="nav-column" Type="Local" />
 
-							<Term Name="Information Services" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
+							<Term Name="Information Services" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/Pages/Home.aspx" Tagging="False">
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="information services" Type="Local" />
 
-								<Term Name="Assist" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="CC-GRC" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="PD-TPS" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="PD-IOS" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="PD-ISGS" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="PD-UTS EXT" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="CC-GSIS" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
-								<Term Name="PD-CSR" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False" />
+								<Term Name="Assist" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/GlobalUTS/Pages/Home.aspx" Tagging="False" />
+								<Term Name="CC-GRC" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/GRC/Pages/default.aspx" Tagging="False" />
+								<Term Name="PD-TPS" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/TPS/Pages/default.aspx" Tagging="False" />
+								<Term Name="PD-IOS" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/IOS/Pages/default.aspx" Tagging="False" />
+								<Term Name="PD-ISGS" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/ISGS/default.aspx" Tagging="False" />
+								<Term Name="PD-UTS EXT" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/GlobalUTS/VendorPo/Pages/default.aspx" Tagging="False" />
+								<Term Name="PDS-INT" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/GlobalUTS/UTSGroup/Pages/default.aspx" Tagging="False" />
+								<Term Name="CC-GSIS" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/cc/GSIS/Pages/default.aspx" Tagging="False" />
+								<Term Name="PD-CSR" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/is/PD/CSR/Pages/default.aspx" Tagging="False" />
 							</Term>
 						</Term>
 						<Term Name="{ParentTermName}-Column5" ID="" Tagging="False">
@@ -210,12 +215,12 @@
 								<Property Name="_Sys_Nav_HoverText" Value="rbp" Type="Local" />
 
 							</Term>
-							<Term Name="Supply" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
+							<Term Name="Supply" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/sc/Pages/home.aspx" Tagging="False">
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="supply" Type="Local" />
 
 							</Term>
-							<Term Name="Sales" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
+							<Term Name="Sales" ID="" Language="1033" Description="" NavigateUrl="http://buzz/Sites/sales/Pages/Home.aspx" Tagging="False">
 								<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
 								<Property Name="_Sys_Nav_HoverText" Value="sales" Type="Local" />
 
@@ -286,25 +291,28 @@
 					</Term>
 				</TermSet>
 
-				<TermSet Name="SideNavigation-0" ID="{18278814-4c62-4a77-8478-723d27f4369f}" Language="1033" Navigation="True" Tagging="False" Open="False" Description="This is a sample 3-level side navigation datasource.">
+				<TermSet Name="SideNavigation-0" ID="{18278814-4c62-4a77-8478-723d27f4369f}" Language="1033" Navigation="True" Tagging="True" Open="False" Description="This is a sample 3-level side navigation datasource.">
 					<Term Name="Home" ID="" Language="1033" Description="side navigation home" NavigateUrl="http://google.com?q=Home" Tagging="False">
 						<Property Name="_Sys_Nav_HoverText" Value="side navigation home hovertext" Type="Local" />
 						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
 						<Property Name="_Rb_Nav_CssClass" Value="nav-root-node" Type="Local" />
+						<Property Name="_Rb_Nav_Icon" Value="fa fa-home" />
 						
 						<Term Name="Documents" ID="" Language="1033" Description="documents node" NavigateUrl="http://google.com?documents" Tagging="False">
 							<Property Name="_Sys_Nav_HoverText" Value="side navigation documents hovertext" Type="Local" />
 							<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
-							<Property Name="_Rb_Nav_CssClass" Value="nav-sub-node" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-section-node" Type="Local" />
+							<Property Name="_Rb_Nav_Icon" Value="fa fa-file-word-o" />
 
-							<Term Name="Doclib 1" ID="" Language="1033" Description="Doclib 1?" NavigateUrl="http://google.com?q=Doclib2" Tagging="False" />
+							<Term Name="Doclib 1" ID="" Language="1033" Description="Doclib 1?" NavigateUrl="http://google.com?q=Doclib2" Tagging="False"></Term>
 							<Term Name="Doclib 2" ID="" Language="1033" Description="Doclib 2?" NavigateUrl="http://google.com?q=Doclib2" Tagging="False" />
 							<Term Name="Doclib 3" ID="" Language="1033" Description="Doclib 3?" NavigateUrl="http://google.com?q=Doclib3" Tagging="False" />
 						</Term>
 						<Term Name="Lists" ID="" Language="1033" Description="lists node" NavigateUrl="http://google.com?lists" Tagging="False">
 							<Property Name="_Sys_Nav_HoverText" Value="side navigation lists hovertext" Type="Local" />
 							<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
-							<Property Name="_Rb_Nav_CssClass" Value="nav-sub-node" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-section-node" Type="Local" />
+							<Property Name="_Rb_Nav_Icon" Value="fa fa-file-text-o" />
 
 							<Term Name="List 1" ID="" Language="1033" Description="List 1?" NavigateUrl="http://google.com?q=List1" Tagging="False" />
 							<Term Name="List 2" ID="" Language="1033" Description="List 2?" NavigateUrl="http://google.com?q=List2" Tagging="False" />
@@ -315,11 +323,12 @@
 						<Property Name="_Sys_Nav_HoverText" Value="side navigation apps hovertext" Type="Local" />
 						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
 						<Property Name="_Rb_Nav_CssClass" Value="nav-root-node" Type="Local" />
+						<Property Name="_Rb_Nav_Icon" Value="fa fa-code" />
 						
 						<Term Name="Management" ID="" Language="1033" Description="management node" NavigateUrl="http://google.com?management" Tagging="False">
 							<Property Name="_Sys_Nav_HoverText" Value="side navigation management hovertext" Type="Local" />
 							<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
-							<Property Name="_Rb_Nav_CssClass" Value="nav-sub-node" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-section-node" Type="Local" />
 
 							<Term Name="Admin 1" ID="" Language="1033" Description="Admin 1?" NavigateUrl="http://google.com?q=Admin2" Tagging="False" />
 							<Term Name="Admin 2" ID="" Language="1033" Description="Admin 2?" NavigateUrl="http://google.com?q=Admin2" Tagging="False" />
@@ -328,7 +337,7 @@
 						<Term Name="Reporting" ID="" Language="1033" Description="Reporting node" NavigateUrl="http://google.com?Reporting" Tagging="False">
 							<Property Name="_Sys_Nav_HoverText" Value="side navigation Reporting hovertext" Type="Local" />
 							<Property Name="_Rb_Nav_Type" Value="Section" Type="Local" />
-							<Property Name="_Rb_Nav_CssClass" Value="nav-sub-node" Type="Local" />
+							<Property Name="_Rb_Nav_CssClass" Value="nav-section-node" Type="Local" />
 
 							<Term Name="Report 1" ID="" Language="1033" Description="Report 1?" NavigateUrl="http://google.com?q=Report2" Tagging="False" />
 							<Term Name="Report 2" ID="" Language="1033" Description="Report 2?" NavigateUrl="http://google.com?q=Report2" Tagging="False" />
