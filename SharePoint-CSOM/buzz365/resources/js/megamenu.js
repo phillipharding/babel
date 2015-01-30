@@ -121,232 +121,232 @@
 	} /* end of RB.Masterpage.Storage */
 
 	RB.Masterpage.TaxonomyDatastore = function( termSetId, cacheType, cacheDurationHours ) {
-		if ( typeof( cacheType ) === 'undefined' ) cacheType = RB.Storagetype.local;
-		if ( typeof( cacheDurationHours ) === 'undefined' ) cacheDurationHours = 24 * 60 * 60;
-		else if ( typeof( cacheDurationHours ) === 'number' && cacheDurationHours >= 0 ) cacheDurationHours = cacheDurationHours * 60 * 60;
-		else cacheDurationHours = -1;
+			if ( typeof( cacheType ) === 'undefined' ) cacheType = RB.Storagetype.local;
+			if ( typeof( cacheDurationHours ) === 'undefined' ) cacheDurationHours = 24 * 60 * 60;
+			else if ( typeof( cacheDurationHours ) === 'number' && cacheDurationHours >= 0 ) cacheDurationHours = cacheDurationHours * 60 * 60;
+			else cacheDurationHours = -1;
 
-		termSetId = termSetId.replace( /[{}]*/gi, '' );
-		var self = this;
-		this.Id = termSetId.replace( /-/gi, '' );
-		this.cache = cacheDurationHours >= 0 ? new RB.Masterpage.Storage( 'RB$Datastore-' + this.Id, cacheDurationHours, cacheType, [ 'Markup' ] ) : null;
-		this.Tag = this.Id;
-		this.initialise = initialise.bind( this );
-		this.render = renderTerms.bind( this );
-		this.isInitialised = new $.Deferred();
-		this.nodes = [];
+			termSetId = termSetId.replace( /[{}]*/gi, '' );
+			var self = this;
+			this.Id = termSetId.replace( /-/gi, '' );
+			this.cache = cacheDurationHours >= 0 ? new RB.Masterpage.Storage( 'RB$Datastore-' + this.Id, cacheDurationHours, cacheType, [ 'Markup' ] ) : null;
+			this.Tag = this.Id;
+			this.initialise = initialise.bind( this );
+			this.render = renderTerms.bind( this );
+			this.isInitialised = new $.Deferred();
+			this.nodes = [];
 
-		RB.Masterpage.TaxonomyDatastore.Instances = RB.Masterpage.TaxonomyDatastore.Instances || [];
-		RB.Masterpage.TaxonomyDatastore.Instances.push( this );
-		return this;
+			RB.Masterpage.TaxonomyDatastore.Instances = RB.Masterpage.TaxonomyDatastore.Instances || {};
+			RB.Masterpage.TaxonomyDatastore.Instances[ this.Id ] = this;
+			return this;
 
-		function initialise() {
-			log( 'TaxonomyDatastore>> [' + this.Id + '] cache type is ' + ( this.cache ? this.cache.storageType : 'disabled' ) );
-			if ( this.cache && this.cache.hasValue() && !this.cache.isExpired() ) {
-				log( 'TaxonomyDatastore>> [' + this.Id + '] datasource being served from cache' );
-				var cached = JSON.parse( this.cache.getValue() );
-				this.Tag = cached.Tag;
-				this.nodes = cached.nodes;
-				this.isInitialised.resolve( this );
-				return;
-			}
-			SP.SOD.loadMultiple( [ 'sp.js' ], function() {
-				log( 'TaxonomyDatastore>> SP.js loaded' );
-				SP.SOD.registerSod( 'sp.taxonomy.js', SP.Utilities.Utility.getLayoutsPageUrl( 'sp.taxonomy.js' ) );
-				SP.SOD.loadMultiple( [ 'sp.taxonomy.js' ], function() {
-					log( 'TaxonomyDatastore>> sp.taxonomy.js loaded' );
-					var
-						ctx = SP.ClientContext.get_current(),
-						taxonomySession = SP.Taxonomy.TaxonomySession.getTaxonomySession( ctx ),
-						termStore = taxonomySession.getDefaultSiteCollectionTermStore(),
-						termSet = termStore.getTermSet( termSetId ),
-						terms = termSet.getAllTerms();
-					ctx.load( termSet );
-					ctx.load( terms );
-					ctx.executeQueryAsync( function( sender, args ) {
-						self.Tag = termSet.get_name().replace( / /gi, '' ) + '-' + self.Id
-						buildTermNodeTreeFromFlatList.call( self, terms, termSet );
-					}, function( sender, args ) {
-						/* handle error */
-						var m = args.get_message();
-						throw new Error( String.format( "TaxonomyDatastore>> [{1}] error: {0}", m, self.Id ) );
+			function initialise() {
+				log( 'TaxonomyDatastore>> [' + this.Id + '] cache type is ' + ( this.cache ? this.cache.storageType : 'disabled' ) );
+				if ( this.cache && this.cache.hasValue() && !this.cache.isExpired() ) {
+					log( 'TaxonomyDatastore>> [' + this.Id + '] datasource being served from cache' );
+					var cached = JSON.parse( this.cache.getValue() );
+					this.Tag = cached.Tag;
+					this.nodes = cached.nodes;
+					this.isInitialised.resolve( this );
+					return;
+				}
+				SP.SOD.loadMultiple( [ 'sp.js' ], function() {
+					log( 'TaxonomyDatastore>> SP.js loaded' );
+					SP.SOD.registerSod( 'sp.taxonomy.js', SP.Utilities.Utility.getLayoutsPageUrl( 'sp.taxonomy.js' ) );
+					SP.SOD.loadMultiple( [ 'sp.taxonomy.js' ], function() {
+						log( 'TaxonomyDatastore>> sp.taxonomy.js loaded' );
+						var
+							ctx = SP.ClientContext.get_current(),
+							taxonomySession = SP.Taxonomy.TaxonomySession.getTaxonomySession( ctx ),
+							termStore = taxonomySession.getDefaultSiteCollectionTermStore(),
+							termSet = termStore.getTermSet( termSetId ),
+							terms = termSet.getAllTerms();
+						ctx.load( termSet );
+						ctx.load( terms );
+						ctx.executeQueryAsync( function( sender, args ) {
+							self.Tag = termSet.get_name().replace( / /gi, '' ) + '-' + self.Id
+							buildTermNodeTreeFromFlatList.call( self, terms, termSet );
+						}, function( sender, args ) {
+							/* handle error */
+							var m = args.get_message();
+							throw new Error( String.format( "TaxonomyDatastore>> [{1}] error: {0}", m, self.Id ) );
+						} );
 					} );
 				} );
-			} );
-		}
+			}
 
-		function buildTermNodeTreeFromFlatList( terms, termSet ) {
-			var
-				termsEnumerator = terms.getEnumerator(),
-				nodeTree = {
-					customSortOrder: termSet && termSet.get_customSortOrder ? termSet.get_customSortOrder() || '' : '',
-					childNodes: []
-				};
-
-			/* iterate each term */
-			while ( termsEnumerator.moveNext() ) {
+			function buildTermNodeTreeFromFlatList( terms, termSet ) {
 				var
-					currentTerm = termsEnumerator.get_current(),
-					currentTermProperties = currentTerm.get_localCustomProperties(),
-					currentTermNodeType = currentTermProperties[ "_Rb_Nav_Type" ] || '',
-					currentTermPath = currentTerm.get_pathOfTerm().split( ';' ),
-					currentChildNodes = nodeTree.childNodes;
-
-				/* iterate each segment of the current terms path */
-				for ( var i = 0; i < currentTermPath.length; i++ ) {
-					var foundNode = false;
-					/* find this node in the current set of childNodes */
-					for ( var z = 0; z < currentChildNodes.length; z++ ) {
-						if ( currentChildNodes[ z ].name === currentTermPath[ i ] ) {
-							foundNode = true;
-							break;
-						}
-					}
-					/* select the child node for the current term path, OR, create a new one */
-					var termNode = foundNode ? currentChildNodes[ z ] : {
-						name: currentTermPath[ i ],
+					termsEnumerator = terms.getEnumerator(),
+					nodeTree = {
+						customSortOrder: termSet && termSet.get_customSortOrder ? termSet.get_customSortOrder() || '' : '',
 						childNodes: []
 					};
 
-					/* if we're the last term path segment, add the term properties */
-					if ( i === currentTermPath.length - 1 ) {
-						termNode.properties = {};
-						termNode.nodeType = currentTermNodeType;
-						termNode.title = currentTerm.get_name();
-						termNode.termId = currentTerm.get_id().toString();
-						termNode.customSortOrder = currentTerm.get_customSortOrder ? currentTerm.get_customSortOrder() || '' : '';
-						termNode.cssClass = currentTermProperties[ "_Rb_Nav_CssClass" ] || '';
-						if ( !currentTermNodeType.match( /column/gi ) ) {
-							if ( currentTermNodeType === 'Section' ) {
-								if ( currentTermProperties[ "_Sys_Nav_SimpleLinkUrl" ] ) {
+				/* iterate each term */
+				while ( termsEnumerator.moveNext() ) {
+					var
+						currentTerm = termsEnumerator.get_current(),
+						currentTermProperties = currentTerm.get_localCustomProperties(),
+						currentTermNodeType = currentTermProperties[ "_Rb_Nav_Type" ] || '',
+						currentTermPath = currentTerm.get_pathOfTerm().split( ';' ),
+						currentChildNodes = nodeTree.childNodes;
+
+					/* iterate each segment of the current terms path */
+					for ( var i = 0; i < currentTermPath.length; i++ ) {
+						var foundNode = false;
+						/* find this node in the current set of childNodes */
+						for ( var z = 0; z < currentChildNodes.length; z++ ) {
+							if ( currentChildNodes[ z ].name === currentTermPath[ i ] ) {
+								foundNode = true;
+								break;
+							}
+						}
+						/* select the child node for the current term path, OR, create a new one */
+						var termNode = foundNode ? currentChildNodes[ z ] : {
+							name: currentTermPath[ i ],
+							childNodes: []
+						};
+
+						/* if we're the last term path segment, add the term properties */
+						if ( i === currentTermPath.length - 1 ) {
+							termNode.properties = {};
+							termNode.nodeType = currentTermNodeType;
+							termNode.title = currentTerm.get_name();
+							termNode.termId = currentTerm.get_id().toString();
+							termNode.customSortOrder = currentTerm.get_customSortOrder ? currentTerm.get_customSortOrder() || '' : '';
+							termNode.cssClass = currentTermProperties[ "_Rb_Nav_CssClass" ] || '';
+							if ( !currentTermNodeType.match( /column/gi ) ) {
+								if ( currentTermNodeType === 'Section' ) {
+									if ( currentTermProperties[ "_Sys_Nav_SimpleLinkUrl" ] ) {
+										termNode.navigateUrl = currentTermProperties[ "_Sys_Nav_SimpleLinkUrl" ] || '';
+										termNode.hoverText = currentTermProperties[ "_Sys_Nav_HoverText" ] || '';
+									}
+									termNode.properties = currentTermProperties;
+								} else if ( currentTermNodeType === 'Root' ) {
 									termNode.navigateUrl = currentTermProperties[ "_Sys_Nav_SimpleLinkUrl" ] || '';
 									termNode.hoverText = currentTermProperties[ "_Sys_Nav_HoverText" ] || '';
+									termNode.properties = currentTermProperties;
+								} else {
+									/* termNode.term = currentTerm; */
+									termNode.description = currentTerm.get_description() || '';
+									termNode.navigateUrl = currentTermProperties[ "_Sys_Nav_SimpleLinkUrl" ] || '';
+									termNode.hoverText = currentTermProperties[ "_Sys_Nav_HoverText" ] || '';
+									termNode.properties = currentTermProperties;
 								}
-								termNode.properties = currentTermProperties;
-							} else if ( currentTermNodeType === 'Root' ) {
-								termNode.navigateUrl = currentTermProperties[ "_Sys_Nav_SimpleLinkUrl" ] || '';
-								termNode.hoverText = currentTermProperties[ "_Sys_Nav_HoverText" ] || '';
-								termNode.properties = currentTermProperties;
-							} else {
-								/* termNode.term = currentTerm; */
-								termNode.description = currentTerm.get_description() || '';
-								termNode.navigateUrl = currentTermProperties[ "_Sys_Nav_SimpleLinkUrl" ] || '';
-								termNode.hoverText = currentTermProperties[ "_Sys_Nav_HoverText" ] || '';
-								termNode.properties = currentTermProperties;
+							}
+						}
+
+						/* if there was a termnode for the current term path, set the current childNodes as that termNodes child nodes for the next term path iteration */
+						if ( foundNode ) {
+							currentChildNodes = termNode.childNodes;
+						} else {
+							/* we created a new termNode for the current term path, add it to the current set of childNodes */
+							currentChildNodes.push( termNode );
+
+							/* if this term path is not the last, set the current childNodes as that termNodes child nodes for the next term path iteration */
+							if ( i !== currentTermPath.length - 1 ) {
+								currentChildNodes = termNode.childNodes;
 							}
 						}
 					}
+				}
 
-					/* if there was a termnode for the current term path, set the current childNodes as that termNodes child nodes for the next term path iteration */
-					if ( foundNode ) {
-						currentChildNodes = termNode.childNodes;
+				var n = applySortOrdering( nodeTree );
+				this.nodes = n && n.childNodes ? n.childNodes : [];
+				/* cache the built data tree */
+				if ( this.cache ) {
+					this.cache.setValue( JSON.stringify( this ) );
+				}
+				/* signal the datasource is initialised */
+				this.isInitialised.resolve( this );
+			}
+
+			function applySortOrdering( nodeTree ) {
+				/* if the node has child nodes and a custom sort order property, sort this nodes child nodes */
+				if ( nodeTree.childNodes.length && typeof( nodeTree.customSortOrder ) !== 'undefined' ) {
+					var sortOrder = nodeTree.customSortOrder || '';
+
+					/* if sortOrder is not null, the custom sort order is a string of term id's (guids), delimited by a : */
+					if ( sortOrder && sortOrder.length ) {
+						sortOrder = sortOrder.split( ':' );
+						nodeTree.childNodes.sort( function( a, b ) {
+							var
+								idxA = sortOrder.indexOf( a.termId ),
+								idxB = sortOrder.indexOf( b.termId );
+							if ( idxA > idxB ) {
+								return 1;
+							} else if ( idxA < idxB ) {
+								return -1;
+							}
+							return 0;
+						} );
 					} else {
-						/* we created a new termNode for the current term path, add it to the current set of childNodes */
-						currentChildNodes.push( termNode );
-
-						/* if this term path is not the last, set the current childNodes as that termNodes child nodes for the next term path iteration */
-						if ( i !== currentTermPath.length - 1 ) {
-							currentChildNodes = termNode.childNodes;
-						}
+						/* if sortOrder is falsey, sort nodes by title */
+						nodeTree.childNodes.sort( function( a, b ) {
+							if ( a.title > b.title ) {
+								return 1;
+							} else if ( a.title < b.title ) {
+								return -1;
+							}
+							return 0;
+						} );
 					}
 				}
+
+				/* now sort the child nodes of each child node */
+				for ( var i = 0; i < nodeTree.childNodes.length; i++ ) {
+					nodeTree.childNodes[ i ] = applySortOrdering( nodeTree.childNodes[ i ] );
+				}
+				return nodeTree;
 			}
 
-			var n = applySortOrdering( nodeTree );
-			this.nodes = n && n.childNodes ? n.childNodes : [];
-			/* cache the built data tree */
-			if ( this.cache ) {
-				this.cache.setValue( JSON.stringify( this ) );
-			}
-			/* signal the datasource is initialised */
-			this.isInitialised.resolve( this );
-		}
+			function renderTerms( domContainer, renderer ) {
+				if ( typeof( domContainer ) === 'undefined' || !domContainer ) {
+					throw new Error( 'TaxonomyDatastore>> [' + this.Id + '] no domContainer parameter supplied!' );
+				}
+				var isCached = this.cache && this.cache.hasValue( 'Markup' );
+				if ( window.console ) {
+					if ( isCached ) {
+						log( 'TaxonomyDatastore>> [' + this.Id + '] Markup being served from cache' );
+					}
+					log( 'TaxonomyDatastore>> render [' + this.Id + '][' + this.Tag + '] at ' + domContainer );
+				}
 
-		function applySortOrdering( nodeTree ) {
-			/* if the node has child nodes and a custom sort order property, sort this nodes child nodes */
-			if ( nodeTree.childNodes.length && typeof( nodeTree.customSortOrder ) !== 'undefined' ) {
-				var sortOrder = nodeTree.customSortOrder || '';
+				var $domContainer = null;
+				if ( typeof( domContainer ) === 'string' ) {
+					$domContainer = $( domContainer );
+				} else if ( typeof( domContainer ) === 'object' && domContainer && domContainer.html ) {
+					/* assume domContainer is a jQuery object */
+					$domContainer = domContainer;
+				}
 
-				/* if sortOrder is not null, the custom sort order is a string of term id's (guids), delimited by a : */
-				if ( sortOrder && sortOrder.length ) {
-					sortOrder = sortOrder.split( ':' );
-					nodeTree.childNodes.sort( function( a, b ) {
-						var
-							idxA = sortOrder.indexOf( a.termId ),
-							idxB = sortOrder.indexOf( b.termId );
-						if ( idxA > idxB ) {
-							return 1;
-						} else if ( idxA < idxB ) {
-							return -1;
-						}
-						return 0;
-					} );
-				} else {
-					/* if sortOrder is falsey, sort nodes by title */
-					nodeTree.childNodes.sort( function( a, b ) {
-						if ( a.title > b.title ) {
-							return 1;
-						} else if ( a.title < b.title ) {
-							return -1;
-						}
-						return 0;
-					} );
+				var markup = isCached ? [ this.cache.getValue( 'Markup' ) ] : [];
+				if ( !isCached || !markup.length ) {
+					/* invalid or no cached markup - build it using the supplied renderer */
+					isCached = false;
+					markup = [];
+
+					if ( renderer && ( typeof( renderer ) === 'object' ) && renderer.renderAsString && typeof( renderer.renderAsString ) === 'function' ) {
+						var m = renderer.renderAsString( this.nodes, $domContainer );
+						if ( m && m.length )
+							markup.push( m );
+					} else {
+						throw new Error( "TaxonomyDatastore>> No Renderer supplied, or Renderer supplied does not have a 'renderAsString(...)' method!" );
+					}
+				}
+
+				markup = markup.join( '' );
+				if ( $domContainer && markup ) {
+					$domContainer.html( markup );
+				}
+
+				if ( !isCached && this.cache && markup && markup.length ) {
+					this.cache.setValue( markup, 'Markup' );
 				}
 			}
-
-			/* now sort the child nodes of each child node */
-			for ( var i = 0; i < nodeTree.childNodes.length; i++ ) {
-				nodeTree.childNodes[ i ] = applySortOrdering( nodeTree.childNodes[ i ] );
-			}
-			return nodeTree;
 		}
-
-		function renderTerms( domContainer, renderer ) {
-			if ( typeof( domContainer ) === 'undefined' || !domContainer ) {
-				throw new Error( 'TaxonomyDatastore>> [' + this.Id + '] no domContainer parameter supplied!' );
-			}
-			var isCached = this.cache && this.cache.hasValue( 'Markup' );
-			if ( window.console ) {
-				if ( isCached ) {
-					log( 'TaxonomyDatastore>> [' + this.Id + '] Markup being served from cache' );
-				}
-				log( 'TaxonomyDatastore>> render [' + this.Id + '][' + this.Tag + '] at ' + domContainer );
-			}
-
-			var $domContainer = null;
-			if ( typeof( domContainer ) === 'string' ) {
-				$domContainer = $( domContainer );
-			} else if ( typeof( domContainer ) === 'object' && domContainer && domContainer.html ) {
-				/* assume domContainer is a jQuery object */
-				$domContainer = domContainer;
-			}
-
-			var markup = isCached ? [ this.cache.getValue( 'Markup' ) ] : [];
-			if ( !isCached || !markup.length ) {
-				/* invalid or no cached markup - build it using the supplied renderer */
-				isCached = false;
-				markup = [];
-
-				if ( renderer && ( typeof( renderer ) === 'object' ) && renderer.renderAsString && typeof( renderer.renderAsString ) === 'function' ) {
-					var m = renderer.renderAsString( this.nodes, $domContainer );
-					if ( m && m.length )
-						markup.push( m );
-				} else {
-					throw new Error( "TaxonomyDatastore>> No Renderer supplied, or Renderer supplied does not have a 'renderAsString(...)' method!" );
-				}
-			}
-
-			markup = markup.join( '' );
-			if ( $domContainer && markup ) {
-				$domContainer.html( markup );
-			}
-
-			if ( !isCached && this.cache && markup && markup.length ) {
-				this.cache.setValue( markup, 'Markup' );
-			}
-		}
-	}
-	/* end of RB.Masterpage.TaxonomyDatastore */
+		/* end of RB.Masterpage.TaxonomyDatastore */
 
 
 	RB.Masterpage.Megamenu = function() {
@@ -387,7 +387,7 @@
 					} else icon = '';
 				}
 				if ( target && target.length ) {
-					target = target.match( /^true$/gi ) ? '_blank:' : '';
+					target = target.match( /^true$/gi ) ? '_blank' : '';
 				}
 
 				node.title = node.title.replace( /[_]*$/gi, '' ).replace( / and /gi, ' & ' );
