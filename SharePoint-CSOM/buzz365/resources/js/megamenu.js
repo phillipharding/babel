@@ -256,7 +256,7 @@
 				this.nodes = n && n.childNodes ? n.childNodes : [];
 				/* cache the built data tree */
 				if ( this.cache ) {
-					this.cache.setValue( JSON.stringify( this ) );
+					this.cache.setValue( JSON.stringify( { Tag: this.Tag, nodes: [] } ) );
 				}
 				/* signal the datasource is initialised */
 				this.isInitialised.resolve( this );
@@ -503,7 +503,7 @@
 				var
 					perWebTermSetId = webProperties[ "RbMasterpageMegaMenuTermsetId" ],
 					megaTermsetId = typeof( perWebTermSetId ) === 'string' && perWebTermSetId && perWebTermSetId.length ? perWebTermSetId : '966c85b8-5344-4350-a22b-79335e3906c7',
-					cacheDurationHours = 24,
+					cacheDurationHours = 168, /* 1 week */
 					taxDs = new RB.Masterpage.TaxonomyDatastore( megaTermsetId, RB.Storagetype.local, cacheDurationHours );
 				taxDs.initialise();
 				taxDs.isInitialised.done( OnDatastoreReady );

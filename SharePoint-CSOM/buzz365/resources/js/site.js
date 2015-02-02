@@ -22,6 +22,7 @@ RB.Masterpage = function() {
 			LoadSPServices: RB$Masterpage$LoadSPServices,
 			IsValidType: RB$Masterpage$IsValidType,
 			Log: RB$Masterpage$Log,
+			ClearLocalStorage: RB$Masterpage$ClearLocalStorage,
 			LoadResourceFromTenantRoot: RB$Masterpage$LoadResourceFromTenantRoot,
 			LoadResourceFromSiteCollection: RB$Masterpage$LoadResourceFromSiteCollection,
 			LoadAllResources: RB$Masterpage$LoadAllResources,
@@ -179,11 +180,21 @@ RB.Masterpage = function() {
 		return typeof r !== 'undefined';
 	}
 
+	function RB$Masterpage$ClearLocalStorage(message) {
+		try {
+			for(var key in localStorage) {
+				if (key.match(/^RB\$/gi)) {
+					localStorage.removeItem(key);
+				}
+			}
+		} catch (e) {
+		}
+	}
+
 	function RB$Masterpage$Log(message) {
 		if (message && message.length && window.console && window.console.log) {
 			window.console.log('[['+(new Date().format('HH:mm:ss.fff'))+']] '+message);
 		}
-		return;
 	}
 
 	function RB$Masterpage$LoadResourceFromTenantRoot(url, afterUi) {

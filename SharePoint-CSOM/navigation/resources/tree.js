@@ -77,7 +77,7 @@
 			termsetId = '1db4f02a-d182-499e-8f3b-dc32bb00e253',
 			cacheDisabled = -1,
 			cacheDurationHours = 24,
-			taxDs = new RB.Masterpage.TaxonomyDatastore( termsetId, RB.Storagetype.session, cacheDurationHours );
+			taxDs = new RB.Masterpage.TaxonomyDatastore( termsetId, RB.Storagetype.local, cacheDurationHours );
 		if ( window.console ) {
 			window.console.log( 'Tree.js>> TaxonomyDatastore [' + taxDs.Tag + '] ' + durStartTime.format( 'yyyy-MM-dd HH:mm:ss.fff' ) );
 		}

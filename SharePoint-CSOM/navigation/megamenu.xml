@@ -24,7 +24,7 @@
 									<Property Name="_Rb_Nav_NewWindow" Value="true" />
 								</Term>
 								<Term Name="Global Company Factsheet" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Global-Corporate-Fact-Sheet.pdf" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
-								<Term Name="Latest Corporate Presentation" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Global-Corporate-Fact-Sheet.pdf" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
+								<Term Name="Latest Corporate Presentation" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Corporate Presentation 2014.ppt" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
 								<Term Name="Corporate Brochure" ID="" Language="1033" Description="" NavigateUrl="http://buzzdev/sites/Comms/Other/Documents/Corporate%20Brochure.pdf" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
 								<Term Name="Vision and Values" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/rb-worldwide/vision-values" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
 								<Term Name="RB Brands" ID="" Language="1033" Description="" NavigateUrl="http://www.rb.com/our-brands" Tagging="False"><Property Name="_Rb_Nav_Icon" Value="" /></Term>
@@ -292,10 +292,19 @@
 				</TermSet>
 
 				<TermSet Name="SideNavigation-0" ID="{18278814-4c62-4a77-8478-723d27f4369f}" Language="1033" Navigation="True" Tagging="True" Open="False" Description="This is a sample 3-level side navigation datasource.">
+					<Term Name="Navigation" ID="" Language="1033" Description="" NavigateUrl="" Tagging="False">
+						<Property Name="_Rb_Nav_CssClass" Value="homenode" Type="Local" />
+						<Property Name="_Sys_Nav_HoverText" Value="your side navigation" Type="Local" />
+					</Term>
+					<Term Name="Category" ID="" Language="1033" Description="" NavigateUrl="http://buzz/sites/cat" Tagging="False">
+						<Property Name="_Sys_Nav_HoverText" Value="go to category" Type="Local" />
+						<Property Name="_Rb_Nav_Icon" Value="fa fa-gears" />
+						<Property Name="_Rb_Nav_NewWindow" Value="true" />
+					</Term>
 					<Term Name="Home" ID="" Language="1033" Description="side navigation home" NavigateUrl="http://google.com?q=Home" Tagging="False">
 						<Property Name="_Sys_Nav_HoverText" Value="side navigation home hovertext" Type="Local" />
 						<Property Name="_Rb_Nav_Type" Value="Root" Type="Local" />
-						<Property Name="_Rb_Nav_CssClass" Value="nav-root-node" Type="Local" />
+						<Property Name="_Rb_Nav_CssClass" Value="nav-root-node open" Type="Local" />
 						<Property Name="_Rb_Nav_Icon" Value="fa fa-home" />
 						
 						<Term Name="Documents" ID="" Language="1033" Description="documents node" NavigateUrl="http://google.com?documents" Tagging="False">
