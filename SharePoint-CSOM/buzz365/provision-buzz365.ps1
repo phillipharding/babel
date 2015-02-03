@@ -44,24 +44,22 @@ Write-Host "Connected.`n"
 $configurationName = "Masterpage"
 $configurationId = $Configuration 
 $configurationPath = $cwd
-$configurationFiles = @("buzz365")
 
-$configurationFiles | ? { $_ -match ".*" } | % {
-    $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
+$configXml = Get-XMLFile "buzz365.xml" "$configurationPath" 
 
-    # get configuration
-    $configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName' and @ID='$configurationId']")
-    if ($configurationXml -eq $null) {
-        Write-Host "Could not find configuration [$configurationName#$configurationId]`n" -ForegroundColor Red
-        return
-    }
-    Write-Host "Applying Configuration [$configurationName#$configurationId] from '$configurationPath\$_.xml'`n$($configurationXml.Description) `n" -ForegroundColor Yellow
-    Write-Host "Press any key to continue..." -ForegroundColor Yellow
-    $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
-
-    if (-not (($x.VirtualKeyCode -eq 17) -and ($x.ControlKeyState -match "LeftCtrlPressed"))) {
-        Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
-        Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
-    }
+# get configuration
+$configurationXml = $configXml.selectSingleNode("*/Configuration[@Name='$configurationName' and @ID='$configurationId']")
+if ($configurationXml -eq $null) {
+    Write-Host "Could not find configuration [$configurationName#$configurationId]`n" -ForegroundColor Red
+    return
 }
+Write-Host "Applying Configuration [$configurationName#$configurationId] from '$configurationPath\$_.xml'`n$($configurationXml.Description) `n" -ForegroundColor Yellow
+Write-Host "Press any key to continue..." -ForegroundColor Yellow
+$x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
+
+if (-not (($x.VirtualKeyCode -eq 17) -and ($x.ControlKeyState -match "LeftCtrlPressed"))) {
+    Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
+    Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
+}
+
 "Done."

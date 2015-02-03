@@ -98,23 +98,31 @@ function Add-CSOM {
         }
     }
     
+    Write-Host "SharePoint Client Components: $CSOMdir" -ForegroundColor White 
     $CSOMdlls = Get-Item "$CSOMdir\*.dll" -exclude $excludeDlls
     
     ForEach ($dll in $CSOMdlls) {
-        [System.Reflection.Assembly]::LoadFrom($dll.FullName) | Out-Null
+        $assembly = [System.Reflection.Assembly]::LoadFrom($dll.FullName)
+        $an = $assembly.GetName()
+        Write-Host "`t[$($dll.VersionInfo.FileVersion)] $($an)" -ForegroundColor Yellow
     }
 
     Add-PSClientContext
 }
+
 function Add-TenantCSOM {
     $tenantDllPath = "${env:ProgramFiles}\SharePoint Client Components\16.0\Assemblies"
     if((Test-Path $tenantDllPath -pathType container) -ne $true) {
         Throw "Please install the SharePoint Online Client Components SDK[1]`n `n[1] http://www.microsoft.com/en-us/download/details.aspx?id=42038`n `n "
     }
 
+    Write-Host "Microsoft.Online.SharePoint.Client.Tenant.dll: $tenantDllPath" -ForegroundColor White 
     $tenantDll =  Get-Item "$tenantDllPath\Microsoft.Online.SharePoint.Client.Tenant.dll"
-    [System.Reflection.Assembly]::LoadFrom($tenantDll.FullName) | Out-Null
+    $assembly = [System.Reflection.Assembly]::LoadFrom($tenantDll.FullName)
+    $an = $assembly.GetName()
+    Write-Host "`t[$($tenantDll.VersionInfo.FileVersion)] $($an)" -ForegroundColor Yellow
 }
+
 function Add-PreloadedSPdlls {
 	[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SharePoint.Client") | Out-Null
 	[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.SharePoint.Client.Runtime") | Out-Null
