@@ -137,7 +137,8 @@ param(
       } else {
          $internalDlls = Get-Item "$assemblyPath\*.dll"
       }
-      Write-Host "Add-InternalDlls:: -exclude `"$excludeDlls`"" -ForegroundColor White
+      Write-Host "Add-InternalDlls" -ForegroundColor White -NoNewLine
+      Write-Host " -exclude `"$excludeDlls`"" -ForegroundColor Yellow
 
       ForEach ($dll in $internalDlls) {
          Write-Host "Add-InternalDlls:: -adding `"$($dll.FullName)`"" -ForegroundColor White

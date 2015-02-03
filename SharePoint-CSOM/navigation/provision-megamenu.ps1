@@ -1,24 +1,19 @@
 ﻿<#
     Example command lines
 
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/O365" -CredentialLabel "RB.COM SPO" -Configuration "2"
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/cccdev1" -CredentialLabel "RB.COM SPO" -Configuration "2"
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/sites/dev-pah" -CredentialLabel "RB.COM SPO" -Configuration "2"
-    .\provision-buzz365.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO" -Configuration "3"
+    .\provision-megamenu.ps1 -URL "https://rbcom.sharepoint.com/" -CredentialLabel "RB.COM SPO" -Configuration "0"
+    .\provision-megamenu.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "0"
+    .\provision-megamenu.ps1 -URL "http://pub.pdogs.local/" -CredentialLabel "OnPrem" -Configuration "0"
 
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/sites/publishing" -CredentialLabel "SPO" -Configuration "2"
-    .\provision-buzz365.ps1 -URL "https://platinumdogsconsulting.sharepoint.com/" -CredentialLabel "SPO" -Configuration "3"
 
     -Configuration;
-        "0" for minimal provisioning
-        "1" for full provisioning
-        "2" for Masterpage files only
-        "3" for Masterpage Resource files only
+        "0" for provisioning Taxonomy Termset
+
 #>
 param (
     [parameter(Mandatory=$false)][string]$URL = $null,
     [parameter(Mandatory=$false)][string]$CredentialLabel = $null,
-    [parameter(Mandatory=$false)][string]$Configuration = "1"
+    [parameter(Mandatory=$false)][string]$Configuration = "0"
 )
 cls
 # load and init the CSOM modules
@@ -41,10 +36,10 @@ $connection = Get-CSOMConnection $connector
 if (-not $connection.HasConnection) { return }
 Write-Host "Connected.`n"
 
-$configurationName = "Masterpage"
-$configurationId = $Configuration 
 $configurationPath = $cwd
-$configurationFiles = @("buzz365")
+$configurationName = "MegaMenu"
+$configurationId = $Configuration
+$configurationFiles = @("megamenu")
 
 $configurationFiles | ? { $_ -match ".*" } | % {
     $configXml = Get-XMLFile "$_.xml" "$configurationPath" 
@@ -60,7 +55,7 @@ $configurationFiles | ? { $_ -match ".*" } | % {
     $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyUp")
 
     if (-not (($x.VirtualKeyCode -eq 17) -and ($x.ControlKeyState -match "LeftCtrlPressed"))) {
-        Update-Taxonomy $taxonomyXml $connection.RootWeb $connection.Context
+        Update-Taxonomy $configurationXml.TermStore $connection.RootWeb $connection.Context
         Update-Web -Xml $configurationXml -Site $connection.Site -Web $connection.Web -ClientContext $connection.Context
     }
 }

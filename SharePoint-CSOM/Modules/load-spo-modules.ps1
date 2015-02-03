@@ -10,8 +10,9 @@ Add-InternalDlls -assemblyPath $assemblyPath -excludeDlls "*.HttpCommands.dll"
 
 $modules = @("ClientConnection.psm1","Columns.psm1","ContentTypes.psm1","Files.psm1","Features.psm1","Items.psm1","Lists.psm1","Permissions.psm1","PropertyBag.psm1","Publishing.psm1","Sites.psm1","Taxonomy.psm1","CustomActions.psm1","Webs.psm1","SearchCenter.psm1")
 $modules | % {
-   Write-Host "Importing Module: `"$_`"" -ForegroundColor White
-   Import-Module "$modulesPath\$_" 
+   Write-Host "Import Module:" -ForegroundColor White -NoNewLine
+   Write-Host " [$_]" -ForegroundColor Yellow
+   Import-Module "$modulesPath\$_" -DisableNameChecking
 }
 <#
    Excluding the ManagedProperties extensions since this is probably 
