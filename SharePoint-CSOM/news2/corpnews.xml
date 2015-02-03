@@ -65,8 +65,8 @@
 				<PropertyBag>
 					<PropertyBagValue Key="SaveSiteAsTemplateEnabled" Value="true" Indexable="true" />
 					<PropertyBagValue Key="ms-blogs-skinid" Value="1" Indexable="false" />
-					<PropertyBagValue Key="RB-WebTemplate" Value="CORPNEWS" />
-					<PropertyBagValue Key="RB-WebTemplateVersion" Value="1-0-0-0" />
+					<PropertyBagValue Key="RbWebTemplate" Value="CORPNEWS" />
+					<PropertyBagValue Key="RbWebTemplateVersion" Value="1-0-0-0" />
 				</PropertyBag>
 
 				<Fields>

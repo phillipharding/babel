@@ -408,8 +408,14 @@ footer .bottom-strap a:active {
   width: 10%;
 }
 
-.nav .nav-column h3 {
-  margin: 0px 0px 5px 0px;
+.nav .nav-column > ul {
+  clear: both;
+}
+.nav .nav-column h3,
+.nav .nav-column h3 a,
+.nav .nav-column h3 a:link,
+.nav .nav-column h3 a:visited {
+  margin: 10px 0px 5px 0px;
   line-height: 18px;
   color: #FFF;
   font-weight: bold;
@@ -419,6 +425,15 @@ footer .bottom-strap a:active {
   display: block;
   width: 100%;
   text-transform: uppercase;
+}
+.nav .nav-column h3 a,
+.nav .nav-column h3 a:link,
+.nav .nav-column h3 a:visited {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.nav .nav-column h3:first-child {
+  margin-top: 0;
 }
 
 .nav .nav-column li {
@@ -433,8 +448,13 @@ footer .bottom-strap a:active {
   font-size: 13px;
   color: #FFF;
 }
+.nav .nav-column li a .fa,
+.nav .nav-column h3 .fa {
+  margin-right: 8px;
+}
 
-.nav .nav-column li a:hover {
+.nav .nav-column li a:hover,
+.nav .nav-column h3 a:hover {
   opacity: 0.8;
 }
 
@@ -628,6 +648,15 @@ Main Menu
 section#main-menu {
   margin: 0 10px 10px;
 }
+
+/* ==========================================================================
+Default Side Navigation / Left Navigation
+========================================================================== */
+
+.tax-sidenav0-default {
+
+}
+
 
 /* ==========================================================================
  Layout
@@ -1218,7 +1247,10 @@ li > a.ms-core-listMenu-item:active {
   }
 
   header .corporate ul li {
+    float: left;
+    margin-left: 10px;
     margin-right: 5px;
+    margin-top: 12px;
   }
 
 }

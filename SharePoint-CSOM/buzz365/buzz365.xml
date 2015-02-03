@@ -20,6 +20,26 @@
 							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
 						</File>
+						<File Path="pagelayouts\Buzz365WidepageLayout.aspx" Url="Buzz365WidepageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811" />
+							<Property Name="Title" Value="Buzz365 Wide Pagelayout" />
+							<Property Name="MasterPageDescription" Value="Buzz365 Wide Pagelayout" />
+							<Property Name="PublishingPreviewImage" Value="~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png, ~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png" />
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#" />
+							<Property Name="PublishingHidden" Value="False" />
+							<Property Name="UIVersion" Value="15" />
+							<Property Name="HtmlDesignAssociated" Value="FALSE" />
+						</File>
+						<File Path="pagelayouts\Buzz365ContentpageLayout.aspx" Url="Buzz365ContentpageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811" />
+							<Property Name="Title" Value="Buzz365 Content Pagelayout" />
+							<Property Name="MasterPageDescription" Value="Buzz365 Content Pagelayout" />
+							<Property Name="PublishingPreviewImage" Value="~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png, ~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png" />
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#" />
+							<Property Name="PublishingHidden" Value="False" />
+							<Property Name="UIVersion" Value="15" />
+							<Property Name="HtmlDesignAssociated" Value="FALSE" />
+						</File>
 
 						<Folder Url="css">
 							<File Path="css\custom.css" Url="custom.css" ReplaceContent="True" />
@@ -56,6 +76,26 @@
 							<Property Name="Title" Value="Buzz365-responsive-v2" />
 							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
+						</File>
+						<File Path="pagelayouts\Buzz365WidepageLayout.aspx" Url="Buzz365WidepageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811" />
+							<Property Name="Title" Value="Buzz365 Wide Pagelayout" />
+							<Property Name="MasterPageDescription" Value="Buzz365 Wide Pagelayout" />
+							<Property Name="PublishingPreviewImage" Value="~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png, ~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png" />
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#" />
+							<Property Name="PublishingHidden" Value="False" />
+							<Property Name="UIVersion" Value="15" />
+							<Property Name="HtmlDesignAssociated" Value="FALSE" />
+						</File>
+						<File Path="pagelayouts\Buzz365ContentpageLayout.aspx" Url="Buzz365ContentpageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811" />
+							<Property Name="Title" Value="Buzz365 Content Pagelayout" />
+							<Property Name="MasterPageDescription" Value="Buzz365 Content Pagelayout" />
+							<Property Name="PublishingPreviewImage" Value="~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png, ~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png" />
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#" />
+							<Property Name="PublishingHidden" Value="False" />
+							<Property Name="UIVersion" Value="15" />
+							<Property Name="HtmlDesignAssociated" Value="FALSE" />
 						</File>
 						<Folder Url="css">
 							<File Path="css\pure-min.css" Url="pure-min.css" ReplaceContent="True" />
@@ -127,11 +167,12 @@
 							<File Path="js\moment-2.9.0.min.js" Url="moment-2.9.0.min.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">
-							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
 							<File Path="fonts\FontAwesome.otf" Url="FontAwesome.otf" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.woff2" Url="fontawesome-webfont.woff2" ReplaceContent="True" />
 							<File Path="fonts\flaticon.eot" Url="flaticon.eot" ReplaceContent="True" />
 							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
 							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
@@ -204,6 +245,26 @@
 							<Property Name="Title" Value="Buzz365-responsive-v2" />
 							<Property Name="MasterPageDescription" Value="The RBCOM v2 Buzz365 Responsive Masterpage" />
 							<Property Name="UIVersion" Value="15" />
+						</File>
+						<File Path="pagelayouts\Buzz365WidepageLayout.aspx" Url="Buzz365WidepageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811" />
+							<Property Name="Title" Value="Buzz365 Wide Pagelayout" />
+							<Property Name="MasterPageDescription" Value="Buzz365 Wide Pagelayout" />
+							<Property Name="PublishingPreviewImage" Value="~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png, ~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png" />
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#" />
+							<Property Name="PublishingHidden" Value="False" />
+							<Property Name="UIVersion" Value="15" />
+							<Property Name="HtmlDesignAssociated" Value="FALSE" />
+						</File>
+						<File Path="pagelayouts\Buzz365ContentpageLayout.aspx" Url="Buzz365ContentpageLayout.aspx" ReplaceContent="True">
+							<Property Name="ContentTypeId" Value="0x01010007FF3E057FA8AB4AA42FCB67B453FFC100E214EEE741181F4E9F7ACC43278EE811" />
+							<Property Name="Title" Value="Buzz365 Content Pagelayout" />
+							<Property Name="MasterPageDescription" Value="Buzz365 Content Pagelayout" />
+							<Property Name="PublishingPreviewImage" Value="~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png, ~sitecollection/_catalogs/masterpage/en-us/Preview Images/WelcomeSplash.png" />
+							<Property Name="PublishingAssociatedContentType" Value=";#Welcome Page;#0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF390064DEA0F50FC8C147B0B6EA0636C4A7D4;#" />
+							<Property Name="PublishingHidden" Value="False" />
+							<Property Name="UIVersion" Value="15" />
+							<Property Name="HtmlDesignAssociated" Value="FALSE" />
 						</File>
 					</Folder>
 				</Folder>
@@ -286,11 +347,12 @@
 							<File Path="js\moment-2.9.0.min.js" Url="moment-2.9.0.min.js" ReplaceContent="True" />
 						</Folder>
 						<Folder Url="fonts">
-							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
 							<File Path="fonts\FontAwesome.otf" Url="FontAwesome.otf" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.eot" Url="fontawesome-webfont.eot" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.svg" Url="fontawesome-webfont.svg" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.ttf" Url="fontawesome-webfont.ttf" ReplaceContent="True" />
 							<File Path="fonts\fontawesome-webfont.woff" Url="fontawesome-webfont.woff" ReplaceContent="True" />
+							<File Path="fonts\fontawesome-webfont.woff2" Url="fontawesome-webfont.woff2" ReplaceContent="True" />
 							<File Path="fonts\flaticon.eot" Url="flaticon.eot" ReplaceContent="True" />
 							<File Path="fonts\flaticon.svg" Url="flaticon.svg" ReplaceContent="True" />
 							<File Path="fonts\flaticon.ttf" Url="flaticon.ttf" ReplaceContent="True" />
