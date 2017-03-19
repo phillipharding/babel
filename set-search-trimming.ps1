@@ -2,7 +2,7 @@
 
 # replace these details (also consider using Get-Credential to enter password securely as script runs).. 
 $username = "phil.harding@platinumdogsconsulting.onmicrosoft.com"
-$password = "Pa`$`$w0rd2"
+$password = ""
 
 $url = "https://platinumdogsconsulting.sharepoint.com/search"
 $dllPath = "C:\Dev\github\MyPnP\Assemblies\16\"
